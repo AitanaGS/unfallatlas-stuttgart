@@ -1,0 +1,772 @@
+---
+title: "Data Cleaning and Geo Data"
+output: html_document
+date: "2023-06-13"
+---
+
+
+
+```{r}
+library(tidyverse)
+library(here)
+library(sf)
+library(janitor)
+library(tidygeocoder)
+library(jsonlite)
+
+```
+
+
+```{r}
+data_list <- read_csv(here("original", "data", "data_list.csv"))
+```
+
+
+## Cleaning
+
+
+```{r}
+years <- data_list %>%
+  distinct(year) %>%
+  pull(year)
+```
+
+
+
+
+```{r}
+for (year in years) {
+  shp_dir <- paste0(here("original", "data"), "/shapefile", year)
+  files <- list.files(shp_dir, recursive = TRUE, full.names = TRUE)
+  shp_file <- files[str_detect(files, "\\.shp$")]
+  shp_name <- paste0("shp_", year)
+  assign(shp_name, st_read(shp_file))
+
+  
+  assign(paste0("col_", year), colnames(get(shp_name)))
+}
+```
+
+
+
+```{r}
+for (year in years) {
+  shp_name <- paste0("shp_", year)
+  df_name <- paste0("shp_df_", year)
+  shp <- get(shp_name)
+
+  assign(df_name, as.data.frame(shp))
+  
+  rm(list = shp_name, envir = .GlobalEnv)
+
+  df <- get(df_name)
+
+  df <- df %>% 
+    clean_names(case = "snake")
+
+  df <- df %>%
+    filter(uland == "08") %>%
+    mutate(ugemschluessel = paste0(uland, uregbez, ukreis, ugemeinde)) %>%
+    relocate(ugemschluessel, .after = ugemeinde) %>%
+    filter(ugemschluessel == "08111000")
+
+  assign(df_name, df)
+}
+```
+
+
+
+
+```{r}
+shp_df_2016 <- shp_df_2016 %>%
+  rename(ustrzustand = ist_strasse) %>%
+  mutate(uidentstla = NA_character_,
+         objectid = as.character(objectid))
+
+shp_df_2017 <- shp_df_2017 %>%
+  rename(ulichtverh = licht,
+         ustrzustand = strzustand) %>%
+  mutate(ist_gkfz = NA_character_,
+         uidentstla = NA_character_,
+         objectid = as.character(objectid))
+
+shp_df_2018 <- shp_df_2018 %>%
+  rename(ustrzustand = strzustand) %>%
+  mutate(objectid = NA_real_) %>%
+  mutate(uidentstla = NA_character_,
+         objectid = as.character(objectid))
+
+shp_df_2019 <- shp_df_2019 %>%
+  rename(ustrzustand = strzustand) %>%
+  mutate(uidentstla = NA_character_,
+         objectid = as.character(objectid))
+
+shp_df_2020 <- shp_df_2020 %>%
+  rename(ustrzustand = strzustand) %>%
+  mutate(objectid = as.character(objectid))
+
+shp_df_2021 <- shp_df_2021 %>%
+  rename(ustrzustand = ustrzustan) %>%
+  mutate(objectid = as.character(objectid))
+
+shp_df_2022 <- shp_df_2022 %>%
+  rename(ustrzustand = ist_strasse) %>%
+  mutate(objectid = as.character(objectid))
+
+```
+
+no id variable in 2018
+
+ist_gkfz is missing in 2017
+
+2017, 2020, 2021, 2022 additional uidentstla; no information in metadata
+
+ist_strasse in 2016 und 2022 ist ustrzustand?
+
+ist_gkfz in jedem Jahr (außer 2017, 2016 jedoch drin - s.u.?) enthalten, aber:
+Unfall, an dem mindestens ein Lastkraftwagen mit Normalaufbau und einem Gesamtgewicht über 3,5 t, ein Lastkraftwagen mit Tankauflage bzw. Spezialaufbau, eine Sattelzugmaschine oder eine andere Zugmaschine beteiligt war (diese Kategorie ist in den Jahren 2016 und 2017 in "Unfall mit Sonstigen" enthalten)
+ist_sonstig: Unfall, an dem mindestens ein oben nicht genanntes Verkehrsmittel beteiligt war, wie z. B. ein Bus oder eine Straßenbahn (2016 und 2017 einschließlich Unfall mit Güterkraftfahrzeug (GKFZ), ab 2018 ohne Unfall mit GKFZ)
+
+
+
+
+```{r}
+for (year in years) {
+  
+  df_name <- paste0("shp_df_", year)
+
+  assign(paste0("col_", year), colnames(get(df_name)))
+}
+
+```
+
+
+```{r}
+cols <- c("objectid", "uidentstla",
+          "uland", "uregbez", "ukreis", "ugemeinde", "ugemschluessel", 
+          "ujahr", "umonat", "ustunde", "uwochentag",
+          "ukategorie", "uart", "utyp1", "ulichtverh", "ustrzustand",
+          "ist_rad", "ist_pkw", "ist_fuss", "ist_krad", "ist_gkfz", "ist_sonstig",
+          "linrefx", "linrefy", "xgcswgs84", "ygcswgs84", "geometry")
+```
+
+
+
+
+```{r}
+for (i in 1:length(years)) {
+  df_name <- paste0("shp_df_", years[i])
+  df <- get(df_name)
+  df <- df %>%
+    relocate(!!!syms(cols))
+  assign(df_name, df)
+}
+
+```
+
+
+
+```{r}
+acc_df <- data.frame()
+
+for (year in years) {
+
+  df_name <- paste0("shp_df_", year)
+  
+  df <- get(df_name)
+  
+  acc_df <- acc_df %>%
+    rbind(df)
+}
+```
+
+
+
+```{r}
+glimpse(acc_df)
+```
+
+
+
+```{r}
+accidents_df <- acc_df %>%
+  mutate(umonatname = factor(umonat,
+                             levels = c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"),
+                             labels = c("Januar",
+                                        "Februar",
+                                        "März",
+                                        "April",
+                                        "Mai",
+                                        "Juni",
+                                        "Juli",
+                                        "August",
+                                        "September",
+                                        "Oktober",
+                                        "November",
+                                        "Dezember")),
+         uwochentag = factor(uwochentag,
+                           levels = c("1", "2", "3", "4", "5", "6", "7"),
+                           labels = c("Sonntag",
+                                      "Montag",
+                                      "Dienstag",
+                                      "Mittwoch",
+                                      "Donnerstag",
+                                      "Freitag",
+                                      "Samstag")),
+         ukategorie = factor(ukategorie,
+                           levels = c("1", "2", "3"),
+                           labels = c("Unfall mit Getöteten",
+                                      "Unfall mit Schwerverletzten",
+                                      "Unfall mit Leichtverletzten")),
+         uart = factor(uart,
+                       levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
+                       labels = c("Zusammenstoß mit anfahrendem/ anhaltendem/ruhendem Fahrzeug",
+                                  "Zusammenstoß mit vorausfahrendem / wartendem Fahrzeug",
+                                  "Zusammenstoß mit seitlich in gleicher Richtung fahrendem Fahrzeug",
+                                  "Zusammenstoß mit entgegenkommendem Fahrzeug",
+                                  "Zusammenstoß mit einbiegendem / kreuzendem Fahrzeug",
+                                  "Zusammenstoß zwischen Fahrzeug und Fußgänger",
+                                  "Aufprall auf Fahrbahnhindernis",
+                                  "Abkommen von Fahrbahn nach rechts",
+                                  "Abkommen von Fahrbahn nach links",
+                                  "Unfall anderer Art")),
+         utyp1 = factor(utyp1,
+                        levels = c("1", "2", "3", "4", "5", "6", "7"),
+                        labels = c("Fahrunfall",
+                                   "Abbiegeunfall",
+                                   "Einbiegen / Kreuzen-Unfall",
+                                   "Überschreiten-Unfall",
+                                   "Unfall durch ruhenden Verkehr",
+                                   "Unfall im Längsverkehr",
+                                   "sonstiger Unfall"
+                                   )),
+         ulichtverh = factor(ulichtverh,
+                        levels = c("0", "1", "2"),
+                        labels = c("Tageslicht",
+                                   "Dämmerung",
+                                   "Dunkelheit")),
+         ustrzustand = factor(ustrzustand,
+                        levels = c("0", "1", "2"),
+                        labels = c("trocken",
+                                   "nass/feucht/schlüpfrig",
+                                   "winterglatt")),
+         ist_rad = factor(ist_rad,
+                        levels = c("0", "1"),
+                        labels = c("Unfall ohne Fahrradbeteiligung",
+                                   "Unfall mit Fahrradbeteiligung")),
+         ist_pkw = factor(ist_pkw,
+                        levels = c("0", "1"),
+                        labels = c("Unfall ohne PKW-Beteiligung",
+                                   "Unfall mit PKW-Beteiligung")),
+         ist_fuss = factor(ist_fuss,
+                        levels = c("0", "1"),
+                        labels = c("Unfall ohne Fußgängerbeteiligung",
+                                   "Unfall mit Fußgängerbeteiligung")),
+         ist_krad = factor(ist_krad,
+                        levels = c("0", "1"),
+                        labels = c("Unfall ohne Kraftradbeteiligung",
+                                   "Unfall mit Kraftradbeteiligung")),
+         ist_gkfz = factor(ist_gkfz,
+                        levels = c("0", "1"),
+                        labels = c("Unfall ohne Güterkraftfahrzeugbeteiligung",
+                                   "Unfall mit Güterkraftfahrzeugbeteiligung")),
+         ist_sonstig = factor(ist_sonstig,
+                        levels = c("0", "1"),
+                        labels = c("Unfall ohne Beteiligung eines oben nicht genannten Verkehrsmittels",
+                                   "Unfall mit Beteiligung eines oben nicht genannten Verkehrsmittels")),
+         ujahr = as.numeric(ujahr),
+         umonat = as.numeric(umonat),
+         ustunde = as.numeric(ustunde)) %>%
+  relocate(umonatname, .after = umonat) %>%
+  relocate(uidentstla, .after = objectid)
+
+
+```
+
+
+
+```{r}
+new_cols <- c("objectid", "identstla",
+          "land", "regbez", "kreis", "gemeinde", "gemschl", 
+          "jahr", "monat", "monatn", "stunde", "wochentag",
+          "kateg", "art", "typ", "licht", "strzust",
+          "istrad", "istpkw", "istfuss", "istkrad", "istgkfz", "istsonst",
+          "linrefx", "linrefy", "xgcswgs84", "ygcswgs84", "geometry")
+```
+
+
+
+```{r}
+colnames(accidents_df) <- new_cols
+```
+
+
+
+## Geo Data
+
+
+```{r}
+accidents <- accidents_df %>%
+  mutate(lon = xgcswgs84,
+         lat = ygcswgs84) %>%
+  relocate(lon, .after = ygcswgs84) %>%
+  relocate(lat, .after = lon)
+```
+
+
+
+
+### Reverse geocode
+
+
+```{r}
+accidents_2016 <- accidents %>%
+  filter(jahr == 2016) %>%
+  reverse_geocode(lat = lat, long = lon, address = address, method = "osm", full_results = TRUE)
+```
+
+
+
+```{r}
+accidents_2017 <- accidents %>%
+  filter(jahr == 2017) %>%
+  reverse_geocode(lat = lat, long = lon, address = address, method = "osm", full_results = TRUE)
+```
+
+
+
+
+```{r}
+accidents_2018 <- accidents %>%
+  filter(jahr == 2018) %>%
+  reverse_geocode(lat = lat, long = lon, address = address, method = "osm", full_results = TRUE)
+```
+
+
+
+
+
+```{r}
+accidents_2019 <- accidents %>%
+  filter(jahr == 2019) %>%
+  reverse_geocode(lat = lat, long = lon, address = address, method = "osm", full_results = TRUE)
+```
+
+
+
+
+
+```{r}
+accidents_2020 <- accidents %>%
+  filter(jahr == 2020) %>%
+  reverse_geocode(lat = lat, long = lon, address = address, method = "osm", full_results = TRUE)
+```
+
+
+
+
+```{r}
+accidents_2021 <- accidents %>%
+  filter(jahr == 2021) %>%
+  reverse_geocode(lat = lat, long = lon, address = address, method = "osm", full_results = TRUE)
+```
+
+
+
+
+
+```{r}
+accidents_2022 <- accidents %>%
+  filter(jahr == 2022) %>%
+  reverse_geocode(lat = lat, long = lon, address = address, method = "osm", full_results = TRUE)
+```
+
+
+
+
+
+```{r}
+accidents_geo <- accidents_2016 %>%
+  bind_rows(accidents_2017,
+            accidents_2018,
+            accidents_2019,
+            accidents_2020,
+            accidents_2021,
+            accidents_2022) %>%
+  mutate(across(where(is.list), ~map_chr(., toString))) %>%
+  mutate(osm_id = as.character(osm_id)) %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+
+
+
+
+
+### Missing Values
+
+
+```{r}
+accidents_geo %>%
+  filter(neighbourhood == suburb) %>%
+  select(neighbourhood) %>%
+  distinct(neighbourhood)
+```
+
+
+```{r}
+accidents_geo %>%
+  filter(suburb == city_district) %>%
+  select(suburb) %>%
+  distinct(suburb)
+```
+
+
+```{r}
+neighbourhoods <- accidents_geo %>%
+  filter(!is.na(neighbourhood)) %>%
+  distinct(neighbourhood) %>%
+  pull(neighbourhood)
+```
+
+
+
+```{r}
+suburbs <- accidents_geo %>%
+  filter(!is.na(suburb)) %>%
+  distinct(suburb) %>%
+  pull(suburb)
+```
+
+
+```{r}
+city_districts <- accidents_geo %>%
+  filter(!is.na(city_district)) %>%
+  distinct(city_district) %>%
+  pull(city_district)
+```
+
+
+
+
+```{r}
+accidents_geo %>%
+  filter(neighbourhood %in% suburbs) %>%
+  select(neighbourhood) %>%
+  distinct(neighbourhood)
+```
+
+
+```{r}
+accidents_geo %>%
+  filter(neighbourhood %in% city_districts) %>%
+  select(neighbourhood) %>%
+  distinct(neighbourhood)
+```
+
+
+
+```{r}
+accidents_geo %>%
+  filter(suburb %in% city_districts) %>%
+  select(suburb) %>%
+  distinct(suburb)
+```
+
+
+
+```{r}
+accidents_geo %>%
+  filter(is.na(neighbourhood) | is.na(suburb) | is.na(city_district)) %>%
+  select(road, neighbourhood, suburb, city_district)
+```
+
+
+
+```{r}
+accidents_geo %>%
+  filter(is.na(neighbourhood) & is.na(suburb) & is.na(city_district)) %>%
+  select(road)
+```
+
+
+
+
+```{r}
+accidents_geo %>%
+  filter(is.na(neighbourhood) & is.na(suburb)) %>%
+  select(road, city_district)
+```
+
+
+
+
+```{r}
+accidents_geo %>%
+  filter(is.na(suburb) & is.na(city_district)) %>%
+  select(road, neighbourhood)
+```
+
+
+
+```{r}
+accidents_geo %>%
+  filter(is.na(city_district)) %>%
+  select(road, neighbourhood, suburb)
+```
+
+
+
+
+```{r}
+accidents_geo_clean <- accidents_geo %>%
+  mutate(
+    city_district = if_else(is.na(city_district) & !is.na(suburb), suburb, city_district),
+    suburb = if_else(is.na(suburb) & !is.na(city_district), city_district, suburb),
+    neighbourhood = if_else(is.na(neighbourhood) & !is.na(suburb), suburb, neighbourhood)
+  )
+```
+
+
+
+
+
+```{r}
+accidents_geo_clean %>%
+  filter(is.na(neighbourhood) | is.na(suburb) | is.na(city_district)) %>%
+  select(road, neighbourhood, suburb, city_district)
+```
+
+
+
+```{r}
+accidents_geo_clean %>%
+  filter(is.na(road)) %>%
+  select(road, neighbourhood, suburb, city_district) %>%
+  group_by(neighbourhood) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+```
+
+
+
+
+```{r}
+accidents_geo_clean %>%
+  filter(str_detect(road, "^Rotebühl")) %>%
+  select(road, neighbourhood, suburb, city_district)
+```
+
+
+```{r}
+accidents_geo_clean %>%
+  filter(str_detect(neighbourhood, "^Rotebühl")) %>%
+  select(road, neighbourhood, suburb, city_district)
+```
+
+
+
+```{r}
+accidents_geo_clean %>%
+  colnames()
+```
+
+
+
+### Selecting variables
+
+
+```{r}
+accidents_geo_clean_select <- accidents_geo_clean %>%
+  select(-c(licence, osm_type, state, "ISO3166-2-lvl4", country, country_code,
+            tourism, amenity, house_number, shop, industrial, building, junction,
+            man_made, highway, municipality, town, county, village,
+            emergency, craft, leisure, hamlet, residential, landuse, aeroway,
+            office, commercial, historic, place, isolated_dwelling, military, allotments, healthcare,
+            club, square)) %>%
+  rename(placeid = place_id,
+         neighb = neighbourhood,
+         district = city_district,
+         pcode = postcode,
+         bbox = boundingbox)
+
+```
+
+
+
+
+```{r}
+accidents_geo_clean_select %>%
+  filter(!is.na(railway)) %>%
+  select(jahr, istrad, istpkw, istfuss, istkrad, istgkfz, istsonst, railway)
+```
+
+
+
+```{r}
+accidents_geo_clean_select %>%
+  filter(istsonst == "Unfall mit Beteiligung eines oben nicht genannten Verkehrsmittels" & is.na(railway)) %>%
+  select(jahr, istrad, istpkw, istfuss, istkrad, istgkfz, istsonst)
+```
+
+
+```{r}
+accidents_geo_clean_select %>%
+  filter(istsonst == "Unfall mit Beteiligung eines oben nicht genannten Verkehrsmittels" & !is.na(railway)) %>%
+  select(jahr, istrad, istpkw, istfuss, istkrad, istgkfz, istsonst, railway)
+```
+
+
+
+
+```{r}
+accidents_geo_clean_select %>%
+  filter(!is.na(railway)) %>%
+  count(railway) %>%
+  arrange(desc(n))
+```
+
+
+
+
+### Adding variables
+
+
+
+```{r}
+accidents_geo_clean_select <- st_read(here("processed", "shapefile", "accidents.shp"))
+```
+
+
+
+
+```{r}
+monate <- c("Januar", "Februar", "März", "April", "Mai", "Juni",
+            "Juli", "August", "September", "Oktober", "November", "Dezember")
+
+wochentage <- c("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")
+
+zeiten <- c("0-6 Uhr", "6-12 Uhr", "12-18 Uhr", "18-0 Uhr")
+
+districts <- accidents_geo_clean_select %>%
+  distinct(district) %>%
+  pull()
+
+kategs <- c("Unfall mit Leichtverletzten", "Unfall mit Schwerverletzten", "Unfall mit Getöteten")
+
+lichtv <- c("Tageslicht", "Dämmerung", "Dunkelheit")
+
+strzustand <- c("trocken", "nass/feucht/schlüpfrig", "winterglatt")
+
+accidents_final <- accidents_geo_clean_select %>%
+  mutate(lon = xgcswgs84,
+         lat = ygcswgs84,
+         dataid = row_number()) %>%
+  relocate(lon, .after = ygcswgs84) %>%
+  relocate(lat, .after = lon) %>%
+  relocate(dataid, .before = objectid) %>%
+  mutate(monatn = fct_relevel(monatn, monate),
+         wochentag = fct_relevel(wochentag, wochentage),
+         kateg = fct_relevel(kateg, kategs),
+         kateg2 = case_when(
+           kateg == "Unfall mit Schwerverletzten" | kateg == "Unfall mit Getöteten" ~ "Unfall mit Schwerverletzten/Getöteten",
+           kateg == "Unfall mit Leichtverletzten" ~ "Unfall mit Leichtverletzten",
+           is.na(kateg) ~ NA_character_
+         ),
+         kateg2 = fct_relevel(kateg2, c("Unfall mit Leichtverletzten", "Unfall mit Schwerverletzten/Getöteten")),
+         licht = fct_relevel(licht, lichtv),
+         strzust = fct_relevel(strzust, strzustand)) %>%
+  mutate(zeit = case_when(
+    stunde >= 0 & stunde < 6 ~ "0-6 Uhr",
+    stunde >= 6 & stunde < 12 ~ "6-12 Uhr",
+    stunde >= 12 & stunde < 18 ~ "12-18 Uhr",
+    stunde >= 18 & stunde < 24 ~ "18-0 Uhr",
+    is.na(stunde) ~ NA_character_
+  )) %>%
+  mutate(zeit = fct_relevel(zeit, zeiten)) %>%
+  relocate(zeit, .after = stunde) %>%
+  relocate(kateg2, .after = kateg) 
+  
+```
+
+
+
+
+
+```{r}
+new_shapefile_dir <- here("processed", "shapefile")
+```
+
+
+
+```{r}
+new_shapefile <- here("processed", "shapefile", "accidents")
+```
+
+
+
+```{r}
+if (file.exists(paste0(new_shapefile, ".shp"))) file.remove(paste0(new_shapefile, c(".shp", ".shx", ".dbf", ".prj")))
+```
+
+
+
+```{r}
+if (file.exists(here("processed", "accidents.geojson"))) file.remove(here("processed", "accidents.geojson"))
+```
+
+
+```{r}
+if (!file.exists(new_shapefile)) dir.create(new_shapefile_dir)
+```
+
+
+
+
+```{r}
+st_write(accidents_final, here("processed", "shapefile", "accidents.shp"), encoding = "UTF-8")
+
+```
+
+
+
+```{r}
+st_write(accidents_final, here("processed", "accidents.geojson"), driver = "GeoJSON")
+```
+
+
+
+```{r}
+accidents_final2 <- accidents_final %>%
+  st_drop_geometry()
+```
+
+
+
+```{r}
+write_csv(accidents_final2, here("processed", "accidents.csv"))
+```
+
+
+
+```{r}
+accidents_final2_json <- toJSON(accidents_final2)
+```
+
+
+
+```{r}
+write(accidents_final2_json, here("processed", "accidents.json"))
+```
+
+
+
+
+```{r}
+check <- st_read(here("processed", "shapefile", "accidents.shp"))
+```
+
+
+
+
+

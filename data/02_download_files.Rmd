@@ -1,0 +1,156 @@
+---
+title: "Download files"
+output: html_document
+date: "2023-06-10"
+---
+
+
+
+```{r}
+library(tidyverse)
+library(here)
+
+```
+
+
+
+```{r}
+link_list <- read_csv(here("link_list.csv"))
+```
+
+
+```{r}
+address <- "https://www.opengeodata.nrw.de/produkte/transport_verkehr/unfallatlas/"
+
+link_list$file_name <- sub(address, "", link_list$download_link)
+```
+
+
+
+
+```{r}
+datadir_all <- file.path(here("original", "data"))
+archive <- file.path(here("original", "archive"))
+
+if (file.exists(archive)) {
+
+  archive_files <- list.files(archive, recursive = TRUE, full.names = TRUE)
+  file.remove(archive_files)
+
+} else {
+
+  dir.create(archive)
+
+}
+
+if (file.exists(datadir_all)) file.copy(datadir_all, archive, recursive = TRUE, overwrite = TRUE)
+
+
+zipdir_all <- file.path(here("original", "zip"))
+if (!file.exists(zipdir_all)) dir.create(zipdir_all)
+
+tempdir_all <- file.path(here("original", "temp"))
+if (!file.exists(tempdir_all)) dir.create(tempdir_all)
+
+if (!file.exists(datadir_all)) dir.create(datadir_all)
+
+```
+
+
+```{r}
+data_links <- link_list %>%
+  filter(type == "shapefile" | type == "csv")
+
+data_list <- tibble(type = character(),
+                    year = numeric(),
+                    directory = character())
+
+for (i in seq_len(nrow(data_links))) {
+  download_link <- data_links$download_link[i]
+  file_name <- data_links$file_name[i]
+  
+  zipdir <- file.path(zipdir_all, paste0(data_links$type[i], data_links$year[i]))
+  if (!file.exists(zipdir)) dir.create(zipdir)
+  zipfile <- file.path(zipdir, file_name)
+
+  tryCatch(
+    {
+      download_success <- try(
+        download.file(download_link, destfile = zipfile, mode = "wb"),
+        silent = TRUE
+      )
+      
+      if (!inherits(download_success, "try-error")) {
+        
+        tempdir <- file.path(tempdir_all, paste0(data_links$type[i], data_links$year[i]))
+        if (!file.exists(tempdir)) dir.create(tempdir)
+                
+        datadir <- file.path(datadir_all, paste0(data_links$type[i], data_links$year[i]))
+        if (!file.exists(datadir)) dir.create(datadir)
+  
+        unzip(zipfile, exdir = tempdir, overwrite = TRUE)
+        
+        innertempdir <- list.files(tempdir, full.names = TRUE)[1]
+        
+        filesdir <- if_else(
+          sub(".*/", "", innertempdir) == "Shapefile" | sub(".*/", "", innertempdir) == "csv",
+          innertempdir,
+          tempdir
+        )
+        
+        files <- list.files(filesdir, full.names = TRUE)
+        file.copy(files, datadir, recursive = TRUE, overwrite = TRUE)
+        
+        data <- tibble(
+          type = c(data_links$type[i]),
+          year = c(data_links$year[i]),
+          directory = c(directory = paste0(type, year))
+        )
+        
+        data_list <- data_list %>%
+          bind_rows(data)
+        
+      } else {
+        warning(paste("Failed to download file:", file_name))
+      }
+    },
+    error = function(e) {
+      warning(paste("Failed to download file:", file_name))
+    }
+  )
+}
+
+unlink(tempdir_all, recursive = TRUE)
+
+write_csv(data_list, file.path(datadir_all, "data_list.csv"))
+```
+
+
+
+
+```{r}
+metadata_links <- link_list %>%
+  filter(type == "metadata")
+
+for (i in seq_len(nrow(metadata_links))) {
+  download_link <- metadata_links$download_link[i]
+  file_name <- metadata_links$file_name[i]
+  destfile <- file.path(datadir_all, file_name)
+
+  tryCatch(
+    {
+      download_success <- try(
+        download.file(download_link, destfile = destfile, mode = "wb"),
+        silent = TRUE
+      )
+    },
+    error = function(e) {
+      warning(paste("Failed to download file:", file_name))
+    }
+  )
+}
+```
+
+
+
+

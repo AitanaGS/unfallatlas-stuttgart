@@ -1,10 +1,40 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+// import Image from 'next/image';
+// import styles from './page.module.css';
+// import Map from '../components/Map';
+// import React, { useEffect, useState } from 'react';
+import React from 'react';
+import data from '../../data/processed/accidents.json';
+// import Dashboard from '@/components/Dashboard/';
+import dynamic from 'next/dynamic';
+import { json } from 'd3-fetch';
+
+const Dashboard = dynamic(() => import('../components/Dashboard'), {
+  ssr: false,
+});
+
+// const DATAPATH = '../../data/processed/accidents.json';
 
 export default function Home() {
+  // const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   json(DATAPATH).then((data) => {
+  //     setData(data);
+  //     setLoading(false);
+  //   });
+  // }, []);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
+    <main>
+      {/* {!data && <p>Loading...</p>} */}
+      {data && <Dashboard data={data} />}
+      {/* className={styles.main} */}
+      {/* {!data && <p>loading...</p>} */}
+      {/* {data && <Dashboard data={data} />} */}
+      {/* {data && <Dashboard data={data} />} */}
+
+      {/* <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.js</code>
@@ -89,7 +119,7 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
-  )
+  );
 }

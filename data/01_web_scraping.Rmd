@@ -1,0 +1,120 @@
+---
+title: "Web Scraping"
+output: html_document
+date: "2023-06-10"
+---
+
+
+
+```{r}
+library(tidyverse)
+library(here)
+library(rvest)
+library(RSelenium)
+
+```
+
+
+
+```{r}
+shell('docker pull selenium/standalone-firefox-debug')
+```
+
+
+
+```{r}
+shell('docker run -d -p 4445:4444 -p 5900:5900 --name selenium-server selenium/standalone-firefox-debug')
+```
+
+
+
+```{r}
+remDr <- remoteDriver(remoteServerAddr = "localhost",
+                      port = 4445L,
+                      browserName = "firefox")
+
+Sys.sleep(5)
+
+remDr$open()
+
+remDr$navigate("https://unfallatlas.statistikportal.de/") 
+
+remDr$screenshot(display = TRUE)
+remDr$getTitle()
+
+```
+
+
+
+```{r}
+close_button <- remDr$findElement("css", "button[aria-label='close']")
+close_button$clickElement()
+
+Sys.sleep(3)
+
+button <- remDr$findElement("css", "button[title='Unfallatlas und OpenData']")
+button$clickElement()
+
+Sys.sleep(3)
+
+dialog_content <- remDr$findElement("css", "div.p-dialog-content")
+content_text <- dialog_content$getElementText()[[1]]
+content_text <- unlist(content_text)
+
+cat(content_text)
+
+```
+
+
+
+```{r}
+dialog_html <- dialog_content$getElementAttribute("innerHTML")[[1]]
+dialog <- read_html(dialog_html)
+
+link_elements <- dialog %>% 
+  html_nodes("a:not([style*='display: none'])")
+
+link_list <- link_elements %>% html_attr("href")
+
+print(link_list)
+
+remDr$close()
+
+```
+
+
+
+
+```{r}
+link_tbl <- tibble(link_list) %>%
+  rename("download_link" = link_list) %>%
+  filter(str_starts(download_link, "https://www.opengeodata.nrw.de/produkte/transport_verkehr/unfallatlas")) %>%
+  mutate(type = case_when(
+    str_detect(download_link, regex("Shape", ignore_case = TRUE)) ~ "shapefile",
+    str_detect(download_link, regex("CSV", ignore_case = TRUE)) ~ "csv",
+    str_detect(download_link, regex("pdf", ignore_case = TRUE)) ~ "metadata",
+    TRUE ~ NA_character_
+  )) %>%
+  mutate(year = str_extract(download_link, "(?<=Unfallorte)\\d{4}"))
+
+```
+
+
+
+
+```{r}
+write_csv(link_tbl, here("link_list.csv"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
