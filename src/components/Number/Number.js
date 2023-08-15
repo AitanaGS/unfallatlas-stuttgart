@@ -1,6 +1,9 @@
 import React from 'react';
+import { numberWithSeparator } from '../../utils/calc';
 
 function Number({ width, height, number, label }) {
+  // TODO: numberwithseparator performance
+  // TODO: check number is undefined
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
@@ -22,7 +25,7 @@ function Number({ width, height, number, label }) {
           {label}
         </tspan>
         <tspan x={0} y={height / 4 + 15}>
-          {number}
+          {number !== undefined ? numberWithSeparator(number) : 0}
         </tspan>
       </text>
     </svg>

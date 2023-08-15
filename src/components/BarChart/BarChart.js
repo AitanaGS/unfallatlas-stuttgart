@@ -2,19 +2,15 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { select } from 'd3-selection';
 import { rollup, extent, max, min } from 'd3-array';
-import Bar from '../Bar';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import BarKatAxis from '../BarKatAxis';
 
-function BarChart({
-  width,
-  height,
-  margin,
-  variableCount,
-  dataTotal,
-  visDataTotal,
-}) {
+function BarChart({ variableCount, visDataTotal }) {
+  const kategorienSorted = [
+    'Unfall mit Schwerverletzten/Getöteten',
+    'Unfall mit Leichtverletzten',
+  ];
   // const [visData, setVisData] = useState(data);
 
   // useEffect(() => {
@@ -51,6 +47,18 @@ function BarChart({
 
   //   setKategCount(newKategCount);
   // }, [visibleData]);
+
+  const width = 300;
+
+  const height = 200;
+
+  const margin = {
+    top: 20,
+    right: 50,
+    bottom: 20,
+    left: 190,
+  };
+
   const innerWidth = width - margin.left - margin.right;
 
   const innerHeight = height - margin.top - margin.bottom;
@@ -77,35 +85,37 @@ function BarChart({
   //   'Unfall mit Leichtverletzten',
   // ];
 
-  const kategorienSorted = [
-    'Unfall mit Schwerverletzten/Getöteten',
-    'Unfall mit Leichtverletzten',
-  ];
-
   const yScale = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
     .range([innerHeight, 0])
     .padding(0.2);
 
-  console.log(
-    'Leicht',
-    yScale('Unfall mit Leichtverletzten'),
-    'schwerverletzt/getötet',
-    yScale('Unfall mit Schwerverletzten/Getöteten')
-  );
+  // console.log(
+  //   'Leicht',
+  //   yScale('Unfall mit Leichtverletzten'),
+  //   'schwerverletzt/getötet',
+  //   yScale('Unfall mit Schwerverletzten/Getöteten')
+  // );
 
   // console.log('xscale', xScale(10));
 
-  console.log(
-    'width',
-    width,
-    'margin left',
-    margin.left,
-    'margin right',
-    margin.right,
-    'innerwidt',
-    innerWidth
-  );
+  // console.log(
+  //   'width',
+  //   width,
+  //   'margin left',
+  //   margin.left,
+  //   'margin right',
+  //   margin.right,
+  //   'innerwidt',
+  //   innerWidth
+  // );
+
+  // console.log(
+  //   'calc', variableCount.get('Unfall mit Leichtverletzten'),  { visDataTotal },
+  //   (variableCount.get('Unfall mit Leichtverletzten') /
+  //     { visDataTotal }) *
+  //     100
+  // );
 
   // TODO: check rendering (useState is called to often vs. useEffect)
   // TODO: scale totalaccidents oder totalvisdata
@@ -122,7 +132,7 @@ function BarChart({
         yScale={yScale}
         innerHeight={innerHeight}
         margin={margin}
-        kat={kategorien}
+        kat={kategorienSorted}
       />
       <g
         ref={barChartRef}
@@ -158,7 +168,9 @@ function BarChart({
               y={yScale(d) + yScale.bandwidth() / 2}
               style={{ fontSize: '0.8rem' }}
             >
-              {variableCount.get(d)}
+              {`${Math.round(
+                (variableCount.get(d) / visDataTotal) * 100
+              )} %`}
             </text>
           </g>
         ))}

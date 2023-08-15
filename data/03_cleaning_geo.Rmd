@@ -675,7 +675,29 @@ accidents_final <- accidents_geo_clean_select %>%
          ),
          kateg2 = fct_relevel(kateg2, c("Unfall mit Leichtverletzten", "Unfall mit Schwerverletzten/Getöteten")),
          licht = fct_relevel(licht, lichtv),
-         strzust = fct_relevel(strzust, strzustand)) %>%
+         licht2 = case_when(
+           licht == "Dämmerung" | licht == "Dunkelheit" ~ "Dämmerung/Dunkelheit",
+           licht == "Tageslicht" ~ "Tageslicht",
+           is.na(licht) ~ NA_character_
+         ),
+         licht2 = fct_relevel(licht2, c("Dämmerung/Dunkelheit", "Tageslicht")),
+         istsonst2 = case_when(
+           istgkfz == "Unfall mit Güterkraftfahrzeugbeteiligung" |
+             istsonst == "Unfall mit Beteiligung eines oben nicht genannten Verkehrsmittels" 
+           ~ "Unfall mit Beteiligung eines anderen Verkehrsmittels",
+           ((istgkfz == "Unfall ohne Güterkraftfahrzeugbeteiligung" |
+             is.na(istgkfz)) & 
+              (istsonst == "Unfall ohne Beteiligung eines oben nicht genannten Verkehrsmittels" |
+                 is.na(istsonst))) 
+           ~ "Unfall ohne Beteiligung eines anderen Verkehrsmittels"
+         ),
+         strzust = fct_relevel(strzust, strzustand),
+         strzust2 = case_when(
+           strzust == "nass/feucht/schlüpfrig" | strzust == "winterglatt" ~ "nass/glatt",
+           strzust == "trocken" ~ "trocken",
+           is.na(strzust) ~ NA_character_
+         ),
+         strzust2 = fct_relevel(strzust2, c("nass/glatt", "trocken"))) %>%
   mutate(zeit = case_when(
     stunde >= 0 & stunde < 6 ~ "0-6 Uhr",
     stunde >= 6 & stunde < 12 ~ "6-12 Uhr",
@@ -685,7 +707,10 @@ accidents_final <- accidents_geo_clean_select %>%
   )) %>%
   mutate(zeit = fct_relevel(zeit, zeiten)) %>%
   relocate(zeit, .after = stunde) %>%
-  relocate(kateg2, .after = kateg) 
+  relocate(kateg2, .after = kateg) %>%
+  relocate(licht2, .after = licht) %>%
+  relocate(istsonst2, .after = istsonst) %>%
+  relocate(strzust2, .after = strzust)
   
 ```
 

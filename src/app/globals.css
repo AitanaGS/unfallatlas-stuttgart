@@ -126,3 +126,13 @@ a {
   font-size: 1.2rem;
   box-shadow: 0 0 0px 5px #fff;
 }
+
+/* .leaflet-map {
+  height: 500px;
+  width: 100%;
+} */
+
+.leaflet-map {
+  height: 300px;
+  width: 400px;
+}
