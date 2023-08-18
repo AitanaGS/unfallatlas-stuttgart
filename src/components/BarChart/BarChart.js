@@ -65,9 +65,9 @@ function BarChart({ variableCount, visDataTotal }) {
 
   const kategorien = [...variableCount.keys()];
 
-  console.log('bar kategcount', variableCount);
-  console.log('keys', kategorien); // [...kategCount.keys()]
-  console.log(variableCount.get(kategorien[0]));
+  // console.log('bar kategcount', variableCount);
+  // console.log('keys', kategorien); // [...kategCount.keys()]
+  // console.log(variableCount.get(kategorien[0]));
 
   const barChartRef = useRef();
   useEffect(() => {
@@ -120,6 +120,7 @@ function BarChart({ variableCount, visDataTotal }) {
   // TODO: check rendering (useState is called to often vs. useEffect)
   // TODO: scale totalaccidents oder totalvisdata
   // TODO: scale etc. useMemo, or...
+  // TODO: check useRef
 
   return (
     <svg
