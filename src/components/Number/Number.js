@@ -2,12 +2,12 @@ import React from 'react';
 import { numberWithSeparator } from '../../utils/calc';
 
 function Number({ width, height, number, label, colorScale, max }) {
-  console.log(
-    'number',
-    number,
-    colorScale ? colorScale(number) : undefined,
-    colorScale ? colorScale(number || 0) : undefined
-  );
+  // console.log(
+  //   'number',
+  //   number,
+  //   colorScale ? colorScale(number) : undefined,
+  //   colorScale ? colorScale(number || 0) : undefined
+  // );
   // TODO: numberwithseparator performance
   // TODO: check number is undefined
   return (
