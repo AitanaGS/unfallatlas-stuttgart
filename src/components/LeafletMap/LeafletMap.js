@@ -7,7 +7,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
 
-function Map({ data, setVisData }) {
+function LeafletMap({ data, setVisData }) {
   // here
   const mapRef = useRef(null);
 
@@ -145,4 +145,4 @@ function Map({ data, setVisData }) {
   return <div id="map" className="leaflet-map" ref={mapRef}></div>;
 }
 
-export default Map;
+export default LeafletMap;

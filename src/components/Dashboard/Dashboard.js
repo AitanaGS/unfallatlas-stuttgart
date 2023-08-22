@@ -9,12 +9,13 @@ import {
 import { min, max, least, greatest, extent } from 'd3-array';
 import { scaleBand, scaleSequential } from 'd3-scale';
 
-import Map from '../Map';
+import LeafletMap from '../LeafletMap';
 import BarChart from '../BarChart';
 import LichtBarChart from '../LichtBarChart';
 import StrasseBarChart from '../StrasseBarChart';
 import Number from '../Number';
 import WeekHourHeatmap from '../WeekHourHeatmap';
+import TreeMap from '../TreeMap';
 // import dynamic from 'next/dynamic';
 
 // const Map = dynamic(() => import('../Map'), {
@@ -239,13 +240,106 @@ function Dashboard({ data }) {
 
   // const accidentsTotal = rollup(athletes, v => d3.sum(v, d => d.earnings), d => d.sport)
 
-  // TODO: check client component in next
-  // TODO: dataTotal/visDataTotal performance/correct use of useMemo
-  // TODO: gkfz und sonstige mit reinnehmen? ja, als sonstige gesamt
-  // TODO: BarChart / Axis abstraction
-  // TODO: visData zu Beginn (data bzw. visData)
-  // TODO: check d3 with react (useref, etc)
-  // TODO: number abstraction
+  const numberData = useMemo(() => {
+    return new Map([
+      [
+        'Fußgänger',
+        fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
+      ],
+      ['Rad', radCount.get('Unfall mit Fahrradbeteiligung') || 0],
+      [
+        'Kraftrad',
+        kradCount.get('Unfall mit Kraftradbeteiligung') || 0,
+      ],
+      ['PKW', pkwCount.get('Unfall mit PKW-Beteiligung') || 0],
+      [
+        'Sonstige',
+        sonstCount.get(
+          'Unfall mit Beteiligung eines anderen Verkehrsmittels'
+        ) || 0,
+      ],
+    ]);
+  }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
+
+  const treemapDataArray = Array.from(
+    numberData,
+    ([name, value]) => ({ name, value })
+  );
+
+  console.log('numberdata', numberData);
+  console.log('treemapdataarray', treemapDataArray);
+
+  // const treeData = {[
+  //   [
+  //     "Art",
+  //     "Parent",
+  //     "Count"
+  //   ],
+  // ]}
+
+  // const treeMapData = Array.from(numberData, ([name, value]) => ({
+  //   name,
+  //   value,
+  // }));
+
+  // const numberData = new Map();
+
+  // useEffect(() => {
+  //   // const numberData = new Map();
+  //   numberData.set(
+  //     'Fußgänger',
+  //     fussCount.get('Unfall mit Fußgängerbeteiligung') || 0
+  //   );
+  //   numberData.set(
+  //     'Rad',
+  //     radCount.get('Unfall mit Fahrradbeteiligung') || 0
+  //   );
+  //   numberData.set(
+  //     'Kraftrad',
+  //     kradCount.get('Unfall mit Kraftradbeteiligung') || 0
+  //   );
+  //   numberData.set(
+  //     'PKW',
+  //     pkwCount.get('Unfall mit PKW-Beteiligung') || 0
+  //   );
+  //   numberData.set(
+  //     'Sonstige',
+  //     sonstCount.get(
+  //       'Unfall mit Beteiligung eines anderen Verkehrsmittels'
+  //     ) || 0
+  //   );
+  // }, [
+  //   fussCount,
+  //   radCount,
+  //   kradCount,
+  //   pkwCount,
+  //   sonstCount,
+  //   numberData,
+  // ]);
+  // numberData.set(
+  //   'Fußgänger',
+  //   fussCount.get('Unfall mit Fußgängerbeteiligung') || 0
+  // );
+  // numberData.set(
+  //   'Rad',
+  //   radCount.get('Unfall mit Fahrradbeteiligung') || 0
+  // );
+  // numberData.set(
+  //   'Kraftrad',
+  //   kradCount.get('Unfall mit Kraftradbeteiligung') || 0
+  // );
+  // numberData.set(
+  //   'PKW',
+  //   pkwCount.get('Unfall mit PKW-Beteiligung') || 0
+  // );
+  // numberData.set(
+  //   'Sonstige',
+  //   sonstCount.get(
+  //     'Unfall mit Beteiligung eines anderen Verkehrsmittels'
+  //   ) || 0
+  // );
+
+  // console.log('numberdata', numberData);
 
   const numberLabels = [
     'Fußgänger',
@@ -254,6 +348,7 @@ function Dashboard({ data }) {
     'PKW',
     'Sonstige',
   ];
+
   const numberValues = [
     fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
     radCount.get('Unfall mit Fahrradbeteiligung') || 0,
@@ -286,17 +381,32 @@ function Dashboard({ data }) {
   //   [0, max(numberValues)]
   // );
 
-  console.log(
-    'color',
-    numberColorScale(0),
-    numberColorScale(max(numberValues)),
-    max(numberValues)
-  );
+  // console.log(
+  //   'color',
+  //   numberColorScale(0),
+  //   numberColorScale(max(numberValues)),
+  //   max(numberValues)
+  // );
+
+  // TODO: check client component in next
+  // TODO: dataTotal/visDataTotal performance/correct use of useMemo
+  // TODO: gkfz und sonstige mit reinnehmen? ja, als sonstige gesamt
+  // TODO: BarChart / Axis abstraction
+  // TODO: visData zu Beginn (data bzw. visData)
+  // TODO: check d3 with react (useref, etc)
+  // TODO: number abstraction
+  // TODO: map cursor, zoom etc.
+  // TODO: Erklärung fallzahl
+  // TODO: transitions
 
   return (
     <div>
       {/* <Map data={data} setVisData={setVisData} /> */}
-      <Map data={data} setVisData={setVisData} visData={visData} />
+      <LeafletMap
+        data={data}
+        setVisData={setVisData}
+        visData={visData}
+      />
       <WeekHourHeatmap
         visData={visData}
         weekHourCount={weekHourCount}
@@ -309,7 +419,8 @@ function Dashboard({ data }) {
         colorScale={undefined}
         max={undefined}
       />
-      <Number
+      <TreeMap treeData={treemapDataArray} />
+      {/* <Number
         width={75}
         height={50}
         number={fussCount.get('Unfall mit Fußgängerbeteiligung') || 0}
@@ -352,7 +463,7 @@ function Dashboard({ data }) {
         label={'Sonstige'}
         colorScale={numberColorScale}
         max={numberMax}
-      />
+      /> */}
       <BarChart
         variableCount={kategCount}
         visDataTotal={visDataTotal}
