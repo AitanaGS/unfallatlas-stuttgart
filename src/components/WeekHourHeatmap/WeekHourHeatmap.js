@@ -8,6 +8,7 @@ import {
 import { min, max, least, greatest, extent } from 'd3-array';
 import WeekHourAxisX from '../WeekHourAxisX';
 import WeekHourAxisY from '../WeekHourAxisY';
+import ChartContainer from '../ChartContainer';
 
 function WeekHourHeatmap({ visData, weekHourCount }) {
   const width = 360;
@@ -72,12 +73,7 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
   // TODO: colorscale wenn alle 0 sollte weiss sein
   // TODO: colorscale von 0 bis max, statt extent (siehe number)
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      height={height}
-      style={{ border: '1px solid black' }}
-    >
+    <ChartContainer width={width} height={height}>
       <WeekHourAxisX
         xScale={hourScale}
         innerWidth={innerWidth}
@@ -168,7 +164,7 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
           });
         })}
       </g>
-    </svg>
+    </ChartContainer>
   );
 }
 

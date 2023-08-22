@@ -4,6 +4,7 @@ import { stratify, treemap, hierarchy } from 'd3-hierarchy';
 import { select, selectAll } from 'd3-selection';
 import { scaleSequential, scaleBand, scaleOrdinal } from 'd3-scale';
 import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
+import ChartContainer from '../ChartContainer';
 
 function TreeMap({ treeData }) {
   const width = 250;
@@ -18,15 +19,25 @@ function TreeMap({ treeData }) {
   const innerWidth = width - margin.right - margin.left;
   const innerHeight = height - margin.top - margin.bottom;
 
-  const svgRef = useRef(null);
+  // const svgRef = useRef(null);
 
-  const treemapLayout = treemap()
-    .size([innerWidth, innerHeight])
-    .padding(1);
+  // const treemapLayout = treemap()
+  //   .size([innerWidth, innerHeight])
+  //   .padding(1);
 
-  const root = treemapLayout(
-    hierarchy({ children: treeData }).sum((d) => d.value)
-  );
+  // const root = treemapLayout(
+  //   hierarchy({ children: treeData }).sum((d) => d.value)
+  // );
+
+  const root = useMemo(() => {
+    const treemapLayout = treemap()
+      .size([innerWidth, innerHeight])
+      .padding(1);
+
+    return treemapLayout(
+      hierarchy({ children: treeData }).sum((d) => d.value)
+    );
+  }, [treeData, innerWidth, innerHeight]);
 
   const namesArray = treeData.map((item) => item.name);
 
@@ -42,13 +53,7 @@ function TreeMap({ treeData }) {
   console.log('color fussgänger', colorScale('Fußgänger'));
 
   return (
-    <svg
-      ref={svgRef}
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      height={height}
-      style={{ border: '1px solid black' }}
-    >
+    <ChartContainer width={width} height={height}>
       <g transform={`translate(${margin.left},${margin.top})`}>
         {root.leaves().map((d) => (
           <g key={d.data.name}>
@@ -79,7 +84,7 @@ function TreeMap({ treeData }) {
           </g>
         ))}
       </g>
-    </svg>
+    </ChartContainer>
   );
 }
 

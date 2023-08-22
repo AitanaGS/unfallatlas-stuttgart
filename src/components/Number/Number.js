@@ -1,5 +1,6 @@
 import React from 'react';
 import { numberWithSeparator } from '../../utils/calc';
+import ChartContainer from '../ChartContainer';
 
 function Number({ width, height, number, label, colorScale, max }) {
   // console.log(
@@ -11,12 +12,7 @@ function Number({ width, height, number, label, colorScale, max }) {
   // TODO: numberwithseparator performance
   // TODO: check number is undefined
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      height={height}
-      style={{ border: '1px solid black' }}
-    >
+    <ChartContainer width={width} height={height}>
       {/* <text x={10} y={10}>
         {number}
       </text> */}
@@ -57,7 +53,7 @@ function Number({ width, height, number, label, colorScale, max }) {
           </tspan>
         </text>
       </g>
-    </svg>
+    </ChartContainer>
   );
 }
 

@@ -395,9 +395,11 @@ function Dashboard({ data }) {
   // TODO: visData zu Beginn (data bzw. visData)
   // TODO: check d3 with react (useref, etc)
   // TODO: number abstraction
+  // TODO: abstraction, chart component, see d3.js in action
   // TODO: map cursor, zoom etc.
   // TODO: Erklärung fallzahl
-  // TODO: transitions
+  // TODO: transitions (check wattenberger)
+  // TODO: responsiveness (see wattenberger etc.)
 
   return (
     <div>

@@ -5,6 +5,7 @@ import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import BarKatAxis from '../BarKatAxis';
+import ChartContainer from '../ChartContainer';
 
 function BarChart({ variableCount, visDataTotal }) {
   const kategorienSorted = [
@@ -123,12 +124,7 @@ function BarChart({ variableCount, visDataTotal }) {
   // TODO: check useRef
 
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      height={height}
-      style={{ border: '1px solid black' }}
-    >
+    <ChartContainer width={width} height={height}>
       <BarKatAxis
         yScale={yScale}
         innerHeight={innerHeight}
@@ -178,7 +174,7 @@ function BarChart({ variableCount, visDataTotal }) {
       </g>
       {/* <BarXAxis variableArray={kategorien} /> */}
       {/* <Bar /> */}
-    </svg>
+    </ChartContainer>
   );
 }
 

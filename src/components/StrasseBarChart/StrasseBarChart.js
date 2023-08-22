@@ -5,6 +5,7 @@ import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import StrasseBarAxis from '../StrasseBarAxis';
+import ChartContainer from '../ChartContainer';
 
 function StrasseBarChart({ variableCount, visDataTotal }) {
   // const kategorienSorted = [
@@ -57,12 +58,7 @@ function StrasseBarChart({ variableCount, visDataTotal }) {
   // TODO: Dunkelheit und dämmerung zusammenfassen
 
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      height={height}
-      style={{ border: '1px solid black' }}
-    >
+    <ChartContainer width={width} height={height}>
       <StrasseBarAxis
         yScale={yScale}
         innerHeight={innerHeight}
@@ -94,7 +90,7 @@ function StrasseBarChart({ variableCount, visDataTotal }) {
           </g>
         ))}
       </g>
-    </svg>
+    </ChartContainer>
   );
 }
 

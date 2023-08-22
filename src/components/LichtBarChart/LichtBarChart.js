@@ -5,6 +5,7 @@ import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import LichtBarAxis from '../LichtBarAxis';
+import ChartContainer from '../ChartContainer';
 
 function LichtBarChart({ variableCount, visDataTotal }) {
   const kategorienSorted = ['Dämmerung/Dunkelheit', 'Tageslicht'];
@@ -51,12 +52,7 @@ function LichtBarChart({ variableCount, visDataTotal }) {
   // TODO: Dunkelheit und dämmerung zusammenfassen
 
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      height={height}
-      style={{ border: '1px solid black' }}
-    >
+    <ChartContainer width={width} height={height}>
       <LichtBarAxis
         yScale={yScale}
         innerHeight={innerHeight}
@@ -88,7 +84,7 @@ function LichtBarChart({ variableCount, visDataTotal }) {
           </g>
         ))}
       </g>
-    </svg>
+    </ChartContainer>
   );
 }
 

@@ -6,7 +6,7 @@ import React from 'react';
 import data from '../../data/processed/accidents.json';
 // import Dashboard from '@/components/Dashboard/';
 import dynamic from 'next/dynamic';
-import { json } from 'd3-fetch';
+// import { json } from 'd3-fetch';
 
 const Dashboard = dynamic(() => import('../components/Dashboard'), {
   ssr: false,
@@ -25,10 +25,26 @@ export default function Home() {
   //   });
   // }, []);
 
+  // const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   const dataUrl = '../../data/processed/accidents.json';
+
+  //   json(dataUrl).then((data) => {
+  //     setData(data);
+  //     setLoading(false);
+  //   });
+  // }, []);
+
   return (
     <main>
-      {/* {!data && <p>Loading...</p>} */}
       {data && <Dashboard data={data} />}
+
+      {/* {loading && <div>Loading...</div>} */}
+      {/* {!loading && <Dashboard data={data} />} */}
+
+      {/* {!data && <p>Loading...</p>} */}
       {/* className={styles.main} */}
       {/* {!data && <p>loading...</p>} */}
       {/* {data && <Dashboard data={data} />} */}
