@@ -16,6 +16,12 @@ import StrasseBarChart from '../StrasseBarChart';
 import Number from '../Number';
 import WeekHourHeatmap from '../WeekHourHeatmap';
 import TreeMap from '../TreeMap';
+import LineChart from '../LineChart';
+import { timeParse } from 'd3-time-format';
+import LineChartYear from '../LineChartYear';
+import LineChartMonth from '../LineChartMonth';
+import MonthYearHeatmap from '../MonthYearHeatmap';
+// import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
 
 // const Map = dynamic(() => import('../Map'), {
@@ -23,7 +29,22 @@ import TreeMap from '../TreeMap';
 // });
 
 function Dashboard({ data }) {
+  // const parseDate = timeParse('%Y-%m-%d');
   const [visData, setVisData] = useState(data); //data
+  // const parseDate = timeParse('%Y-%m-%d');
+  // const [visData, setVisData] = useState(() => {
+  //   return data.map((d) => {
+  //     return {
+  //       ...d,
+  //       datum: parseDate(d.datum),
+  //     };
+  //   });
+  // }); //data
+
+  //   data.forEach(function (d) {
+  //   d.datum = parseDate(d.datum);
+  // });
+
   // console.log('dashboard', visData.length);
   // const [kategCount, setKategCount] = useState(new Map());
 
@@ -139,7 +160,7 @@ function Dashboard({ data }) {
     return nestedObj;
   }, [visData]);
 
-  console.log(weekHourCount);
+  // console.log(weekHourCount);
 
   const radCount = useMemo(() => {
     return rollup(
@@ -233,8 +254,6 @@ function Dashboard({ data }) {
   //   );
   // }, [visData]);
 
-  const dataTotal = data.length;
-
   // console.log('total', dataTotal);
   // console.log('visdata total', visDataTotal);
 
@@ -266,8 +285,8 @@ function Dashboard({ data }) {
     ([name, value]) => ({ name, value })
   );
 
-  console.log('numberdata', numberData);
-  console.log('treemapdataarray', treemapDataArray);
+  // console.log('numberdata', numberData);
+  // console.log('treemapdataarray', treemapDataArray);
 
   // const treeData = {[
   //   [
@@ -388,6 +407,47 @@ function Dashboard({ data }) {
   //   max(numberValues)
   // );
 
+  const dataTotal = data.length;
+
+  // const parseDate = timeParse('%Y-%m-%d');
+
+  const aggregatedTimeData = useMemo(() => {
+    return rollup(
+      data,
+      (v) => v.length, // Aggregation function: count the length of each group
+      (d) => d.datum // Grouping key: the "datum" property representing the month
+    );
+  }, [data]); // Recalculate when data changes
+
+  // const timeDataDates = useMemo(() => {
+  //   return Array.from(aggregatedTimeData.keys());
+  // }, [aggregatedTimeData]); // Recalculate when aggregatedTimeData changes
+
+  const timeDataDates = useMemo(() => {
+    const keys = Array.from(aggregatedTimeData.keys());
+    keys.sort((a, b) => new Date(a) - new Date(b));
+    return keys;
+  }, [aggregatedTimeData]);
+
+  // const aggregatedTimeData = rollup(
+  //   data,
+  //   (v) => v.length, // Aggregation function: count the length of each group
+  //   (d) => d.datum // Grouping key: the "datum" property representing the month
+  // );
+  // const timeDataDates = Array.from(aggregatedTimeData.keys()); // Assuming keys are Date objects
+  const timeDataCounts = Array.from(aggregatedTimeData.values());
+
+  // const dataDatumMin = parseDate(min(data, (d) => d.datum)); //data[0].datum
+  // const dataDatumMax = parseDate(max(data, (d) => d.datum)); //data[dataTotal - 1].datum
+
+  // const countExtent = [0, dataTotal];
+  // const timeExtent = [dataDatumMin, dataDatumMax];
+
+  const timeDateExtent = extent(timeDataDates);
+  // const countExtent = extent(timeDataCounts);
+  const timeCountExtent = [0, max(timeDataCounts)];
+  // console.log(timeDateExtent, timeCountExtent);
+
   // TODO: check client component in next
   // TODO: dataTotal/visDataTotal performance/correct use of useMemo
   // TODO: gkfz und sonstige mit reinnehmen? ja, als sonstige gesamt
@@ -400,29 +460,46 @@ function Dashboard({ data }) {
   // TODO: Erklärung fallzahl
   // TODO: transitions (check wattenberger)
   // TODO: responsiveness (see wattenberger etc.)
+  // TODO: time variables more efficient (page.js)
+  // TODO: check which calculations in components vs. here
+  // TODO: Line Chart mean (und sd) statt count (?)
+
+  // console.log(timeDataDates);
 
   return (
-    <div>
-      {/* <Map data={data} setVisData={setVisData} /> */}
-      <LeafletMap
-        data={data}
-        setVisData={setVisData}
-        visData={visData}
-      />
-      <WeekHourHeatmap
-        visData={visData}
-        weekHourCount={weekHourCount}
-      />
-      <Number
-        width={75}
-        height={50}
-        number={visDataTotal}
-        label={'Gesamt'}
-        colorScale={undefined}
-        max={undefined}
-      />
-      <TreeMap treeData={treemapDataArray} />
-      {/* <Number
+    visData && (
+      <div>
+        {/* <Map data={data} setVisData={setVisData} /> */}
+        <LeafletMap
+          data={data}
+          setVisData={setVisData}
+          visData={visData}
+        />
+        <Number
+          width={75}
+          height={50}
+          number={visDataTotal}
+          label={'Gesamt'}
+          colorScale={undefined}
+          max={undefined}
+        />
+        <MonthYearHeatmap visData={visData} />
+        <LineChartYear visData={visData} />
+        <LineChartMonth visData={visData} />
+        {/* <LineChart
+          visData={visData}
+          dataTotal={dataTotal}
+          aggregatedTimeData={aggregatedTimeData}
+          timeDateExtent={timeDateExtent}
+          timeCountExtent={timeCountExtent}
+          timeDataDates={timeDataDates}
+        /> */}
+        <WeekHourHeatmap
+          visData={visData}
+          weekHourCount={weekHourCount}
+        />
+        <TreeMap treeData={treemapDataArray} />
+        {/* <Number
         width={75}
         height={50}
         number={fussCount.get('Unfall mit Fußgängerbeteiligung') || 0}
@@ -466,19 +543,20 @@ function Dashboard({ data }) {
         colorScale={numberColorScale}
         max={numberMax}
       /> */}
-      <BarChart
-        variableCount={kategCount}
-        visDataTotal={visDataTotal}
-      />
-      <LichtBarChart
-        variableCount={lichtCount}
-        visDataTotal={visDataTotal}
-      />
-      <StrasseBarChart
-        variableCount={strasseCount}
-        visDataTotal={visDataTotal}
-      />
-    </div>
+        <BarChart
+          variableCount={kategCount}
+          visDataTotal={visDataTotal}
+        />
+        <LichtBarChart
+          variableCount={lichtCount}
+          visDataTotal={visDataTotal}
+        />
+        <StrasseBarChart
+          variableCount={strasseCount}
+          visDataTotal={visDataTotal}
+        />
+      </div>
+    )
   );
 }
 

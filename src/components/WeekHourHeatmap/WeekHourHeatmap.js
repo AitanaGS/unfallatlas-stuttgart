@@ -62,7 +62,7 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
   const extentCounts = [0, max(counts)]; //extent(counts);
   const extentCountsZero = [0, 1];
 
-  console.log(extent(counts));
+  // console.log(extent(counts));
 
   const colorScale = scaleSequential(interpolateOranges).domain(
     extentCounts[1] === 0 ? extentCountsZero : extentCounts

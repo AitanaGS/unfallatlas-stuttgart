@@ -1,5 +1,11 @@
 'use client';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useCallback,
+  useState,
+} from 'react';
 import L, { Icon, divIcon } from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet/dist/leaflet.css';
@@ -7,27 +13,44 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
 
+const calculateVisibleData = (map, markerClusterGroup) => {
+  const bounds = map.getBounds();
+  const visibleMarkersData = [];
+
+  markerClusterGroup.eachLayer((marker) => {
+    const markerLatLng = marker.getLatLng();
+
+    if (bounds.contains(markerLatLng)) {
+      visibleMarkersData.push(marker.options.data);
+    }
+  });
+
+  // console.log('run', visibleMarkersData);
+
+  return visibleMarkersData;
+};
+
 function LeafletMap({ data, setVisData }) {
   // here
   const mapRef = useRef(null);
 
-  // here
-  const calculateVisibleData = (map, markerClusterGroup) => {
-    const bounds = map.getBounds();
-    const visibleMarkersData = [];
+  // // here
+  // const calculateVisibleData = (map, markerClusterGroup) => {
+  //   const bounds = map.getBounds();
+  //   const visibleMarkersData = [];
 
-    markerClusterGroup.eachLayer((marker) => {
-      const markerLatLng = marker.getLatLng();
+  //   markerClusterGroup.eachLayer((marker) => {
+  //     const markerLatLng = marker.getLatLng();
 
-      if (bounds.contains(markerLatLng)) {
-        visibleMarkersData.push(marker.options.data);
-      }
-    });
+  //     if (bounds.contains(markerLatLng)) {
+  //       visibleMarkersData.push(marker.options.data);
+  //     }
+  //   });
 
-    console.log('run', visibleMarkersData);
+  //   // console.log('run', visibleMarkersData);
 
-    return visibleMarkersData;
-  };
+  //   return visibleMarkersData;
+  // };
 
   useEffect(() => {
     // here
@@ -89,28 +112,31 @@ function LeafletMap({ data, setVisData }) {
 
     map.addLayer(markerClusterGroup);
 
-    // here
-    setVisData(calculateVisibleData(map, markerClusterGroup));
+    // here, for zoom below 11 - dont remove
+    // setVisData(calculateVisibleData(map, markerClusterGroup));
 
     const onMoveEnd = () => {
       // here
       // const bounds = map.getBounds();
       // const visibleMarkersData = [];
-
       // markerClusterGroup.eachLayer((marker) => {
       //   const markerLatLng = marker.getLatLng();
-
       //   // Check if the marker's LatLng is within the visible bounds
       //   if (bounds.contains(markerLatLng)) {
       //     visibleMarkersData.push(marker.options.data);
       //   }
       // });
-
       // console.log('Visible Markers Data:', visibleMarkersData);
       // setVisData(visibleMarkersData);
 
       // here
       setVisData(calculateVisibleData(map, markerClusterGroup));
+
+      // const newVisibleData = calculateVisibleData(
+      //   map,
+      //   markerClusterGroup
+      // );
+      // setVisData(newVisibleData); // Update visible data immediately
     };
 
     const debouncedOnMoveEnd = L.Util.throttle(onMoveEnd, 500);
@@ -141,8 +167,96 @@ function LeafletMap({ data, setVisData }) {
   // TODO: check if markerIdToMarker is necessary
   // TODO: check if usememo for markers
   // TODO: check if const map = useMemo(createMap, [])
+  // TODO: calculateVisibleData in own file hook
+  // TODO: setvisdata not only in mouse end, also in useeffect, if zoom below 11, check visdata length
 
   return <div id="map" className="leaflet-map" ref={mapRef}></div>;
 }
 
 export default LeafletMap;
+
+// import React, { useEffect, useRef } from 'react';
+// import L from 'leaflet';
+// import 'leaflet.markercluster';
+// import 'leaflet/dist/leaflet.css';
+// import 'leaflet.markercluster/dist/MarkerCluster.css';
+// import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+// import '../../leaflet-heat/leaflet-heat';
+
+// function LeafletMap({ data, setVisData }) {
+//   const mapRef = useRef(null);
+
+//   useEffect(() => {
+//     const map = L.map(mapRef.current, {
+//       preferCanvas: true,
+//     }).setView([48.7758, 9.1829], 13);
+
+//     L.tileLayer(
+//       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//       {
+//         attribution:
+//           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//       }
+//     ).addTo(map);
+
+//     const markerClusterGroup = L.markerClusterGroup({
+//       chunkedLoading: true,
+//       disableClusteringAtZoom: 17,
+//       iconCreateFunction: function (cluster) {
+//         return L.divIcon({
+//           html: '<b>' + cluster.getChildCount() + '</b>',
+//           className: 'cluster',
+//         });
+//       },
+//     });
+
+//     var points = [];
+
+//     data.forEach((d) => {
+//       points.push([d.lat, d.lon]);
+//       const marker = L.marker([d.lat, d.lon]);
+//       marker.options.data = d;
+//       markerClusterGroup.addLayer(marker);
+
+//       marker.on('click', () => {
+//         L.popup()
+//           .setLatLng(marker.getLatLng())
+//           .setContent(d.address)
+//           .openOn(map);
+//       });
+//     });
+
+//     var heat = L.heatLayer(points, {
+//       maxZoom: 15,
+//     }).addTo(map);
+
+//     map.addLayer(markerClusterGroup);
+
+//     const onMoveEnd = () => {
+//       const bounds = map.getBounds();
+//       const visibleMarkersData = [];
+
+//       markerClusterGroup.eachLayer((marker) => {
+//         const markerLatLng = marker.getLatLng();
+
+//         if (bounds.contains(markerLatLng)) {
+//           visibleMarkersData.push(marker.options.data);
+//         }
+//       });
+
+//       setVisData(visibleMarkersData);
+//     };
+
+//     const debouncedOnMoveEnd = L.Util.throttle(onMoveEnd, 500);
+//     map.on('moveend', debouncedOnMoveEnd);
+
+//     return () => {
+//       map.off('moveend', debouncedOnMoveEnd);
+//       map.remove();
+//     };
+//   }, [data, setVisData]);
+
+//   return <div id="map" className="leaflet-map" ref={mapRef}></div>;
+// }
+
+// export default LeafletMap;

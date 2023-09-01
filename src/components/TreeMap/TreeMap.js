@@ -46,11 +46,11 @@ function TreeMap({ treeData }) {
     .domain(namesArray)
     .range(schemeDark2);
 
-  console.log('root leaves', root.leaves());
+  // console.log('root leaves', root.leaves());
 
-  console.log('names array', namesArray);
+  // console.log('names array', namesArray);
 
-  console.log('color fussgänger', colorScale('Fußgänger'));
+  // console.log('color fussgänger', colorScale('Fußgänger'));
 
   return (
     <ChartContainer width={width} height={height}>

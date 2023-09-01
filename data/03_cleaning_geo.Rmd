@@ -13,6 +13,7 @@ library(sf)
 library(janitor)
 library(tidygeocoder)
 library(jsonlite)
+library(lubridate)
 
 ```
 
@@ -697,7 +698,8 @@ accidents_final <- accidents_geo_clean_select %>%
            strzust == "trocken" ~ "trocken",
            is.na(strzust) ~ NA_character_
          ),
-         strzust2 = fct_relevel(strzust2, c("nass/glatt", "trocken"))) %>%
+         strzust2 = fct_relevel(strzust2, c("nass/glatt", "trocken")),
+         datum = format(make_date(jahr, monat), "%Y-%m-%d")) %>%
   mutate(zeit = case_when(
     stunde >= 0 & stunde < 6 ~ "0-6 Uhr",
     stunde >= 6 & stunde < 12 ~ "6-12 Uhr",
@@ -710,10 +712,10 @@ accidents_final <- accidents_geo_clean_select %>%
   relocate(kateg2, .after = kateg) %>%
   relocate(licht2, .after = licht) %>%
   relocate(istsonst2, .after = istsonst) %>%
-  relocate(strzust2, .after = strzust)
+  relocate(strzust2, .after = strzust) %>%
+  relocate(datum, .after = monatn)
   
 ```
-
 
 
 

@@ -3,10 +3,11 @@
 // import Map from '../components/Map';
 // import React, { useEffect, useState } from 'react';
 import React from 'react';
-import data from '../../data/processed/accidents.json';
+import dataJSON from '../../data/processed/accidents.json';
 // import Dashboard from '@/components/Dashboard/';
 import dynamic from 'next/dynamic';
 // import { json } from 'd3-fetch';
+import { timeParse } from 'd3-time-format';
 
 const Dashboard = dynamic(() => import('../components/Dashboard'), {
   ssr: false,
@@ -36,6 +37,52 @@ export default function Home() {
   //     setLoading(false);
   //   });
   // }, []);
+
+  // const parseDate = timeParse('%Y-%m-%d');
+  // const data = new Promise(function (resolve) {
+  //   dataJSON.forEach(function (d) {
+  //     d.datum = parseDate(d.datum);
+  //   });
+  //   resolve(dataJSON);
+  // });
+
+  // const dataUrl = '../../data/processed/accidents.json';
+
+  // const data = json(dataUrl).then((data) => {
+  //   return data.map((d) => {
+  //     return {
+  //       ...d,
+  //       datum: parseDate(d.datum),
+  //     };
+  //   });
+  // });
+
+  // const data = dataJSON.then(function (data) {
+  //   // Parse dates in the loaded data
+  //   return dataJSON.map((d) => {
+  //     return {
+  //       ...d,
+  //       datum: parseDate(d.datum),
+  //     };
+  //   });
+  // });
+
+  const parseDate = timeParse('%Y-%m-%d');
+  const data = dataJSON.map((d) => {
+    return {
+      ...d,
+      datum: parseDate(d.datum),
+    };
+  });
+
+  //   const [visData, setVisData] = useState(() => {
+  //   return data.map((d) => {
+  //     return {
+  //       ...d,
+  //       datum: parseDate(d.datum),
+  //     };
+  //   });
+  // }); //data
 
   return (
     <main>
