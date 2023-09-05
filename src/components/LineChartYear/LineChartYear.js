@@ -30,7 +30,7 @@ function LineChartYear({ visData }) {
 
   const years = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
-  console.log(yearCount);
+  // console.log(yearCount);
 
   // Now "aggregatedData" is a Map object with keys representing months and values representing total rows
 

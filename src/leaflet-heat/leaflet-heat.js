@@ -57,7 +57,7 @@
     gradient: function (t) {
       var i = document.createElement('canvas'),
         a = i.getContext('2d'),
-        s = a.createLinearGradient(0, 0, 0, 256);
+        s = a.createLinearGradient(0, 0, 0, 256); // 256
       (i.width = 1), (i.height = 256);
       for (var e in t) s.addColorStop(e, t[e]);
       return (

@@ -62,7 +62,7 @@ function LineChartTimeAxis({
   // console.log('yscale', yScale, 'innerheight', innerHeight);
   // console.log('time ticks', xScale.ticks(14));
 
-  console.log('check jan 2021', timeDataDates);
+  // console.log('check jan 2021', timeDataDates);
 
   const formatMonthName = timeFormatLocale(germanLocale).format('%b');
   const formatYear = timeFormat('%Y');

@@ -64,7 +64,7 @@ function LineChart({
     return unsortedArray.sort((a, b) => a.datum - b.datum);
   }, [timeDataDates, aggregatedData]); // Recalculate when timeDataDates or aggregatedTimeData changes
 
-  console.log('check', timeDataDates);
+  // console.log('check', timeDataDates);
   const xScale = scaleTime()
     .domain(timeDateExtent)
     .range([0, innerWidth]);

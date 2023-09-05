@@ -699,7 +699,17 @@ accidents_final <- accidents_geo_clean_select %>%
            is.na(strzust) ~ NA_character_
          ),
          strzust2 = fct_relevel(strzust2, c("nass/glatt", "trocken")),
-         datum = format(make_date(jahr, monat), "%Y-%m-%d")) %>%
+         datum = format(make_date(jahr, monat), "%Y-%m-%d"),
+         istradb = if_else(istrad == 'Unfall mit Fahrradbeteiligung', TRUE, FALSE),
+         istpkwb = if_else(istpkw == 'Unfall mit PKW-Beteiligung', TRUE, FALSE),
+         istfussb = if_else(istfuss == 'Unfall mit Fußgängerbeteiligung', TRUE, FALSE),
+         istkradb = if_else(istkrad == 'Unfall mit Kraftradbeteiligung', TRUE, FALSE),
+         istgkfzb = if_else(istgkfz == 'Unfall mit Güterkraftfahrzeugbeteiligung', TRUE, FALSE),
+         istsonstb = if_else(istsonst == 'Unfall mit Beteiligung eines oben nicht genannten Verkehrsmittels', TRUE, FALSE),
+         istsonst2b = if_else(istsonst2 == 'Unfall mit Beteiligung eines anderen Verkehrsmittels', TRUE, FALSE),
+         
+         
+         ) %>%
   mutate(zeit = case_when(
     stunde >= 0 & stunde < 6 ~ "0-6 Uhr",
     stunde >= 6 & stunde < 12 ~ "6-12 Uhr",
@@ -713,7 +723,14 @@ accidents_final <- accidents_geo_clean_select %>%
   relocate(licht2, .after = licht) %>%
   relocate(istsonst2, .after = istsonst) %>%
   relocate(strzust2, .after = strzust) %>%
-  relocate(datum, .after = monatn)
+  relocate(datum, .after = monatn) %>%
+  relocate(istradb, .after = istrad) %>%
+  relocate(istpkwb, .after = istpkw) %>%
+  relocate(istfussb, .after = istfuss) %>%
+  relocate(istkradb, .after = istkrad) %>%
+  relocate(istgkfzb, .after = istgkfz) %>%
+  relocate(istsonstb, .after = istsonst) %>%
+  relocate(istsonst2b, .after = istsonst2)
   
 ```
 

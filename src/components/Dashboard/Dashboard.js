@@ -1,6 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
 import { rollup, sum } from 'd3-array';
 import {
   interpolateOranges,
@@ -21,6 +26,7 @@ import { timeParse } from 'd3-time-format';
 import LineChartYear from '../LineChartYear';
 import LineChartMonth from '../LineChartMonth';
 import MonthYearHeatmap from '../MonthYearHeatmap';
+import FilterCheckboxes from '../FilterCheckboxes';
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
 
@@ -28,9 +34,226 @@ import MonthYearHeatmap from '../MonthYearHeatmap';
 //   ssr: false,
 // });
 
-function Dashboard({ data }) {
+const initialFilter = {
+  Fußgänger: true,
+  Fahrrad: true,
+  Kraftrad: true,
+  PKW: true,
+  Sonstige: true,
+};
+
+// const filterData = (dataToFilter, allFilter, filter) => {
+//   return dataToFilter.filter((item) => {
+//     if (allFilter) {
+//       return true; // If allFilter is true, return all items
+//     }
+
+//     // Check each category filter and filter out items accordingly
+//     if (!filter.Fußgänger && item.istfussb) {
+//       return false; // Filter out items where Fußgänger filter is false and istfussb is true
+//     }
+//     if (!filter.Fahrrad && item.istradb) {
+//       return false; // Filter out items where Fahrrad filter is false and istradb is true
+//     }
+//     if (!filter.Kraftrad && item.istkradb) {
+//       return false; // Filter out items where Kraftrad filter is false and istkradb is true
+//     }
+//     if (!filter.PKW && item.istpkwb) {
+//       return false; // Filter out items where PKW filter is false and istpkwb is true
+//     }
+//     if (!filter.Sonstige && item.istsonst2b) {
+//       return false; // Filter out items where Sonstige filter is false and istsonst2b is true
+//     }
+
+//     // If none of the above conditions match, keep the item
+//     return true;
+//   });
+// };
+
+const filterData = (dataToFilter, allFilter, filter) => {
+  return dataToFilter.filter((item) => {
+    if (allFilter) {
+      return true; // If allFilter is true, return all items
+    }
+
+    // Check each category filter and filter out items accordingly
+    if (filter.Fußgänger && item.istfussb) {
+      return true; // Filter out items where Fußgänger filter is false and istfussb is true
+    }
+    if (filter.Fahrrad && item.istradb) {
+      return true; // Filter out items where Fahrrad filter is false and istradb is true
+    }
+    if (filter.Kraftrad && item.istkradb) {
+      return true; // Filter out items where Kraftrad filter is false and istkradb is true
+    }
+    if (filter.PKW && item.istpkwb) {
+      return true; // Filter out items where PKW filter is false and istpkwb is true
+    }
+    if (filter.Sonstige && item.istsonst2b) {
+      return true; // Filter out items where Sonstige filter is false and istsonst2b is true
+    }
+
+    // If none of the above conditions match, keep the item
+    return false;
+  });
+};
+
+// const updatedFilteredData = mapData.filter((item) => {
+//   if (allFilter) {
+//     return true; // If allFilter is true, return all items
+//   }
+
+//   // Check each category filter and filter out items accordingly
+//   if (!filter.Fußgänger && item.istfussb) {
+//     return false; // Filter out items where Fußgänger filter is false and istfussb is true
+//   }
+//   if (!filter.Fahrrad && item.istradb) {
+//     return false; // Filter out items where Fahrrad filter is false and istradb is true
+//   }
+//   if (!filter.Kraftrad && item.istkradb) {
+//     return false; // Filter out items where Kraftrad filter is false and istkradb is true
+//   }
+//   if (!filter.PKW && item.istpkwb) {
+//     return false; // Filter out items where PKW filter is false and istpkwb is true
+//   }
+//   if (!filter.Sonstige && item.istsonst2b) {
+//     return false; // Filter out items where Sonstige filter is false and istsonst2b is true
+//   }
+
+//   // If none of the above conditions match, keep the item
+//   return true;
+// });
+
+function Dashboard({ initialData }) {
   // const parseDate = timeParse('%Y-%m-%d');
-  const [visData, setVisData] = useState(data); //data
+  const [data, setData] = useState(initialData);
+  const [mapData, setMapData] = useState(initialData);
+  const [visData, setVisData] = useState(initialData); // Original dataset
+  const [filteredData, setFilteredData] = useState(visData); // Initially set to visData
+  const [allFilter, setAllFilter] = useState(true);
+  const [filter, setFilter] = useState(initialFilter);
+  const [filteringMode, setFilteringMode] = useState('none');
+  // console.log('visData', visData);
+
+  // const filterData = useCallback(() => {
+  //   const updatedFilteredData = mapData.filter((item) => {
+  //     if (allFilter) {
+  //       return true;
+  //     }
+  //     if (filter.Fußgänger && item.istfussb) {
+  //       return true;
+  //     }
+  //     if (filter.Fahrrad && item.istradb) {
+  //       return true;
+  //     }
+  //     if (filter.Kraftrad && item.istkradb) {
+  //       return true;
+  //     }
+  //     if (filter.PKW && item.istpkwb) {
+  //       console.log(filter.PKW, item.istpkwb);
+  //       return true;
+  //     }
+  //     if (filter.Sonstige && item.istsonst2b) {
+  //       return true;
+  //     }
+  //     return false;
+  //   });
+
+  //   setFilteredData(updatedFilteredData);
+  //   setVisData(updatedFilteredData);
+  // }, [mapData, filter, allFilter]);
+
+  const filterAndSetData = useCallback(() => {
+    const updatedFilteredData = filterData(
+      mapData,
+      allFilter,
+      filter
+    );
+    // const updatedFilteredData = mapData.filter((item) => {
+    //   if (allFilter) {
+    //     return true; // If allFilter is true, return all items
+    //   }
+
+    //   // Check each category filter and filter out items accordingly
+    //   if (!filter.Fußgänger && item.istfussb) {
+    //     return false; // Filter out items where Fußgänger filter is false and istfussb is true
+    //   }
+    //   if (!filter.Fahrrad && item.istradb) {
+    //     return false; // Filter out items where Fahrrad filter is false and istradb is true
+    //   }
+    //   if (!filter.Kraftrad && item.istkradb) {
+    //     return false; // Filter out items where Kraftrad filter is false and istkradb is true
+    //   }
+    //   if (!filter.PKW && item.istpkwb) {
+    //     return false; // Filter out items where PKW filter is false and istpkwb is true
+    //   }
+    //   if (!filter.Sonstige && item.istsonst2b) {
+    //     return false; // Filter out items where Sonstige filter is false and istsonst2b is true
+    //   }
+
+    //   // If none of the above conditions match, keep the item
+    //   return true;
+    // });
+
+    setFilteredData(updatedFilteredData);
+    setVisData(updatedFilteredData);
+    // setData(updatedFilteredData);
+  }, [mapData, filter, allFilter]);
+
+  useEffect(() => {
+    if (filteringMode === 'none') {
+      setFilteredData(mapData);
+      setVisData(mapData);
+      // setData(mapData);
+    } else {
+      filterAndSetData();
+    }
+  }, [filter, allFilter, filteringMode, mapData, filterAndSetData]);
+
+  // useEffect(() => {
+  //   // Update visData independently from filteredData
+  //   if (filteringMode === 'none') {
+  //     setVisData(mapData);
+  //   } else {
+  //     setVisData(filteredData);
+  //   }
+  // }, [filteringMode, mapData, filteredData]);
+
+  // const filterData = () => {
+  //   const updatedFilteredData = visData.filter((item) => {
+  //     if (allFilter) {
+  //       return true; // Wenn "Alle" aktiviert ist, alle Elemente zurückgeben
+  //     }
+  //     // Ansonsten, die individuellen Filter gegen die Eigenschaften der Elemente überprüfen
+  //     if (filter['Fußgänger'] && item.istfussb) {
+  //       return true;
+  //     }
+  //     if (filter.Fahrrad && item.istradb) {
+  //       return true;
+  //     }
+  //     if (filter.Kraftrad && item.istkradb) {
+  //       return true;
+  //     }
+  //     if (filter['PKW'] && item.istpkwb) {
+  //       return true;
+  //     }
+  //     if (filter.Sonstige && item.istsonst2b) {
+  //       return true;
+  //     }
+  //     return false;
+  //   });
+
+  //   setFilteredData(updatedFilteredData);
+  // };
+
+  // useEffect(() => {
+  //   if (filteringMode === 'none') {
+  //     setFilteredData(visData); // Reset filteredData to visData when filteringMode is 'none'
+  //   } else {
+  //     filterData();
+  //   }
+  // }, [filter, allFilter, visData, filteringMode]);
+
   // const parseDate = timeParse('%Y-%m-%d');
   // const [visData, setVisData] = useState(() => {
   //   return data.map((d) => {
@@ -166,7 +389,7 @@ function Dashboard({ data }) {
     return rollup(
       visData,
       (v) => v.length,
-      (d) => (d.options ? d.options.data.istrad : d.istrad)
+      (d) => (d.options ? d.options.data.istradb : d.istradb)
     );
   }, [visData]);
 
@@ -174,7 +397,7 @@ function Dashboard({ data }) {
     return rollup(
       visData,
       (v) => v.length,
-      (d) => (d.options ? d.options.data.istfuss : d.istfuss)
+      (d) => (d.options ? d.options.data.istfussb : d.istfussb)
     );
   }, [visData]);
 
@@ -182,7 +405,7 @@ function Dashboard({ data }) {
     return rollup(
       visData,
       (v) => v.length,
-      (d) => (d.options ? d.options.data.istpkw : d.istpkw)
+      (d) => (d.options ? d.options.data.istpkwb : d.istpkwb)
     );
   }, [visData]);
 
@@ -190,7 +413,7 @@ function Dashboard({ data }) {
     return rollup(
       visData,
       (v) => v.length,
-      (d) => (d.options ? d.options.data.istkrad : d.istkrad)
+      (d) => (d.options ? d.options.data.istkradb : d.istkradb)
     );
   }, [visData]);
 
@@ -198,7 +421,7 @@ function Dashboard({ data }) {
     return rollup(
       visData,
       (v) => v.length,
-      (d) => (d.options ? d.options.data.istsonst2 : d.istsonst2)
+      (d) => (d.options ? d.options.data.istsonst2b : d.istsonst2b)
     );
   }, [visData]);
 
@@ -259,24 +482,34 @@ function Dashboard({ data }) {
 
   // const accidentsTotal = rollup(athletes, v => d3.sum(v, d => d.earnings), d => d.sport)
 
+  // const numberData = useMemo(() => {
+  //   return new Map([
+  //     [
+  //       'Fußgänger',
+  //       fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
+  //     ],
+  //     ['Rad', radCount.get('Unfall mit Fahrradbeteiligung') || 0],
+  //     [
+  //       'Kraftrad',
+  //       kradCount.get('Unfall mit Kraftradbeteiligung') || 0,
+  //     ],
+  //     ['PKW', pkwCount.get('Unfall mit PKW-Beteiligung') || 0],
+  //     [
+  //       'Sonstige',
+  //       sonstCount.get(
+  //         'Unfall mit Beteiligung eines anderen Verkehrsmittels'
+  //       ) || 0,
+  //     ],
+  //   ]);
+  // }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
+
   const numberData = useMemo(() => {
     return new Map([
-      [
-        'Fußgänger',
-        fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
-      ],
-      ['Rad', radCount.get('Unfall mit Fahrradbeteiligung') || 0],
-      [
-        'Kraftrad',
-        kradCount.get('Unfall mit Kraftradbeteiligung') || 0,
-      ],
-      ['PKW', pkwCount.get('Unfall mit PKW-Beteiligung') || 0],
-      [
-        'Sonstige',
-        sonstCount.get(
-          'Unfall mit Beteiligung eines anderen Verkehrsmittels'
-        ) || 0,
-      ],
+      ['Fußgänger', fussCount.get(true) || 0],
+      ['Rad', radCount.get(true) || 0],
+      ['Kraftrad', kradCount.get(true) || 0],
+      ['PKW', pkwCount.get(true) || 0],
+      ['Sonstige', sonstCount.get(true) || 0],
     ]);
   }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
 
@@ -368,14 +601,22 @@ function Dashboard({ data }) {
     'Sonstige',
   ];
 
+  // const numberValues = [
+  //   fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
+  //   radCount.get('Unfall mit Fahrradbeteiligung') || 0,
+  //   kradCount.get('Unfall mit Kraftradbeteiligung') || 0,
+  //   pkwCount.get('Unfall mit PKW-Beteiligung') || 0,
+  //   sonstCount.get(
+  //     'Unfall mit Beteiligung eines anderen Verkehrsmittels'
+  //   ) || 0,
+  // ];
+
   const numberValues = [
-    fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
-    radCount.get('Unfall mit Fahrradbeteiligung') || 0,
-    kradCount.get('Unfall mit Kraftradbeteiligung') || 0,
-    pkwCount.get('Unfall mit PKW-Beteiligung') || 0,
-    sonstCount.get(
-      'Unfall mit Beteiligung eines anderen Verkehrsmittels'
-    ) || 0,
+    fussCount.get(true) || 0,
+    radCount.get(true) || 0,
+    kradCount.get(true) || 0,
+    pkwCount.get(true) || 0,
+    sonstCount.get(true) || 0,
   ];
 
   const numberMax = max(numberValues);
@@ -389,6 +630,14 @@ function Dashboard({ data }) {
       ? numberExtentCountsZero
       : numberExtentCounts
   );
+
+  // console.log(
+  //   'sonstige',
+  //   numberData,
+  //   sonstCount,
+  //   treemapDataArray,
+  //   numberValues
+  // );
 
   // const numberColorScale = scaleSequential(interpolateOranges).domain(
   //   numberMax
@@ -466,6 +715,8 @@ function Dashboard({ data }) {
 
   // console.log(timeDataDates);
 
+  // console.log('tree', numberData, treemapDataArray, pkwCount);
+
   return (
     visData && (
       <div>
@@ -473,7 +724,20 @@ function Dashboard({ data }) {
         <LeafletMap
           data={data}
           setVisData={setVisData}
-          visData={visData}
+          setMapData={setMapData}
+          filteredData={filteredData}
+          filteringMode={filteringMode}
+          setData={setData}
+          filterData={filterData}
+          allFilter={allFilter}
+          filter={filter}
+        />
+        <FilterCheckboxes
+          filter={filter}
+          setFilter={setFilter}
+          allFilter={allFilter}
+          setAllFilter={setAllFilter}
+          setFilteringMode={setFilteringMode}
         />
         <Number
           width={75}
@@ -486,14 +750,14 @@ function Dashboard({ data }) {
         <MonthYearHeatmap visData={visData} />
         <LineChartYear visData={visData} />
         <LineChartMonth visData={visData} />
-        {/* <LineChart
+        <LineChart
           visData={visData}
           dataTotal={dataTotal}
           aggregatedTimeData={aggregatedTimeData}
           timeDateExtent={timeDateExtent}
           timeCountExtent={timeCountExtent}
           timeDataDates={timeDataDates}
-        /> */}
+        />
         <WeekHourHeatmap
           visData={visData}
           weekHourCount={weekHourCount}

@@ -68,7 +68,7 @@ export default function Home() {
   // });
 
   const parseDate = timeParse('%Y-%m-%d');
-  const data = dataJSON.map((d) => {
+  const initialData = dataJSON.map((d) => {
     return {
       ...d,
       datum: parseDate(d.datum),
@@ -86,7 +86,7 @@ export default function Home() {
 
   return (
     <main>
-      {data && <Dashboard data={data} />}
+      {initialData && <Dashboard initialData={initialData} />}
 
       {/* {loading && <div>Loading...</div>} */}
       {/* {!loading && <Dashboard data={data} />} */}

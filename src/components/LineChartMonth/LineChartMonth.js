@@ -60,14 +60,14 @@ function LineChartMonth({ visData }) {
 
   const xScale = scaleBand().domain(months).range([0, innerWidth]);
 
-  console.log(
-    'herre',
-    monthCountArray,
-    xScale('März'),
-    xScale('Mai'),
-    xScale.keys,
-    extent(months)
-  );
+  // console.log(
+  //   'herre',
+  //   monthCountArray,
+  //   xScale('März'),
+  //   xScale('Mai'),
+  //   xScale.keys,
+  //   extent(months)
+  // );
 
   // console.log('time', aggregatedArray);
 
