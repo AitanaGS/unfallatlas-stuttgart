@@ -39,6 +39,7 @@ function LeafletMap({
   filterData,
   allFilter,
   filter,
+  selectHeatmap,
 }) {
   // here
   const mapRef = useRef(null);
@@ -162,9 +163,11 @@ function LeafletMap({
       });
     });
 
-    var heat = L.heatLayer(points, {
-      maxZoom: zoom, // 15 // 10
-    }).addTo(map);
+    if (selectHeatmap) {
+      var heat = L.heatLayer(points, {
+        maxZoom: zoom, // 15 // 10
+      }).addTo(map);
+    }
 
     map.addLayer(markerClusterGroup);
 
@@ -236,7 +239,17 @@ function LeafletMap({
       map.off('zoomend', debouncedOnZoomEnd);
       map.remove();
     };
-  }, [data, setVisData, setMapData, center, zoom, allFilter, filter]);
+  }, [
+    data,
+    setVisData,
+    setMapData,
+    center,
+    zoom,
+    allFilter,
+    filter,
+    filterData,
+    selectHeatmap,
+  ]);
 
   const customIcon = new L.Icon({
     // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),

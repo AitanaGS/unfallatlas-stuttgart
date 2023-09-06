@@ -27,6 +27,7 @@ import LineChartYear from '../LineChartYear';
 import LineChartMonth from '../LineChartMonth';
 import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
+import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
 
@@ -133,6 +134,7 @@ function Dashboard({ initialData }) {
   const [allFilter, setAllFilter] = useState(true);
   const [filter, setFilter] = useState(initialFilter);
   const [filteringMode, setFilteringMode] = useState('none');
+  const [selectHeatmap, setSelectHeatmap] = useState(true);
   // console.log('visData', visData);
 
   // const filterData = useCallback(() => {
@@ -731,6 +733,11 @@ function Dashboard({ initialData }) {
           filterData={filterData}
           allFilter={allFilter}
           filter={filter}
+          selectHeatmap={selectHeatmap}
+        />
+        <LeafletHeatCheckbox
+          selectHeatmap={selectHeatmap}
+          setSelectHeatmap={setSelectHeatmap}
         />
         <FilterCheckboxes
           filter={filter}

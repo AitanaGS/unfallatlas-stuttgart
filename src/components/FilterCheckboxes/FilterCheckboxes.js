@@ -201,10 +201,10 @@ function FilterCheckboxes({
           ))} */}
         </fieldset>
       </form>
-      <p>
+      {/* <p>
         <strong>Stored state:</strong>
       </p>
-      <p className="output">{JSON.stringify(filter, null, 2)}</p>
+      <p className="output">{JSON.stringify(filter, null, 2)}</p> */}
     </>
   );
 }
