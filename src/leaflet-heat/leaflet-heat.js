@@ -18,6 +18,14 @@
   }
   (t.prototype = {
     defaultRadius: 15, // original: 25
+    // defaultGradient: {
+    //   0.4: '#440154',
+    //   0.6: '#3b528b',
+    //   0.7: '#21918c',
+    //   0.8: '#5ec962',
+    //   1: '#fde725',
+    // },
+    // original:
     defaultGradient: {
       0.4: 'blue',
       0.6: 'cyan',
@@ -57,7 +65,7 @@
     gradient: function (t) {
       var i = document.createElement('canvas'),
         a = i.getContext('2d'),
-        s = a.createLinearGradient(0, 0, 0, 256); // 256
+        s = a.createLinearGradient(0, 0, 0, 256);
       (i.width = 1), (i.height = 256);
       for (var e in t) s.addColorStop(e, t[e]);
       return (

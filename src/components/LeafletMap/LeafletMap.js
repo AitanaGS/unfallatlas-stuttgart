@@ -123,15 +123,37 @@ function LeafletMap({
       }
     ).addTo(map);
 
+    // L.tileLayer(
+    //   'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    //   {
+    //     attribution:
+    //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    //     subdomains: 'abcd',
+    //     maxZoom: 20,
+    //   }
+    // ).addTo(map);
+
+    // L.tileLayer(
+    //   'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    //   {
+    //     attribution:
+    //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    //     subdomains: 'abcd',
+    //     maxZoom: 20,
+    //   }
+    // ).addTo(map);
+
     const markerClusterGroup = L.markerClusterGroup({
       chunkedLoading: true, // Enable chunked loading
       disableClusteringAtZoom: 17, // Disable clustering at higher zoom levels
-      iconCreateFunction: function (cluster) {
-        return L.divIcon({
-          html: '<b>' + cluster.getChildCount() + '</b>',
-          className: 'cluster',
-        });
-      },
+      iconCreateFunction: selectHeatmap
+        ? function (cluster) {
+            return L.divIcon({
+              html: '<b>' + cluster.getChildCount() + '</b>',
+              className: 'cluster',
+            });
+          }
+        : undefined,
     });
 
     // Check if necessary: Create a mapping of marker ID to marker instance
@@ -174,6 +196,8 @@ function LeafletMap({
     // here, for zoom below 11 - dont remove
     // setVisData(calculateVisibleData(map, markerClusterGroup));
 
+    let isZoomEnd = false;
+
     const onMoveEnd = (event) => {
       // here
       // const bounds = map.getBounds();
@@ -192,11 +216,15 @@ function LeafletMap({
       // here: data
       // setVisData(calculateVisibleData(map, markerClusterGroup));
       // setMapData(calculateVisibleData(map, markerClusterGroup));
-      setCenter([
-        event.target.getCenter().lat,
-        event.target.getCenter().lng,
-      ]);
-      setMapData(calculateVisibleData(map, markerClusterGroup));
+
+      if (!isZoomEnd) {
+        console.log('move');
+        setCenter([
+          event.target.getCenter().lat,
+          event.target.getCenter().lng,
+        ]);
+        setMapData(calculateVisibleData(map, markerClusterGroup));
+      }
       // setCurrentData(calculateVisibleData(map, markerClusterGroup));
       // if (filteringMode != 'none') setMapData()
       // filteringMode === 'none'
@@ -213,11 +241,12 @@ function LeafletMap({
     };
 
     const debouncedOnMoveEnd = L.Util.throttle(onMoveEnd, 500);
-    map.on('moveend', debouncedOnMoveEnd);
 
     const onZoomEnd = (event) => {
-      console.log('zoom', event.target.getZoom());
-      console.log('center', event.target.getCenter());
+      isZoomEnd = true;
+      console.log('zoom');
+      // console.log('zoom', event.target.getZoom());
+      // console.log('center', event.target.getCenter());
       setZoom(event.target.getZoom());
       setCenter([
         event.target.getCenter().lat,
@@ -228,7 +257,9 @@ function LeafletMap({
       // setCurrentData(calculateVisibleData(map, markerClusterGroup));
     };
     const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500);
+
     map.on('zoomend', debouncedOnZoomEnd);
+    map.on('moveend', debouncedOnMoveEnd);
 
     // map.on('zoomend', ({ target }) => {
     //   setZoom(target.getZoom());
