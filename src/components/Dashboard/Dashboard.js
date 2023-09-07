@@ -28,6 +28,7 @@ import LineChartMonth from '../LineChartMonth';
 import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
+import ArtBarChart from '../ArtBarChart';
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
 
@@ -135,6 +136,8 @@ function Dashboard({ initialData }) {
   const [filter, setFilter] = useState(initialFilter);
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(true);
+
+  // console.log(visData);
   // console.log('visData', visData);
 
   // const filterData = useCallback(() => {
@@ -462,7 +465,41 @@ function Dashboard({ initialData }) {
     );
   }, [visData]);
 
-  // console.log(lichtCount);
+  // const artCount = useMemo(() => {
+  //   const data = rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.art : d.art)
+  //   );
+
+  //   // Convert the Map to an array of objects for sorting
+  //   const sortedData = Array.from(data, ([key, value]) => ({
+  //     key,
+  //     value,
+  //   }));
+
+  //   // Sort the array by count in descending order
+  //   sortedData.sort((a, b) => b.value - a.value);
+
+  //   return sortedData;
+  // }, [visData]);
+
+  const artCount = useMemo(() => {
+    const sortedArtCount = new Map(
+      Array.from(
+        rollup(
+          visData,
+          (v) => v.length,
+          (d) => (d.options ? d.options.data.art : d.art)
+        ),
+        ([key, value]) => [key, value]
+      ).sort((a, b) => a[1] - b[1]) // Sort the entries by count (length)
+    );
+
+    return sortedArtCount;
+  }, [visData]);
+
+  // console.log(artCount);
 
   const visDataTotal = useMemo(() => {
     // console.log('check data', data); // d.kateg // d.properties.kateg
@@ -753,6 +790,10 @@ function Dashboard({ initialData }) {
           label={'Gesamt'}
           colorScale={undefined}
           max={undefined}
+        />
+        <ArtBarChart
+          variableCount={artCount}
+          visDataTotal={visDataTotal}
         />
         <MonthYearHeatmap visData={visData} />
         <LineChartYear visData={visData} />

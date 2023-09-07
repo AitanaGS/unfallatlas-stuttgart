@@ -640,7 +640,6 @@ accidents_geo_clean_select <- st_read(here("processed", "shapefile", "accidents.
 
 
 
-
 ```{r}
 monate <- c("Januar", "Februar", "März", "April", "Mai", "Juni",
             "Juli", "August", "September", "Oktober", "November", "Dezember")
@@ -658,6 +657,17 @@ kategs <- c("Unfall mit Leichtverletzten", "Unfall mit Schwerverletzten", "Unfal
 lichtv <- c("Tageslicht", "Dämmerung", "Dunkelheit")
 
 strzustand <- c("trocken", "nass/feucht/schlüpfrig", "winterglatt")
+
+arten <- c("Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug",
+         "Zusammenstoß mit vorausfahrendem / wartendem Fahrzeug",
+         "Zusammenstoß mit seitlich in gleicher Richtung fahrendem Fahrzeug",
+         "Zusammenstoß mit entgegenkommendem Fahrzeug",
+         "Zusammenstoß mit einbiegendem / kreuzendem Fahrzeug",
+         "Zusammenstoß zwischen Fahrzeug und Fußgänger",
+         "Aufprall auf Fahrbahnhindernis",
+         "Abkommen von Fahrbahn nach rechts",
+         "Abkommen von Fahrbahn nach links",
+         "Unfall anderer Art")
 
 accidents_final <- accidents_geo_clean_select %>%
   mutate(lon = xgcswgs84,
@@ -717,7 +727,10 @@ accidents_final <- accidents_geo_clean_select %>%
     stunde >= 18 & stunde < 24 ~ "18-0 Uhr",
     is.na(stunde) ~ NA_character_
   )) %>%
-  mutate(zeit = fct_relevel(zeit, zeiten)) %>%
+  mutate(zeit = fct_relevel(zeit, zeiten),
+         art = if_else(art == "Zusammenstoß mit anfahrendem/ anhaltendem/ruhendem Fahrzeug",
+                       "Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug", art),
+         art = fct_relevel(art, arten)) %>%
   relocate(zeit, .after = stunde) %>%
   relocate(kateg2, .after = kateg) %>%
   relocate(licht2, .after = licht) %>%

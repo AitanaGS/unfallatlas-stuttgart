@@ -218,7 +218,7 @@ function LeafletMap({
       // setMapData(calculateVisibleData(map, markerClusterGroup));
 
       if (!isZoomEnd) {
-        console.log('move');
+        // console.log('move');
         setCenter([
           event.target.getCenter().lat,
           event.target.getCenter().lng,
@@ -244,7 +244,7 @@ function LeafletMap({
 
     const onZoomEnd = (event) => {
       isZoomEnd = true;
-      console.log('zoom');
+      // console.log('zoom');
       // console.log('zoom', event.target.getZoom());
       // console.log('center', event.target.getCenter());
       setZoom(event.target.getZoom());
