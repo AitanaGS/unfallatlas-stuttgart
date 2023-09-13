@@ -795,7 +795,7 @@ function Dashboard({ initialData }) {
           variableCount={artCount}
           visDataTotal={visDataTotal}
         />
-        <MonthYearHeatmap visData={visData} />
+        {/* <MonthYearHeatmap visData={visData} />
         <LineChartYear visData={visData} />
         <LineChartMonth visData={visData} />
         <LineChart
@@ -811,6 +811,20 @@ function Dashboard({ initialData }) {
           weekHourCount={weekHourCount}
         />
         <TreeMap treeData={treemapDataArray} />
+
+        <BarChart
+          variableCount={kategCount}
+          visDataTotal={visDataTotal}
+        />
+        <LichtBarChart
+          variableCount={lichtCount}
+          visDataTotal={visDataTotal}
+        />
+        <StrasseBarChart
+          variableCount={strasseCount}
+          visDataTotal={visDataTotal}
+        /> */}
+        {/* Ab hier Numbers */}
         {/* <Number
         width={75}
         height={50}
@@ -855,18 +869,6 @@ function Dashboard({ initialData }) {
         colorScale={numberColorScale}
         max={numberMax}
       /> */}
-        <BarChart
-          variableCount={kategCount}
-          visDataTotal={visDataTotal}
-        />
-        <LichtBarChart
-          variableCount={lichtCount}
-          visDataTotal={visDataTotal}
-        />
-        <StrasseBarChart
-          variableCount={strasseCount}
-          visDataTotal={visDataTotal}
-        />
       </div>
     )
   );

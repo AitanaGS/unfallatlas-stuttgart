@@ -64,7 +64,7 @@ function FilterCheckboxes({
       // console.log('allfilterchecked', allFilterChecked);
       allFilterChecked
         ? setFilteringMode('none')
-        : setFilteringMode('checkbox');
+        : setFilteringMode(`checkbox ${name}`); // here: 'checkbox
     }
   };
 
