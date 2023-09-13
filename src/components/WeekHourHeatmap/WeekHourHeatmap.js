@@ -9,8 +9,27 @@ import { min, max, least, greatest, extent } from 'd3-array';
 import WeekHourAxisX from '../WeekHourAxisX';
 import WeekHourAxisY from '../WeekHourAxisY';
 import ChartContainer from '../ChartContainer';
+// import { useChartDimensions } from '../../hooks/useChartDimensions';
+// import '../../hooks/useChartDimensions';
+import useChartDimensions from '../../hooks/useChartDimensions';
+import styled from 'styled-components';
+
+const chartSettings = {
+  marginTop: 40,
+  marginRight: 5,
+  marginBottom: 5,
+  marginLeft: 100,
+  // width: 360, // 360
+  height: 300, // 300
+};
 
 function WeekHourHeatmap({ visData, weekHourCount }) {
+  const [ref, dms] = useChartDimensions(chartSettings);
+
+  console.log('chartDimension', dms);
+  console.log('width', dms.width);
+  console.log('innerwidt', dms.innerWidth);
+
   const width = 360;
   const height = 300;
 
@@ -39,13 +58,13 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
 
   const hourScale = scaleBand()
     .domain(hourSorted)
-    .range([0, innerWidth])
+    .range([0, dms.innerWidth]) // innerWidth
     .padding(0.05)
     .paddingOuter(0.1);
 
   const weekScale = scaleBand()
     .domain(weekSorted)
-    .range([0, innerHeight])
+    .range([0, dms.innerHeight]) // innerHeight
     .padding(0.1)
     .paddingOuter(0.1);
 
@@ -73,7 +92,8 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
   // TODO: colorscale wenn alle 0 sollte weiss sein
   // TODO: colorscale von 0 bis max, statt extent (siehe number)
   return (
-    <ChartContainer width={width} height={height}>
+    // <ChartWrapper ref={ref}>
+    <ChartContainer width={dms.width} height={dms.height} ref={ref}>
       <WeekHourAxisX
         xScale={hourScale}
         innerWidth={innerWidth}
@@ -86,7 +106,7 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
         margin={margin}
         kat={weekSorted}
       />
-      <g transform={`translate(${margin.left}, ${margin.top})`}>
+      <g transform={`translate(${dms.marginLeft}, ${dms.marginTop})`}>
         {weekSorted.map((d, i) => {
           return hourSorted.map((e, i) => {
             return (
@@ -165,7 +185,17 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
         })}
       </g>
     </ChartContainer>
+    // </ChartWrapper>
   );
 }
 
+// const ChartWrapper = styled.div`
+//   background-color: blue;
+// `;
+
 export default WeekHourHeatmap;
+// export default forwardRef(WeekHourHeatmap);
+
+// // const LogoWrapper = styled.div`
+// //   //background-color: blue;
+// // `;

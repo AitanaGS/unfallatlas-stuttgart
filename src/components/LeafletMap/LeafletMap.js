@@ -46,6 +46,9 @@ function LeafletMap({
 
   const [zoom, setZoom] = useState(11);
   const [center, setCenter] = useState([48.7758, 9.1829]);
+  // const [currentData, setCurrentData] = useState(
+  //   filterData(data, allFilter, filter)
+  // );
   // const [currentData, setCurrentData] = useState(data);
 
   // useEffect(() => {
@@ -75,6 +78,14 @@ function LeafletMap({
 
   //   return visibleMarkersData;
   // };
+
+  const customIcon = useMemo(() => {
+    return new L.Icon({
+      // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
+      iconUrl: '/leaflet-icons/marker-icon-2x.png',
+      iconSize: [38, 45], // [38, 38]
+    });
+  }, []);
 
   useEffect(() => {
     // here
@@ -109,10 +120,11 @@ function LeafletMap({
     // });
 
     const currentData = filterData(data, allFilter, filter);
+    // setCurrentData(filterData(data, allFilter, filter));
 
     // here
     const map = L.map(mapRef.current, {
-      preferCanvas: true, // Enable canvas rendering
+      preferCanvas: true, // Enable canvas rendering,
     }).setView(center, zoom); // [48.7758, 9.1829] 11 // 13
 
     L.tileLayer(
@@ -199,54 +211,36 @@ function LeafletMap({
     let isZoomEnd = false;
 
     const onMoveEnd = (event) => {
-      // here
-      // const bounds = map.getBounds();
-      // const visibleMarkersData = [];
-      // markerClusterGroup.eachLayer((marker) => {
-      //   const markerLatLng = marker.getLatLng();
-      //   // Check if the marker's LatLng is within the visible bounds
-      //   if (bounds.contains(markerLatLng)) {
-      //     visibleMarkersData.push(marker.options.data);
-      //   }
-      // });
-      // console.log('Visible Markers Data:', visibleMarkersData);
-      // setVisData(visibleMarkersData);
-
-      // here
-      // here: data
-      // setVisData(calculateVisibleData(map, markerClusterGroup));
-      // setMapData(calculateVisibleData(map, markerClusterGroup));
-
+      if (!map || !markerClusterGroup) return; // Check if the map object is valid
+      // console.log('move event', event, map, markerClusterGroup);
       if (!isZoomEnd) {
         // console.log('move');
+        // setCenter([
+        //   event.target.getCenter().lat,
+        //   event.target.getCenter().lng,
+        // ]);
+        console.log('move');
+        setMapData(calculateVisibleData(map, markerClusterGroup));
+        setZoom(event.target.getZoom());
         setCenter([
           event.target.getCenter().lat,
           event.target.getCenter().lng,
         ]);
-        setMapData(calculateVisibleData(map, markerClusterGroup));
       }
-      // setCurrentData(calculateVisibleData(map, markerClusterGroup));
-      // if (filteringMode != 'none') setMapData()
-      // filteringMode === 'none'
-      //   ? setVisData(calculateVisibleData(map, markerClusterGroup))
-      //   : setFilteredData(
-      //       calculateVisibleData(map, markerClusterGroup)
-      //     );
-
-      // const newVisibleData = calculateVisibleData(
-      //   map,
-      //   markerClusterGroup
-      // );
-      // setVisData(newVisibleData); // Update visible data immediately
     };
 
-    const debouncedOnMoveEnd = L.Util.throttle(onMoveEnd, 500);
+    const debouncedOnMoveEnd = L.Util.throttle(onMoveEnd, 500); // 500
 
     const onZoomEnd = (event) => {
-      isZoomEnd = true;
+      // isZoomEnd = true;
       // console.log('zoom');
       // console.log('zoom', event.target.getZoom());
       // console.log('center', event.target.getCenter());
+
+      if (!map || !markerClusterGroup) return; // Check if the map object is valid
+      isZoomEnd = true;
+      // console.log('zoom event', event, map, markerClusterGroup);
+      console.log('zoom');
       setZoom(event.target.getZoom());
       setCenter([
         event.target.getCenter().lat,
@@ -256,10 +250,10 @@ function LeafletMap({
       setMapData(calculateVisibleData(map, markerClusterGroup));
       // setCurrentData(calculateVisibleData(map, markerClusterGroup));
     };
-    const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500);
+    const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500); // 500
 
-    map.on('zoomend', debouncedOnZoomEnd);
-    map.on('moveend', debouncedOnMoveEnd);
+    map.on('zoomend', debouncedOnZoomEnd); // debouncedOnZoomEnd
+    map.on('moveend', debouncedOnMoveEnd); // debouncedOnMoveEnd
 
     // map.on('zoomend', ({ target }) => {
     //   setZoom(target.getZoom());
@@ -280,13 +274,8 @@ function LeafletMap({
     filter,
     filterData,
     selectHeatmap,
+    customIcon,
   ]);
-
-  const customIcon = new L.Icon({
-    // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
-    iconUrl: '/leaflet-icons/marker-icon-2x.png',
-    iconSize: [38, 45], // [38, 38]
-  });
 
   // const customIcon = new L.Icon({
   //   iconUrl: '/leaflet-icons/marker-icon-2x.png',
@@ -303,6 +292,8 @@ function LeafletMap({
   // TODO: check if const map = useMemo(createMap, [])
   // TODO: calculateVisibleData in own file hook
   // TODO: setvisdata not only in mouse end, also in useeffect, if zoom below 11, check visdata length
+  // TODO: check if setCurrentData
+  // TODO: check error
 
   return <div id="map" className="leaflet-map" ref={mapRef}></div>;
 }
