@@ -21,6 +21,7 @@ function ChartContainer({ width, height, children }, ref) {
 
 const ChartWrapper = styled.div`
   /* background-color: blue; */
+  max-width: 500px;
 `;
 
 export default forwardRef(ChartContainer);

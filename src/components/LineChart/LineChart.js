@@ -77,8 +77,8 @@ function LineChart({
 
   // Create a y-scale based on total rows
   const yScale = scaleLinear()
-    .domain(extent(aggregatedArray, (d) => d.count))
-    // .domain(timeCountExtent) // Set the y-domain based on the maximum total rows
+    // .domain(extent(aggregatedArray, (d) => d.count)) // here
+    .domain([0, max(aggregatedArray, (d) => d.count)]) // here
     .range([innerHeight, 0]); // Set the y-range based on your chart's height
 
   // const valueLine = line()
@@ -89,7 +89,7 @@ function LineChart({
   const pathLine = line()
     .x((d) => xScale(d.datum))
     .y((d) => yScale(d.count))
-    .curve(curveMonotoneX); // curveMonotoneX, curveBasis
+    .curve(curveBasis); // curveMonotoneX, curveBasis
 
   // useEffect(() => {
   //   const gElement = select(gRef.current);
@@ -182,7 +182,34 @@ function LineChart({
             strokeLinecap: 'round',
           }}
         />
-        {aggregatedArray.map((d, i) => (
+        {/* {aggregatedArray.map((d, i) => {
+          {
+            return i % 6 == 0 ? (
+              <g key={d.datum}>
+                <circle
+                  cx={xScale(d.datum)}
+                  cy={yScale(d.count)}
+                  r="5"
+                  style={{
+                    // stroke: 'blue',
+                    // strokeWidth: 2,
+                    // fill: 'none',
+                    fill: 'blue',
+                  }}
+                />
+                <text
+                  x={xScale(d.datum)}
+                  y={yScale(d.count) - 10}
+                  textAnchor="middle"
+                  dominantBaseline={'middle'}
+                >
+                  {d.count}
+                </text>
+              </g>
+            ) : undefined;
+          }
+        })} */}
+        {/* {aggregatedArray.map((d, i) => (
           <g key={d.datum}>
             <circle
               cx={xScale(d.datum)}
@@ -206,7 +233,7 @@ function LineChart({
               </text>
             ) : undefined}
           </g>
-        ))}
+        ))} */}
       </g>
     </ChartContainer>
   );

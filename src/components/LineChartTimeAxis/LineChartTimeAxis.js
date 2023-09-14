@@ -88,11 +88,11 @@ function LineChartTimeAxis({
             dominantBaseline="middle"
             style={{ fontSize: '0.8rem' }}
           >
-            {i % 6 == 0 ? (
+            {/* {i % 6 == 0 ? (
               <tspan x={xScale(d)} y={10}>{`${formatMonthName(
                 d
               )}`}</tspan>
-            ) : undefined}
+            ) : undefined} */}
             {i % 12 == 0 ? (
               <tspan x={xScale(d)} y={25}>{`${formatYear(d)}`}</tspan>
             ) : undefined}

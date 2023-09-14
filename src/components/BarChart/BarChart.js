@@ -165,9 +165,10 @@ function BarChart({ variableCount, visDataTotal }) {
               y={yScale(d) + yScale.bandwidth() / 2}
               style={{ fontSize: '0.8rem' }}
             >
-              {`${Math.round(
+              {variableCount.get(d)}
+              {/* {`${Math.round(
                 (variableCount.get(d) / visDataTotal) * 100
-              )} %`}
+              )} %`} */}
             </text>
           </g>
         ))}

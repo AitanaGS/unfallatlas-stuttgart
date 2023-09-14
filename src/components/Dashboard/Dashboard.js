@@ -129,6 +129,7 @@ const filterData = (dataToFilter, allFilter, filter) => {
 function Dashboard({ initialData }) {
   // const parseDate = timeParse('%Y-%m-%d');
   const [data, setData] = useState(initialData);
+  const [totalMapData, setTotalMapData] = useState(initialData);
   const [mapData, setMapData] = useState(initialData);
   const [visData, setVisData] = useState(initialData); // Original dataset
   const [filteredData, setFilteredData] = useState(visData); // Initially set to visData
@@ -136,6 +137,8 @@ function Dashboard({ initialData }) {
   const [filter, setFilter] = useState(initialFilter);
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(true);
+
+  // console.log('mapData', mapData, 'totalMapData', totalMapData);
 
   // console.log(visData);
   // console.log('visData', visData);
@@ -170,7 +173,7 @@ function Dashboard({ initialData }) {
 
   const filterAndSetData = useCallback(() => {
     const updatedFilteredData = filterData(
-      mapData,
+      totalMapData, // here: mapData
       allFilter,
       filter
     );
@@ -203,17 +206,24 @@ function Dashboard({ initialData }) {
     setFilteredData(updatedFilteredData);
     setVisData(updatedFilteredData);
     // setData(updatedFilteredData);
-  }, [mapData, filter, allFilter]);
+  }, [filter, allFilter, totalMapData]); // here: mapData
 
   useEffect(() => {
     if (filteringMode === 'none') {
-      setFilteredData(mapData);
-      setVisData(mapData);
-      // setData(mapData);
+      // setFilteredData(mapData); // here
+      // setVisData(mapData); // here
+      setFilteredData(totalMapData);
+      setVisData(totalMapData);
     } else {
       filterAndSetData();
     }
-  }, [filter, allFilter, filteringMode, mapData, filterAndSetData]);
+  }, [
+    filter,
+    allFilter,
+    filteringMode,
+    filterAndSetData,
+    totalMapData,
+  ]); // here: mapData,
 
   // useEffect(() => {
   //   // Update visData independently from filteredData
@@ -745,7 +755,7 @@ function Dashboard({ initialData }) {
   // TODO: number abstraction
   // TODO: abstraction, chart component, see d3.js in action
   // TODO: map cursor, zoom etc.
-  // TODO: Erklärung fallzahl
+  // TODO: Erklärung fallzahl, besonders geringe fallzahl, und um zu vergleichen wäre anzahl fahrzeuge in der jeweiligen gegend relevant
   // TODO: transitions (check wattenberger)
   // TODO: responsiveness (see wattenberger etc.)
   // TODO: time variables more efficient (page.js)
@@ -771,6 +781,7 @@ function Dashboard({ initialData }) {
           allFilter={allFilter}
           filter={filter}
           selectHeatmap={selectHeatmap}
+          setTotalMapData={setTotalMapData}
         />
         <LeafletHeatCheckbox
           selectHeatmap={selectHeatmap}
@@ -791,26 +802,26 @@ function Dashboard({ initialData }) {
           colorScale={undefined}
           max={undefined}
         />
-        <ArtBarChart
+        {/* <ArtBarChart
           variableCount={artCount}
           visDataTotal={visDataTotal}
-        />
-        {/* <MonthYearHeatmap visData={visData} />
-        <LineChartYear visData={visData} />
-        <LineChartMonth visData={visData} />
-        <LineChart
+        /> */}
+        {/* <MonthYearHeatmap visData={visData} /> */}
+        {/* <LineChart
           visData={visData}
           dataTotal={dataTotal}
           aggregatedTimeData={aggregatedTimeData}
           timeDateExtent={timeDateExtent}
           timeCountExtent={timeCountExtent}
           timeDataDates={timeDataDates}
-        />
-        <WeekHourHeatmap
+        /> */}
+        {/* <LineChartYear visData={visData} /> */}
+        {/* <LineChartMonth visData={visData} /> */}
+        {/* <WeekHourHeatmap
           visData={visData}
           weekHourCount={weekHourCount}
-        />
-        <TreeMap treeData={treemapDataArray} />
+        /> */}
+        {/* <TreeMap treeData={treemapDataArray} /> */}
 
         <BarChart
           variableCount={kategCount}
@@ -823,7 +834,7 @@ function Dashboard({ initialData }) {
         <StrasseBarChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
-        /> */}
+        />
         {/* Ab hier Numbers */}
         {/* <Number
         width={75}

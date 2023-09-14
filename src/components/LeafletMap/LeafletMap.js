@@ -19,6 +19,7 @@ const calculateVisibleData = (map, markerClusterGroup) => {
 
   markerClusterGroup.eachLayer((marker) => {
     const markerLatLng = marker.getLatLng();
+    // console.log('coord', markerLatLng);
 
     if (bounds.contains(markerLatLng)) {
       visibleMarkersData.push(marker.options.data);
@@ -28,6 +29,27 @@ const calculateVisibleData = (map, markerClusterGroup) => {
   // console.log('run', visibleMarkersData);
 
   return visibleMarkersData;
+};
+
+// use callback
+const calculateTotalVisibleData = (map, data) => {
+  const bounds = map.getBounds();
+  const visibleData = [];
+
+  data.forEach((d) => {
+    const coord = {
+      lat: d.lat,
+      lng: d.lon,
+    };
+
+    if (bounds.contains(coord)) {
+      visibleData.push(d);
+    }
+  });
+
+  // console.log('run', visibleMarkersData);
+
+  return visibleData;
 };
 
 function LeafletMap({
@@ -40,9 +62,12 @@ function LeafletMap({
   allFilter,
   filter,
   selectHeatmap,
+  setTotalMapData,
 }) {
   // here
   const mapRef = useRef(null);
+
+  // console.log(data);
 
   const [zoom, setZoom] = useState(11);
   const [center, setCenter] = useState([48.7758, 9.1829]);
@@ -220,7 +245,8 @@ function LeafletMap({
         //   event.target.getCenter().lng,
         // ]);
         console.log('move');
-        setMapData(calculateVisibleData(map, markerClusterGroup));
+        // setMapData(calculateVisibleData(map, markerClusterGroup)); //here
+        setTotalMapData(calculateTotalVisibleData(map, data));
         setZoom(event.target.getZoom());
         setCenter([
           event.target.getCenter().lat,
@@ -247,7 +273,8 @@ function LeafletMap({
         event.target.getCenter().lng,
       ]);
 
-      setMapData(calculateVisibleData(map, markerClusterGroup));
+      // setMapData(calculateVisibleData(map, markerClusterGroup)); //here
+      setTotalMapData(calculateTotalVisibleData(map, data)); //here
       // setCurrentData(calculateVisibleData(map, markerClusterGroup));
     };
     const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500); // 500
@@ -275,6 +302,8 @@ function LeafletMap({
     filterData,
     selectHeatmap,
     customIcon,
+    filteringMode,
+    setTotalMapData,
   ]);
 
   // const customIcon = new L.Icon({
