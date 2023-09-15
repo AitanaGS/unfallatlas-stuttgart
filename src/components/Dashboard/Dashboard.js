@@ -29,6 +29,8 @@ import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
+import ColumnChart from '../ColumnChart';
+import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
 
@@ -802,6 +804,8 @@ function Dashboard({ initialData }) {
           colorScale={undefined}
           max={undefined}
         />
+        <ColumnChartSmallMultiple visData={visData} />
+        {/* <ColumnChart visData={visData} visDataTotal={visDataTotal} /> */}
         {/* <ArtBarChart
           variableCount={artCount}
           visDataTotal={visDataTotal}
@@ -823,18 +827,18 @@ function Dashboard({ initialData }) {
         /> */}
         {/* <TreeMap treeData={treemapDataArray} /> */}
 
-        <BarChart
+        {/* <BarChart
           variableCount={kategCount}
           visDataTotal={visDataTotal}
-        />
-        <LichtBarChart
+        /> */}
+        {/* <LichtBarChart
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
-        />
-        <StrasseBarChart
+        /> */}
+        {/* <StrasseBarChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
-        />
+        /> */}
         {/* Ab hier Numbers */}
         {/* <Number
         width={75}

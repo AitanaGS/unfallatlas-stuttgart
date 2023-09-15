@@ -5,7 +5,7 @@ import { ResizeObserver } from '@juggle/resize-observer';
 // Code by Amelia Wattenberger
 // https://2019.wattenberger.com/blog/react-and-d3
 
-console.log('resize', ResizeObserver);
+// console.log('resize', ResizeObserver);
 const useChartDimensions = (passedSettings) => {
   const ref = useRef();
 
