@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import ChartContainer from '../ChartContainer';
 import { scaleTime, scaleLinear, scaleBand } from 'd3-scale';
-import { extent, rollup, max } from 'd3-array';
+import { extent, rollup, max, mean, median } from 'd3-array';
 import { line, curve, curveMonotoneX, curveBasis } from 'd3-shape';
 import { select, selectAll } from 'd3-selection';
 import LineChartTimeAxis from '../LineChartTimeAxis';
@@ -59,6 +59,8 @@ function ColumnChart({
   );
 
   const maxMonthData = max(Array.from(monthData.values()));
+  const meanMonthData = mean(Array.from(monthData.values()));
+  // const medianMonthData = median(Array.from(monthData.values()));
 
   useEffect(() => {
     setMaxValueMap(maxValueMap.set(year, maxMonthData));
@@ -174,6 +176,14 @@ function ColumnChart({
             </text> */}
           </g>
         ))}
+        <line
+          x1={0}
+          y1={yScale(meanMonthData)}
+          x2={innerWidth}
+          y2={yScale(meanMonthData)}
+          stroke="#69b3a2"
+          stroke-width="2"
+        />
       </g>
     </ChartContainer>
   );

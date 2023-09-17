@@ -30,6 +30,7 @@ function ColumnChartSmallMultiple({ visData }) {
   }, [visData]);
 
   // TODO: yScale construction here instead of ColumnChart (?)
+  // TODO: chart srtuktur zeigen, wenn gar keine fälle
 
   return (
     <SmallMultipleWrapper>
