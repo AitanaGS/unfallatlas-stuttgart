@@ -244,7 +244,7 @@ function LeafletMap({
         //   event.target.getCenter().lat,
         //   event.target.getCenter().lng,
         // ]);
-        console.log('move');
+        // console.log('move');
         // setMapData(calculateVisibleData(map, markerClusterGroup)); //here
         setTotalMapData(calculateTotalVisibleData(map, data));
         setZoom(event.target.getZoom());
@@ -266,7 +266,7 @@ function LeafletMap({
       if (!map || !markerClusterGroup) return; // Check if the map object is valid
       isZoomEnd = true;
       // console.log('zoom event', event, map, markerClusterGroup);
-      console.log('zoom');
+      // console.log('zoom');
       setZoom(event.target.getZoom());
       setCenter([
         event.target.getCenter().lat,
