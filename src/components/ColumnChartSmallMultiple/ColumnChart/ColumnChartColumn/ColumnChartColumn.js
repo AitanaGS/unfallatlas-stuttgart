@@ -31,6 +31,11 @@ function ColumnChartColumn({
     // config: {
     //   friction: 10,
     // },
+    config: {
+      mass: 1,
+      tension: 120,
+      friction: 20,
+    },
   });
 
   // const [isAnimating, setIsAnimating] = useState(false);
@@ -120,25 +125,28 @@ function ColumnChartColumn({
   // TODO: bars out of chart when rapid zooming
   // TODO: check friction value in config of usespring (because of overshooting, see above)
   // TODO: check error because of negative height (appears only when friction is on)
+  // TODO: condition afte rreturn necessary (console errors)?
 
   return (
-    <animated.rect
-      // {...springs}
-      x={xScale(monat)}
-      // y={yScale(monthData.get(monat) || 0)} //yScale(monthData.get(d) || 0)
-      width={xScale.bandwidth()}
-      // height={innerHeight - yScale(monthData.get(monat) || 0)} //innerHeight - yScale(monthData.get(d) || 0)
-      fill="#69b3a2"
-      y={spring.y}
-      height={spring.height}
-    />
-    // <rect
-    //   x={xScale(monat)}
-    //   y={yScale(monthData.get(monat) || 0)} //yScale(monthData.get(d) || 0)
-    //   width={xScale.bandwidth()}
-    //   height={innerHeight - yScale(monthData.get(monat) || 0)} //innerHeight - yScale(monthData.get(d) || 0)
-    //   fill="#69b3a2"
-    // />
+    monthData.get(monat) > 0 && (
+      <animated.rect
+        // {...springs}
+        x={xScale(monat)}
+        // y={yScale(monthData.get(monat) || 0)} //yScale(monthData.get(d) || 0)
+        width={xScale.bandwidth()}
+        // height={innerHeight - yScale(monthData.get(monat) || 0)} //innerHeight - yScale(monthData.get(d) || 0)
+        fill="#69b3a2"
+        y={spring.y}
+        height={spring.height}
+      />
+      // <rect
+      //   x={xScale(monat)}
+      //   y={yScale(monthData.get(monat) || 0)} //yScale(monthData.get(d) || 0)
+      //   width={xScale.bandwidth()}
+      //   height={innerHeight - yScale(monthData.get(monat) || 0)} //innerHeight - yScale(monthData.get(d) || 0)
+      //   fill="#69b3a2"
+      // />
+    )
   );
 }
 

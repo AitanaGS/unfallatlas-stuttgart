@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { scaleTime, scaleLinear, scaleBand } from 'd3-scale';
-import ColumnChart from '../ColumnChart';
+import ColumnChart from './ColumnChart';
 import styled from 'styled-components';
 import { group, max } from 'd3-array';
 

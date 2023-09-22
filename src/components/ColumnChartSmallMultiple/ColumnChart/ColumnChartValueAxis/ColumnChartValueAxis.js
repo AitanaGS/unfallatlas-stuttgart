@@ -38,6 +38,11 @@ function ColumnChartValueAxis({
     ticks.map(({ value, yOffset }, index) => ({
       y: yOffset,
       value: value,
+      config: {
+        mass: 1,
+        tension: 120,
+        friction: 20,
+      },
       // onResume: (props) => {
       //   setFinalValues((prev) => [...prev, props.value]);
       // },

@@ -264,7 +264,7 @@ function LeafletMap({
       // console.log('center', event.target.getCenter());
 
       if (!map || !markerClusterGroup) return; // Check if the map object is valid
-      isZoomEnd = true;
+      isZoomEnd = true; // here
       // console.log('zoom event', event, map, markerClusterGroup);
       // console.log('zoom');
       setZoom(event.target.getZoom());

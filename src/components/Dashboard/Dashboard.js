@@ -29,7 +29,7 @@ import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
-import ColumnChart from '../ColumnChart';
+// import ColumnChart from '../ColumnChart';
 import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
@@ -138,7 +138,7 @@ function Dashboard({ initialData }) {
   const [allFilter, setAllFilter] = useState(true);
   const [filter, setFilter] = useState(initialFilter);
   const [filteringMode, setFilteringMode] = useState('none');
-  const [selectHeatmap, setSelectHeatmap] = useState(true);
+  const [selectHeatmap, setSelectHeatmap] = useState(false); // true
 
   // console.log('mapData', mapData, 'totalMapData', totalMapData);
 

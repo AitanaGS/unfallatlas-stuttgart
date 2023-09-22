@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
-import ChartContainer from '../ChartContainer';
+import ChartContainer from '../../ChartContainer';
 import { scaleTime, scaleLinear, scaleBand } from 'd3-scale';
 import { extent, rollup, max, mean, median } from 'd3-array';
 import { line, curve, curveMonotoneX, curveBasis } from 'd3-shape';
 import { select, selectAll } from 'd3-selection';
-import LineChartTimeAxis from '../LineChartTimeAxis';
-import ColumnChartMonthAxis from '../ColumnChartMonthAxis';
-import ColumnChartValueAxis from '../ColumnChartValueAxis';
+// import LineChartTimeAxis from '../LineChartTimeAxis';
+import ColumnChartMonthAxis from './ColumnChartMonthAxis';
+import ColumnChartValueAxis from './ColumnChartValueAxis';
 import { useSpring, useSprings, animated } from '@react-spring/web';
-import ColumnChartColumn from '../ColumnChartColumn';
-import ColumnChartLine from '../ColumnChartLine';
+import ColumnChartColumn from './ColumnChartColumn';
+import ColumnChartLine from './ColumnChartLine';
 
 const monate = [
   'Januar',
@@ -373,6 +373,7 @@ function ColumnChart({
             yScale={yScale}
             innerWidth={innerWidth}
             meanMonthData={meanMonthData}
+            innerHeight={innerHeight}
           />
         )}
         {/* <ColumnChartLine
