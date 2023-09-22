@@ -805,7 +805,6 @@ function Dashboard({ initialData }) {
           max={undefined}
         />
         <ColumnChartSmallMultiple visData={visData} />
-        {/* <ColumnChart visData={visData} visDataTotal={visDataTotal} /> */}
         {/* <ArtBarChart
           variableCount={artCount}
           visDataTotal={visDataTotal}

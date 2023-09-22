@@ -43,16 +43,18 @@ function ColumnChartLine({
   // console.log(meanMonthData);
 
   return (
-    <animated.line
-      x1={0}
-      // y1={yScale(meanMonthData)}
-      y1={spring.y1}
-      x2={innerWidth}
-      // y2={yScale(meanMonthData)}
-      y2={spring.y2}
-      stroke="#69b3a2"
-      strokeWidth="2"
-    />
+    meanMonthData && (
+      <animated.line
+        x1={0}
+        // y1={yScale(meanMonthData)}
+        y1={spring.y1}
+        x2={innerWidth}
+        // y2={yScale(meanMonthData)}
+        y2={spring.y2}
+        stroke="#69b3a2"
+        strokeWidth="2"
+      />
+    )
   );
 }
 

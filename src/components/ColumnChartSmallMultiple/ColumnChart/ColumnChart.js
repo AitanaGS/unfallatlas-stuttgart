@@ -368,14 +368,14 @@ function ColumnChart({
           stroke="#69b3a2"
           strokeWidth="2"
         /> */}
-        {meanMonthData && (
-          <ColumnChartLine
-            yScale={yScale}
-            innerWidth={innerWidth}
-            meanMonthData={meanMonthData}
-            innerHeight={innerHeight}
-          />
-        )}
+        {/* {meanMonthData && ( */}
+        <ColumnChartLine
+          yScale={yScale}
+          innerWidth={innerWidth}
+          meanMonthData={meanMonthData}
+          innerHeight={innerHeight}
+        />
+        {/* )} */}
         {/* <ColumnChartLine
           yScale={yScale}
           innerWidth={innerWidth}

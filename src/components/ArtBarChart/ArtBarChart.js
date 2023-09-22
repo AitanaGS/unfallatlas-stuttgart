@@ -5,7 +5,9 @@ import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import ChartContainer from '../ChartContainer';
-import ArtBarAxis from '../ArtBarAxis';
+import ArtBarAxis from './ArtBarAxis';
+import { useSpring, useSprings, animated } from '@react-spring/web';
+import ArtBarChartBar from './ArtBarChartBar';
 
 function ArtBarChart({ variableCount, visDataTotal }) {
   // const kategorienSorted = [
@@ -88,6 +90,8 @@ function ArtBarChart({ variableCount, visDataTotal }) {
   // TODO: scale totalaccidents oder totalvisdata
   // TODO: scale etc. useMemo, or...
   // TODO: Dunkelheit und dämmerung zusammenfassen
+  // TODO: check if springs alle werte enthalten solllte (u.a. wegen responsiveness, etc.)
+  // TODO: absolute oder relative zahlen
 
   return (
     <ChartContainer width={width} height={height}>
@@ -102,24 +106,33 @@ function ArtBarChart({ variableCount, visDataTotal }) {
         transform={`translate(${margin.left}, ${margin.top})`}
       >
         {kategorienSorted.map((d, i) => (
-          <g key={d}>
-            <rect
-              x={xScale(0)}
-              y={yScale(d)}
-              width={xScale(variableCount.get(d))}
-              height={yScale.bandwidth()}
-              fill="#69b3a2"
-            />
-            <text
-              x={xScale(variableCount.get(d)) + 10}
-              y={yScale(d) + yScale.bandwidth() / 2}
-              style={{ fontSize: '0.8rem' }}
-            >
-              {`${Math.round(
-                (variableCount.get(d) / visDataTotal) * 100
-              )} %`}
-            </text>
-          </g>
+          <ArtBarChartBar
+            key={d}
+            xScale={xScale}
+            yScale={yScale}
+            variableCount={variableCount}
+            visDataTotal={visDataTotal}
+            kat={d}
+          />
+          // <g key={d}>
+          //   <rect
+          //     x={xScale(0)}
+          //     y={yScale(d)}
+          //     width={xScale(variableCount.get(d))}
+          //     height={yScale.bandwidth()}
+          //     fill="#69b3a2"
+          //   />
+          //   <text
+          //     x={xScale(variableCount.get(d)) + 10}
+          //     y={yScale(d) + yScale.bandwidth() / 2}
+          //     style={{ fontSize: '0.8rem' }}
+          //   >
+          //     {/* {variableCount.get(d)} */}
+          //     {`${Math.round(
+          //       (variableCount.get(d) / visDataTotal) * 100
+          //     )} %`}
+          //   </text>
+          // </g>
         ))}
         {/* {kategorien.map((d, i) => {
           if (
