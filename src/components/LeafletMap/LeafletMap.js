@@ -13,44 +13,50 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
 
-const calculateVisibleData = (map, markerClusterGroup) => {
-  const bounds = map.getBounds();
-  const visibleMarkersData = [];
+// const calculateVisibleData = (map, markerClusterGroup) => {
+//   const bounds = map.getBounds();
 
-  markerClusterGroup.eachLayer((marker) => {
-    const markerLatLng = marker.getLatLng();
-    // console.log('coord', markerLatLng);
+//   if (!bounds) return []; // new
 
-    if (bounds.contains(markerLatLng)) {
-      visibleMarkersData.push(marker.options.data);
-    }
-  });
+//   const visibleMarkersData = [];
 
-  // console.log('run', visibleMarkersData);
+//   markerClusterGroup.eachLayer((marker) => {
+//     const markerLatLng = marker.getLatLng();
+//     // console.log('coord', markerLatLng);
 
-  return visibleMarkersData;
-};
+//     if (bounds.contains(markerLatLng)) {
+//       visibleMarkersData.push(marker.options.data);
+//     }
+//   });
+
+//   // console.log('run', visibleMarkersData);
+
+//   return visibleMarkersData;
+// };
 
 // use callback
-const calculateTotalVisibleData = (map, data) => {
-  const bounds = map.getBounds();
-  const visibleData = [];
+// const calculateTotalVisibleData = (map, data) => {
+//   const bounds = map.getBounds();
 
-  data.forEach((d) => {
-    const coord = {
-      lat: d.lat,
-      lng: d.lon,
-    };
+//   if (!bounds) return []; // new
 
-    if (bounds.contains(coord)) {
-      visibleData.push(d);
-    }
-  });
+//   const visibleData = [];
 
-  // console.log('run', visibleMarkersData);
+//   data.forEach((d) => {
+//     const coord = {
+//       lat: d.lat,
+//       lng: d.lon,
+//     };
 
-  return visibleData;
-};
+//     if (bounds.contains(coord)) {
+//       visibleData.push(d);
+//     }
+//   });
+
+//   // console.log('run', visibleMarkersData);
+
+//   return visibleData;
+// };
 
 function LeafletMap({
   data,
@@ -104,6 +110,29 @@ function LeafletMap({
   //   return visibleMarkersData;
   // };
 
+  const calculateTotalVisibleData = useMemo(() => {
+    return (map, data) => {
+      const bounds = map.getBounds();
+
+      if (!bounds) return []; // new
+
+      const visibleData = [];
+
+      data.forEach((d) => {
+        const coord = {
+          lat: d.lat,
+          lng: d.lon,
+        };
+
+        if (bounds.contains(coord)) {
+          visibleData.push(d);
+        }
+      });
+
+      return visibleData;
+    };
+  }, []);
+
   const customIcon = useMemo(() => {
     return new L.Icon({
       // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
@@ -144,7 +173,9 @@ function LeafletMap({
     //   return true;
     // });
 
-    const currentData = filterData(data, allFilter, filter);
+    if (!mapRef.current) return; // new
+
+    // const currentData = filterData(data, allFilter, filter);
     // setCurrentData(filterData(data, allFilter, filter));
 
     // here
@@ -157,6 +188,7 @@ function LeafletMap({
       {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        useCache: true,
       }
     ).addTo(map);
 
@@ -203,6 +235,9 @@ function LeafletMap({
     //   filteringMode === 'none' ? data : filteredData;
     // here: data
     //filterData(data, allFilter, filter)
+
+    const currentData = filterData(data, allFilter, filter);
+
     currentData.forEach((d) => {
       points.push([d.lat, d.lon]);
       // const marker = L.marker([d.lat, d.lon]);
@@ -237,6 +272,10 @@ function LeafletMap({
 
     const onMoveEnd = (event) => {
       if (!map || !markerClusterGroup) return; // Check if the map object is valid
+
+      // const bounds = map.getBounds();
+      // if (!bounds) return;
+
       // console.log('move event', event, map, markerClusterGroup);
       if (!isZoomEnd) {
         // console.log('move');
@@ -264,6 +303,10 @@ function LeafletMap({
       // console.log('center', event.target.getCenter());
 
       if (!map || !markerClusterGroup) return; // Check if the map object is valid
+
+      // const bounds = map.getBounds();
+      // if (!bounds) return;
+
       isZoomEnd = true; // here
       // console.log('zoom event', event, map, markerClusterGroup);
       // console.log('zoom');
@@ -304,6 +347,7 @@ function LeafletMap({
     customIcon,
     filteringMode,
     setTotalMapData,
+    calculateTotalVisibleData,
   ]);
 
   // const customIcon = new L.Icon({
@@ -323,6 +367,7 @@ function LeafletMap({
   // TODO: setvisdata not only in mouse end, also in useeffect, if zoom below 11, check visdata length
   // TODO: check if setCurrentData
   // TODO: check error
+  // TODO: check if error with/without "const bounds = map.getBounds(); if (!bounds) return;" in onzoomend and onmoveend
 
   return <div id="map" className="leaflet-map" ref={mapRef}></div>;
 }

@@ -15,7 +15,7 @@ import { min, max, least, greatest, extent } from 'd3-array';
 import { scaleBand, scaleSequential } from 'd3-scale';
 
 import LeafletMap from '../LeafletMap';
-import BarChart from '../BarChart';
+import KategBarChart from '../KategBarChart';
 import LichtBarChart from '../LichtBarChart';
 import StrasseBarChart from '../StrasseBarChart';
 import Number from '../Number';
@@ -804,29 +804,13 @@ function Dashboard({ initialData }) {
           colorScale={undefined}
           max={undefined}
         />
-        <ColumnChartSmallMultiple visData={visData} />
-        {/* <ArtBarChart
+        {/* <ColumnChartSmallMultiple visData={visData} />
+        <ArtBarChart
           variableCount={artCount}
           visDataTotal={visDataTotal}
-        /> */}
-        {/* <MonthYearHeatmap visData={visData} /> */}
-        {/* <LineChart
-          visData={visData}
-          dataTotal={dataTotal}
-          aggregatedTimeData={aggregatedTimeData}
-          timeDateExtent={timeDateExtent}
-          timeCountExtent={timeCountExtent}
-          timeDataDates={timeDataDates}
-        /> */}
-        {/* <LineChartYear visData={visData} /> */}
-        {/* <LineChartMonth visData={visData} /> */}
-        {/* <WeekHourHeatmap
-          visData={visData}
-          weekHourCount={weekHourCount}
-        /> */}
-        {/* <TreeMap treeData={treemapDataArray} /> */}
+    /> */}
 
-        {/* <BarChart
+        {/* <KategBarChart
           variableCount={kategCount}
           visDataTotal={visDataTotal}
         /> */}
@@ -834,11 +818,12 @@ function Dashboard({ initialData }) {
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
         /> */}
-        {/* <StrasseBarChart
+        <StrasseBarChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
-        /> */}
-        {/* Ab hier Numbers */}
+        />
+        {/* <TreeMap treeData={treemapDataArray} /> */}
+        {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
         {/* <Number
         width={75}
         height={50}
@@ -883,6 +868,21 @@ function Dashboard({ initialData }) {
         colorScale={numberColorScale}
         max={numberMax}
       /> */}
+        {/* <MonthYearHeatmap visData={visData} /> */}
+        {/* <LineChart
+          visData={visData}
+          dataTotal={dataTotal}
+          aggregatedTimeData={aggregatedTimeData}
+          timeDateExtent={timeDateExtent}
+          timeCountExtent={timeCountExtent}
+          timeDataDates={timeDataDates}
+        /> */}
+        {/* <LineChartYear visData={visData} /> */}
+        {/* <LineChartMonth visData={visData} /> */}
+        {/* <WeekHourHeatmap
+          visData={visData}
+          weekHourCount={weekHourCount}
+        /> */}
       </div>
     )
   );

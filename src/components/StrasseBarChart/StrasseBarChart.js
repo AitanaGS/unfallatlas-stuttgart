@@ -4,8 +4,9 @@ import { select } from 'd3-selection';
 import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
-import StrasseBarAxis from '../StrasseBarAxis';
+import StrasseBarAxis from './StrasseBarAxis';
 import ChartContainer from '../ChartContainer';
+import StrasseBarChartBar from './StrasseBarChartBar';
 
 function StrasseBarChart({ variableCount, visDataTotal }) {
   // const kategorienSorted = [
@@ -70,25 +71,33 @@ function StrasseBarChart({ variableCount, visDataTotal }) {
         transform={`translate(${margin.left}, ${margin.top})`}
       >
         {kategorien.map((d, i) => (
-          <g key={d}>
-            <rect
-              x={xScale(0)}
-              y={yScale(d)}
-              width={xScale(variableCount.get(d))}
-              height={yScale.bandwidth()}
-              fill="#69b3a2"
-            />
-            <text
-              x={xScale(variableCount.get(d)) + 10}
-              y={yScale(d) + yScale.bandwidth() / 2}
-              style={{ fontSize: '0.8rem' }}
-            >
-              {variableCount.get(d)}
-              {/* {`${Math.round(
-                (variableCount.get(d) / visDataTotal) * 100
-              )} %`} */}
-            </text>
-          </g>
+          <StrasseBarChartBar
+            key={d}
+            xScale={xScale}
+            yScale={yScale}
+            variableCount={variableCount}
+            visDataTotal={visDataTotal}
+            kat={d}
+          />
+          // <g key={d}>
+          //   <rect
+          //     x={xScale(0)}
+          //     y={yScale(d)}
+          //     width={xScale(variableCount.get(d))}
+          //     height={yScale.bandwidth()}
+          //     fill="#69b3a2"
+          //   />
+          //   <text
+          //     x={xScale(variableCount.get(d)) + 10}
+          //     y={yScale(d) + yScale.bandwidth() / 2}
+          //     style={{ fontSize: '0.8rem' }}
+          //   >
+          //     {variableCount.get(d)}
+          //     {/* {`${Math.round(
+          //       (variableCount.get(d) / visDataTotal) * 100
+          //     )} %`} */}
+          //   </text>
+          // </g>
         ))}
       </g>
     </ChartContainer>

@@ -42,6 +42,8 @@ function ColumnChartLine({
   // }
   // console.log(meanMonthData);
 
+  console.log(meanMonthData);
+
   return (
     meanMonthData && (
       <animated.line

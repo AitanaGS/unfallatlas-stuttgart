@@ -49,6 +49,20 @@ function ColumnChartValueAxis({
     }))
   );
 
+  // const axisSpring = useSpring({
+  //   from: {
+  //     y1: innerHeight,
+  //   },
+  //   to: {
+  //     y1: 0,
+  //   },
+  //   config: {
+  //     mass: 1,
+  //     tension: 500, // Adjusted tension value
+  //     friction: 20, // Adjusted friction value
+  //   },
+  // });
+
   // useEffect(() => {
   //   // Once all animations have completed, do something with finalValues
   //   if (finalValues.length === ticks.length) {
@@ -59,6 +73,13 @@ function ColumnChartValueAxis({
   return (
     <g transform={`translate(${margin.left}, ${margin.top})`}>
       <line x1={0} y1={0} x2={0} y2={innerHeight} stroke={'black'} />
+      {/* <animated.line
+        x1={0}
+        y1={axisSpring.y1}
+        x2={0}
+        y2={innerHeight}
+        stroke={'black'}
+      /> */}
       {springs.map((props, i) => {
         return (
           <animated.text

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-function BarKatAxis({ yScale, innerHeight, margin, kat }) {
+function KategBarKatAxis({ yScale, innerHeight, margin, kat }) {
   // console.log(yScale(innerHeight));
   // console.log('yscale', yScale, 'innerheight', innerHeight);
   return (
@@ -26,4 +26,4 @@ function BarKatAxis({ yScale, innerHeight, margin, kat }) {
   );
 }
 
-export default BarKatAxis;
+export default KategBarKatAxis;

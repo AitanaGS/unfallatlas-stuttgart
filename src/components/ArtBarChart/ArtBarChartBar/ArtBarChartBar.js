@@ -80,6 +80,7 @@ function ArtBarChartBar({
           x={spring.textX}
           y={spring.textY}
           style={{ fontSize: '0.8rem' }}
+          dominantBaseline="middle"
         >
           {variableCount.get(kat)}
           {/* {`${Math.round(

@@ -4,10 +4,12 @@ import { select } from 'd3-selection';
 import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
-import BarKatAxis from '../BarKatAxis';
+import KategBarKatAxis from './KategBarKatAxis';
 import ChartContainer from '../ChartContainer';
+import { useSpring, useSprings, animated } from '@react-spring/web';
+import KategBarChartBar from './KategBarChartBar';
 
-function BarChart({ variableCount, visDataTotal }) {
+function KategBarChart({ variableCount, visDataTotal }) {
   const kategorienSorted = [
     'Unfall mit Schwerverletzten/Getöteten',
     'Unfall mit Leichtverletzten',
@@ -118,6 +120,24 @@ function BarChart({ variableCount, visDataTotal }) {
   //     100
   // );
 
+  // const springs = useSprings(
+  //   kategorienSorted.length,
+  //   kategorienSorted.map((k, index) => ({
+  //     rectY: yScale(k),
+  //     rectWidth: xScale(variableCount.get(k)),
+  //     textX: xScale(variableCount.get(k)) + 10,
+  //     textY: yScale(k) + yScale.bandwidth() / 2,
+  //     config: {
+  //       mass: 1,
+  //       tension: 120,
+  //       friction: 20,
+  //     },
+  //     // onResume: (props) => {
+  //     //   setFinalValues((prev) => [...prev, props.value]);
+  //     // },
+  //   }))
+  // );
+
   // TODO: check rendering (useState is called to often vs. useEffect)
   // TODO: scale totalaccidents oder totalvisdata
   // TODO: scale etc. useMemo, or...
@@ -125,7 +145,7 @@ function BarChart({ variableCount, visDataTotal }) {
 
   return (
     <ChartContainer width={width} height={height}>
-      <BarKatAxis
+      <KategBarKatAxis
         yScale={yScale}
         innerHeight={innerHeight}
         margin={margin}
@@ -135,6 +155,24 @@ function BarChart({ variableCount, visDataTotal }) {
         ref={barChartRef}
         transform={`translate(${margin.left}, ${margin.top})`}
       >
+        {/* {springs.map((spring, i) => (
+          <g key={kategorienSorted[i]}>
+            <animated.rect
+              x={xScale(0)}
+              y={spring.rectY}
+              width={spring.rectWidth}
+              height={yScale.bandwidth()}
+              fill="#69b3a2"
+            />
+            <animated.text
+              x={spring.textX}
+              y={spring.textY}
+              style={{ fontSize: '0.8rem' }}
+            >
+              {variableCount.get(kategorienSorted[i])}
+            </animated.text>
+          </g>
+        ))} */}
         {/* <rect
           width={innerWidth}
           height={innerHeight}
@@ -152,25 +190,33 @@ function BarChart({ variableCount, visDataTotal }) {
         {/* {children} */}
         {/* <BarXAxis variableArray={kategorien} /> */}
         {kategorien.map((d, i) => (
-          <g key={d}>
-            <rect
-              x={xScale(0)}
-              y={yScale(d)}
-              width={xScale(variableCount.get(d))}
-              height={yScale.bandwidth()}
-              fill="#69b3a2"
-            />
-            <text
-              x={xScale(variableCount.get(d)) + 10}
-              y={yScale(d) + yScale.bandwidth() / 2}
-              style={{ fontSize: '0.8rem' }}
-            >
-              {variableCount.get(d)}
-              {/* {`${Math.round(
-                (variableCount.get(d) / visDataTotal) * 100
-              )} %`} */}
-            </text>
-          </g>
+          <KategBarChartBar
+            key={d}
+            xScale={xScale}
+            yScale={yScale}
+            variableCount={variableCount}
+            visDataTotal={visDataTotal}
+            kat={d}
+          />
+          // <g key={d}>
+          //   <rect
+          //     x={xScale(0)}
+          //     y={yScale(d)}
+          //     width={xScale(variableCount.get(d))}
+          //     height={yScale.bandwidth()}
+          //     fill="#69b3a2"
+          //   />
+          //   <text
+          //     x={xScale(variableCount.get(d)) + 10}
+          //     y={yScale(d) + yScale.bandwidth() / 2}
+          //     style={{ fontSize: '0.8rem' }}
+          //   >
+          //     {variableCount.get(d)}
+          //     {/* {`${Math.round(
+          //       (variableCount.get(d) / visDataTotal) * 100
+          //     )} %`} */}
+          //   </text>
+          // </g>
         ))}
       </g>
       {/* <BarXAxis variableArray={kategorien} /> */}
@@ -179,4 +225,4 @@ function BarChart({ variableCount, visDataTotal }) {
   );
 }
 
-export default BarChart;
+export default KategBarChart;

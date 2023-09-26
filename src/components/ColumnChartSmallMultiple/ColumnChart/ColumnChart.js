@@ -313,7 +313,7 @@ function ColumnChart({
         innerHeight={innerHeight}
       />
       <g transform={`translate(${margin.left},${margin.top})`}>
-        <rect
+        {/* <rect
           width={innerWidth}
           height={innerHeight}
           // border={'2px solid blue'}
@@ -326,7 +326,7 @@ function ColumnChart({
             // color: 'transparent',
             // fill: 'transparent',
           }}
-        />
+        /> */}
         {monate.map((monat, i) => (
           <ColumnChartColumn
             key={monat}
