@@ -818,9 +818,13 @@ function Dashboard({ initialData }) {
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
         /> */}
-        <StrasseBarChart
+        {/* <StrasseBarChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
+        /> */}
+        <WeekHourHeatmap
+          visData={visData}
+          weekHourCount={weekHourCount}
         />
         {/* <TreeMap treeData={treemapDataArray} /> */}
         {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
@@ -879,10 +883,6 @@ function Dashboard({ initialData }) {
         /> */}
         {/* <LineChartYear visData={visData} /> */}
         {/* <LineChartMonth visData={visData} /> */}
-        {/* <WeekHourHeatmap
-          visData={visData}
-          weekHourCount={weekHourCount}
-        /> */}
       </div>
     )
   );

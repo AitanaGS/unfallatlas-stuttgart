@@ -6,13 +6,14 @@ import {
   interpolateReds,
 } from 'd3-scale-chromatic';
 import { min, max, least, greatest, extent } from 'd3-array';
-import WeekHourAxisX from '../WeekHourAxisX';
-import WeekHourAxisY from '../WeekHourAxisY';
+import WeekHourAxisX from './WeekHourAxisX';
+import WeekHourAxisY from './WeekHourAxisY';
 import ChartContainer from '../ChartContainer';
 // import { useChartDimensions } from '../../hooks/useChartDimensions';
 // import '../../hooks/useChartDimensions';
 import useChartDimensions from '../../hooks/useChartDimensions';
 import styled from 'styled-components';
+import WeekHourRect from './WeekHourRect';
 
 const chartSettings = {
   marginTop: 40,
@@ -110,76 +111,86 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
         {weekSorted.map((d, i) => {
           return hourSorted.map((e, i) => {
             return (
-              <g key={`${d}${e}`}>
-                <rect
-                  x={hourScale(e)}
-                  y={weekScale(d)}
-                  width={hourScale.bandwidth()}
-                  height={weekScale.bandwidth()}
-                  style={{
-                    // stroke: 'blue',
-                    // strokeWidth: '2px',
-                    fill:
-                      colorScale(weekHourCount[d]?.[e] || 0) ||
-                      'white',
-                    // fill:
-                    //   colorScale(weekHourCount.get(d).get(e)) ||
-                    //   'white',
-                    // fill: 'transparent',
-                  }}
-                />
-                {/* <text
-                  x={hourScale(e)}
-                  y={weekScale(d) + weekScale.bandwidth() / 2}
-                  fill={
-                    (weekHourCount[d]?.[e] || 0) > extentCounts[1] / 2
-                      ? 'white'
-                      : 'black'
-                  }
-                  // fill={
-                  //   weekHourCount.get(d).get(e) > extentCounts[1] / 2
-                  //     ? 'white'
-                  //     : 'black'
-                  // }
-                >
-                  {d}
-                </text>
-                <text
-                  x={hourScale(e) + 5}
-                  y={weekScale(d) + weekScale.bandwidth() / 2 + 10}
-                  fill={
-                    (weekHourCount[d]?.[e] || 0) > extentCounts[1] / 2
-                      ? 'white'
-                      : 'black'
-                  }
-                  // fill={
-                  //   weekHourCount.get(d).get(e) > extentCounts[1] / 2
-                  //     ? 'white'
-                  //     : 'black'
-                  // }
-                >
-                  {e}
-                </text> */}
-                <text
-                  x={hourScale(e) + hourScale.bandwidth() / 2}
-                  y={weekScale(d) + weekScale.bandwidth() / 2}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fill={
-                    (weekHourCount[d]?.[e] || 0) > extentCounts[1] / 2
-                      ? 'white'
-                      : 'black'
-                  }
-                  // fill={
-                  //   weekHourCount.get(d).get(e) > extentCounts[1] / 2
-                  //     ? 'white'
-                  //     : 'black'
-                  // }
-                >
-                  {/* {weekHourCount.get(d).get(e) || 0} */}
-                  {weekHourCount[d]?.[e] || 0}
-                </text>
-              </g>
+              <WeekHourRect
+                key={`${d}${e}`}
+                hour={e}
+                week={d}
+                hourScale={hourScale}
+                weekScale={weekScale}
+                colorScale={colorScale}
+                weekHourCount={weekHourCount}
+                extentCounts={extentCounts}
+              />
+              // <g key={`${d}${e}`}>
+              //   <rect
+              //     x={hourScale(e)}
+              //     y={weekScale(d)}
+              //     width={hourScale.bandwidth()}
+              //     height={weekScale.bandwidth()}
+              //     style={{
+              //       // stroke: 'blue',
+              //       // strokeWidth: '2px',
+              //       fill:
+              //         colorScale(weekHourCount[d]?.[e] || 0) ||
+              //         'white',
+              //       // fill:
+              //       //   colorScale(weekHourCount.get(d).get(e)) ||
+              //       //   'white',
+              //       // fill: 'transparent',
+              //     }}
+              //   />
+              //   {/* <text
+              //     x={hourScale(e)}
+              //     y={weekScale(d) + weekScale.bandwidth() / 2}
+              //     fill={
+              //       (weekHourCount[d]?.[e] || 0) > extentCounts[1] / 2
+              //         ? 'white'
+              //         : 'black'
+              //     }
+              //     // fill={
+              //     //   weekHourCount.get(d).get(e) > extentCounts[1] / 2
+              //     //     ? 'white'
+              //     //     : 'black'
+              //     // }
+              //   >
+              //     {d}
+              //   </text>
+              //   <text
+              //     x={hourScale(e) + 5}
+              //     y={weekScale(d) + weekScale.bandwidth() / 2 + 10}
+              //     fill={
+              //       (weekHourCount[d]?.[e] || 0) > extentCounts[1] / 2
+              //         ? 'white'
+              //         : 'black'
+              //     }
+              //     // fill={
+              //     //   weekHourCount.get(d).get(e) > extentCounts[1] / 2
+              //     //     ? 'white'
+              //     //     : 'black'
+              //     // }
+              //   >
+              //     {e}
+              //   </text> */}
+              //   <text
+              //     x={hourScale(e) + hourScale.bandwidth() / 2}
+              //     y={weekScale(d) + weekScale.bandwidth() / 2}
+              //     textAnchor="middle"
+              //     dominantBaseline="middle"
+              //     fill={
+              //       (weekHourCount[d]?.[e] || 0) > extentCounts[1] / 2
+              //         ? 'white'
+              //         : 'black'
+              //     }
+              //     // fill={
+              //     //   weekHourCount.get(d).get(e) > extentCounts[1] / 2
+              //     //     ? 'white'
+              //     //     : 'black'
+              //     // }
+              //   >
+              //     {/* {weekHourCount.get(d).get(e) || 0} */}
+              //     {weekHourCount[d]?.[e] || 0}
+              //   </text>
+              // </g>
             );
           });
         })}

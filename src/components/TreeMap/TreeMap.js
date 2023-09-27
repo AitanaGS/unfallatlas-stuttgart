@@ -5,6 +5,7 @@ import { select, selectAll } from 'd3-selection';
 import { scaleSequential, scaleBand, scaleOrdinal } from 'd3-scale';
 import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
 import ChartContainer from '../ChartContainer';
+import TreeMapRect from './TreeMapRect';
 
 function TreeMap({ treeData }) {
   const width = 250;
@@ -56,32 +57,37 @@ function TreeMap({ treeData }) {
     <ChartContainer width={width} height={height}>
       <g transform={`translate(${margin.left},${margin.top})`}>
         {root.leaves().map((d) => (
-          <g key={d.data.name}>
-            <rect
-              x={d.x0}
-              y={d.y0}
-              width={d.x1 - d.x0}
-              height={d.y1 - d.y0}
-              fill={colorScale(d.data.name)}
-              // fill={colorScale(d.value)}
-            />
-            <text
-              x={d.x0}
-              y={d.y0}
-              textAnchor="start"
-              dominantBaseline="hanging"
-            >
-              {d.value > 0 ? d.data.name : ''}
-            </text>
-            <text
-              x={d.x0}
-              y={d.y0 + 15}
-              textAnchor="start"
-              dominantBaseline="hanging"
-            >
-              {d.value > 0 ? d.value : ''}
-            </text>
-          </g>
+          <TreeMapRect
+            key={d.data.name}
+            d={d}
+            colorScale={colorScale}
+          />
+          // <g key={d.data.name}>
+          //   <rect
+          //     x={d.x0}
+          //     y={d.y0}
+          //     width={d.x1 - d.x0}
+          //     height={d.y1 - d.y0}
+          //     fill={colorScale(d.data.name)}
+          //     // fill={colorScale(d.value)}
+          //   />
+          //   <text
+          //     x={d.x0}
+          //     y={d.y0}
+          //     textAnchor="start"
+          //     dominantBaseline="hanging"
+          //   >
+          //     {d.value > 0 ? d.data.name : ''}
+          //   </text>
+          //   <text
+          //     x={d.x0}
+          //     y={d.y0 + 15}
+          //     textAnchor="start"
+          //     dominantBaseline="hanging"
+          //   >
+          //     {d.value > 0 ? d.value : ''}
+          //   </text>
+          // </g>
         ))}
       </g>
     </ChartContainer>
