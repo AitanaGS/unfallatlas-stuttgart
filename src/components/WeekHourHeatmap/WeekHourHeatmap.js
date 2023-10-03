@@ -15,23 +15,23 @@ import useChartDimensions from '../../hooks/useChartDimensions';
 import styled from 'styled-components';
 import WeekHourRect from './WeekHourRect';
 
-const chartSettings = {
-  marginTop: 40,
-  marginRight: 5,
-  marginBottom: 5,
-  marginLeft: 100,
-  // width: 360, // 360
-  height: 300, // 300
-};
+// const chartSettings = {
+//   marginTop: 40,
+//   marginRight: 5,
+//   marginBottom: 5,
+//   marginLeft: 100,
+//   // width: 360, // 360
+//   height: 300, // 300
+// };
 
-function WeekHourHeatmap({ visData, weekHourCount }) {
-  const [ref, dms] = useChartDimensions(chartSettings);
+function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
+  // const [ref, dms] = useChartDimensions(chartSettings);
 
-  console.log('chartDimension', dms);
-  console.log('width', dms.width);
-  console.log('innerwidt', dms.innerWidth);
+  // console.log('chartDimension', dms);
+  // console.log('width', dms.width);
+  // console.log('innerwidt', dms.innerWidth);
 
-  const width = 360;
+  const width = dashboardWidth; // 360
   const height = 300;
 
   const margin = {
@@ -59,13 +59,13 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
 
   const hourScale = scaleBand()
     .domain(hourSorted)
-    .range([0, dms.innerWidth]) // innerWidth
+    .range([0, innerWidth]) // dms.innerWidth
     .padding(0.05)
     .paddingOuter(0.1);
 
   const weekScale = scaleBand()
     .domain(weekSorted)
-    .range([0, dms.innerHeight]) // innerHeight
+    .range([0, innerHeight]) // dms.innerHeight
     .padding(0.1)
     .paddingOuter(0.1);
 
@@ -92,9 +92,12 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
   // TODO: zero instead of na (in R)?
   // TODO: colorscale wenn alle 0 sollte weiss sein
   // TODO: colorscale von 0 bis max, statt extent (siehe number)
+  // TODO: check if useChartDimensions necessary
+
   return (
     // <ChartWrapper ref={ref}>
-    <ChartContainer width={dms.width} height={dms.height} ref={ref}>
+    // <ChartContainer width={dms.width} height={dms.height} ref={ref}>
+    <ChartContainer width={width} height={height}>
       <WeekHourAxisX
         xScale={hourScale}
         innerWidth={innerWidth}
@@ -107,7 +110,8 @@ function WeekHourHeatmap({ visData, weekHourCount }) {
         margin={margin}
         kat={weekSorted}
       />
-      <g transform={`translate(${dms.marginLeft}, ${dms.marginTop})`}>
+      {/* <g transform={`translate(${dms.marginLeft}, ${dms.marginTop})`}> */}
+      <g transform={`translate(${margin.left}, ${margin.top})`}>
         {weekSorted.map((d, i) => {
           return hourSorted.map((e, i) => {
             return (

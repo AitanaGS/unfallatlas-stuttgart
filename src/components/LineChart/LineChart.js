@@ -4,7 +4,7 @@ import { scaleTime, scaleLinear } from 'd3-scale';
 import { extent, rollup, max } from 'd3-array';
 import { line, curve, curveMonotoneX, curveBasis } from 'd3-shape';
 import { select, selectAll } from 'd3-selection';
-import LineChartTimeAxis from '../LineChartTimeAxis';
+import LineChartTimeAxis from './LineChartTimeAxis';
 
 function LineChart({
   visData,

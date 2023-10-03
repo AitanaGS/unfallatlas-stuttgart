@@ -56,7 +56,7 @@ function WeekHourRect({
         dominantBaseline="middle"
         // fill={spring.textFill}
         fill={
-          (weekHourCount[d]?.[e] || 0) > extentCounts[1] / 2
+          (weekHourCount[week]?.[hour] || 0) > extentCounts[1] / 2
             ? 'white'
             : 'black'
         }

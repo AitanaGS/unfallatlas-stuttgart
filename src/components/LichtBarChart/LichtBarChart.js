@@ -8,10 +8,25 @@ import LichtBarAxis from './LichtBarAxis';
 import ChartContainer from '../ChartContainer';
 import LichtBarChartBar from './LichtBarChartBar';
 
-function LichtBarChart({ variableCount, visDataTotal }) {
+function LichtBarChart({
+  variableCount,
+  visDataTotal,
+  dashboardWidth,
+}) {
   const kategorienSorted = ['Dämmerung/Dunkelheit', 'Tageslicht'];
 
-  const width = 300;
+  // const width = 300;
+
+  // const height = 200;
+
+  // const margin = {
+  //   top: 20,
+  //   right: 50,
+  //   bottom: 20,
+  //   left: 160,
+  // };
+
+  const width = dashboardWidth > 400 ? dashboardWidth : 300;
 
   const height = 200;
 
@@ -19,7 +34,7 @@ function LichtBarChart({ variableCount, visDataTotal }) {
     top: 20,
     right: 50,
     bottom: 20,
-    left: 160,
+    left: 190,
   };
 
   const innerWidth = width - margin.left - margin.right;

@@ -8,8 +8,13 @@ import KategBarKatAxis from './KategBarKatAxis';
 import ChartContainer from '../ChartContainer';
 import { useSpring, useSprings, animated } from '@react-spring/web';
 import KategBarChartBar from './KategBarChartBar';
+import styled from 'styled-components';
 
-function KategBarChart({ variableCount, visDataTotal }) {
+function KategBarChart({
+  variableCount,
+  visDataTotal,
+  dashboardWidth,
+}) {
   const kategorienSorted = [
     'Unfall mit Schwerverletzten/Getöteten',
     'Unfall mit Leichtverletzten',
@@ -51,7 +56,7 @@ function KategBarChart({ variableCount, visDataTotal }) {
   //   setKategCount(newKategCount);
   // }, [visibleData]);
 
-  const width = 300;
+  const width = dashboardWidth > 400 ? dashboardWidth : 300;
 
   const height = 200;
 
@@ -226,3 +231,15 @@ function KategBarChart({ variableCount, visDataTotal }) {
 }
 
 export default KategBarChart;
+
+// const ChartWrapper = styled.div`
+//   flex: 1;
+//   /* display: flex;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+//   width: 100%;
+//   height: 100%;
+//   max-width: 1000px; // 500px
+//   margin: 0 auto;
+//   position: relative; */
+// `;

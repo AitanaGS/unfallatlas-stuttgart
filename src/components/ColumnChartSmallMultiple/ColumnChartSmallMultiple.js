@@ -4,7 +4,7 @@ import ColumnChart from './ColumnChart';
 import styled from 'styled-components';
 import { group, max } from 'd3-array';
 
-function ColumnChartSmallMultiple({ visData }) {
+function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
   // const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
   const [maxValueMap, setMaxValueMap] = useState(new Map());
@@ -14,6 +14,17 @@ function ColumnChartSmallMultiple({ visData }) {
     const newMaxValue = max(Array.from(maxValueMap.values()));
     setMaxValue(newMaxValue);
   }, [maxValueMap, visData]);
+
+  const widthNudge = 10;
+
+  const chartWidth =
+    dashboardWidth > 450
+      ? (dashboardWidth - widthNudge) / 3
+      : dashboardWidth > 300
+      ? (dashboardWidth - widthNudge) / 2
+      : dashboardWidth;
+
+  // console.log(dashboardWidth);
 
   // const dataByYear = group(visData, (d) => d.jahr);
 
@@ -66,7 +77,7 @@ function ColumnChartSmallMultiple({ visData }) {
   // TODO: chart srtuktur zeigen, wenn gar keine fälle
 
   return (
-    <SmallMultipleWrapper>
+    <SmallMultipleWrapper dashboardWidth={dashboardWidth}>
       {Array.from(dataByYear, ([year, yearVisData]) => (
         <ColumnChart
           key={year}
@@ -75,6 +86,7 @@ function ColumnChartSmallMultiple({ visData }) {
           maxValue={maxValue}
           setMaxValueMap={setMaxValueMap}
           maxValueMap={maxValueMap}
+          chartWidth={chartWidth}
         />
       ))}
       {/* {jahre.map((jahr, i) => (
@@ -91,7 +103,9 @@ function ColumnChartSmallMultiple({ visData }) {
 const SmallMultipleWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 500px;
+  /* max-width: 500px; */
+  /* max-width: ${(props) => props.dashboardWidth}; */
+  width: ${(props) => props.dashboardWidth}px;
 `;
 
 export default ColumnChartSmallMultiple;

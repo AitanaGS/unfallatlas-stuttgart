@@ -1,18 +1,24 @@
 import React from 'react';
+import styled from 'styled-components';
 
-function LeafletHeatCheckbox({ selectHeatmap, setSelectHeatmap }) {
+function LeafletHeatCheckbox({
+  selectHeatmap,
+  setSelectHeatmap,
+  dashboardWidth,
+}) {
   const handleSelectHeatmap = (event) => {
     setSelectHeatmap(event.target.checked);
   };
 
   return (
     <>
-      <form
+      <FormWrapper
+        dashboardWidth={dashboardWidth}
         onSubmit={(event) => {
           event.preventDefault();
         }}
       >
-        <fieldset>
+        <fieldset style={{ border: 'none' }}>
           {/* <legend>Heatmap</legend> */}
           <label>
             <input
@@ -26,9 +32,16 @@ function LeafletHeatCheckbox({ selectHeatmap, setSelectHeatmap }) {
             Heatmap
           </label>
         </fieldset>
-      </form>
+      </FormWrapper>
     </>
   );
 }
 
 export default LeafletHeatCheckbox;
+
+const FormWrapper = styled.form`
+  /* display: flex;
+  flex-wrap: wrap;
+  max-width: 100%; // 500px */
+  width: ${(props) => props.dashboardWidth}px;
+`;

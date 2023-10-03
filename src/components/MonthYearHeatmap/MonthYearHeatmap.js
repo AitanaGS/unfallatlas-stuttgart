@@ -9,8 +9,8 @@ import { min, max, least, greatest, extent } from 'd3-array';
 // import WeekHourAxisX from '../WeekHourAxisX';
 // import WeekHourAxisY from '../WeekHourAxisY';
 import ChartContainer from '../ChartContainer';
-import MonthYearAxisX from '../MonthYearAxisX';
-import MonthYearAxisY from '../MonthYearAxisY';
+import MonthYearAxisX from './MonthYearAxisX';
+import MonthYearAxisY from './MonthYearAxisY';
 
 function MonthYearHeatmap({ visData }) {
   const width = 360;

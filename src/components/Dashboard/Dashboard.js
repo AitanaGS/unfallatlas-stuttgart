@@ -5,7 +5,9 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
+  useRef,
 } from 'react';
+import { ResizeObserver } from '@juggle/resize-observer';
 import { rollup, sum } from 'd3-array';
 import {
   interpolateOranges,
@@ -31,6 +33,9 @@ import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
 // import ColumnChart from '../ColumnChart';
 import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
+import styled from 'styled-components';
+import useChartDimensions from '../../hooks/useChartDimensions';
+import { window } from 'd3-selection';
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
 
@@ -139,6 +144,76 @@ function Dashboard({ initialData }) {
   const [filter, setFilter] = useState(initialFilter);
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Step 2: State to hold window width
+  const [dashboardWidth, setDashboardWidth] = useState(windowWidth);
+
+  const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
+
+  // console.log(
+  //   'window width',
+  //   windowWidth,
+  //   'dashboard width',
+  //   dashboardWidth
+  // );
+  // console.log(windowWidth);
+  // console.log(resizeObserverRef.current)
+
+  // Step 3: Observe window width
+  // useEffect(() => {
+  //   console.log(dashboardWrapperRef.current);
+  //   console.log('window with', windowWidth);
+  //   // resizeObserverRef.current = new ResizeObserver((entries) => {
+  //   //   for (let entry of entries) {
+  //   //     if (entry.target === window && entry.contentRect) {
+  //   //       setWindowWidth(entry.contentRect.width);
+  //   //     }
+  //   //   }
+  //   // });
+
+  //   // resizeObserverRef.current.observe(window);
+
+  //   // return () => {
+  //   //   resizeObserverRef.current.disconnect();
+  //   // };
+  //   if (dashboardWrapperRef.current) {
+  //     const resizeObserver = new ResizeObserver((entries) => {
+  //       for (let entry of entries) {
+  //         if (entry.target === window && entry.contentRect) {
+  //           setWindowWidth(entry.contentRect.width);
+  //         }
+  //       }
+  //     });
+
+  //     resizeObserver.observe(dashboardWrapperRef.current);
+
+  //     return () => {
+  //       resizeObserver.disconnect();
+  //     };
+  //   }
+  // }, [dashboardWrapperRef, windowWidth]);
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (
+          entry.target === dashboardWrapperRef.current &&
+          entry.contentRect
+        ) {
+          setWindowWidth(entry.contentRect.width);
+          setDashboardWidth(min([entry.contentRect.width, 600]));
+        }
+      }
+    });
+
+    if (dashboardWrapperRef.current) {
+      resizeObserver.observe(dashboardWrapperRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [dashboardWrapperRef, windowWidth]);
 
   // console.log('mapData', mapData, 'totalMapData', totalMapData);
 
@@ -770,7 +845,10 @@ function Dashboard({ initialData }) {
 
   return (
     visData && (
-      <div>
+      <DashboardWrapper
+        ref={dashboardWrapperRef}
+        dashboardWidth={dashboardWidth}
+      >
         {/* <Map data={data} setVisData={setVisData} /> */}
         <LeafletMap
           data={data}
@@ -784,10 +862,13 @@ function Dashboard({ initialData }) {
           filter={filter}
           selectHeatmap={selectHeatmap}
           setTotalMapData={setTotalMapData}
+          dashboardWidth={dashboardWidth}
         />
+        {/* <CheckboxWrapper> */}
         <LeafletHeatCheckbox
           selectHeatmap={selectHeatmap}
           setSelectHeatmap={setSelectHeatmap}
+          dashboardWidth={dashboardWidth}
         />
         <FilterCheckboxes
           filter={filter}
@@ -795,7 +876,9 @@ function Dashboard({ initialData }) {
           allFilter={allFilter}
           setAllFilter={setAllFilter}
           setFilteringMode={setFilteringMode}
+          dashboardWidth={dashboardWidth}
         />
+        {/* </CheckboxWrapper> */}
         <Number
           width={75}
           height={50}
@@ -804,29 +887,44 @@ function Dashboard({ initialData }) {
           colorScale={undefined}
           max={undefined}
         />
-        {/* <ColumnChartSmallMultiple visData={visData} />
-        <ArtBarChart
-          variableCount={artCount}
-          visDataTotal={visDataTotal}
-    /> */}
-
-        {/* <KategBarChart
-          variableCount={kategCount}
-          visDataTotal={visDataTotal}
-        /> */}
-        {/* <LichtBarChart
-          variableCount={lichtCount}
-          visDataTotal={visDataTotal}
-        /> */}
-        {/* <StrasseBarChart
-          variableCount={strasseCount}
-          visDataTotal={visDataTotal}
-        /> */}
+        <TreeMap
+          treeData={treemapDataArray}
+          dashboardWidth={dashboardWidth}
+        />
         <WeekHourHeatmap
           visData={visData}
           weekHourCount={weekHourCount}
+          dashboardWidth={dashboardWidth}
         />
-        {/* <TreeMap treeData={treemapDataArray} /> */}
+
+        <ArtBarChart
+          variableCount={artCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        />
+
+        {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
+        <KategBarChart
+          variableCount={kategCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        />
+        <LichtBarChart
+          variableCount={lichtCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        />
+        <StrasseBarChart
+          variableCount={strasseCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        />
+        {/* </BarChartWrapper> */}
+
+        <ColumnChartSmallMultiple
+          visData={visData}
+          dashboardWidth={dashboardWidth}
+        />
         {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
         {/* <Number
         width={75}
@@ -883,9 +981,34 @@ function Dashboard({ initialData }) {
         /> */}
         {/* <LineChartYear visData={visData} /> */}
         {/* <LineChartMonth visData={visData} /> */}
-      </div>
+      </DashboardWrapper>
     )
   );
 }
+
+const DashboardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* width: 100%; */
+  width: ${(props) => props.dashboardWidth}px;
+  height: 100%;
+  max-width: 1000px; // 500px
+  margin: 0 auto;
+  position: relative;
+`;
+
+const CheckboxWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%; // 500px
+`;
+
+const BarChartWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: ${(props) => props.dashboardWidth}px;
+  /* max-width: 100%; // 500px */
+`;
 
 export default Dashboard;

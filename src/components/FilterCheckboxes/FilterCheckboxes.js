@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 // const initialFilter = {
 //   alle: true,
@@ -32,6 +33,7 @@ function FilterCheckboxes({
   allFilter,
   setAllFilter,
   setFilteringMode,
+  dashboardWidth,
 }) {
   // const [allFilter, setAllFilter] = useState(true);
   // const [filter, setFilter] = useState(initialFilter);
@@ -91,12 +93,13 @@ function FilterCheckboxes({
 
   return (
     <>
-      <form
+      <FormWrapper
+        dashboardWidth={dashboardWidth}
         onSubmit={(event) => {
           event.preventDefault();
         }}
       >
-        <fieldset>
+        <fieldset style={{ border: 'none' }}>
           <legend>Auswahl Unfallbeteiligung:</legend>
           <label>
             <input
@@ -200,7 +203,7 @@ function FilterCheckboxes({
             </div>
           ))} */}
         </fieldset>
-      </form>
+      </FormWrapper>
       {/* <p>
         <strong>Stored state:</strong>
       </p>
@@ -210,3 +213,11 @@ function FilterCheckboxes({
 }
 
 export default FilterCheckboxes;
+
+const FormWrapper = styled.form`
+  /* display: flex;
+  flex-wrap: wrap;
+  max-width: 100%; // 500px */
+  width: ${(props) => props.dashboardWidth}px;
+  /* border: none; */
+`;

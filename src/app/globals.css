@@ -106,13 +106,10 @@ a {
   }
 } */
 
-.leaflet-container {
-  /* height: 90vh;
-  width: 90%; */
+/* .leaflet-container {
   height: 300px;
   width: 400px;
-  /* border-radius: 2rem; */
-}
+} */
 
 .cluster-icon {
   background-color: #333;
@@ -133,8 +130,12 @@ a {
 } */
 
 .leaflet-map {
-  height: 500px;
-  width: 400px;
+  /* height: 400px; */
+  /* height: 50%; */
+  /* width: 400px; */
+  height: 50vh;
+  width: 100%;
+  position: relative;
 }
 
 .cluster {

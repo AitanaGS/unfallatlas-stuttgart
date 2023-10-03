@@ -42,7 +42,9 @@ function ColumnChartLine({
   // }
   // console.log(meanMonthData);
 
-  console.log(meanMonthData);
+  // console.log(meanMonthData);
+
+  // TODO: warning "Got NaN while animating:"
 
   return (
     meanMonthData && (

@@ -4,7 +4,7 @@ import { scaleTime, scaleLinear } from 'd3-scale';
 import { extent, rollup, max } from 'd3-array';
 import { line, curve, curveMonotoneX, curveBasis } from 'd3-shape';
 import { select, selectAll } from 'd3-selection';
-import LineChartYearAxis from '../LineChartYearAxis';
+import LineChartYearAxis from './LineChartYearAxis';
 
 function LineChartYear({ visData }) {
   const width = 400;

@@ -12,6 +12,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
+import styled from 'styled-components';
 
 // const calculateVisibleData = (map, markerClusterGroup) => {
 //   const bounds = map.getBounds();
@@ -69,6 +70,7 @@ function LeafletMap({
   filter,
   selectHeatmap,
   setTotalMapData,
+  dashboardWidth,
 }) {
   // here
   const mapRef = useRef(null);
@@ -348,6 +350,7 @@ function LeafletMap({
     filteringMode,
     setTotalMapData,
     calculateTotalVisibleData,
+    dashboardWidth,
   ]);
 
   // const customIcon = new L.Icon({
@@ -369,10 +372,29 @@ function LeafletMap({
   // TODO: check error
   // TODO: check if error with/without "const bounds = map.getBounds(); if (!bounds) return;" in onzoomend and onmoveend
 
-  return <div id="map" className="leaflet-map" ref={mapRef}></div>;
+  return (
+    dashboardWidth && (
+      <MapWrapper
+        dashboardWidth={dashboardWidth}
+        // id="map"
+        // className="leaflet-map"
+        // ref={mapRef}
+      >
+        <div id="map" className="leaflet-map" ref={mapRef}></div>
+      </MapWrapper>
+    )
+  );
 }
 
 export default LeafletMap;
+
+const MapWrapper = styled.div`
+  height: 400px;
+  height: 50vh;
+  /* width: 400px; */
+  position: relative;
+  width: ${(props) => props.dashboardWidth}px; // 400px
+`;
 
 // import React, { useEffect, useRef } from 'react';
 // import L from 'leaflet';

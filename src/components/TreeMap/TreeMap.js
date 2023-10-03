@@ -7,12 +7,12 @@ import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
 import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
 
-function TreeMap({ treeData }) {
-  const width = 250;
+function TreeMap({ treeData, dashboardWidth }) {
+  const width = dashboardWidth; // 250
   const height = 250;
   const margin = {
     top: 10,
-    right: 10,
+    right: 40,
     bottom: 10,
     left: 10,
   };

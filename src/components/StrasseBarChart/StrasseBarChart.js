@@ -8,7 +8,11 @@ import StrasseBarAxis from './StrasseBarAxis';
 import ChartContainer from '../ChartContainer';
 import StrasseBarChartBar from './StrasseBarChartBar';
 
-function StrasseBarChart({ variableCount, visDataTotal }) {
+function StrasseBarChart({
+  variableCount,
+  visDataTotal,
+  dashboardWidth,
+}) {
   // const kategorienSorted = [
   //   'winterglatt',
   //   'nass/feucht/schlüpfrig',
@@ -17,7 +21,30 @@ function StrasseBarChart({ variableCount, visDataTotal }) {
 
   const kategorienSorted = ['nass/glatt', 'trocken'];
 
-  const width = 300;
+  // const width = 300;
+
+  // const height = 200;
+
+  // const margin = {
+  //   top: 20,
+  //   right: 50,
+  //   bottom: 20,
+  //   left: 120,
+  // };
+
+  // LichtBarChart
+  // const width = 300;
+
+  // const height = 200;
+
+  // const margin = {
+  //   top: 20,
+  //   right: 50,
+  //   bottom: 20,
+  //   left: 160,
+  // };
+
+  const width = dashboardWidth > 400 ? dashboardWidth : 300;
 
   const height = 200;
 
@@ -25,7 +52,7 @@ function StrasseBarChart({ variableCount, visDataTotal }) {
     top: 20,
     right: 50,
     bottom: 20,
-    left: 120,
+    left: 190,
   };
 
   const innerWidth = width - margin.left - margin.right;
@@ -57,6 +84,7 @@ function StrasseBarChart({ variableCount, visDataTotal }) {
   // TODO: scale totalaccidents oder totalvisdata
   // TODO: scale etc. useMemo, or...
   // TODO: Dunkelheit und dämmerung zusammenfassen
+  // TODO: component bar chart with width/height/margins
 
   return (
     <ChartContainer width={width} height={height}>

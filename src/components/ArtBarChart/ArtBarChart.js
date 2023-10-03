@@ -48,15 +48,15 @@ function ArtBarChart({ variableCount, visDataTotal }) {
     }
   );
 
-  const width = 600; // 300
+  const width = 600; // 600 // 300
 
   const height = 200;
 
   const margin = {
     top: 20,
-    right: 50,
+    right: 5,
     bottom: 20,
-    left: 500, // 160
+    left: 450, // 500 // 160
   };
 
   const innerWidth = width - margin.left - margin.right;
