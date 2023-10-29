@@ -881,6 +881,7 @@ function Dashboard({ initialData }) {
   // TODO: check which calculations in components vs. here
   // TODO: Line Chart mean (und sd) statt count (?)
   // TODO: dashboardwidth and data as context
+  // TODO: bei 0 fällen gerüst der einzelnen charts
 
   // console.log(timeDataDates);
 

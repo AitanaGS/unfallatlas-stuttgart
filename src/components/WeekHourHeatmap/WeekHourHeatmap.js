@@ -55,7 +55,10 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
     'Sonntag',
   ];
 
-  const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
+  const hourSorted =
+    dashboardWidth > 400
+      ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
+      : ['0-6 Uhr', '6-12', '12-18', '18-0'];
 
   const hourScale = scaleBand()
     .domain(hourSorted)

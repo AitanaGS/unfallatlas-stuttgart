@@ -53,7 +53,7 @@ function ArtBarChartBar({
     width: xScale(variableCount.get(kat)),
     // height: yScale.bandwidth(),
     height: yScaleBandwidth,
-    textX: xScale(variableCount.get(kat)) + 5,
+    textX: xScale(variableCount.get(kat)) + 3,
     // textY: yScale(kat) + yScale.bandwidth() / 2,
     textY: yScale(kat) + yScaleBandwidth / 2,
     config: {
