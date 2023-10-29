@@ -9,7 +9,11 @@ import ArtBarAxis from './ArtBarAxis';
 import { useSpring, useSprings, animated } from '@react-spring/web';
 import ArtBarChartBar from './ArtBarChartBar';
 
-function ArtBarChart({ variableCount, visDataTotal }) {
+function ArtBarChart({
+  variableCount,
+  visDataTotal,
+  dashboardWidth,
+}) {
   // const kategorienSorted = [
   //   'Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug',
   //   'Zusammenstoß mit vorausfahrendem / wartendem Fahrzeug',
@@ -40,6 +44,8 @@ function ArtBarChart({ variableCount, visDataTotal }) {
 
   // const kategorienSorted = Array.from(variableCount.keys());
 
+  console.log('artbar dashboardwidth', dashboardWidth);
+
   const kategorienSorted = Array.from(variableCount.keys()).filter(
     (key) => {
       const count = variableCount.get(key);
@@ -48,16 +54,35 @@ function ArtBarChart({ variableCount, visDataTotal }) {
     }
   );
 
-  const width = 600; // 600 // 300
+  // const width = 600; // 600 // 300
+  const width = dashboardWidth;
 
-  const height = 200;
+  const height =
+    kategorienSorted.length <= 2
+      ? 150
+      : kategorienSorted.length > 2 && kategorienSorted.length <= 5
+      ? 300
+      : 600;
+  // : kategorienSorted.length > 5 || kategorienSorted <= 7
+  // ? 450
+  // 600;
+
+  // const height = useMemo(() => {
+  //   return kategorienSorted.length <= 2
+  //     ? 150
+  //     : kategorienSorted.length > 2 || kategorienSorted.length <= 5
+  //     ? 300
+  //     : 600;
+  // }, [kategorienSorted]);
 
   const margin = {
     top: 20,
-    right: 5,
+    right: dashboardWidth > 400 ? 5 : 0, // 5
     bottom: 20,
-    left: 450, // 500 // 160
+    left: dashboardWidth > 400 ? 275 : 250, // 275 // 450 // 500 // 160
   };
+
+  console.log(kategorienSorted.length, height);
 
   const innerWidth = width - margin.left - margin.right;
 
@@ -79,10 +104,14 @@ function ArtBarChart({ variableCount, visDataTotal }) {
     .range([0, innerWidth])
     .nice();
 
+  const yScaleBandwidth = 40;
+
   const yScale = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
     .range([innerHeight, 0])
     .padding(0.2);
+
+  // console.log('bandwidth', yScale.bandwidth());
 
   // console.log(kategorienSorted);
 
@@ -100,6 +129,7 @@ function ArtBarChart({ variableCount, visDataTotal }) {
         innerHeight={innerHeight}
         margin={margin}
         kat={kategorienSorted}
+        yScaleBandwidth={yScaleBandwidth}
       />
       <g
         ref={barChartRef}
@@ -113,6 +143,7 @@ function ArtBarChart({ variableCount, visDataTotal }) {
             variableCount={variableCount}
             visDataTotal={visDataTotal}
             kat={d}
+            yScaleBandwidth={yScaleBandwidth}
           />
           // <g key={d}>
           //   <rect

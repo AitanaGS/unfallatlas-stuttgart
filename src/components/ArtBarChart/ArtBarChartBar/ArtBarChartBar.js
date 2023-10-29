@@ -7,6 +7,7 @@ function ArtBarChartBar({
   variableCount,
   visDataTotal,
   kat,
+  yScaleBandwidth,
 }) {
   // const spring = useSpring({
   //   from: {
@@ -50,9 +51,11 @@ function ArtBarChartBar({
     x: xScale(0),
     y: yScale(kat),
     width: xScale(variableCount.get(kat)),
-    height: yScale.bandwidth(),
-    textX: xScale(variableCount.get(kat)) + 10,
-    textY: yScale(kat) + yScale.bandwidth() / 2,
+    // height: yScale.bandwidth(),
+    height: yScaleBandwidth,
+    textX: xScale(variableCount.get(kat)) + 5,
+    // textY: yScale(kat) + yScale.bandwidth() / 2,
+    textY: yScale(kat) + yScaleBandwidth / 2,
     config: {
       mass: 1,
       tension: 120,

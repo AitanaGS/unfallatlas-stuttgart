@@ -63,7 +63,7 @@ function LeafletMap({
   data,
   setVisData,
   setMapData,
-  filteredData,
+  // filteredData,
   filteringMode,
   filterData,
   allFilter,

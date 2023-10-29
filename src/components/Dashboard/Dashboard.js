@@ -15,6 +15,7 @@ import {
 } from 'd3-scale-chromatic';
 import { min, max, least, greatest, extent } from 'd3-array';
 import { scaleBand, scaleSequential } from 'd3-scale';
+import { throttle } from 'lodash';
 
 import LeafletMap from '../LeafletMap';
 import KategBarChart from '../KategBarChart';
@@ -145,17 +146,36 @@ function Dashboard({ initialData }) {
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Step 2: State to hold window width
+  const [windowWidth, setWindowWidth] = useState(
+    window.innerWidth || 600
+  ); // Step 2: State to hold window width
   const [dashboardWidth, setDashboardWidth] = useState(windowWidth);
 
   const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
 
-  // console.log(
-  //   'window width',
-  //   windowWidth,
-  //   'dashboard width',
-  //   dashboardWidth
-  // );
+  console.log(
+    'window width',
+    windowWidth,
+    'dashboard width',
+    dashboardWidth
+  );
+
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowWidth(window.innerWidth);
+  //     setDashboardWidth(min([window.innerWidth, 600]));
+  //   };
+
+  //   const resizeObserver = new ResizeObserver(handleResize);
+  //   resizeObserver.observe(window);
+
+  //   return () => {
+  //     resizeObserver.disconnect();
+  //   };
+  // }, []); // Empty dependency array means this effect runs once on component mount
+
   // console.log(windowWidth);
   // console.log(resizeObserverRef.current)
 
@@ -193,7 +213,29 @@ function Dashboard({ initialData }) {
   //   }
   // }, [dashboardWrapperRef, windowWidth]);
 
+  // here
   useEffect(() => {
+    // const handleResize = throttle((entries) => {
+    //   for (let entry of entries) {
+    //     if (
+    //       entry.target === dashboardWrapperRef.current &&
+    //       entry.contentRect
+    //     ) {
+    //       setWindowWidth(entry.contentRect.width);
+    //       setDashboardWidth(Math.min([entry.contentRect.width, 600]));
+    //     }
+    //   }
+    // }, 200); // Adjust the throttle duration (in milliseconds) as needed
+
+    // if (dashboardWrapperRef.current) {
+    //   const resizeObserver = new ResizeObserver(handleResize);
+    //   resizeObserver.observe(dashboardWrapperRef.current);
+
+    //   return () => {
+    //     resizeObserver.disconnect();
+    //   };
+    // }
+
     const resizeObserver = new ResizeObserver((entries) => {
       for (let entry of entries) {
         if (
@@ -838,6 +880,7 @@ function Dashboard({ initialData }) {
   // TODO: time variables more efficient (page.js)
   // TODO: check which calculations in components vs. here
   // TODO: Line Chart mean (und sd) statt count (?)
+  // TODO: dashboardwidth and data as context
 
   // console.log(timeDataDates);
 
@@ -847,16 +890,16 @@ function Dashboard({ initialData }) {
     visData && (
       <DashboardWrapper
         ref={dashboardWrapperRef}
-        dashboardWidth={dashboardWidth}
+        // dashboardWidth={dashboardWidth}
       >
         {/* <Map data={data} setVisData={setVisData} /> */}
         <LeafletMap
           data={data}
           setVisData={setVisData}
           setMapData={setMapData}
-          filteredData={filteredData}
+          // filteredData={filteredData}
           filteringMode={filteringMode}
-          setData={setData}
+          // setData={setData}
           filterData={filterData}
           allFilter={allFilter}
           filter={filter}
@@ -990,8 +1033,8 @@ const DashboardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  /* width: 100%; */
-  width: ${(props) => props.dashboardWidth}px;
+  width: 100%;
+  /* width: ${(props) => props.dashboardWidth}px; */
   height: 100%;
   max-width: 1000px; // 500px
   margin: 0 auto;
