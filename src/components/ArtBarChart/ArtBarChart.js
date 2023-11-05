@@ -8,6 +8,7 @@ import ChartContainer from '../ChartContainer';
 import ArtBarAxis from './ArtBarAxis';
 import { useSpring, useSprings, animated } from '@react-spring/web';
 import ArtBarChartBar from './ArtBarChartBar';
+import ArtBarChartLabelledBar from './ArtBarChartLabelledBar';
 
 function ArtBarChart({
   variableCount,
@@ -57,12 +58,19 @@ function ArtBarChart({
   // const width = 600; // 600 // 300
   const width = dashboardWidth;
 
-  const height =
-    kategorienSorted.length <= 2
-      ? 150
-      : kategorienSorted.length > 2 && kategorienSorted.length <= 5
-      ? 300
-      : 600;
+  // const height =
+  //   kategorienSorted.length <= 2
+  //     ? 150
+  //     : kategorienSorted.length > 2 && kategorienSorted.length <= 5
+  //     ? 300
+  //     : 600;
+  // const height =
+  //   kategorienSorted.length <= 2
+  //     ? 150
+  //     : kategorienSorted.length > 2 && kategorienSorted.length <= 6
+  //     ? 500
+  //     : 800;
+  const height = kategorienSorted.length * 75;
   // : kategorienSorted.length > 5 || kategorienSorted <= 7
   // ? 450
   // 600;
@@ -82,9 +90,19 @@ function ArtBarChart({
     left: dashboardWidth > 400 ? 275 : 250, // 275 // 450 // 500 // 160
   };
 
-  console.log(kategorienSorted.length, height);
+  const marginLabelled = {
+    top: 20,
+    right: 10, // 5
+    bottom: 20,
+    left: 15, // 275 // 450 // 500 // 160
+  };
 
   const innerWidth = width - margin.left - margin.right;
+
+  const innerWidthLabelled =
+    width - marginLabelled.left - marginLabelled.right;
+
+  console.log('innerwidht labelled', innerWidthLabelled);
 
   const innerHeight = height - margin.top - margin.bottom;
 
@@ -104,12 +122,34 @@ function ArtBarChart({
     .range([0, innerWidth])
     .nice();
 
+  const maxKat = kategorienSorted.pop();
+
+  const maxKatCount = variableCount.get(maxKat);
+
+  console.log(
+    'variableCount kategoriensprted',
+    variableCount,
+    kategorienSorted
+  );
+  const xScaleLabelled = scaleLinear()
+    .domain([0, maxKatCount]) // visDataTotal dataTotal
+    .range([0, innerWidthLabelled]) // innerWidthLabelled
+    .nice();
+
   const yScaleBandwidth = 40;
 
   const yScale = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
     .range([innerHeight, 0])
     .padding(0.2);
+
+  const yScaleLabelled = scaleBand()
+    .domain(kategorienSorted) // kategorienSorted
+    .range([innerHeight, 0])
+    .paddingInner(2.5) //0.8
+    .paddingOuter(0.3);
+
+  console.log('xscallelabelled', xScaleLabelled(3600));
 
   // console.log('bandwidth', yScale.bandwidth());
 
@@ -124,22 +164,31 @@ function ArtBarChart({
 
   return (
     <ChartContainer width={width} height={height}>
-      <ArtBarAxis
+      {/* <ArtBarAxis
         yScale={yScale}
         innerHeight={innerHeight}
         margin={margin}
         kat={kategorienSorted}
         yScaleBandwidth={yScaleBandwidth}
-      />
+      /> */}
       <g
         ref={barChartRef}
-        transform={`translate(${margin.left}, ${margin.top})`}
+        transform={`translate(${marginLabelled.left}, ${marginLabelled.top})`}
       >
         {kategorienSorted.map((d, i) => (
-          <ArtBarChartBar
+          // <ArtBarChartBar
+          //   key={d}
+          //   xScale={xScale}
+          //   yScale={yScale}
+          //   variableCount={variableCount}
+          //   visDataTotal={visDataTotal}
+          //   kat={d}
+          //   yScaleBandwidth={yScaleBandwidth}
+          // />
+          <ArtBarChartLabelledBar
             key={d}
-            xScale={xScale}
-            yScale={yScale}
+            xScale={xScaleLabelled}
+            yScale={yScaleLabelled}
             variableCount={variableCount}
             visDataTotal={visDataTotal}
             kat={d}
