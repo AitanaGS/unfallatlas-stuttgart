@@ -32,6 +32,7 @@ import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
+import KategStackedBarChart from '../KategStackedBarChart';
 // import ColumnChart from '../ColumnChart';
 import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
 import styled from 'styled-components';
@@ -882,6 +883,7 @@ function Dashboard({ initialData }) {
   // TODO: Line Chart mean (und sd) statt count (?)
   // TODO: dashboardwidth and data as context
   // TODO: bei 0 fällen gerüst der einzelnen charts
+  // TODO: remove heatmap functionaliy in leaflet
 
   // console.log(timeDataDates);
 
@@ -909,11 +911,11 @@ function Dashboard({ initialData }) {
           dashboardWidth={dashboardWidth}
         />
         {/* <CheckboxWrapper> */}
-        <LeafletHeatCheckbox
+        {/* <LeafletHeatCheckbox
           selectHeatmap={selectHeatmap}
           setSelectHeatmap={setSelectHeatmap}
           dashboardWidth={dashboardWidth}
-        />
+        /> */}
         <FilterCheckboxes
           filter={filter}
           setFilter={setFilter}
@@ -948,6 +950,11 @@ function Dashboard({ initialData }) {
         />
 
         {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
+        {/* <KategStackedBarChart
+          variableCount={kategCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        /> */}
         <KategBarChart
           variableCount={kategCount}
           visDataTotal={visDataTotal}

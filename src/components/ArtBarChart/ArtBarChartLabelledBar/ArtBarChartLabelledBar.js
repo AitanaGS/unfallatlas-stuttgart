@@ -61,9 +61,16 @@ function ArtBarChartLabelledBar({
   //   },
   // });
 
+  // const katDivided =
+  //   kat === 'Unfall anderer Art'
+  //     ? ['', 'Unfall anderer Art']
+  //     : splitStringByHalf(kat);
+
+  // const katDivided = splitStringByHalf(kat);
+
   const katDivided =
     kat === 'Unfall anderer Art'
-      ? ['', 'Unfall anderer Art']
+      ? ['Unfall', 'anderer Art']
       : splitStringByHalf(kat);
 
   const spring = useSpring({
@@ -125,6 +132,7 @@ function ArtBarChartLabelledBar({
           <animated.tspan
             // x={-5}
             dy="1.2em"
+            // dy={kat !== 'Unfall anderer Art' ? '1.2em' : '0'}
             x={spring.textLabelX}
             textAnchor="start"
             // dominantBaseline="middle"

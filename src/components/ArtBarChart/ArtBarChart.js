@@ -45,7 +45,7 @@ function ArtBarChart({
 
   // const kategorienSorted = Array.from(variableCount.keys());
 
-  console.log('artbar dashboardwidth', dashboardWidth);
+  // console.log('artbar dashboardwidth', dashboardWidth);
 
   const kategorienSorted = Array.from(variableCount.keys()).filter(
     (key) => {
@@ -70,7 +70,7 @@ function ArtBarChart({
   //     : kategorienSorted.length > 2 && kategorienSorted.length <= 6
   //     ? 500
   //     : 800;
-  const height = kategorienSorted.length * 75;
+  const height = kategorienSorted.length * 60; // 75
   // : kategorienSorted.length > 5 || kategorienSorted <= 7
   // ? 450
   // 600;
@@ -94,7 +94,7 @@ function ArtBarChart({
     top: 20,
     right: 10, // 5
     bottom: 20,
-    left: 15, // 275 // 450 // 500 // 160
+    left: 20, // 275 // 450 // 500 // 160
   };
 
   const innerWidth = width - margin.left - margin.right;
@@ -102,7 +102,7 @@ function ArtBarChart({
   const innerWidthLabelled =
     width - marginLabelled.left - marginLabelled.right;
 
-  console.log('innerwidht labelled', innerWidthLabelled);
+  // console.log('innerwidht labelled', innerWidthLabelled);
 
   const innerHeight = height - margin.top - margin.bottom;
 
@@ -126,17 +126,17 @@ function ArtBarChart({
 
   const maxKatCount = variableCount.get(maxKat);
 
-  console.log(
-    'variableCount kategoriensprted',
-    variableCount,
-    kategorienSorted
-  );
+  // console.log(
+  //   'variableCount kategoriensprted',
+  //   variableCount,
+  //   kategorienSorted
+  // );
   const xScaleLabelled = scaleLinear()
     .domain([0, maxKatCount]) // visDataTotal dataTotal
     .range([0, innerWidthLabelled]) // innerWidthLabelled
     .nice();
 
-  const yScaleBandwidth = 40;
+  const yScaleBandwidth = 20; // 40
 
   const yScale = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
@@ -146,10 +146,10 @@ function ArtBarChart({
   const yScaleLabelled = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
     .range([innerHeight, 0])
-    .paddingInner(2.5) //0.8
+    .paddingInner(0.3) // 2.5 0.8
     .paddingOuter(0.3);
 
-  console.log('xscallelabelled', xScaleLabelled(3600));
+  // console.log('xscallelabelled', xScaleLabelled(3600));
 
   // console.log('bandwidth', yScale.bandwidth());
 

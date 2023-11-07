@@ -58,12 +58,12 @@ function KategBarChart({
 
   const width = dashboardWidth > 400 ? dashboardWidth : 300;
 
-  const height = 200;
+  const height = 120;
 
   const margin = {
     top: 20,
     right: 50,
-    bottom: 20,
+    bottom: 5,
     left: 190,
   };
 
@@ -77,13 +77,23 @@ function KategBarChart({
   // console.log('keys', kategorien); // [...kategCount.keys()]
   // console.log(variableCount.get(kategorien[0]));
 
+  const maxKateg =
+    variableCount.get('Unfall mit Leichtverletzten') >=
+    variableCount.get('Unfall mit Schwerverletzten/Getöteten')
+      ? 'Unfall mit Leichtverletzten'
+      : 'Unfall mit Schwerverletzten/Getöteten';
+
+  const maxValue = variableCount.get(maxKateg);
+
+  // console.log('maxkateg, maxvalue', maxKateg, maxValue);
+
   const barChartRef = useRef();
   useEffect(() => {
     const barChart = select(barChartRef.current);
   }, [variableCount]);
 
   const xScale = scaleLinear()
-    .domain([0, visDataTotal]) // dataTotal
+    .domain([0, maxValue]) // visDataTotal
     .range([0, innerWidth])
     .nice();
 

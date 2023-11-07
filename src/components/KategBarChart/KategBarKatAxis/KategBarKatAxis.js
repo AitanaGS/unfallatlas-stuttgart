@@ -16,8 +16,8 @@ function KategBarKatAxis({ yScale, innerHeight, margin, kat }) {
           dominantBaseline="middle"
           style={{ fontSize: '0.8rem' }}
         >
-          <tspan>Unfall mit</tspan>
-          <tspan x={-5} y={yScale(d) + yScale.bandwidth() / 2 + 15}>
+          <tspan dy="-0.6em">Unfall mit</tspan>
+          <tspan x={-5} dy="1.2em">
             {d.split(' ').slice(-1)}
           </tspan>
         </text>
