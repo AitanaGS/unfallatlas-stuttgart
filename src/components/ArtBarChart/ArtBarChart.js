@@ -70,7 +70,7 @@ function ArtBarChart({
   //     : kategorienSorted.length > 2 && kategorienSorted.length <= 6
   //     ? 500
   //     : 800;
-  const height = kategorienSorted.length * 60; // 75
+  const height = kategorienSorted.length * 65; // 75
   // : kategorienSorted.length > 5 || kategorienSorted <= 7
   // ? 450
   // 600;
@@ -85,15 +85,15 @@ function ArtBarChart({
 
   const margin = {
     top: 20,
-    right: dashboardWidth > 400 ? 5 : 0, // 5
-    bottom: 20,
+    right: dashboardWidth > 400 ? 5 : 2, // 5
+    bottom: 5,
     left: dashboardWidth > 400 ? 275 : 250, // 275 // 450 // 500 // 160
   };
 
   const marginLabelled = {
     top: 20,
-    right: 10, // 5
-    bottom: 20,
+    right: 5, // 5
+    bottom: 5,
     left: 20, // 275 // 450 // 500 // 160
   };
 
@@ -122,9 +122,11 @@ function ArtBarChart({
     .range([0, innerWidth])
     .nice();
 
-  const maxKat = kategorienSorted.pop();
+  const maxKat = kategorienSorted.pop() || '';
 
-  const maxKatCount = variableCount.get(maxKat);
+  const maxKatCount = variableCount.get(maxKat) || 0;
+
+  console.log('maxkat', maxKat, maxKatCount);
 
   // console.log(
   //   'variableCount kategoriensprted',

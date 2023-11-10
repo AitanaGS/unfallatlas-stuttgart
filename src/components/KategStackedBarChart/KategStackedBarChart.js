@@ -38,8 +38,9 @@ function KategBarChart({
   const kategorien = [...variableCount.keys()];
 
   const maxKateg =
-    variableCount.get('Unfall mit Leichtverletzten') >=
-    variableCount.get('Unfall mit Schwerverletzten/Getöteten')
+    variableCount.get('Unfall mit Leichtverletzten') ||
+    0 >= variableCount.get('Unfall mit Schwerverletzten/Getöteten') ||
+    0
       ? 'Unfall mit Leichtverletzten'
       : 'Unfall mit Schwerverletzten/Getöteten';
 

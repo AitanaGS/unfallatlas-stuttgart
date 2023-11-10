@@ -33,6 +33,7 @@ import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
 import KategStackedBarChart from '../KategStackedBarChart';
+import LichtLollipopChart from '../LichtLollipopChart';
 // import ColumnChart from '../ColumnChart';
 import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
 import styled from 'styled-components';
@@ -884,6 +885,7 @@ function Dashboard({ initialData }) {
   // TODO: dashboardwidth and data as context
   // TODO: bei 0 fällen gerüst der einzelnen charts
   // TODO: remove heatmap functionaliy in leaflet
+  // TODO: check in R/Daten Unfälle ohne Verletzte
 
   // console.log(timeDataDates);
 
@@ -957,6 +959,11 @@ function Dashboard({ initialData }) {
         /> */}
         <KategBarChart
           variableCount={kategCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        />
+        <LichtLollipopChart
+          variableCount={lichtCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         />
