@@ -105,12 +105,12 @@ function LichtLollipopChartLine({
 
   // TODO: abstract bar chart
 
-  console.log(
-    'lollipop variablecount, kat',
-    variableCount,
-    kat,
-    yScale(variableCount.get(kat))
-  );
+  // console.log(
+  //   'lollipop variablecount, kat',
+  //   variableCount,
+  //   kat,
+  //   yScale(variableCount.get(kat))
+  // );
 
   return (
     variableCount.get(kat) > 0 && (

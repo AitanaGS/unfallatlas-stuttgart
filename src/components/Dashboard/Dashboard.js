@@ -34,6 +34,7 @@ import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
 import KategStackedBarChart from '../KategStackedBarChart';
 import LichtLollipopChart from '../LichtLollipopChart';
+import LichtDonutChart from '../LichtDonutChart';
 // import ColumnChart from '../ColumnChart';
 import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
 import styled from 'styled-components';
@@ -935,7 +936,7 @@ function Dashboard({ initialData }) {
           colorScale={undefined}
           max={undefined}
         />
-        <TreeMap
+        {/* <TreeMap
           treeData={treemapDataArray}
           dashboardWidth={dashboardWidth}
         />
@@ -950,15 +951,13 @@ function Dashboard({ initialData }) {
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         />
-
-        {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
-        {/* <KategStackedBarChart
+        <KategBarChart
           variableCount={kategCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         /> */}
-        <KategBarChart
-          variableCount={kategCount}
+        <LichtDonutChart
+          variableCount={lichtCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         />
@@ -984,6 +983,12 @@ function Dashboard({ initialData }) {
           dashboardWidth={dashboardWidth}
         />
         {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
+        {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
+        {/* <KategStackedBarChart
+          variableCount={kategCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        /> */}
         {/* <Number
         width={75}
         height={50}

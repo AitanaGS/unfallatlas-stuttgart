@@ -89,7 +89,7 @@ function LichtBarChart({
     .range([innerHeight, 0])
     .nice();
 
-  console.log('lollipop', kategorien, maxValue);
+  // console.log('lollipop', kategorien, maxValue);
 
   // TODO: check rendering (useState is called to often vs. useEffect)
   // TODO: scale totalaccidents oder totalvisdata
