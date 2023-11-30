@@ -1,7 +1,12 @@
 'use client';
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 // import { useSpring, animated } from '@react-spring/web';
-import { useSprings, animated } from '@react-spring/web';
+import {
+  useSprings,
+  animated,
+  useSpring,
+  SpringValue,
+} from '@react-spring/web';
 import { select } from 'd3-selection';
 import { rollup, extent, max, min } from 'd3-array';
 import { pie, arc } from 'd3-shape';
@@ -13,7 +18,7 @@ import LichtDonutChartArc from './LichtDonutChartArc';
 // import LichtLollipopChartLine from './LichtLollipopChartLine';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 
-function LichtBarChart({
+function LichtDonutChart({
   variableCount,
   visDataTotal,
   dashboardWidth,
@@ -105,45 +110,19 @@ function LichtBarChart({
 
   // console.log(countArray);
 
-  const arcGenerator = pie()
-    .value((d) => d.value)
-    .sort(null);
+  // const arcGenerator = pie()
+  //   .value((d) => d.value)
+  //   .sort(null);
 
-  const arcs = useMemo(() => {
-    return arcGenerator(countArray);
-  }, [countArray, arcGenerator]);
+  const arcData = useMemo(() => {
+    const pieGenerator = pie()
+      .value((d) => d.value)
+      .sort(null);
+
+    return pieGenerator(countArray);
+  }, [countArray]); // arcGenerator
 
   // console.log('arcs', arcs);
-
-  const arcPath = arc()
-    .innerRadius(100) // This is the size of the donut hole
-    .outerRadius(radius);
-
-  // const arcData = arcGenerator(pieData);
-
-  // console.log(arcData);
-
-  // const xScale = scaleLinear()
-  //   .domain([0, visDataTotal]) // dataTotal
-  //   .range([0, innerWidth])
-  //   .nice();
-
-  // const yScale = scaleBand()
-  //   .domain(kategorienSorted) // kategorienSorted
-  //   .range([innerHeight, 0])
-  //   .padding(0.2);
-
-  // const xScale = scaleBand()
-  //   .domain(kategorienSorted) // kategorienSorted
-  //   .range([0, innerWidth])
-  //   .padding(0.2);
-
-  // const yScale = scaleLinear()
-  //   .domain([0, maxValue]) // dataTotal
-  //   .range([innerHeight, 0])
-  //   .nice();
-
-  // console.log('lollipop', kategorien, maxValue);
 
   // const leftLabelXPosition =
   //   dashboardWidth > 450 ? innerWidth / 2 - radius : 10;
@@ -177,26 +156,6 @@ function LichtBarChart({
 
   // const rightLabelTextAnchor = dashboardWidth > 400 ? 'start' : 'end';
   const rightLabelTextAnchor = 'start';
-  // console.log('arcs', arcs);
-
-  // const [springs, api] = useSprings(
-  //   2,
-  //   () => ({
-  //     // from: { opacity: 0 },
-  //     // to: { opacity: 1 },
-  //   }),
-  //   []
-  // )
-
-  // const { ...springs } = useSprings(
-  //   arcs.length,
-  //   arcs.map((arc) => ({
-  //     d: arcPath(arc),
-  //     config: { mass: 1, tension: 120, friction: 20 },
-  //   }))
-  // );
-
-  // console.log('springs', springs);
 
   // TODO: check rendering (useState is called to often vs. useEffect)
   // TODO: scale totalaccidents oder totalvisdata
@@ -261,65 +220,17 @@ function LichtBarChart({
           margin.top + innerHeight / 2
         })`}
       >
-        {/* {arcs.map(
-          (arc) =>
-            arc && (
-              <LichtDonutChartArc
-                key={arc.data.key}
-                arc={arc}
-                pathGenerator={arcPath}
-                fill={colorScale(arc.data.key) || '#fff'}
-              />
-            )
-        )} */}
-        {/* {Object.keys(springs).map((key) => (
-          <animated.path
-            key={key}
-            d={springs[key].d}
-            fill={colorScale(arcs[parseInt(key)].data.key) || '#fff'}
-            stroke="white"
+        {arcData.map((d, i) => (
+          <LichtDonutChartArc
+            key={d.data.key}
+            radius={radius}
+            arcDatum={d}
+            color={colorScale(d.data.key)} //colors[i]
           />
-        ))} */}
-        {arcs.map(
-          (arc) => (
-            <path
-              key={arc.data.key}
-              d={arcPath(arc)}
-              fill={colorScale(arc.data.key) || '#fff'}
-              stroke="white"
-            />
-          )
-          // (arc) =>
-          //   arc && (
-          //     <LichtDonutChartArc
-          //       key={arc.data.key}
-          //       arc={arc}
-          //       path={arcPath(arc)}
-          //       fill={colorScale(arc.data.key) || '#fff'}
-          //     />
-          //   )
-        )}
-        {/* {kategorien.map((d, i) => (
-          <LichtLollipopChartLine
-            key={d}
-            xScale={xScale}
-            yScale={yScale}
-            variableCount={variableCount}
-            visDataTotal={visDataTotal}
-            maxValue={maxValue}
-            innerHeight={innerHeight}
-            kat={d}
-          />
-        ))} */}
-        {/* <circle
-          cx={innerWidth / 2}
-          cy={innerHeight / 2}
-          r={100}
-          fill="white"
-        /> */}
+        ))}
       </g>
     </ChartContainer>
   );
 }
 
-export default LichtBarChart;
+export default LichtDonutChart;
