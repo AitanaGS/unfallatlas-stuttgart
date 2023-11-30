@@ -35,6 +35,7 @@ import ArtBarChart from '../ArtBarChart';
 import KategStackedBarChart from '../KategStackedBarChart';
 import LichtLollipopChart from '../LichtLollipopChart';
 import LichtDonutChart from '../LichtDonutChart';
+import StrasseDonutChart from '../StrasseDonutChart';
 // import ColumnChart from '../ColumnChart';
 import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
 import styled from 'styled-components';
@@ -936,7 +937,7 @@ function Dashboard({ initialData }) {
           colorScale={undefined}
           max={undefined}
         />
-        {/* <TreeMap
+        <TreeMap
           treeData={treemapDataArray}
           dashboardWidth={dashboardWidth}
         />
@@ -955,13 +956,24 @@ function Dashboard({ initialData }) {
           variableCount={kategCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
-        /> */}
+        />
         <LichtDonutChart
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         />
-        <LichtLollipopChart
+        <StrasseDonutChart
+          variableCount={strasseCount}
+          visDataTotal={visDataTotal}
+          dashboardWidth={dashboardWidth}
+        />
+
+        <ColumnChartSmallMultiple
+          visData={visData}
+          dashboardWidth={dashboardWidth}
+        />
+        {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
+        {/* <LichtLollipopChart
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
@@ -970,19 +982,13 @@ function Dashboard({ initialData }) {
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
-        />
-        <StrasseBarChart
+        /> */}
+        {/* <StrasseBarChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
-        />
+        /> */}
         {/* </BarChartWrapper> */}
-
-        <ColumnChartSmallMultiple
-          visData={visData}
-          dashboardWidth={dashboardWidth}
-        />
-        {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
         {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
         {/* <KategStackedBarChart
           variableCount={kategCount}

@@ -8,7 +8,7 @@ import {
 } from '@react-spring/web';
 import { pie, arc } from 'd3-shape';
 
-const LichtDonutChartArc = ({ arcDatum, radius, color }) => {
+const StrasseDonutChartArc = ({ arcDatum, radius, color }) => {
   const arcPathGenerator = arc();
 
   const spring = useSpring({
@@ -34,4 +34,4 @@ const LichtDonutChartArc = ({ arcDatum, radius, color }) => {
   );
 };
 
-export default LichtDonutChartArc;
+export default StrasseDonutChartArc;
