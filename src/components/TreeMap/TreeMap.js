@@ -11,7 +11,7 @@ function TreeMap({ treeData, dashboardWidth }) {
   const width = dashboardWidth; // 250
   const height = 250;
   const margin = {
-    top: 10,
+    top: 20,
     right: 40,
     bottom: 10,
     left: 10,
@@ -55,6 +55,15 @@ function TreeMap({ treeData, dashboardWidth }) {
 
   return (
     <ChartContainer width={width} height={height}>
+      <text
+        x={5}
+        y={2}
+        textAnchor="auto"
+        dominantBaseline="hanging"
+        className="svg-title"
+      >
+        Test
+      </text>
       <g transform={`translate(${margin.left},${margin.top})`}>
         {root.leaves().map((d) => (
           <TreeMapRect

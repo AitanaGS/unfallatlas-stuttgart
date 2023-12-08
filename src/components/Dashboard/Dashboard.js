@@ -40,12 +40,24 @@ import StrasseDonutChart from '../StrasseDonutChart';
 import ColumnChartSmallMultiple from '../ColumnChartSmallMultiple';
 import styled from 'styled-components';
 import useChartDimensions from '../../hooks/useChartDimensions';
+// import { lato } from '../../utils/fonts';
 import { window } from 'd3-selection';
+import Intro from '../Intro';
+// import { Quattrocento, Lato } from 'next/font/google';
+
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
 
 // const Map = dynamic(() => import('../Map'), {
 //   ssr: false,
+// });
+
+// const lato = Lato({
+//   weight: ['400', '700'],
+//   style: ['normal'],
+//   subsets: ['latin'],
+//   display: 'swap',
+//   variable: '--font-lato',
 // });
 
 const initialFilter = {
@@ -899,6 +911,7 @@ function Dashboard({ initialData }) {
         ref={dashboardWrapperRef}
         // dashboardWidth={dashboardWidth}
       >
+        <Intro />
         {/* <Map data={data} setVisData={setVisData} /> */}
         <LeafletMap
           data={data}
