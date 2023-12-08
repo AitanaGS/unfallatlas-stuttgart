@@ -30,6 +30,8 @@ function WeekHourRect({
   //   },
   // });
 
+  // TODO: numberwithseperator?
+
   return (
     <g>
       <animated.rect

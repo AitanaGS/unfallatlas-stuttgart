@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSpring, animated } from '@react-spring/web';
+import { numberWithSeparator } from '../../../utils/calc';
 
 function TreeMapRect({ d, colorScale }) {
   const spring = useSpring({
@@ -51,7 +52,7 @@ function TreeMapRect({ d, colorScale }) {
         textAnchor="start"
         dominantBaseline="hanging"
       >
-        {d.value > 0 ? d.value : ''}
+        {d.value > 0 ? numberWithSeparator(d.value) : ''}
       </animated.text>
     </g>
   );

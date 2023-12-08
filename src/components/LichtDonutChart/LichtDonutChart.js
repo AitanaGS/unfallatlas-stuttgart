@@ -17,6 +17,7 @@ import ChartContainer from '../ChartContainer';
 import LichtDonutChartArc from './LichtDonutChartArc';
 // import LichtLollipopChartLine from './LichtLollipopChartLine';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
+import { numberWithSeparator } from '../../utils/calc';
 
 function LichtDonutChart({
   variableCount,
@@ -194,7 +195,9 @@ function LichtDonutChart({
           Dunkelheit
         </tspan>
         <tspan x={leftLabelXPosition} dy="1.4em">
-          {variableCount.get('Dämmerung/Dunkelheit') || 0}
+          {numberWithSeparator(
+            variableCount.get('Dämmerung/Dunkelheit')
+          ) || 0}
         </tspan>
       </text>
       {/* )} */}
@@ -210,7 +213,7 @@ function LichtDonutChart({
           Tageslicht
         </tspan>
         <tspan x={rightLabelXPosition} dy="1.4em">
-          {variableCount.get('Tageslicht') || 0}
+          {numberWithSeparator(variableCount.get('Tageslicht')) || 0}
         </tspan>
       </text>
       {/* )} */}

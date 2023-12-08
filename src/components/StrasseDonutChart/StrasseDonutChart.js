@@ -17,6 +17,7 @@ import ChartContainer from '../ChartContainer';
 import StrasseDonutChartArc from './StrasseDonutChartArc';
 // import LichtLollipopChartLine from './LichtLollipopChartLine';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
+import { numberWithSeparator } from '../../utils/calc';
 
 function StrasseDonutChart({
   variableCount,
@@ -196,7 +197,7 @@ function StrasseDonutChart({
           Dunkelheit
         </tspan> */}
         <tspan x={leftLabelXPosition} dy="1.4em">
-          {variableCount.get('nass/glatt') || 0}
+          {numberWithSeparator(variableCount.get('nass/glatt')) || 0}
         </tspan>
       </text>
       {/* )} */}
@@ -212,7 +213,7 @@ function StrasseDonutChart({
           trocken
         </tspan>
         <tspan x={rightLabelXPosition} dy="1.4em">
-          {variableCount.get('trocken') || 0}
+          {numberWithSeparator(variableCount.get('trocken')) || 0}
         </tspan>
       </text>
       {/* )} */}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
+import { numberWithSeparator } from '../../../utils/calc';
 
 function splitStringByHalf(inputString) {
   // Split the input string into an array of words
@@ -150,7 +151,7 @@ function ArtBarChartLabelledBar({
           style={{ fontSize: '0.8rem' }}
           dominantBaseline="middle"
         >
-          {variableCount.get(kat)}
+          {numberWithSeparator(variableCount.get(kat))}
           {/* {`${Math.round(
             (variableCount.get(kat) / visDataTotal) * 100
           )} %`} */}

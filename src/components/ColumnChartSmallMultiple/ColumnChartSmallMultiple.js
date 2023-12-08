@@ -75,6 +75,7 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
 
   // TODO: yScale construction here instead of ColumnChart (?)
   // TODO: chart srtuktur zeigen, wenn gar keine fälle
+  // TODO: numberwithseperator?
 
   return (
     <SmallMultipleWrapper dashboardWidth={dashboardWidth}>

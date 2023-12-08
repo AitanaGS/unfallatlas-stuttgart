@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
+import { numberWithSeparator } from '../../../utils/calc';
 
 function KategBarChartBar({
   xScale,
@@ -56,7 +57,7 @@ function KategBarChartBar({
           y={spring.textY}
           style={{ fontSize: '0.8rem' }}
         >
-          {variableCount.get(kat)}
+          {numberWithSeparator(variableCount.get(kat))}
           {/* {`${Math.round(
       (variableCount.get(d) / visDataTotal) * 100
     )} %`} */}
