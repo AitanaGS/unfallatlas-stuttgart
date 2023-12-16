@@ -7,11 +7,11 @@ import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
 import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
 
-function TreeMap({ treeData, dashboardWidth }) {
+function TreeMap({ treeData, dashboardWidth, visDataTotal }) {
   const width = dashboardWidth; // 250
-  const height = 250;
+  const height = 255;
   const margin = {
-    top: 20,
+    top: 25, // 20
     right: 40,
     bottom: 10,
     left: 10,
@@ -56,14 +56,25 @@ function TreeMap({ treeData, dashboardWidth }) {
   return (
     <ChartContainer width={width} height={height}>
       <text
-        x={5}
-        y={2}
+        x={margin.left}
+        y={4}
         textAnchor="auto"
         dominantBaseline="hanging"
         className="svg-title"
       >
-        Test
+        Beteiligte Verkehrsteilnehmer
       </text>
+      {visDataTotal < 1 && (
+        <text
+          x={margin.left}
+          y={50}
+          textAnchor="auto"
+          dominantBaseline="hanging"
+          // className="svg-title"
+        >
+          keine Unfälle / keine Informationen verfügbar
+        </text>
+      )}
       <g transform={`translate(${margin.left},${margin.top})`}>
         {root.leaves().map((d) => (
           <TreeMapRect

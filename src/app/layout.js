@@ -1,5 +1,5 @@
 import './globals.css';
-import { Quattrocento, Lato } from 'next/font/google';
+import { Quattrocento, Noto_Sans, Lato } from 'next/font/google';
 // import { Inter } from 'next/font/google';
 
 const quattrocento = Quattrocento({
@@ -10,12 +10,12 @@ const quattrocento = Quattrocento({
   variable: '--font-quattrocento',
 });
 
-const lato = Lato({
+const noto_sans = Noto_Sans({
   weight: ['400', '700'],
   style: ['normal'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-lato',
+  variable: '--font-noto-sans',
 });
 
 export const metadata = {
@@ -27,7 +27,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       {/* <body className={quattrocento.className}>{children}</body> */}
-      <body className={`${quattrocento.variable} ${lato.variable}`}>
+      <body
+        className={`${quattrocento.variable} ${noto_sans.variable}`}
+      >
         {children}
       </body>
     </html>

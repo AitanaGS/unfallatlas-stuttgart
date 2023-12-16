@@ -52,7 +52,7 @@ function StrasseDonutChart({
   // };
 
   const margin = {
-    top: dashboardWidth > 400 ? 60 : 100,
+    top: dashboardWidth > 400 ? 60 : 80, // 100
     right: 50,
     bottom: 10,
     left: 50,
@@ -184,6 +184,15 @@ function StrasseDonutChart({
       /> */}
       {/* {variableCount.get('Dämmerung/Dunkelheit') > 0 && ( */}
       <text
+        x={10}
+        y={4}
+        textAnchor="auto"
+        dominantBaseline="hanging"
+        className="svg-title"
+      >
+        Straßenzustand beim Unfall
+      </text>
+      <text
         // x={20}
         y={leftLabelYPosition}
         textAnchor={leftLabelTextAnchor}
@@ -197,7 +206,9 @@ function StrasseDonutChart({
           Dunkelheit
         </tspan> */}
         <tspan x={leftLabelXPosition} dy="1.4em">
-          {numberWithSeparator(variableCount.get('nass/glatt')) || 0}
+          {variableCount.get('nass/glatt')
+            ? numberWithSeparator(variableCount.get('nass/glatt'))
+            : 0}
         </tspan>
       </text>
       {/* )} */}
@@ -213,8 +224,13 @@ function StrasseDonutChart({
           trocken
         </tspan>
         <tspan x={rightLabelXPosition} dy="1.4em">
-          {numberWithSeparator(variableCount.get('trocken')) || 0}
+          {variableCount.get('trocken')
+            ? numberWithSeparator(variableCount.get('trocken'))
+            : 0}
         </tspan>
+        {
+          //numberWithSeparator(variableCount.get('trocken')) || 0
+        }
       </text>
       {/* )} */}
       <g

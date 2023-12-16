@@ -50,7 +50,7 @@ function LichtDonutChart({
   // };
 
   const margin = {
-    top: dashboardWidth > 400 ? 60 : 100,
+    top: dashboardWidth > 400 ? 60 : 80, //100
     right: 50,
     bottom: 10,
     left: 50,
@@ -182,6 +182,15 @@ function LichtDonutChart({
       /> */}
       {/* {variableCount.get('Dämmerung/Dunkelheit') > 0 && ( */}
       <text
+        x={10}
+        y={4}
+        textAnchor="auto"
+        dominantBaseline="hanging"
+        className="svg-title"
+      >
+        Lichtverhältnisse beim Unfall
+      </text>
+      <text
         // x={20}
         y={leftLabelYPosition}
         textAnchor={leftLabelTextAnchor}
@@ -195,13 +204,18 @@ function LichtDonutChart({
           Dunkelheit
         </tspan>
         <tspan x={leftLabelXPosition} dy="1.4em">
-          {numberWithSeparator(
-            variableCount.get('Dämmerung/Dunkelheit')
-          ) || 0}
+          {variableCount.get('Dämmerung/Dunkelheit')
+            ? numberWithSeparator(
+                variableCount.get('Dämmerung/Dunkelheit')
+              )
+            : 0}
         </tspan>
       </text>
       {/* )} */}
       {/* {variableCount.get('Tageslicht') > 0 && ( */}
+      {/*numberWithSeparator(
+            variableCount.get('Dämmerung/Dunkelheit')
+      ) || 0 */}
       <text
         // x={20}
         y={rightLabelYPosition}
@@ -213,7 +227,9 @@ function LichtDonutChart({
           Tageslicht
         </tspan>
         <tspan x={rightLabelXPosition} dy="1.4em">
-          {numberWithSeparator(variableCount.get('Tageslicht')) || 0}
+          {variableCount.get('Tageslicht')
+            ? numberWithSeparator(variableCount.get('Tageslicht'))
+            : 0}
         </tspan>
       </text>
       {/* )} */}

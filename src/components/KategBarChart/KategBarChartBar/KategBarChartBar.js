@@ -27,12 +27,21 @@ function KategBarChartBar({
   //   }))
   // );
 
+  // console.log(
+  //   'check variablecount',
+  //   variableCount,
+  //   variableCount.get(kat)
+  // );
+
   const spring = useSpring({
     // rectX: xScale(0),
     rectY: yScale(kat),
     rectWidth: xScale(variableCount.get(kat)),
     // rectHeight: yScale.bandwidth(),
-    textX: xScale(variableCount.get(kat)) + 10,
+    textX:
+      variableCount.get(kat) > 0
+        ? xScale(variableCount.get(kat)) - 2 // + 10
+        : 20,
     textY: yScale(kat) + yScale.bandwidth() / 2,
     config: {
       mass: 1,
@@ -42,28 +51,43 @@ function KategBarChartBar({
   });
 
   // TODO: springs for all props (?)
-  return (
-    variableCount.get(kat) > 0 && (
-      <g>
-        <animated.rect
-          x={xScale(0)}
-          y={spring.rectY}
-          width={spring.rectWidth}
-          height={yScale.bandwidth()}
-          fill="#69b3a2"
-        />
-        <animated.text
-          x={spring.textX}
-          y={spring.textY}
-          style={{ fontSize: '0.8rem' }}
-        >
-          {numberWithSeparator(variableCount.get(kat))}
-          {/* {`${Math.round(
+  return variableCount.get(kat) > 0 ? (
+    <g>
+      <animated.rect
+        x={xScale(0)}
+        y={spring.rectY}
+        width={spring.rectWidth}
+        height={yScale.bandwidth()}
+        fill="#69b3a2"
+      />
+      <animated.text
+        x={spring.textX}
+        y={spring.textY}
+        style={{ fontSize: '0.8rem' }}
+        textAnchor="end"
+        dominantBaseline="middle"
+      >
+        {numberWithSeparator(variableCount.get(kat))}
+        {/* {`${Math.round(
       (variableCount.get(d) / visDataTotal) * 100
     )} %`} */}
-        </animated.text>
-      </g>
-    )
+      </animated.text>
+    </g>
+  ) : (
+    <g>
+      <animated.text
+        x={spring.textX}
+        y={spring.textY}
+        style={{ fontSize: '0.8rem' }}
+        textAnchor="end"
+        dominantBaseline="middle"
+      >
+        {0}
+        {/* {`${Math.round(
+  (variableCount.get(d) / visDataTotal) * 100
+)} %`} */}
+      </animated.text>
+    </g>
   );
 }
 

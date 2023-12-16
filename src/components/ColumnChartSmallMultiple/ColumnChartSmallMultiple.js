@@ -78,26 +78,39 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
   // TODO: numberwithseperator?
 
   return (
-    <SmallMultipleWrapper dashboardWidth={dashboardWidth}>
-      {Array.from(dataByYear, ([year, yearVisData]) => (
-        <ColumnChart
-          key={year}
-          yearVisData={yearVisData}
-          year={year}
-          maxValue={maxValue}
-          setMaxValueMap={setMaxValueMap}
-          maxValueMap={maxValueMap}
-          chartWidth={chartWidth}
-        />
-      ))}
-      {/* {jahre.map((jahr, i) => (
+    <>
+      <svg viewBox={`0 0 ${250} ${20}`} width={250} height={20}>
+        <text
+          x={10}
+          y={6}
+          textAnchor="auto"
+          dominantBaseline="hanging"
+          className="svg-title"
+        >
+          Monat und Jahr des Unfalls
+        </text>
+      </svg>
+      <SmallMultipleWrapper dashboardWidth={dashboardWidth}>
+        {Array.from(dataByYear, ([year, yearVisData]) => (
+          <ColumnChart
+            key={year}
+            yearVisData={yearVisData}
+            year={year}
+            maxValue={maxValue}
+            setMaxValueMap={setMaxValueMap}
+            maxValueMap={maxValueMap}
+            chartWidth={chartWidth}
+          />
+        ))}
+        {/* {jahre.map((jahr, i) => (
         <ColumnChart
           key={jahr}
           yearVisData={visData.filter((d) => d.jahr === jahr)}
           year={jahr}
         />
       ))} */}
-    </SmallMultipleWrapper>
+      </SmallMultipleWrapper>
+    </>
   );
 }
 

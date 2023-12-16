@@ -35,7 +35,7 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
   const height = 300;
 
   const margin = {
-    top: 40,
+    top: 45, // 40
     right: 5,
     bottom: 5,
     left: 100,
@@ -101,6 +101,15 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
     // <ChartWrapper ref={ref}>
     // <ChartContainer width={dms.width} height={dms.height} ref={ref}>
     <ChartContainer width={width} height={height}>
+      <text
+        x={10}
+        y={4}
+        textAnchor="auto"
+        dominantBaseline="hanging"
+        className="svg-title"
+      >
+        Wochentag und Uhrzeit des Unfalls
+      </text>
       <WeekHourAxisX
         xScale={hourScale}
         innerWidth={innerWidth}

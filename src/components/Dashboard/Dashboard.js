@@ -32,7 +32,7 @@ import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
-import KategStackedBarChart from '../KategStackedBarChart';
+// import KategStackedBarChart from '../KategStackedBarChart';
 import LichtLollipopChart from '../LichtLollipopChart';
 import LichtDonutChart from '../LichtDonutChart';
 import StrasseDonutChart from '../StrasseDonutChart';
@@ -169,12 +169,12 @@ function Dashboard({ initialData }) {
 
   const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
 
-  console.log(
-    'window width',
-    windowWidth,
-    'dashboard width',
-    dashboardWidth
-  );
+  // console.log(
+  //   'window width',
+  //   windowWidth,
+  //   'dashboard width',
+  //   dashboardWidth
+  // );
 
   // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -953,6 +953,7 @@ function Dashboard({ initialData }) {
         <TreeMap
           treeData={treemapDataArray}
           dashboardWidth={dashboardWidth}
+          visDataTotal={visDataTotal}
         />
         <WeekHourHeatmap
           visData={visData}
@@ -1072,6 +1073,7 @@ const DashboardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  gap: 25px;
   width: 100%;
   /* width: ${(props) => props.dashboardWidth}px; */
   height: 100%;
@@ -1079,6 +1081,33 @@ const DashboardWrapper = styled.div`
   margin: 0 auto;
   position: relative;
 `;
+
+// const DashboardWrapper =
+//   dashboardWidth > 600
+//     ? styled.div`
+//         display: flex;
+//         flex-direction: column;
+//         flex-wrap: wrap;
+//         gap: 25px;
+//         width: 100%;
+//         /* width: ${(props) => props.dashboardWidth}px; */
+//         height: 100%;
+//         max-width: 1000px; // 500px
+//         margin: 0 auto;
+//         position: relative;
+//       `
+//     : styled.div`
+//         display: flex;
+//         flex-direction: column;
+//         flex-wrap: wrap;
+//         gap: 25px;
+//         width: 100%;
+//         /* width: ${(props) => props.dashboardWidth}px; */
+//         height: 100%;
+//         max-width: 1000px; // 500px
+//         margin: 0 auto;
+//         position: relative;
+//       `;
 
 const CheckboxWrapper = styled.div`
   display: flex;

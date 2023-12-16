@@ -61,7 +61,7 @@ function KategBarChart({
   const height = 120;
 
   const margin = {
-    top: 20,
+    top: 30, // 20
     right: 50,
     bottom: 5,
     left: 190,
@@ -71,7 +71,12 @@ function KategBarChart({
 
   const innerHeight = height - margin.top - margin.bottom;
 
-  const kategorien = [...variableCount.keys()];
+  // const kategorien = [...variableCount.keys()];
+
+  const kategorien = [
+    'Unfall mit Leichtverletzten',
+    'Unfall mit Schwerverletzten/Getöteten',
+  ];
 
   // console.log('bar kategcount', variableCount);
   // console.log('keys', kategorien); // [...kategCount.keys()]
@@ -160,6 +165,15 @@ function KategBarChart({
 
   return (
     <ChartContainer width={width} height={height}>
+      <text
+        x={10}
+        y={4}
+        textAnchor="auto"
+        dominantBaseline="hanging"
+        className="svg-title"
+      >
+        Schweregrad des Unfalls
+      </text>
       <KategBarKatAxis
         yScale={yScale}
         innerHeight={innerHeight}

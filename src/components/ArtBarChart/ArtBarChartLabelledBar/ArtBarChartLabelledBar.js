@@ -80,8 +80,7 @@ function ArtBarChartLabelledBar({
     width: xScale(variableCount.get(kat)),
     // height: yScale.bandwidth(),
     height: yScaleBandwidth,
-    textNumberX: xScale(variableCount.get(kat)) + 3, //xScale(variableCount.get(kat)) + 3,
-    // textY: yScale(kat) + yScale.bandwidth() / 2,
+    textNumberX: xScale(variableCount.get(kat)) - 2, // xScale(variableCount.get(kat)) + 3
     textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
@@ -150,6 +149,7 @@ function ArtBarChartLabelledBar({
           y={spring.textNumberY}
           style={{ fontSize: '0.8rem' }}
           dominantBaseline="middle"
+          textAnchor="end"
         >
           {numberWithSeparator(variableCount.get(kat))}
           {/* {`${Math.round(

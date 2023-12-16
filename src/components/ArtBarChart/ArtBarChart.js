@@ -70,7 +70,8 @@ function ArtBarChart({
   //     : kategorienSorted.length > 2 && kategorienSorted.length <= 6
   //     ? 500
   //     : 800;
-  const height = kategorienSorted.length * 65; // 75
+  const height =
+    visDataTotal > 0 ? kategorienSorted.length * 60 : 200; // 65
   // : kategorienSorted.length > 5 || kategorienSorted <= 7
   // ? 450
   // 600;
@@ -83,28 +84,29 @@ function ArtBarChart({
   //     : 600;
   // }, [kategorienSorted]);
 
-  const margin = {
-    top: 20,
-    right: dashboardWidth > 400 ? 5 : 2, // 5
-    bottom: 5,
-    left: dashboardWidth > 400 ? 275 : 250, // 275 // 450 // 500 // 160
-  };
+  // const margin = {
+  //   top: 20,
+  //   right: dashboardWidth > 400 ? 5 : 2, // 5
+  //   bottom: 5,
+  //   left: dashboardWidth > 400 ? 275 : 250, // 275 // 450 // 500 // 160
+  // };
 
   const marginLabelled = {
-    top: 20,
+    top: 40, // 20
     right: 5, // 5
-    bottom: 5,
-    left: 20, // 275 // 450 // 500 // 160
+    bottom: 0,
+    left: 10, // 20 // 275 // 450 // 500 // 160
   };
 
-  const innerWidth = width - margin.left - margin.right;
+  // const innerWidth = width - margin.left - margin.right;
 
   const innerWidthLabelled =
     width - marginLabelled.left - marginLabelled.right;
 
   // console.log('innerwidht labelled', innerWidthLabelled);
 
-  const innerHeight = height - margin.top - margin.bottom;
+  const innerHeight =
+    height - marginLabelled.top - marginLabelled.bottom;
 
   // const kategorien = [...variableCount.keys()];
 
@@ -117,16 +119,16 @@ function ArtBarChart({
     const barChart = select(barChartRef.current);
   }, [variableCount]);
 
-  const xScale = scaleLinear()
-    .domain([0, visDataTotal]) // dataTotal
-    .range([0, innerWidth])
-    .nice();
+  // const xScale = scaleLinear()
+  //   .domain([0, visDataTotal]) // dataTotal
+  //   .range([0, innerWidth])
+  //   .nice();
 
   const maxKat = kategorienSorted.pop() || '';
 
   const maxKatCount = variableCount.get(maxKat) || 0;
 
-  console.log('maxkat', maxKat, maxKatCount);
+  // console.log('maxkat', maxKat, maxKatCount);
 
   // console.log(
   //   'variableCount kategoriensprted',
@@ -140,10 +142,10 @@ function ArtBarChart({
 
   const yScaleBandwidth = 20; // 40
 
-  const yScale = scaleBand()
-    .domain(kategorienSorted) // kategorienSorted
-    .range([innerHeight, 0])
-    .padding(0.2);
+  // const yScale = scaleBand()
+  //   .domain(kategorienSorted) // kategorienSorted
+  //   .range([innerHeight, 0])
+  //   .padding(0.2);
 
   const yScaleLabelled = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
@@ -173,6 +175,26 @@ function ArtBarChart({
         kat={kategorienSorted}
         yScaleBandwidth={yScaleBandwidth}
       /> */}
+      <text
+        x={10}
+        y={4}
+        textAnchor="auto"
+        dominantBaseline="hanging"
+        className="svg-title"
+      >
+        Art des Unfalls
+      </text>
+      {visDataTotal < 1 && (
+        <text
+          x={10}
+          y={50}
+          textAnchor="auto"
+          dominantBaseline="hanging"
+          // className="svg-title"
+        >
+          keine Unfälle / keine Informationen verfügbar
+        </text>
+      )}
       <g
         ref={barChartRef}
         transform={`translate(${marginLabelled.left}, ${marginLabelled.top})`}
