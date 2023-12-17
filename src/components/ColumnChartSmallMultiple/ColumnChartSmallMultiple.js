@@ -3,6 +3,7 @@ import { scaleTime, scaleLinear, scaleBand } from 'd3-scale';
 import ColumnChart from './ColumnChart';
 import styled from 'styled-components';
 import { group, max } from 'd3-array';
+import ChartContainer from '../ChartContainer';
 
 function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
   // const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
@@ -78,8 +79,12 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
   // TODO: numberwithseperator?
 
   return (
-    <>
-      <svg viewBox={`0 0 ${250} ${20}`} width={250} height={20}>
+    <SvgWrapper dashboardWidth={dashboardWidth}>
+      <svg
+        viewBox={`0 0 ${dashboardWidth} ${20}`}
+        width={dashboardWidth}
+        height={20}
+      >
         <text
           x={10}
           y={6}
@@ -110,13 +115,21 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
         />
       ))} */}
       </SmallMultipleWrapper>
-    </>
+    </SvgWrapper>
   );
 }
 
 const SmallMultipleWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  /* max-width: 500px; */
+  /* max-width: ${(props) => props.dashboardWidth}; */
+  width: ${(props) => props.dashboardWidth}px;
+`;
+
+const SvgWrapper = styled.div`
+  /* display: flex;
+  flex-wrap: wrap; */
   /* max-width: 500px; */
   /* max-width: ${(props) => props.dashboardWidth}; */
   width: ${(props) => props.dashboardWidth}px;

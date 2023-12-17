@@ -5,7 +5,7 @@ import styled from 'styled-components';
 function Intro() {
   return (
     <IntroWrapper>
-      <h1>Stuttgart Unfallatlas</h1>
+      <h1>Unfallatlas Stuttgart</h1>
       <p>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
         diam nonumy eirmod tempor invidunt ut labore et dolore magna
@@ -34,6 +34,10 @@ const IntroWrapper = styled.div`
   max-width: 600px; // 1000px 500px
   /* margin: 0 auto; */
   position: relative;
+
+  h1 {
+    margin: 10px 0px;
+  }
 `;
 
 export default Intro;

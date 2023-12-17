@@ -60,6 +60,20 @@ import Intro from '../Intro';
 //   variable: '--font-lato',
 // });
 
+const getScrollbarWidth = () => {
+  const scrollDiv = document.createElement('div');
+  scrollDiv.style.width = '100px';
+  scrollDiv.style.height = '100px';
+  scrollDiv.style.overflow = 'scroll';
+  scrollDiv.style.position = 'absolute';
+  scrollDiv.style.top = '-9999px';
+  document.body.appendChild(scrollDiv);
+  const scrollbarWidth =
+    scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  return scrollbarWidth;
+};
+
 const initialFilter = {
   Fußgänger: true,
   Fahrrad: true,
@@ -161,13 +175,26 @@ function Dashboard({ initialData }) {
   const [filter, setFilter] = useState(initialFilter);
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
 
-  const [windowWidth, setWindowWidth] = useState(
-    window.innerWidth || 600
-  ); // Step 2: State to hold window width
-  const [dashboardWidth, setDashboardWidth] = useState(windowWidth);
+  const [windowWidth, setWindowWidth] = useState(700); // window.innerWidth || 700
+  // Step 2: State to hold window width
+  // const [dashboardWidth, setDashboardWidth] = useState(windowWidth);
+  const [dashboardWidth, setDashboardWidth] = useState(
+    windowWidth > 700 ? windowWidth : windowWidth
+  ); // layout
+  const [chartWidth, setChartWidth] = useState(
+    windowWidth > 700 ? windowWidth / 2 : windowWidth
+  ); // layout  * 0.75
 
   const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
+
+  useEffect(() => {
+    const width = getScrollbarWidth();
+    setScrollbarWidth(width);
+  }, []);
+
+  // console.log('dashboardwidth', dashboardWidth);
 
   // console.log(
   //   'window width',
@@ -181,7 +208,7 @@ function Dashboard({ initialData }) {
   // useEffect(() => {
   //   const handleResize = () => {
   //     setWindowWidth(window.innerWidth);
-  //     setDashboardWidth(min([window.innerWidth, 600]));
+  //     setDashboardWidth(min([window.innerWidth, 700]));
   //   };
 
   //   const resizeObserver = new ResizeObserver(handleResize);
@@ -229,6 +256,13 @@ function Dashboard({ initialData }) {
   //   }
   // }, [dashboardWrapperRef, windowWidth]);
 
+  // useEffect(() => {
+  //   const onLoadScrollbarWidth =
+  //     document.body.offsetWidth - document.body.clientWidth;
+  //   console.log(onLoadScrollbarWidth);
+  //   setScrollbarWidth(onLoadScrollbarWidth);
+  // }, []);
+
   // here
   useEffect(() => {
     // const handleResize = throttle((entries) => {
@@ -238,7 +272,7 @@ function Dashboard({ initialData }) {
     //       entry.contentRect
     //     ) {
     //       setWindowWidth(entry.contentRect.width);
-    //       setDashboardWidth(Math.min([entry.contentRect.width, 600]));
+    //       setDashboardWidth(Math.min([entry.contentRect.width, 700]));
     //     }
     //   }
     // }, 200); // Adjust the throttle duration (in milliseconds) as needed
@@ -258,20 +292,56 @@ function Dashboard({ initialData }) {
           entry.target === dashboardWrapperRef.current &&
           entry.contentRect
         ) {
-          setWindowWidth(entry.contentRect.width);
-          setDashboardWidth(min([entry.contentRect.width, 600]));
+          // console.log(
+          //   'check 1',
+          //   entry.contentRect.width,
+          //   dashboardWidth
+          // );
+
+          // console.log(
+          //   'entry.target, entry.contentRect',
+          //   entry.target,
+          //   entry.contentRect
+          // );
+          // const [borderBoxSize] = entry.borderBoxSize;
+          // console.log(
+          //   'size',
+          //   size,
+          //   'entry.borderBoxSize',
+          //   entry.borderBoxSize
+          // );
+          const size = entry.contentRect.width; // + 12
+          setWindowWidth(size); // layout
+          // setDashboardWidth(min([entry.contentRect.width, 700])); // layout
+          setDashboardWidth(size <= 700 ? min([size, 700]) : size);
+
+          setChartWidth(size <= 700 ? min([size, 700]) : size / 2);
+
+          console.log(
+            'entry.contentrect.width',
+            entry.contentRect.width
+            // 'entry.borderBoxSize.inlineSize',
+            // borderBoxSize.inlineSize
+          );
         }
       }
     });
 
+    const observerOptions = {
+      box: 'border-box',
+    };
+
     if (dashboardWrapperRef.current) {
-      resizeObserver.observe(dashboardWrapperRef.current);
+      resizeObserver.observe(
+        dashboardWrapperRef.current,
+        observerOptions
+      );
     }
 
     return () => {
       resizeObserver.disconnect();
     };
-  }, [dashboardWrapperRef, windowWidth]);
+  }, [dashboardWrapperRef, windowWidth, dashboardWidth, chartWidth]);
 
   // console.log('mapData', mapData, 'totalMapData', totalMapData);
 
@@ -905,11 +975,14 @@ function Dashboard({ initialData }) {
 
   // console.log('tree', numberData, treemapDataArray, pkwCount);
 
+  // layout: chartWidth instead of dashboadwidth
+
   return (
     visData && (
       <DashboardWrapper
         ref={dashboardWrapperRef}
-        // dashboardWidth={dashboardWidth}
+        dashboardWidth={dashboardWidth}
+        scrollbarWidth={scrollbarWidth}
       >
         <Intro />
         {/* <Map data={data} setVisData={setVisData} /> */}
@@ -925,7 +998,7 @@ function Dashboard({ initialData }) {
           filter={filter}
           selectHeatmap={selectHeatmap}
           setTotalMapData={setTotalMapData}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
         {/* <CheckboxWrapper> */}
         {/* <LeafletHeatCheckbox
@@ -939,7 +1012,7 @@ function Dashboard({ initialData }) {
           allFilter={allFilter}
           setAllFilter={setAllFilter}
           setFilteringMode={setFilteringMode}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
         {/* </CheckboxWrapper> */}
         <Number
@@ -952,39 +1025,39 @@ function Dashboard({ initialData }) {
         />
         <TreeMap
           treeData={treemapDataArray}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
           visDataTotal={visDataTotal}
         />
         <WeekHourHeatmap
           visData={visData}
           weekHourCount={weekHourCount}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
 
         <ArtBarChart
           variableCount={artCount}
           visDataTotal={visDataTotal}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
         <KategBarChart
           variableCount={kategCount}
           visDataTotal={visDataTotal}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
         <LichtDonutChart
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
         <StrasseDonutChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
 
         <ColumnChartSmallMultiple
           visData={visData}
-          dashboardWidth={dashboardWidth}
+          dashboardWidth={chartWidth}
         />
         {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
         {/* <LichtLollipopChart
@@ -1069,6 +1142,20 @@ function Dashboard({ initialData }) {
   );
 }
 
+// const DashboardWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+//   gap: 25px;
+//   width: 100%;
+//   /* width: ${(props) => props.dashboardWidth}px; */
+//   height: 100%;
+//   max-width: 1000px; // 500px
+//   margin: 0 auto;
+//   position: relative;
+// `;
+
+// layout
 const DashboardWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -1077,37 +1164,34 @@ const DashboardWrapper = styled.div`
   width: 100%;
   /* width: ${(props) => props.dashboardWidth}px; */
   height: 100%;
-  max-width: 1000px; // 500px
+  max-width: 1200px; // 500px
   margin: 0 auto;
   position: relative;
+  padding: 10px 50px;
+  // @media (min-width: 820px)
+  @media only screen and (min-width: ${(props) =>
+      `${props.scrollbarWidth + 801}px`}) {
+    display: grid;
+    display: grid;
+    grid-template-columns:
+      1fr
+      1fr;
+    width: 100%;
+    grid-column: 1 / 3;
+    grid-column-gap: 20px;
+    /* flex-direction: column;
+  flex-wrap: wrap;
+  gap: 25px; */
+    /* width: 100%; */
+    /* max-width: ${(props) => props.dashboardWidth}px; */
+    max-width: 1200px;
+    height: 100%;
+    /* max-width: 1000px; */
+    /* width: ${(props) => props.dashboardWidth}px; // 1000px 500px */
+    margin: 0 auto;
+    position: relative;
+  }
 `;
-
-// const DashboardWrapper =
-//   dashboardWidth > 600
-//     ? styled.div`
-//         display: flex;
-//         flex-direction: column;
-//         flex-wrap: wrap;
-//         gap: 25px;
-//         width: 100%;
-//         /* width: ${(props) => props.dashboardWidth}px; */
-//         height: 100%;
-//         max-width: 1000px; // 500px
-//         margin: 0 auto;
-//         position: relative;
-//       `
-//     : styled.div`
-//         display: flex;
-//         flex-direction: column;
-//         flex-wrap: wrap;
-//         gap: 25px;
-//         width: 100%;
-//         /* width: ${(props) => props.dashboardWidth}px; */
-//         height: 100%;
-//         max-width: 1000px; // 500px
-//         margin: 0 auto;
-//         position: relative;
-//       `;
 
 const CheckboxWrapper = styled.div`
   display: flex;
