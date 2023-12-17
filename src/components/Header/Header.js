@@ -2,10 +2,10 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
-function Intro() {
+function Header() {
   return (
-    <IntroWrapper>
-      {/* <h1>Unfallatlas Stuttgart</h1> */}
+    <HeaderWrapper>
+      <h1>Unfallatlas Stuttgart</h1>
       <p>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
         diam nonumy eirmod tempor invidunt ut labore et dolore magna
@@ -20,25 +20,25 @@ function Intro() {
         justo duo dolores et ea rebum. Stet clita kasd gubergren, no
         sea takimata sanctus est Lorem ipsum dolor sit amet.
       </p>
-    </IntroWrapper>
+    </HeaderWrapper>
   );
 }
 
-const IntroWrapper = styled.div`
+const HeaderWrapper = styled.header`
   /* display: flex;
   flex-direction: column;
   flex-wrap: wrap; */
-  width: 100%;
+  /* width: 100%; */
   /* width: ${(props) => props.dashboardWidth}px; */
   /* height: 100%; */
   /* max-width: 600px; // 1000px 500px */
   /* margin: 0 auto; */
   /* position: relative; */
-  border: 2px solid blue;
-
-  /* h1 {
+  /* border: 2px solid blue; */
+  width: 100%;
+  h1 {
     margin: 10px 0px;
-  } */
+  }
 `;
 
-export default Intro;
+export default Header;

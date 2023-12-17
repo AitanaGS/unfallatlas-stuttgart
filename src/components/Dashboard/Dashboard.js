@@ -43,6 +43,7 @@ import useChartDimensions from '../../hooks/useChartDimensions';
 // import { lato } from '../../utils/fonts';
 import { window } from 'd3-selection';
 import Intro from '../Intro';
+import Header from '../Header';
 // import { Quattrocento, Lato } from 'next/font/google';
 
 // import { timeParse } from 'd3-time-format';
@@ -970,6 +971,7 @@ function Dashboard({ initialData }) {
   // TODO: bei 0 fällen gerüst der einzelnen charts
   // TODO: remove heatmap functionaliy in leaflet
   // TODO: check in R/Daten Unfälle ohne Verletzte
+  // TODO: check media query only screen
 
   // console.log(timeDataDates);
 
@@ -984,81 +986,86 @@ function Dashboard({ initialData }) {
         dashboardWidth={dashboardWidth}
         scrollbarWidth={scrollbarWidth}
       >
-        <Intro />
-        {/* <Map data={data} setVisData={setVisData} /> */}
-        <LeafletMap
-          data={data}
-          setVisData={setVisData}
-          setMapData={setMapData}
-          // filteredData={filteredData}
-          filteringMode={filteringMode}
-          // setData={setData}
-          filterData={filterData}
-          allFilter={allFilter}
-          filter={filter}
-          selectHeatmap={selectHeatmap}
-          setTotalMapData={setTotalMapData}
-          dashboardWidth={chartWidth}
-        />
-        {/* <CheckboxWrapper> */}
-        {/* <LeafletHeatCheckbox
+        <Header />
+        <InputWrapper>
+          {/* <Map data={data} setVisData={setVisData} /> */}
+          <LeafletMap
+            data={data}
+            setVisData={setVisData}
+            setMapData={setMapData}
+            // filteredData={filteredData}
+            filteringMode={filteringMode}
+            // setData={setData}
+            filterData={filterData}
+            allFilter={allFilter}
+            filter={filter}
+            selectHeatmap={selectHeatmap}
+            setTotalMapData={setTotalMapData}
+            dashboardWidth={chartWidth}
+          />
+          {/* <CheckboxWrapper> */}
+          {/* <LeafletHeatCheckbox
           selectHeatmap={selectHeatmap}
           setSelectHeatmap={setSelectHeatmap}
           dashboardWidth={dashboardWidth}
         /> */}
-        <FilterCheckboxes
-          filter={filter}
-          setFilter={setFilter}
-          allFilter={allFilter}
-          setAllFilter={setAllFilter}
-          setFilteringMode={setFilteringMode}
-          dashboardWidth={chartWidth}
-        />
-        {/* </CheckboxWrapper> */}
-        <Number
-          width={75}
-          height={50}
-          number={visDataTotal}
-          label={'Gesamt'}
-          colorScale={undefined}
-          max={undefined}
-        />
-        <TreeMap
-          treeData={treemapDataArray}
-          dashboardWidth={chartWidth}
-          visDataTotal={visDataTotal}
-        />
-        <WeekHourHeatmap
-          visData={visData}
-          weekHourCount={weekHourCount}
-          dashboardWidth={chartWidth}
-        />
+          <FilterCheckboxes
+            filter={filter}
+            setFilter={setFilter}
+            allFilter={allFilter}
+            setAllFilter={setAllFilter}
+            setFilteringMode={setFilteringMode}
+            dashboardWidth={chartWidth}
+          />
+          {/* </CheckboxWrapper> */}
+          <Number
+            width={75}
+            height={50}
+            number={visDataTotal}
+            label={'Gesamt'}
+            colorScale={undefined}
+            max={undefined}
+          />
+          {/* <Intro /> */}
+        </InputWrapper>
+        <VizWrapper>
+          <TreeMap
+            treeData={treemapDataArray}
+            dashboardWidth={chartWidth}
+            visDataTotal={visDataTotal}
+          />
+          <WeekHourHeatmap
+            visData={visData}
+            weekHourCount={weekHourCount}
+            dashboardWidth={chartWidth}
+          />
 
-        <ArtBarChart
-          variableCount={artCount}
-          visDataTotal={visDataTotal}
-          dashboardWidth={chartWidth}
-        />
-        <KategBarChart
-          variableCount={kategCount}
-          visDataTotal={visDataTotal}
-          dashboardWidth={chartWidth}
-        />
-        <LichtDonutChart
-          variableCount={lichtCount}
-          visDataTotal={visDataTotal}
-          dashboardWidth={chartWidth}
-        />
-        <StrasseDonutChart
-          variableCount={strasseCount}
-          visDataTotal={visDataTotal}
-          dashboardWidth={chartWidth}
-        />
+          <ArtBarChart
+            variableCount={artCount}
+            visDataTotal={visDataTotal}
+            dashboardWidth={chartWidth}
+          />
+          <KategBarChart
+            variableCount={kategCount}
+            visDataTotal={visDataTotal}
+            dashboardWidth={chartWidth}
+          />
+          <LichtDonutChart
+            variableCount={lichtCount}
+            visDataTotal={visDataTotal}
+            dashboardWidth={chartWidth}
+          />
+          <StrasseDonutChart
+            variableCount={strasseCount}
+            visDataTotal={visDataTotal}
+            dashboardWidth={chartWidth}
+          />
 
-        <ColumnChartSmallMultiple
-          visData={visData}
-          dashboardWidth={chartWidth}
-        />
+          <ColumnChartSmallMultiple
+            visData={visData}
+            dashboardWidth={chartWidth}
+          />
+        </VizWrapper>
         {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
         {/* <LichtLollipopChart
           variableCount={lichtCount}
@@ -1166,7 +1173,7 @@ const DashboardWrapper = styled.div`
   height: 100%;
   max-width: 1200px; // 500px
   margin: 0 auto;
-  position: relative;
+  /* position: relative; */
   padding: 10px 50px;
   // @media (min-width: 820px)
   @media only screen and (min-width: ${(props) =>
@@ -1179,17 +1186,140 @@ const DashboardWrapper = styled.div`
     width: 100%;
     grid-column: 1 / 3;
     grid-column-gap: 20px;
+    isolation: isolate;
     /* flex-direction: column;
   flex-wrap: wrap;
   gap: 25px; */
     /* width: 100%; */
     /* max-width: ${(props) => props.dashboardWidth}px; */
     max-width: 1200px;
-    height: 100%;
+    /* height: 100%; */
     /* max-width: 1000px; */
     /* width: ${(props) => props.dashboardWidth}px; // 1000px 500px */
     margin: 0 auto;
-    position: relative;
+    /* position: relative; */
+  }
+`;
+
+// const DashboardWrapper = styled.div`
+//   /* display: flex;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+//   gap: 25px; */
+//   width: 100%;
+//   height: 100%;
+//   max-width: 1200px; // 500px
+//   margin: 0 auto;
+//   padding: 10px 50px;
+//   /* @media only screen and (min-width: ${(props) =>
+//     `${props.scrollbarWidth + 801}px`}) {
+//     display: grid;
+//     display: grid;
+//     grid-template-columns:
+//       1fr
+//       1fr;
+//     width: 100%;
+//     grid-column: 1 / 3;
+//     grid-column-gap: 20px;
+//     isolation: isolate;
+//     max-width: 1200px;
+//     margin: 0 auto;
+//   } */
+// `;
+
+// const GridWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+//   gap: 25px;
+//   width: 100%;
+//   /* width: ${(props) => props.dashboardWidth}px; */
+//   height: 100%;
+//   max-width: 1200px; // 500px
+//   margin: 0 auto;
+//   /* position: relative; */
+//   padding: 10px 50px;
+//   // @media (min-width: 820px)
+//   @media only screen and (min-width: ${(props) =>
+//       `${props.scrollbarWidth + 801}px`}) {
+//     display: grid;
+//     display: grid;
+//     grid-template-columns:
+//       1fr
+//       1fr;
+//     width: 100%;
+//     grid-column: 1 / 3;
+//     grid-column-gap: 20px;
+//     isolation: isolate;
+//     /* flex-direction: column;
+//   flex-wrap: wrap;
+//   gap: 25px; */
+//     /* width: 100%; */
+//     /* max-width: ${(props) => props.dashboardWidth}px; */
+//     max-width: 1200px;
+//     /* height: 100%; */
+//     /* max-width: 1000px; */
+//     /* width: ${(props) => props.dashboardWidth}px; // 1000px 500px */
+//     margin: 0 auto;
+//     /* position: relative; */
+//   }
+// `;
+
+const InputWrapper = styled.div`
+  /* width: 100%;
+  border: 2px solid red; */
+  /* grid-column: 1;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  isolation: isolate; */
+
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start;
+  grid-column: 1;
+  height: max-content;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+
+  width: 100%;
+  /* border: 2px solid red; */
+
+  /* height: 100%; */
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start; */
+  /* overflow: auto; */
+  /* @media only screen and (min-width: ${(props) =>
+    `${props.scrollbarWidth + 801}px`}) { */
+  /* grid-column: 1;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    isolation: isolate;
+
+    width: 100%;
+    border: 2px solid red; */
+
+  /* height: 100%; */
+  /* display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start; */
+  /* } */
+`;
+
+const VizWrapper = styled.div`
+  grid-column: 2;
+  @media only screen and (min-width: ${(props) =>
+      `${props.scrollbarWidth + 801}px`}) {
+    grid-column: 2;
+    /* height: 100%; */
+    /* overflow-y: hidden; */
   }
 `;
 

@@ -389,8 +389,8 @@ function LeafletMap({
 export default LeafletMap;
 
 const MapWrapper = styled.div`
-  height: 400px;
-  height: 50vh;
+  height: 300px; // 400px
+  /* height: 50vh; */
   /* width: 400px; */
   position: relative;
   width: ${(props) => props.dashboardWidth}px; // 400px
