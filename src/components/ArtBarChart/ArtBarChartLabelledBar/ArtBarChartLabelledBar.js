@@ -77,10 +77,10 @@ function ArtBarChartLabelledBar({
   const spring = useSpring({
     x: xScale(0),
     y: yScale(kat),
-    width: xScale(variableCount.get(kat)),
+    width: xScale(variableCount.get(kat) || 0),
     // height: yScale.bandwidth(),
     height: yScaleBandwidth,
-    textNumberX: xScale(variableCount.get(kat)) - 2, // xScale(variableCount.get(kat)) + 3
+    textNumberX: xScale(variableCount.get(kat) || 0) - 2, // xScale(variableCount.get(kat)) + 3
     textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
@@ -93,72 +93,72 @@ function ArtBarChartLabelledBar({
   });
 
   return (
-    variableCount.get(kat) > 0 && (
-      <g>
-        <animated.rect
-          // x={xScale(0)}
-          // y={yScale(d)}
-          // width={xScale(variableCount.get(d))}
-          // height={yScale.bandwidth()}
-          x={spring.x}
-          y={spring.y}
-          width={spring.width}
-          height={spring.height}
-          fill="#69b3a2"
-        />
-        <animated.text
-          // x={xScale(variableCount.get(d)) + 10}
-          // y={yScale(d) + yScale.bandwidth() / 2}
-          // x={spring.textLabelX}
-          y={spring.textLabelY}
-          style={{ fontSize: '0.8rem' }}
+    // variableCount.get(kat) > 0 && (
+    <g>
+      <animated.rect
+        // x={xScale(0)}
+        // y={yScale(d)}
+        // width={xScale(variableCount.get(d))}
+        // height={yScale.bandwidth()}
+        x={spring.x}
+        y={spring.y}
+        width={spring.width}
+        height={spring.height}
+        fill="#69b3a2"
+      />
+      <animated.text
+        // x={xScale(variableCount.get(d)) + 10}
+        // y={yScale(d) + yScale.bandwidth() / 2}
+        // x={spring.textLabelX}
+        y={spring.textLabelY}
+        style={{ fontSize: '0.8rem' }}
+        // dominantBaseline="middle"
+      >
+        {/* {kat} */}
+        {/* {`${Math.round(
+            (variableCount.get(kat) / visDataTotal) * 100
+          )} %`} */}
+        <animated.tspan
+          // x={-5}
+          dy="0em"
+          x={spring.textLabelX}
+          textAnchor="start"
           // dominantBaseline="middle"
+          // dominantBaseline="hanging"
+          dominantBaseline="auto"
         >
-          {/* {kat} */}
-          {/* {`${Math.round(
+          {katDivided[0] || ''}
+        </animated.tspan>
+        <animated.tspan
+          // x={-5}
+          dy="1.2em"
+          // dy={kat !== 'Unfall anderer Art' ? '1.2em' : '0'}
+          x={spring.textLabelX}
+          textAnchor="start"
+          // dominantBaseline="middle"
+          // dominantBaseline="hanging"
+          dominantBaseline="auto"
+        >
+          {katDivided[1] || ''}
+        </animated.tspan>
+      </animated.text>
+      <animated.text
+        // x={xScale(variableCount.get(d)) + 10}
+        // y={yScale(d) + yScale.bandwidth() / 2}
+        x={spring.textNumberX}
+        y={spring.textNumberY}
+        style={{ fontSize: '0.8rem' }}
+        dominantBaseline="middle"
+        textAnchor="end"
+      >
+        {numberWithSeparator(variableCount.get(kat) || 0)}
+        {/* {`${Math.round(
             (variableCount.get(kat) / visDataTotal) * 100
           )} %`} */}
-          <animated.tspan
-            // x={-5}
-            dy="0em"
-            x={spring.textLabelX}
-            textAnchor="start"
-            // dominantBaseline="middle"
-            // dominantBaseline="hanging"
-            dominantBaseline="auto"
-          >
-            {katDivided[0] || ''}
-          </animated.tspan>
-          <animated.tspan
-            // x={-5}
-            dy="1.2em"
-            // dy={kat !== 'Unfall anderer Art' ? '1.2em' : '0'}
-            x={spring.textLabelX}
-            textAnchor="start"
-            // dominantBaseline="middle"
-            // dominantBaseline="hanging"
-            dominantBaseline="auto"
-          >
-            {katDivided[1] || ''}
-          </animated.tspan>
-        </animated.text>
-        <animated.text
-          // x={xScale(variableCount.get(d)) + 10}
-          // y={yScale(d) + yScale.bandwidth() / 2}
-          x={spring.textNumberX}
-          y={spring.textNumberY}
-          style={{ fontSize: '0.8rem' }}
-          dominantBaseline="middle"
-          textAnchor="end"
-        >
-          {numberWithSeparator(variableCount.get(kat))}
-          {/* {`${Math.round(
-            (variableCount.get(kat) / visDataTotal) * 100
-          )} %`} */}
-        </animated.text>
-      </g>
-    )
+      </animated.text>
+    </g>
   );
+  // );
 }
 
 export default ArtBarChartLabelledBar;

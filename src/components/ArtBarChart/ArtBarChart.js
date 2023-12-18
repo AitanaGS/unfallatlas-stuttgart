@@ -5,30 +5,48 @@ import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import ChartContainer from '../ChartContainer';
+import AnimatedChartContainer from '../ChartContainer';
 import ArtBarAxis from './ArtBarAxis';
 import { useSpring, useSprings, animated } from '@react-spring/web';
 import ArtBarChartBar from './ArtBarChartBar';
 import ArtBarChartLabelledBar from './ArtBarChartLabelledBar';
+
+const sortArrayByReferenceArray = (referenceArray) => {
+  return (a, b) => {
+    const indexA = referenceArray.indexOf(a);
+    const indexB = referenceArray.indexOf(b);
+
+    if (indexA !== -1 && indexB !== -1) {
+      return indexA - indexB;
+    }
+
+    if (indexA === -1) {
+      return -1;
+    }
+
+    return 1;
+  };
+};
 
 function ArtBarChart({
   variableCount,
   visDataTotal,
   dashboardWidth,
 }) {
-  // const kategorienSorted = [
-  //   'Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug',
-  //   'Zusammenstoß mit vorausfahrendem / wartendem Fahrzeug',
-  //   'Zusammenstoß mit seitlich in gleicher Richtung fahrendem Fahrzeug',
-  //   'Zusammenstoß mit entgegenkommendem Fahrzeug',
-  //   'Zusammenstoß mit einbiegendem / kreuzendem Fahrzeug',
-  //   'Zusammenstoß zwischen Fahrzeug und Fußgänger',
-  //   'Aufprall auf Fahrbahnhindernis',
-  //   'Abkommen von Fahrbahn nach rechts',
-  //   'Abkommen von Fahrbahn nach links',
-  //   'Unfall anderer Art',
-  // ];
+  const kategorien = [
+    'Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug',
+    'Zusammenstoß mit vorausfahrendem / wartendem Fahrzeug',
+    'Zusammenstoß mit seitlich in gleicher Richtung fahrendem Fahrzeug',
+    'Zusammenstoß mit entgegenkommendem Fahrzeug',
+    'Zusammenstoß mit einbiegendem / kreuzendem Fahrzeug',
+    'Zusammenstoß zwischen Fahrzeug und Fußgänger',
+    'Aufprall auf Fahrbahnhindernis',
+    'Abkommen von Fahrbahn nach rechts',
+    'Abkommen von Fahrbahn nach links',
+    'Unfall anderer Art',
+  ];
 
-  // const kategorienSorted = [
+  // const kategorien = [
   //   'Unfall anderer Art',
   //   'Abkommen von Fahrbahn nach links',
   //   'Abkommen von Fahrbahn nach rechts',
@@ -47,13 +65,41 @@ function ArtBarChart({
 
   // console.log('artbar dashboardwidth', dashboardWidth);
 
-  const kategorienSorted = Array.from(variableCount.keys()).filter(
-    (key) => {
-      const count = variableCount.get(key);
-      const percentage = Math.round((count / visDataTotal) * 100);
-      return percentage > 0; // Adjust the filtering criteria as needed
-    }
-  );
+  // const kategorienSorted = useMemo(() => {
+  //   return Array.from(variableCount.keys()).filter((key) => {
+  //     const count = variableCount.get(key);
+  //     const percentage = Math.round((count / visDataTotal) * 100);
+  //     return percentage > 0; // Adjust the filtering criteria as needed
+  //   });
+  // }, [variableCount, visDataTotal]);
+
+  // const kategorienSorted = Array.from(variableCount.keys()).filter(
+  //   (key) => {
+  //     const count = variableCount.get(key);
+  //     const percentage = Math.round((count / visDataTotal) * 100);
+  //     return percentage > 0; // Adjust the filtering criteria as needed
+  //   }
+  // );
+
+  // const variableCountArray = Array.from(variableCount.keys());
+
+  // const sortKategorien = sortArrayByReferenceArray(
+  //   variableCountArray
+  // );
+
+  // const kategorienSorted = kategorien.sort(sortKategorien);
+
+  const kategorienSorted = useMemo(() => {
+    const variableCountArray = Array.from(variableCount.keys());
+
+    const sortKategorien = sortArrayByReferenceArray(
+      variableCountArray
+    );
+
+    return kategorien.sort(sortKategorien);
+  }, [variableCount, kategorien]);
+
+  // console.log(variableCount, kategorienSorted);
 
   // const width = 600; // 600 // 300
   const width = dashboardWidth;
@@ -70,8 +116,43 @@ function ArtBarChart({
   //     : kategorienSorted.length > 2 && kategorienSorted.length <= 6
   //     ? 500
   //     : 800;
-  const height =
-    visDataTotal > 0 ? kategorienSorted.length * 60 : 200; // 65
+
+  // const height =
+  // visDataTotal > 0 ? kategorienSorted.length * 65 : 200; // 65
+  // const height =
+  //   visDataTotal <= 0
+  //     ? 200
+  //     : kategorienSorted.length > 5
+  //     ? kategorienSorted.length * 65
+  //     : kategorienSorted.length <= 5 && kategorienSorted.length >= 3
+  //     ? kategorienSorted.length * 80
+  //     : kategorienSorted.length * 100;
+
+  const height = kategorienSorted.length * 65; // 65
+
+  // kategorienSorted.length * 70 : 200; // 65
+
+  const spring = useSpring({
+    height: kategorienSorted.length * 60 + 100,
+    // visDataTotal > 0 ? kategorienSorted.length * 60 : 200
+    // x: xScale(0),
+    // y: yScale(kat),
+    // width: xScale(variableCount.get(kat)),
+    // // height: yScale.bandwidth(),
+    // height: yScaleBandwidth,
+    // textNumberX: xScale(variableCount.get(kat)) - 2, // xScale(variableCount.get(kat)) + 3
+    // textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
+    // textLabelX: xScale(0),
+    // // textLabelY: yScale(kat) - 8,
+    // textLabelY: yScale(kat) - 20,
+    config: {
+      mass: 1,
+      tension: 120,
+      friction: 20,
+    },
+  });
+
+  // const height = 480;
   // : kategorienSorted.length > 5 || kategorienSorted <= 7
   // ? 450
   // 600;
@@ -124,9 +205,11 @@ function ArtBarChart({
   //   .range([0, innerWidth])
   //   .nice();
 
-  const maxKat = kategorienSorted.pop() || '';
+  const maxKat = kategorienSorted[kategorienSorted.length - 1] || '';
 
   const maxKatCount = variableCount.get(maxKat) || 0;
+
+  // console.log('maxkat', maxKat, 'maxkatcount', maxKatCount);
 
   // console.log('maxkat', maxKat, maxKatCount);
 
@@ -136,7 +219,7 @@ function ArtBarChart({
   //   kategorienSorted
   // );
   const xScaleLabelled = scaleLinear()
-    .domain([0, maxKatCount]) // visDataTotal dataTotal
+    .domain([0, maxKatCount > 0 ? maxKatCount : 1]) // visDataTotal dataTotal
     .range([0, innerWidthLabelled]) // innerWidthLabelled
     .nice();
 
@@ -184,7 +267,7 @@ function ArtBarChart({
       >
         Art des Unfalls
       </text>
-      {visDataTotal < 1 && (
+      {/* {visDataTotal < 1 && (
         <text
           x={10}
           y={50}
@@ -194,30 +277,35 @@ function ArtBarChart({
         >
           keine Unfälle / keine Informationen verfügbar
         </text>
-      )}
+      )} */}
       <g
         ref={barChartRef}
         transform={`translate(${marginLabelled.left}, ${marginLabelled.top})`}
       >
-        {kategorienSorted.map((d, i) => (
-          // <ArtBarChartBar
-          //   key={d}
-          //   xScale={xScale}
-          //   yScale={yScale}
-          //   variableCount={variableCount}
-          //   visDataTotal={visDataTotal}
-          //   kat={d}
-          //   yScaleBandwidth={yScaleBandwidth}
-          // />
-          <ArtBarChartLabelledBar
-            key={d}
-            xScale={xScaleLabelled}
-            yScale={yScaleLabelled}
-            variableCount={variableCount}
-            visDataTotal={visDataTotal}
-            kat={d}
-            yScaleBandwidth={yScaleBandwidth}
-          />
+        {kategorienSorted.map(
+          (d, i) => {
+            // <ArtBarChartBar
+            //   key={d}
+            //   xScale={xScale}
+            //   yScale={yScale}
+            //   variableCount={variableCount}
+            //   visDataTotal={visDataTotal}
+            //   kat={d}
+            //   yScaleBandwidth={yScaleBandwidth}
+            // />
+            // console.log(d, i);
+            return (
+              <ArtBarChartLabelledBar
+                key={d}
+                xScale={xScaleLabelled}
+                yScale={yScaleLabelled}
+                variableCount={variableCount}
+                visDataTotal={visDataTotal}
+                kat={d}
+                yScaleBandwidth={yScaleBandwidth}
+              />
+            );
+          }
           // <g key={d}>
           //   <rect
           //     x={xScale(0)}
@@ -237,7 +325,7 @@ function ArtBarChart({
           //     )} %`}
           //   </text>
           // </g>
-        ))}
+        )}
         {/* {kategorien.map((d, i) => {
           if (
             Math.round((variableCount.get(d) / visDataTotal) * 100) >

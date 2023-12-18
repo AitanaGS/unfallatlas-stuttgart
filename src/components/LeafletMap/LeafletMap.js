@@ -394,6 +394,7 @@ const MapWrapper = styled.div`
   /* width: 400px; */
   position: relative;
   width: ${(props) => props.dashboardWidth}px; // 400px
+  margin-top: 20px;
 `;
 
 // import React, { useEffect, useRef } from 'react';

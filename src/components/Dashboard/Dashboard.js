@@ -177,8 +177,9 @@ function Dashboard({ initialData }) {
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  const [layout, setLayout] = useState('grid'); // flex
 
-  const [windowWidth, setWindowWidth] = useState(700); // window.innerWidth || 700
+  const [windowWidth, setWindowWidth] = useState(1000); // 700 window.innerWidth || 700
   // Step 2: State to hold window width
   // const [dashboardWidth, setDashboardWidth] = useState(windowWidth);
   const [dashboardWidth, setDashboardWidth] = useState(
@@ -318,12 +319,13 @@ function Dashboard({ initialData }) {
 
           setChartWidth(size <= 700 ? min([size, 700]) : size / 2);
 
-          console.log(
-            'entry.contentrect.width',
-            entry.contentRect.width
-            // 'entry.borderBoxSize.inlineSize',
-            // borderBoxSize.inlineSize
-          );
+          setLayout(size <= 700 ? 'flex' : 'grid');
+          // console.log(
+          //   'entry.contentrect.width',
+          //   entry.contentRect.width
+          //   // 'entry.borderBoxSize.inlineSize',
+          //   // borderBoxSize.inlineSize
+          // );
         }
       }
     });
@@ -985,9 +987,10 @@ function Dashboard({ initialData }) {
         ref={dashboardWrapperRef}
         dashboardWidth={dashboardWidth}
         scrollbarWidth={scrollbarWidth}
+        layout={layout}
       >
         <Header />
-        <InputWrapper>
+        <InputWrapper layout={layout} dashboardWidth={dashboardWidth}>
           {/* <Map data={data} setVisData={setVisData} /> */}
           <LeafletMap
             data={data}
@@ -1028,7 +1031,7 @@ function Dashboard({ initialData }) {
           />
           {/* <Intro /> */}
         </InputWrapper>
-        <VizWrapper>
+        <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
           <TreeMap
             treeData={treemapDataArray}
             dashboardWidth={chartWidth}
@@ -1265,38 +1268,89 @@ const DashboardWrapper = styled.div`
 //   }
 // `;
 
-const InputWrapper = styled.div`
-  /* width: 100%;
+// const InputWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+//   justify-content: start;
+//   grid-column: 1;
+//   height: max-content;
+//   position: sticky;
+//   top: 0px;
+//   z-index: 2;
+
+//   width: 100%;
+
+//   @media only screen and (min-width: ${(props) =>
+//     `${props.scrollbarWidth + 801}px`}) {
+//   /* grid-column: 1;
+//     position: sticky;
+//     top: 0px;
+//     z-index: 1;
+//     isolation: isolate;
+
+//     width: 100%;
+//     border: 2px solid red; */
+
+//   /* height: 100%; */
+//   /* display: flex;
+//     flex-direction: column;
+//     align-items: flex-start;
+//     justify-content: start; */
+//   }
+
+/* width: 100%;
   border: 2px solid red; */
-  /* grid-column: 1;
+/* grid-column: 1;
   position: sticky;
   top: 0px;
   z-index: 1;
   isolation: isolate; */
 
-  /* height: 100%; */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: start;
-  grid-column: 1;
-  height: max-content;
-  position: sticky;
-  top: 0px;
-  z-index: 2;
+/* height: 100%; */
+/* border: 2px solid red; */
 
-  width: 100%;
-  /* border: 2px solid red; */
-
-  /* height: 100%; */
-  /* display: flex;
+/* height: 100%; */
+/* display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: start; */
-  /* overflow: auto; */
-  /* @media only screen and (min-width: ${(props) =>
-    `${props.scrollbarWidth + 801}px`}) { */
-  /* grid-column: 1;
+/* overflow: auto; */
+// `;
+
+const inputWrapperVariants = {
+  flex: ``,
+  grid: `
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+    grid-column: 1;
+    height: max-content;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+    width: 100%;
+  `,
+};
+
+const InputWrapper = styled.div`
+  ${(props) => inputWrapperVariants[props.layout]}
+`;
+/* @media only screen and (min-width: ${(props) =>
+      `${props.scrollbarWidth + 801}px`}) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+    grid-column: 1;
+    height: max-content;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+
+    width: 100%; */
+/* grid-column: 1;
     position: sticky;
     top: 0px;
     z-index: 1;
@@ -1305,22 +1359,34 @@ const InputWrapper = styled.div`
     width: 100%;
     border: 2px solid red; */
 
-  /* height: 100%; */
-  /* display: flex;
+/* height: 100%; */
+/* display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: start; */
-  /* } */
-`;
+/* } */
+// `;
+// const VizWrapper = styled.div`
+//   grid-column: 2;
+//   margin-top: 40px;
+//   @media only screen and (min-width: ${(props) =>
+//       `${props.scrollbarWidth + 801}px`}) {
+//     grid-column: 2;
+//     /* height: 100%; */
+//     /* overflow-y: hidden; */
+//   }
+// `;
+
+const vizWrapperVariants = {
+  flex: ``,
+  grid: `
+    grid-column: 2;
+    margin-top: 60px;
+  `,
+};
 
 const VizWrapper = styled.div`
-  grid-column: 2;
-  @media only screen and (min-width: ${(props) =>
-      `${props.scrollbarWidth + 801}px`}) {
-    grid-column: 2;
-    /* height: 100%; */
-    /* overflow-y: hidden; */
-  }
+  ${(props) => vizWrapperVariants[props.layout]}
 `;
 
 const CheckboxWrapper = styled.div`
