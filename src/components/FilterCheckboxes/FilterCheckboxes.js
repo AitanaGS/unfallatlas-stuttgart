@@ -34,11 +34,19 @@ function FilterCheckboxes({
   setAllFilter,
   setFilteringMode,
   dashboardWidth,
+  feature,
 }) {
   // const [allFilter, setAllFilter] = useState(true);
   // const [filter, setFilter] = useState(initialFilter);
 
   // const filterList = ['allFiltere', ...Object.keys(initialFilter)];
+
+  // New
+  // const filterParticipant = filter.slice(0, -2);
+  // const filterKateg = filter.slice(-2);
+
+  // console.log('filterParticipant', filterParticipant);
+  // console.log('filterKateg', filterKateg);
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
@@ -68,6 +76,7 @@ function FilterCheckboxes({
         ? setFilteringMode('none')
         : setFilteringMode(`checkbox ${name}`); // here: 'checkbox
     }
+    // console.log('name', name, 'checked', checked);
   };
 
   // useEffect(() => {
@@ -100,7 +109,7 @@ function FilterCheckboxes({
         }}
       >
         <fieldset style={{ border: 'none' }}>
-          <legend>Auswahl Unfallbeteiligung:</legend>
+          <legend>Auswahl {feature}:</legend>
           <label>
             <input
               type="checkbox"
@@ -219,5 +228,6 @@ const FormWrapper = styled.form`
   flex-wrap: wrap;
   max-width: 100%; // 500px */
   width: ${(props) => props.dashboardWidth}px;
+  margin: 10px 0;
   /* border: none; */
 `;

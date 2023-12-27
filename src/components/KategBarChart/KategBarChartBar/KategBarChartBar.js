@@ -36,7 +36,7 @@ function KategBarChartBar({
   const spring = useSpring({
     // rectX: xScale(0),
     rectY: yScale(kat),
-    rectWidth: xScale(variableCount.get(kat)),
+    rectWidth: xScale(variableCount.get(kat) || 0),
     // rectHeight: yScale.bandwidth(),
     textX:
       variableCount.get(kat) > 0

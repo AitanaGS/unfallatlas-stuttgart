@@ -71,6 +71,9 @@ function LeafletMap({
   selectHeatmap,
   setTotalMapData,
   dashboardWidth,
+  filterKategData,
+  allKategFilter,
+  kategFilter,
 }) {
   // here
   const mapRef = useRef(null);
@@ -238,7 +241,18 @@ function LeafletMap({
     // here: data
     //filterData(data, allFilter, filter)
 
-    const currentData = filterData(data, allFilter, filter);
+    const currentKategData = filterKategData(
+      data,
+      allKategFilter,
+      kategFilter
+    );
+    const currentData = filterData(
+      currentKategData,
+      allFilter,
+      filter
+    );
+
+    // const currentData = filterData(data, allFilter, filter);
 
     currentData.forEach((d) => {
       points.push([d.lat, d.lon]);
@@ -351,6 +365,9 @@ function LeafletMap({
     setTotalMapData,
     calculateTotalVisibleData,
     dashboardWidth,
+    filterKategData,
+    allKategFilter,
+    kategFilter,
   ]);
 
   // const customIcon = new L.Icon({

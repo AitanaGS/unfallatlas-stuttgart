@@ -83,6 +83,11 @@ const initialFilter = {
   Sonstige: true,
 };
 
+const initialKategFilter = {
+  'Unfall mit Leichtverletzten': true, // new
+  'Unfall mit Schwerverletzten/Getöteten': true, // new
+};
+
 // const filterData = (dataToFilter, allFilter, filter) => {
 //   return dataToFilter.filter((item) => {
 //     if (allFilter) {
@@ -112,6 +117,7 @@ const initialFilter = {
 // };
 
 const filterData = (dataToFilter, allFilter, filter) => {
+  // console.log(dataToFilter);
   return dataToFilter.filter((item) => {
     if (allFilter) {
       return true; // If allFilter is true, return all items
@@ -133,10 +139,37 @@ const filterData = (dataToFilter, allFilter, filter) => {
     if (filter.Sonstige && item.istsonst2b) {
       return true; // Filter out items where Sonstige filter is false and istsonst2b is true
     }
+    // If none of the above conditions match, keep the item
+    return false;
+  });
+};
+
+const filterKategData = (dataToFilter, allFilter, filter) => {
+  // console.log(dataToFilter);
+  const data = dataToFilter.filter((item) => {
+    if (allFilter) {
+      return true; // If allFilter is true, return all items
+    }
+
+    if (
+      filter['Unfall mit Leichtverletzten'] &&
+      item.kateg2 === 'Unfall mit Leichtverletzten'
+    ) {
+      return true;
+    }
+
+    if (
+      filter['Unfall mit Schwerverletzten/Getöteten'] &&
+      item.kateg2 === 'Unfall mit Schwerverletzten/Getöteten'
+    ) {
+      return true;
+    }
 
     // If none of the above conditions match, keep the item
     return false;
   });
+  // console.log('data in function', data);
+  return data;
 };
 
 // const updatedFilteredData = mapData.filter((item) => {
@@ -173,11 +206,15 @@ function Dashboard({ initialData }) {
   const [visData, setVisData] = useState(initialData); // Original dataset
   const [filteredData, setFilteredData] = useState(visData); // Initially set to visData
   const [allFilter, setAllFilter] = useState(true);
+  const [allKategFilter, setAllKategFilter] = useState(true);
   const [filter, setFilter] = useState(initialFilter);
+  const [kategFilter, setKategFilter] = useState(initialKategFilter);
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const [layout, setLayout] = useState('grid'); // flex
+
+  // TODO: check mapdata - is it used?
 
   const [windowWidth, setWindowWidth] = useState(1000); // 700 window.innerWidth || 700
   // Step 2: State to hold window width
@@ -380,11 +417,32 @@ function Dashboard({ initialData }) {
   // }, [mapData, filter, allFilter]);
 
   const filterAndSetData = useCallback(() => {
-    const updatedFilteredData = filterData(
+    // const updatedFilteredData = filterData(
+    //   totalMapData, // here: mapData
+    //   allFilter,
+    //   filter
+    // );
+
+    // console.log(
+    //   'totalmapdata',
+    //   totalMapData,
+    //   'allkategfilter',
+    //   allKategFilter,
+    //   'kategfilter',
+    //   kategFilter
+    // );
+    const updatedKategFilteredData = filterKategData(
       totalMapData, // here: mapData
+      allKategFilter,
+      kategFilter
+    );
+
+    const updatedFilteredData = filterData(
+      updatedKategFilteredData, // here: mapData
       allFilter,
       filter
     );
+
     // const updatedFilteredData = mapData.filter((item) => {
     //   if (allFilter) {
     //     return true; // If allFilter is true, return all items
@@ -411,10 +469,13 @@ function Dashboard({ initialData }) {
     //   return true;
     // });
 
+    // console.log('updatedkategfiltereddata', updatedKategFilteredData);
+    // console.log('updatedfiltereddata', updatedFilteredData);
+
     setFilteredData(updatedFilteredData);
     setVisData(updatedFilteredData);
     // setData(updatedFilteredData);
-  }, [filter, allFilter, totalMapData]); // here: mapData
+  }, [filter, allFilter, totalMapData, allKategFilter, kategFilter]); // here: mapData
 
   useEffect(() => {
     if (filteringMode === 'none') {
@@ -431,7 +492,19 @@ function Dashboard({ initialData }) {
     filteringMode,
     filterAndSetData,
     totalMapData,
+    allKategFilter,
+    kategFilter,
   ]); // here: mapData,
+
+  // console.log('filtereddata', filteredData, 'visdata', visData);
+  // console.log('filter', filter, 'allfilter', allFilter);
+  // console.log(
+  //   'kategfilter',
+  //   kategFilter,
+  //   'allkategfilter',
+  //   allKategFilter
+  // );
+  // TODO: check if all dependencies necessary
 
   // useEffect(() => {
   //   // Update visData independently from filteredData
@@ -1002,6 +1075,9 @@ function Dashboard({ initialData }) {
             filterData={filterData}
             allFilter={allFilter}
             filter={filter}
+            filterKategData={filterKategData}
+            allKategFilter={allKategFilter}
+            kategFilter={kategFilter}
             selectHeatmap={selectHeatmap}
             setTotalMapData={setTotalMapData}
             dashboardWidth={chartWidth}
@@ -1019,6 +1095,16 @@ function Dashboard({ initialData }) {
             setAllFilter={setAllFilter}
             setFilteringMode={setFilteringMode}
             dashboardWidth={chartWidth}
+            feature="Unfallbeteiligung"
+          />
+          <FilterCheckboxes
+            filter={kategFilter}
+            setFilter={setKategFilter}
+            allFilter={allKategFilter}
+            setAllFilter={setAllKategFilter}
+            setFilteringMode={setFilteringMode}
+            dashboardWidth={chartWidth}
+            feature="Schweregrad"
           />
           {/* </CheckboxWrapper> */}
           <Number

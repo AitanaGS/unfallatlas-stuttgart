@@ -82,13 +82,25 @@ function KategBarChart({
   // console.log('keys', kategorien); // [...kategCount.keys()]
   // console.log(variableCount.get(kategorien[0]));
 
+  // const maxKateg =
+  //   variableCount.get('Unfall mit Leichtverletzten') >=
+  //   variableCount.get('Unfall mit Schwerverletzten/Getöteten')
+  //     ? 'Unfall mit Leichtverletzten'
+  //     : 'Unfall mit Schwerverletzten/Getöteten';
+
+  const leichtCount =
+    variableCount.get('Unfall mit Leichtverletzten') || 0;
+  const schwerCount =
+    variableCount.get('Unfall mit Schwerverletzten/Getöteten') || 0;
+
   const maxKateg =
-    variableCount.get('Unfall mit Leichtverletzten') >=
-    variableCount.get('Unfall mit Schwerverletzten/Getöteten')
+    leichtCount >= schwerCount
       ? 'Unfall mit Leichtverletzten'
       : 'Unfall mit Schwerverletzten/Getöteten';
 
-  const maxValue = variableCount.get(maxKateg);
+  const maxValue = variableCount.get(maxKateg) || 0;
+
+  console.log('maxkateg', maxKateg, 'maxvalue', maxValue);
 
   // console.log('maxkateg, maxvalue', maxKateg, maxValue);
 
