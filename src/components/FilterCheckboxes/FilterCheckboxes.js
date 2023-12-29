@@ -108,10 +108,19 @@ function FilterCheckboxes({
           event.preventDefault();
         }}
       >
-        <fieldset style={{ border: 'none' }}>
-          <legend>Auswahl {feature}:</legend>
-          <label>
-            <input
+        <Fieldset style={{ border: 'none' }}>
+          <legend
+            style={{
+              fontWeight: 700,
+              marginBottom: '5px',
+              marginTop: '3px',
+            }}
+          >
+            {feature}:
+          </legend>
+          <Label>
+            Alle
+            <CheckboxInput
               type="checkbox"
               id="Alle"
               name="Alle"
@@ -119,11 +128,13 @@ function FilterCheckboxes({
               checked={allFilter}
               onChange={handleCheckboxChange}
             />
-            Alle
-          </label>
+            {/* Alle */}
+            <Checkmark className="checkmark" />
+          </Label>
           {Object.keys(filter).map((key) => (
-            <label key={key}>
-              <input
+            <Label key={key}>
+              {key}
+              <CheckboxInput
                 type="checkbox"
                 id={key}
                 name={key}
@@ -131,8 +142,9 @@ function FilterCheckboxes({
                 checked={filter[key]}
                 onChange={handleCheckboxChange}
               />
-              {key}
-            </label>
+              <Checkmark />
+              {/* {key} */}
+            </Label>
           ))}
           {/* {filterList.map((option) => (
             <div key={option}>
@@ -211,7 +223,7 @@ function FilterCheckboxes({
               <label htmlFor={option}>{option}</label>
             </div>
           ))} */}
-        </fieldset>
+        </Fieldset>
       </FormWrapper>
       {/* <p>
         <strong>Stored state:</strong>
@@ -230,4 +242,143 @@ const FormWrapper = styled.form`
   width: ${(props) => props.dashboardWidth}px;
   margin: 10px 0;
   /* border: none; */
+`;
+
+// const Label = styled.label`
+//   /* padding-left: 10px;
+//   input[type='checkbox'] {
+//     height: 20px;
+//     width: 20px;
+
+//     background-color: red;
+//   } */
+
+//   /* display: block;
+//   position: relative;
+//   padding-left: 35px;
+//   margin-bottom: 12px;
+//   cursor: pointer;
+//   font-size: 22px;
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none; */
+
+//   input {
+//     position: absolute;
+//     opacity: 0;
+//     cursor: pointer;
+//   }
+//   input:checked + .checkmark {
+//     background-color: #2196f3; /* Change background color when checked */
+//   }
+
+//   input:checked + .checkmark:after {
+//     display: block;
+//   }
+// `;
+
+// const Checkmark = styled.span`
+//   /* position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 25px;
+//   width: 25px;
+//   background-color: #eee; */
+
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 20px;
+//   width: 20px;
+//   background-color: #eee; /* Background color of the checkbox */
+//   border: 1px solid #aaa; /* Border color of the checkbox */
+//   border-radius: 5px; /* Border radius to create rounded corners */
+
+//   :after {
+//     content: '';
+//     position: absolute;
+//     display: none;
+//     left: 7px;
+//     top: 3px;
+//     width: 5px;
+//     height: 10px;
+//     border: solid white;
+//     border-width: 0 2px 2px 0;
+//     transform: rotate(45deg);
+//   }
+// `;
+
+const Fieldset = styled.fieldset`
+  display: flex;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+`;
+
+const Label = styled.label`
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin: 5px;
+  /* margin-bottom: 12px; */
+  cursor: pointer;
+  /* font-size: 22px; */
+  user-select: none;
+
+  /* On mouse-over, add a grey background color */
+  /* &:hover input ~ .checkmark {
+    background-color: #ccc;
+  } */
+`;
+
+const CheckboxInput = styled.input`
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  border: 3px solid rgba(97, 90, 74, 1);
+  border-radius: 5px;
+`;
+
+const Checkmark = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px; /* Increased size for the checkmark */
+  width: 25px; /* Increased size for the checkmark */
+  background-color: rgba(255, 238, 199, 1);
+  border: 3px solid rgba(97, 90, 74, 1);
+  border-radius: 5px;
+
+  /* When the checkbox is checked, add a blue background */
+  /* ${CheckboxInput}:checked ~ & {
+    background-color: #2196f3;
+  } */
+  /* ${CheckboxInput} ~ & {
+    background-color: rgba(255, 238, 199, 1);
+  } */
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  &:after {
+    content: '';
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  ${CheckboxInput}:checked ~ &:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  &:after {
+    left: 8px; /* Adjusted position for the larger checkmark */
+    top: 2px; /* Adjusted position for the larger checkmark */
+    width: 5px;
+    height: 10px;
+    border: solid rgba(97, 90, 74, 1);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
 `;

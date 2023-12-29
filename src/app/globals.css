@@ -129,19 +129,35 @@ html {
 
 body {
   font-family: var(--font-quattrocento);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.5;
+  /* background-color: rgba(214, 217, 232, 1);
+  color: rgba(32, 35, 56, 1); */
+  background-color: rgba(255, 238, 199, 1);
+  color: rgba(53, 49, 40, 1);
 }
 
 svg {
   font-family: var(--font-noto-sans);
-  font-size: 0.8rem;
+  font-size: 1rem;
+  fill: rgba(53, 49, 40, 1);
 }
+
+/* svg text {
+  font-family: var(--font-noto-sans);
+  font-size: 1rem;
+  fill: rgba(53, 49, 40, 1);
+} */
+
+/* .svg-text {
+  fill: rgba(32, 35, 56, 1);
+} */
 
 .svg-title {
   font-family: var(--font-quattrocento);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  fill: rgba(32, 35, 56, 1);
 }
 
 .cluster-icon {

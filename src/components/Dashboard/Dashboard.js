@@ -42,7 +42,6 @@ import styled from 'styled-components';
 import useChartDimensions from '../../hooks/useChartDimensions';
 // import { lato } from '../../utils/fonts';
 import { window } from 'd3-selection';
-import Intro from '../Intro';
 import Header from '../Header';
 // import { Quattrocento, Lato } from 'next/font/google';
 
@@ -83,6 +82,7 @@ const initialFilter = {
   Sonstige: true,
 };
 
+// added filter
 const initialKategFilter = {
   'Unfall mit Leichtverletzten': true, // new
   'Unfall mit Schwerverletzten/Getöteten': true, // new
@@ -144,6 +144,7 @@ const filterData = (dataToFilter, allFilter, filter) => {
   });
 };
 
+// added filter
 const filterKategData = (dataToFilter, allFilter, filter) => {
   // console.log(dataToFilter);
   const data = dataToFilter.filter((item) => {
@@ -206,15 +207,15 @@ function Dashboard({ initialData }) {
   const [visData, setVisData] = useState(initialData); // Original dataset
   const [filteredData, setFilteredData] = useState(visData); // Initially set to visData
   const [allFilter, setAllFilter] = useState(true);
-  const [allKategFilter, setAllKategFilter] = useState(true);
+  const [allKategFilter, setAllKategFilter] = useState(true); // added filter
   const [filter, setFilter] = useState(initialFilter);
-  const [kategFilter, setKategFilter] = useState(initialKategFilter);
+  const [kategFilter, setKategFilter] = useState(initialKategFilter); // added filter
   const [filteringMode, setFilteringMode] = useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const [layout, setLayout] = useState('grid'); // flex
 
-  // TODO: check mapdata - is it used?
+  // TODO: check mapdata, filtereddata, etc. - is it used?
 
   const [windowWidth, setWindowWidth] = useState(1000); // 700 window.innerWidth || 700
   // Step 2: State to hold window width
@@ -435,13 +436,13 @@ function Dashboard({ initialData }) {
       totalMapData, // here: mapData
       allKategFilter,
       kategFilter
-    );
+    ); // added filter
 
     const updatedFilteredData = filterData(
       updatedKategFilteredData, // here: mapData
       allFilter,
       filter
-    );
+    ); // old filter but a bit changed because of added filter (input is from above (added filter))
 
     // const updatedFilteredData = mapData.filter((item) => {
     //   if (allFilter) {
@@ -476,6 +477,7 @@ function Dashboard({ initialData }) {
     setVisData(updatedFilteredData);
     // setData(updatedFilteredData);
   }, [filter, allFilter, totalMapData, allKategFilter, kategFilter]); // here: mapData
+  // added filter (depencencies and inside function)
 
   useEffect(() => {
     if (filteringMode === 'none') {
@@ -494,7 +496,8 @@ function Dashboard({ initialData }) {
     totalMapData,
     allKategFilter,
     kategFilter,
-  ]); // here: mapData,
+  ]); // here: mapData
+  // added filter (dependencies)
 
   // console.log('filtereddata', filteredData, 'visdata', visData);
   // console.log('filter', filter, 'allfilter', allFilter);
@@ -1047,6 +1050,7 @@ function Dashboard({ initialData }) {
   // TODO: remove heatmap functionaliy in leaflet
   // TODO: check in R/Daten Unfälle ohne Verletzte
   // TODO: check media query only screen
+  // TODO: check all charts for count.get || 0
 
   // console.log(timeDataDates);
 

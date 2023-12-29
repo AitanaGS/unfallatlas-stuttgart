@@ -23,9 +23,10 @@ function Number({ width, height, number, label, colorScale, max }) {
           style={{
             // stroke: 'blue',
             // strokeWidth: '2px',
-            fill: colorScale
-              ? colorScale(number || 0) || 'white'
-              : 'white',
+            // fill: colorScale
+            //   ? colorScale(number || 0) || 'white'
+            //   : 'white',
+            fill: 'transparent',
             // fill:
             //   colorScale(weekHourCount.get(d).get(e)) ||
             //   'white',
@@ -40,6 +41,7 @@ function Number({ width, height, number, label, colorScale, max }) {
           style={{
             fontSize: '0.8rem',
             fontWeight: !colorScale ? 'bold' : 'normal',
+            // fill: 'rgba(32, 35, 56, 1)',
           }}
           fill={
             max ? (number > max / 2 ? 'white' : 'black') : 'black'

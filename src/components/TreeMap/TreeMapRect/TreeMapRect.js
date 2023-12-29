@@ -43,6 +43,7 @@ function TreeMapRect({ d, colorScale }) {
         y={spring.y}
         textAnchor="start"
         dominantBaseline="hanging"
+        // fill="rgba(32, 35, 56, 1)"
       >
         {d.value > 0 ? d.data.name : ''}
       </animated.text>
@@ -51,6 +52,7 @@ function TreeMapRect({ d, colorScale }) {
         y={spring.y2}
         textAnchor="start"
         dominantBaseline="hanging"
+        // fill="rgba(32, 35, 56, 1)"
       >
         {d.value > 0 ? numberWithSeparator(d.value) : ''}
       </animated.text>

@@ -397,7 +397,15 @@ function LeafletMap({
         // className="leaflet-map"
         // ref={mapRef}
       >
-        <div id="map" className="leaflet-map" ref={mapRef}></div>
+        <div
+          id="map"
+          className="leaflet-map"
+          ref={mapRef}
+          style={{
+            border: '5px solid rgba(97, 90, 74, 1)',
+            borderRadius: '10px',
+          }}
+        ></div>
       </MapWrapper>
     )
   );

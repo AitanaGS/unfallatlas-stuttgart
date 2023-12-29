@@ -33,19 +33,6 @@ function ArtBarChart({
   visDataTotal,
   dashboardWidth,
 }) {
-  const kategorien = [
-    'Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug',
-    'Zusammenstoß mit vorausfahrendem / wartendem Fahrzeug',
-    'Zusammenstoß mit seitlich in gleicher Richtung fahrendem Fahrzeug',
-    'Zusammenstoß mit entgegenkommendem Fahrzeug',
-    'Zusammenstoß mit einbiegendem / kreuzendem Fahrzeug',
-    'Zusammenstoß zwischen Fahrzeug und Fußgänger',
-    'Aufprall auf Fahrbahnhindernis',
-    'Abkommen von Fahrbahn nach rechts',
-    'Abkommen von Fahrbahn nach links',
-    'Unfall anderer Art',
-  ];
-
   // const kategorien = [
   //   'Unfall anderer Art',
   //   'Abkommen von Fahrbahn nach links',
@@ -90,6 +77,19 @@ function ArtBarChart({
   // const kategorienSorted = kategorien.sort(sortKategorien);
 
   const kategorienSorted = useMemo(() => {
+    const kategorien = [
+      'Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug',
+      'Zusammenstoß mit vorausfahrendem / wartendem Fahrzeug',
+      'Zusammenstoß mit seitlich in gleicher Richtung fahrendem Fahrzeug',
+      'Zusammenstoß mit entgegenkommendem Fahrzeug',
+      'Zusammenstoß mit einbiegendem / kreuzendem Fahrzeug',
+      'Zusammenstoß zwischen Fahrzeug und Fußgänger',
+      'Aufprall auf Fahrbahnhindernis',
+      'Abkommen von Fahrbahn nach rechts',
+      'Abkommen von Fahrbahn nach links',
+      'Unfall anderer Art',
+    ];
+
     const variableCountArray = Array.from(variableCount.keys());
 
     const sortKategorien = sortArrayByReferenceArray(
@@ -97,7 +97,7 @@ function ArtBarChart({
     );
 
     return kategorien.sort(sortKategorien);
-  }, [variableCount, kategorien]);
+  }, [variableCount]);
 
   // console.log(variableCount, kategorienSorted);
 
@@ -128,7 +128,9 @@ function ArtBarChart({
   //     ? kategorienSorted.length * 80
   //     : kategorienSorted.length * 100;
 
-  const height = kategorienSorted.length * 65; // 65
+  // const height = kategorienSorted.length * 60; // 65
+
+  const height = 620; // 65
 
   // kategorienSorted.length * 70 : 200; // 65
 

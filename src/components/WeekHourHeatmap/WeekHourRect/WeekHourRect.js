@@ -59,8 +59,8 @@ function WeekHourRect({
         // fill={spring.textFill}
         fill={
           (weekHourCount[week]?.[hour] || 0) > extentCounts[1] / 2
-            ? 'white'
-            : 'black'
+            ? 'rgba(255, 238, 199, 1)'
+            : 'rgba(53, 49, 40, 1)'
         }
       >
         {/* {weekHourCount.get(d).get(e) || 0} */}
