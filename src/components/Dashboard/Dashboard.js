@@ -1051,6 +1051,8 @@ function Dashboard({ initialData }) {
   // TODO: check in R/Daten Unfälle ohne Verletzte
   // TODO: check media query only screen
   // TODO: check all charts for count.get || 0
+  // TODO: preferred no motion
+  // TODO: info text inkl. data, colorscale, etc.
 
   // console.log(timeDataDates);
 
@@ -1066,7 +1068,7 @@ function Dashboard({ initialData }) {
         scrollbarWidth={scrollbarWidth}
         layout={layout}
       >
-        <Header />
+        <Header chartWidth={chartWidth} />
         <InputWrapper layout={layout} dashboardWidth={dashboardWidth}>
           {/* <Map data={data} setVisData={setVisData} /> */}
           <LeafletMap
@@ -1471,7 +1473,7 @@ const vizWrapperVariants = {
   flex: ``,
   grid: `
     grid-column: 2;
-    margin-top: 60px;
+    margin-top: 80px;
   `,
 };
 

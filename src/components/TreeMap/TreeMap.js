@@ -42,10 +42,22 @@ function TreeMap({ treeData, dashboardWidth, visDataTotal }) {
 
   const namesArray = treeData.map((item) => item.name);
 
+  const colorArray = [
+    'rgba(240, 228, 66, 1)',
+    'rgba(0, 158, 115, 1)',
+    'rgba(204, 121, 167, 1)',
+    'rgba(213, 94, 0, 1)',
+    'rgba(86, 180, 233, 1)',
+  ];
+  // https://jfly.uni-koeln.de/color/
+
   // const colorScale = scaleBand(schemeDark2).domain(namesArray);
+  // const colorScale = scaleOrdinal()
+  //   .domain(namesArray)
+  //   .range(schemeDark2);
   const colorScale = scaleOrdinal()
     .domain(namesArray)
-    .range(schemeDark2);
+    .range(colorArray);
 
   // console.log('root leaves', root.leaves());
 

@@ -1,11 +1,17 @@
 'use client';
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import styled from 'styled-components';
+import { COLORS } from '../../utils/constants';
 
-function Header() {
+function Header({ chartWidth }) {
+  // TODO: css calc margin of titlewrapper
+
+  console.log('chartwidth', chartWidth);
   return (
-    <HeaderWrapper>
-      <h1>Unfallatlas Stuttgart</h1>
+    <HeaderWrapper colors={COLORS}>
+      <TitleWrapper colors={COLORS} chartWidth={chartWidth}>
+        <h1>Unfallatlas Stuttgart</h1>
+      </TitleWrapper>
       <IntroText>
         <p>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
@@ -38,15 +44,31 @@ const HeaderWrapper = styled.header`
   /* position: relative; */
   /* border: 2px solid blue; */
   width: 100%;
-  h1 {
-    margin: 15px 0px 20px 0px;
-    /* font-size: 4rem; */
-  }
+  /* h1 {
+    /* margin: 30px 0px 20px 0px; */
+  /* margin: 30px 0px 20px 0px;
+    font-size: 2.8rem;
+    background-color: ${(props) => props.colors.yellow.medium}; */
+  /* } */
   /* p {
     background-color: rgba(55, 62, 98, 1);
     color: rgba(214, 217, 232, 1);
     padding: 20px;
   } */
+`;
+
+const TitleWrapper = styled.div`
+  background-color: ${(props) => props.colors.yellow.medium};
+  margin: ${(props) => `30px 0px 20px -${props.chartWidth}px`};
+  /* margin: 30px 0px 20px -1000px; */
+  border-radius: 10px;
+  /* padding: 0px 0px 0px 0px; */
+  h1 {
+    /* margin: 30px 0px 20px 0px; */
+    /* margin: 30px 0px 20px 1000px; */
+    margin: ${(props) => `30px 0px 20px ${props.chartWidth}px`};
+    font-size: 3rem;
+  }
 `;
 
 const IntroText = styled.div`

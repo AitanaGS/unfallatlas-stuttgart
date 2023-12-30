@@ -402,7 +402,8 @@ function LeafletMap({
           className="leaflet-map"
           ref={mapRef}
           style={{
-            border: '5px solid rgba(97, 90, 74, 1)',
+            // border: '5px solid rgba(97, 90, 74, 1)',
+            border: '5px solid rgba(104, 104, 104, 1)',
             borderRadius: '10px',
           }}
         ></div>

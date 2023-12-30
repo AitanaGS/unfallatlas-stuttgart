@@ -176,7 +176,7 @@ function ArtBarChart({
 
   const marginLabelled = {
     top: 40, // 20
-    right: 5, // 5
+    right: 10, // 5
     bottom: 0,
     left: 10, // 20 // 275 // 450 // 500 // 160
   };

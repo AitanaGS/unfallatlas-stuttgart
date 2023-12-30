@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { COLORS } from '../../utils/constants';
 
 // const initialFilter = {
 //   alle: true,
@@ -100,6 +101,9 @@ function FilterCheckboxes({
   // }, [allFilter, filter]);
   // // console.log('filter list', filterList);
 
+  // TODO: accessibility
+  console.log(COLORS);
+
   return (
     <>
       <FormWrapper
@@ -127,9 +131,10 @@ function FilterCheckboxes({
               value="Alle"
               checked={allFilter}
               onChange={handleCheckboxChange}
+              colors={COLORS}
             />
             {/* Alle */}
-            <Checkmark className="checkmark" />
+            <Checkmark className="checkmark" colors={COLORS} />
           </Label>
           {Object.keys(filter).map((key) => (
             <Label key={key}>
@@ -141,8 +146,9 @@ function FilterCheckboxes({
                 value={key}
                 checked={filter[key]}
                 onChange={handleCheckboxChange}
+                colors={COLORS}
               />
-              <Checkmark />
+              <Checkmark className="checkmark" colors={COLORS} />
               {/* {key} */}
             </Label>
           ))}
@@ -337,7 +343,9 @@ const CheckboxInput = styled.input`
   cursor: pointer;
   height: 0;
   width: 0;
-  border: 3px solid rgba(97, 90, 74, 1);
+  /* border: 3px solid rgba(97, 90, 74, 1); */
+  /* border: 3px solid rgba(104, 104, 104, 1); */
+  border: ${(props) => `3px solid ${props.colors.gray.dark}`};
   border-radius: 5px;
 `;
 
@@ -347,8 +355,12 @@ const Checkmark = styled.span`
   left: 0;
   height: 25px; /* Increased size for the checkmark */
   width: 25px; /* Increased size for the checkmark */
-  background-color: rgba(255, 238, 199, 1);
-  border: 3px solid rgba(97, 90, 74, 1);
+  /* background-color: rgba(255, 238, 199, 1); */
+  /* background-color: rgba(255, 247, 228, 1); */
+  background-color: ${(props) => props.colors.yellow.medium};
+  /* border: 3px solid rgba(97, 90, 74, 1); */
+  /* border: 3px solid rgba(104, 104, 104, 1); */
+  border: ${(props) => `3px solid ${props.colors.gray.dark}`};
   border-radius: 5px;
 
   /* When the checkbox is checked, add a blue background */
@@ -373,11 +385,13 @@ const Checkmark = styled.span`
 
   /* Style the checkmark/indicator */
   &:after {
-    left: 8px; /* Adjusted position for the larger checkmark */
+    left: 7px; /* Adjusted position for the larger checkmark */
     top: 2px; /* Adjusted position for the larger checkmark */
     width: 5px;
     height: 10px;
-    border: solid rgba(97, 90, 74, 1);
+    /* border: solid rgba(97, 90, 74, 1); */
+    /* border: solid rgba(104, 104, 104, 1); */
+    border: ${(props) => `solid ${props.colors.gray.dark}`};
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
   }

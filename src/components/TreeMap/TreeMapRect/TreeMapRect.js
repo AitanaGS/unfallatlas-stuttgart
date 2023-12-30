@@ -18,7 +18,7 @@ function TreeMapRect({ d, colorScale }) {
     // text: weekHourCount[week]?.[hour] || 0,
     x: d.x0,
     y: d.y0,
-    y2: d.y0 + 15,
+    y2: d.y0 + 16,
     width: d.x1 - d.x0,
     height: d.y1 - d.y0,
     config: {

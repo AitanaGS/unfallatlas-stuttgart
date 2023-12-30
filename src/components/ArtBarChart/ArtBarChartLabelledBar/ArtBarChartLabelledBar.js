@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
+import { COLORS } from '../../../utils/constants';
 
 function splitStringByHalf(inputString) {
   // Split the input string into an array of words
@@ -80,7 +81,7 @@ function ArtBarChartLabelledBar({
     width: xScale(variableCount.get(kat) || 0),
     // height: yScale.bandwidth(),
     height: yScaleBandwidth,
-    textNumberX: xScale(variableCount.get(kat) || 0) - 2, // xScale(variableCount.get(kat)) + 3
+    textNumberX: xScale(variableCount.get(kat) || 0) + 5, // xScale(variableCount.get(kat) || 0) - 2
     textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
@@ -104,7 +105,7 @@ function ArtBarChartLabelledBar({
         y={spring.y}
         width={spring.width}
         height={spring.height}
-        fill="#69b3a2"
+        fill={COLORS.gray.light}
       />
       <animated.text
         // x={xScale(variableCount.get(d)) + 10}
@@ -112,6 +113,7 @@ function ArtBarChartLabelledBar({
         // x={spring.textLabelX}
         y={spring.textLabelY}
         style={{ fontSize: '0.8rem' }}
+        // textAnchor="start"
         // dominantBaseline="middle"
       >
         {/* {kat} */}
@@ -149,7 +151,7 @@ function ArtBarChartLabelledBar({
         y={spring.textNumberY}
         style={{ fontSize: '0.8rem' }}
         dominantBaseline="middle"
-        textAnchor="end"
+        textAnchor="start"
       >
         {numberWithSeparator(variableCount.get(kat) || 0)}
         {/* {`${Math.round(
