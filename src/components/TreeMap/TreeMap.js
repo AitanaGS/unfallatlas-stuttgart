@@ -63,7 +63,7 @@ function TreeMap({ treeData, dashboardWidth, visDataTotal }) {
 
   // console.log('names array', namesArray);
 
-  // console.log('color fussgänger', colorScale('Fußgänger'));
+  // TODO: add info text about sonstige
 
   return (
     <ChartContainer width={width} height={height}>

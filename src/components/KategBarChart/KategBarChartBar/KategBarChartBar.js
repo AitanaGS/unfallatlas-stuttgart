@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
+import { COLORS } from '../../../utils/constants';
 
 function KategBarChartBar({
   xScale,
@@ -40,7 +41,7 @@ function KategBarChartBar({
     // rectHeight: yScale.bandwidth(),
     textX:
       variableCount.get(kat) > 0
-        ? xScale(variableCount.get(kat)) - 2 // + 10
+        ? xScale(variableCount.get(kat)) + 5 // -2
         : 20,
     textY: yScale(kat) + yScale.bandwidth() / 2,
     config: {
@@ -58,13 +59,13 @@ function KategBarChartBar({
         y={spring.rectY}
         width={spring.rectWidth}
         height={yScale.bandwidth()}
-        fill="#69b3a2"
+        fill={COLORS.gray.light}
       />
       <animated.text
         x={spring.textX}
         y={spring.textY}
-        style={{ fontSize: '0.8rem' }}
-        textAnchor="end"
+        // style={{ fontSize: '0.8rem' }}
+        textAnchor="start"
         dominantBaseline="middle"
       >
         {numberWithSeparator(variableCount.get(kat))}

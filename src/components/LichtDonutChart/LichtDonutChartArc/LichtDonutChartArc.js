@@ -7,6 +7,7 @@ import {
   SpringValue,
 } from '@react-spring/web';
 import { pie, arc } from 'd3-shape';
+import { COLORS } from '../../../utils/constants';
 
 const LichtDonutChartArc = ({ arcDatum, radius, color }) => {
   const arcPathGenerator = arc();
@@ -29,7 +30,7 @@ const LichtDonutChartArc = ({ arcDatum, radius, color }) => {
         });
       })}
       fill={color}
-      stroke="white"
+      stroke={COLORS.white}
     />
   );
 };

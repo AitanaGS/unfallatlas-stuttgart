@@ -85,7 +85,7 @@ function ArtBarChartLabelledBar({
     textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
-    textLabelY: yScale(kat) - 20,
+    textLabelY: yScale(kat) - 25, // -20
     config: {
       mass: 1,
       tension: 120,
@@ -112,7 +112,7 @@ function ArtBarChartLabelledBar({
         // y={yScale(d) + yScale.bandwidth() / 2}
         // x={spring.textLabelX}
         y={spring.textLabelY}
-        style={{ fontSize: '0.8rem' }}
+        // style={{ fontSize: '0.8rem' }}
         // textAnchor="start"
         // dominantBaseline="middle"
       >
@@ -149,7 +149,7 @@ function ArtBarChartLabelledBar({
         // y={yScale(d) + yScale.bandwidth() / 2}
         x={spring.textNumberX}
         y={spring.textNumberY}
-        style={{ fontSize: '0.8rem' }}
+        // style={{ fontSize: '0.8rem' }}
         dominantBaseline="middle"
         textAnchor="start"
       >

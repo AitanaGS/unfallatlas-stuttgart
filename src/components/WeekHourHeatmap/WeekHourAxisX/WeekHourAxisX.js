@@ -16,7 +16,7 @@ function WeekHourAxisX({ xScale, innerWidth, margin, kat }) {
           y={-5}
           textAnchor="middle"
           dominantBaseline="middle"
-          style={{ fontSize: '0.8rem' }}
+          // style={{ fontSize: '0.8rem' }}
         >
           <tspan>{d}</tspan>
         </text>

@@ -130,7 +130,7 @@ function ArtBarChart({
 
   // const height = kategorienSorted.length * 60; // 65
 
-  const height = 620; // 65
+  const height = 780; // 750 620 65
 
   // kategorienSorted.length * 70 : 200; // 65
 
@@ -175,8 +175,8 @@ function ArtBarChart({
   // };
 
   const marginLabelled = {
-    top: 40, // 20
-    right: 10, // 5
+    top: 50, // 20
+    right: 50, // 5
     bottom: 0,
     left: 10, // 20 // 275 // 450 // 500 // 160
   };
@@ -235,8 +235,9 @@ function ArtBarChart({
   const yScaleLabelled = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
     .range([innerHeight, 0])
-    .paddingInner(0.3) // 2.5 0.8
-    .paddingOuter(0.3);
+    .padding(0.2);
+  // .paddingInner(0.3) // 2.5 0.8
+  // .paddingOuter(0.3);
 
   // console.log('xscallelabelled', xScaleLabelled(3600));
 
@@ -262,7 +263,7 @@ function ArtBarChart({
       /> */}
       <text
         x={10}
-        y={4}
+        y={3}
         textAnchor="auto"
         dominantBaseline="hanging"
         className="svg-title"

@@ -37,9 +37,9 @@ function ColumnChart({
   // const [isAnimating, setIsAnimating] = useState(false);
 
   const width = chartWidth; //150;
-  const height = 100;
+  const height = 150;
   const margin = {
-    top: 20,
+    top: 25,
     right: 5,
     bottom: 15,
     left: 30,
@@ -294,7 +294,7 @@ function ColumnChart({
       <text
         x={5}
         y={8}
-        style={{ fontSize: '0.6rem' }}
+        style={{ fontSize: '0.8rem', fontWeight: 700 }}
         textAnchor="start"
         dominantBaseline={'middle'}
       >

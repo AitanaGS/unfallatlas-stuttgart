@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
+import { COLORS } from '../../../../utils/constants';
 
 function ColumnChartColumn({
   monat,
@@ -136,7 +137,7 @@ function ColumnChartColumn({
       // y={yScale(monthData.get(monat) || 0)} //yScale(monthData.get(d) || 0)
       width={xScale.bandwidth()}
       // height={innerHeight - yScale(monthData.get(monat) || 0)} //innerHeight - yScale(monthData.get(d) || 0)
-      fill="#69b3a2"
+      fill={COLORS.gray.light}
       y={spring.y}
       height={spring.height}
     />

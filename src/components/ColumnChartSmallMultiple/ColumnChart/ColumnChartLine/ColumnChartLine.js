@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
+import { COLORS } from '../../../../utils/constants';
 
 function ColumnChartLine({
   yScale,
@@ -55,7 +56,7 @@ function ColumnChartLine({
         x2={innerWidth}
         // y2={yScale(meanMonthData)}
         y2={spring.y2}
-        stroke="#69b3a2"
+        stroke={COLORS.gray.dark}
         strokeWidth="2"
       />
     )

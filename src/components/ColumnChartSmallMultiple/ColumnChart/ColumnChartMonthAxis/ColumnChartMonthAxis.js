@@ -27,7 +27,7 @@ function ColumnChartMonthAxis({
             y={10}
             textAnchor="middle"
             dominantBaseline="middle"
-            style={{ fontSize: '0.6rem' }}
+            style={{ fontSize: '0.8rem' }}
           >
             {d[0]}
             {/* {/* {i % 6 == 0 ? (

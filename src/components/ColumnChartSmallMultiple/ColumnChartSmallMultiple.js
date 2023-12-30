@@ -83,11 +83,11 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
       <svg
         viewBox={`0 0 ${dashboardWidth} ${20}`}
         width={dashboardWidth}
-        height={20}
+        height={40}
       >
         <text
           x={10}
-          y={6}
+          y={4}
           textAnchor="auto"
           dominantBaseline="hanging"
           className="svg-title"

@@ -160,7 +160,7 @@ svg {
 .svg-title {
   font-family: var(--font-quattrocento);
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   /* fill: rgba(32, 35, 56, 1); */
   color: rgba(59, 59, 59, 1);
 }
@@ -194,6 +194,38 @@ svg {
 
 .cluster {
   background-color: transparent;
+}
+
+.marker-cluster-small {
+  background-color: rgba(254, 212, 175, 1) !important;
+}
+
+.marker-cluster-small div {
+  background-color: rgba(253, 184, 123, 1) !important;
+  color: #000 !important;
+}
+
+.marker-cluster-medium {
+  background-color: rgba(248, 153, 89, 1) !important;
+}
+
+.marker-cluster-medium div {
+  background-color: rgba(246, 123, 40, 1) !important;
+  color: #000 !important;
+}
+
+.marker-cluster-large {
+  background-color: rgba(251, 90, 9, 1) !important;
+}
+
+.marker-cluster-large div {
+  background-color: rgba(
+    207,
+    71,
+    3,
+    1
+  ) !important; /* rgba(207, 71, 3, 1)*/
+  color: #000 !important;
 }
 
 /* .marker-cluster-small {

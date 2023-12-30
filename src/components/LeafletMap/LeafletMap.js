@@ -142,7 +142,7 @@ function LeafletMap({
     return new L.Icon({
       // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
       iconUrl: '/leaflet-icons/marker-icon-2x.png',
-      iconSize: [38, 45], // [38, 38]
+      iconSize: [25, 28], // [38, 38] [38, 45]
     });
   }, []);
 

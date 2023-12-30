@@ -14,7 +14,7 @@ function WeekHourAxisY({ yScale, innerHeight, margin, kat }) {
           y={yScale(d) + yScale.bandwidth() / 2}
           textAnchor="end"
           dominantBaseline="middle"
-          style={{ fontSize: '0.8rem' }}
+          // style={{ fontSize: '0.8rem' }}
         >
           <tspan>{d}</tspan>
         </text>

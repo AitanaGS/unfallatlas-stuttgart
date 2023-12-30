@@ -18,6 +18,7 @@ import LichtDonutChartArc from './LichtDonutChartArc';
 // import LichtLollipopChartLine from './LichtLollipopChartLine';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 import { numberWithSeparator } from '../../utils/calc';
+import { COLORS } from '../../utils/constants';
 
 function LichtDonutChart({
   variableCount,
@@ -85,7 +86,14 @@ function LichtDonutChart({
 
   const colorScale = scaleOrdinal()
     .domain(kategorienSorted)
-    .range(['#98abc5', '#a05d56']);
+    // .range([COLORS.orange.medium, COLORS.orange.dark]);
+    // .range([
+    //   COLORS.categorical.orangeLight,
+    //   COLORS.categorical.orangeDark,
+    // ]);
+    // .range([COLORS.orange, COLORS.yellow.medium]);
+    .range([COLORS.gray.light, COLORS.gray.medium]);
+  // .range([COLORS.yellow.medium, COLORS.yellow.light]);
 
   // const countArray = useMemo(() => {
   //   return Array.from(variableCount.entries(), ([key, value]) => ({
@@ -195,7 +203,7 @@ function LichtDonutChart({
         y={leftLabelYPosition}
         textAnchor={leftLabelTextAnchor}
         dominantBaseline="middle"
-        style={{ fontSize: '0.8rem' }}
+        // style={{ fontSize: '0.8rem' }}
       >
         <tspan x={leftLabelXPosition} dy="0">
           Dämmerung/
@@ -221,7 +229,7 @@ function LichtDonutChart({
         y={rightLabelYPosition}
         textAnchor={rightLabelTextAnchor}
         dominantBaseline="middle"
-        style={{ fontSize: '0.8rem' }}
+        // style={{ fontSize: '0.8rem' }}
       >
         <tspan x={rightLabelXPosition} dy="0">
           Tageslicht

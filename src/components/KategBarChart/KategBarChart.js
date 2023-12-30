@@ -58,11 +58,11 @@ function KategBarChart({
 
   const width = dashboardWidth > 400 ? dashboardWidth : 300;
 
-  const height = 120;
+  const height = 160; // 120
 
   const margin = {
     top: 30, // 20
-    right: 50,
+    right: 80,
     bottom: 5,
     left: 190,
   };
@@ -100,7 +100,7 @@ function KategBarChart({
 
   const maxValue = variableCount.get(maxKateg) || 0;
 
-  console.log('maxkateg', maxKateg, 'maxvalue', maxValue);
+  // console.log('maxkateg', maxKateg, 'maxvalue', maxValue);
 
   // console.log('maxkateg, maxvalue', maxKateg, maxValue);
 

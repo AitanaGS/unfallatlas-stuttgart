@@ -1114,12 +1114,10 @@ function Dashboard({ initialData }) {
           />
           {/* </CheckboxWrapper> */}
           <Number
-            width={75}
-            height={50}
             number={visDataTotal}
             label={'Gesamt'}
-            colorScale={undefined}
-            max={undefined}
+            // colorScale={undefined}
+            // max={undefined}
           />
           {/* <Intro /> */}
         </InputWrapper>
@@ -1129,20 +1127,18 @@ function Dashboard({ initialData }) {
             dashboardWidth={chartWidth}
             visDataTotal={visDataTotal}
           />
+          <KategBarChart
+            variableCount={kategCount}
+            visDataTotal={visDataTotal}
+            dashboardWidth={chartWidth}
+          />
           <WeekHourHeatmap
             visData={visData}
             weekHourCount={weekHourCount}
             dashboardWidth={chartWidth}
           />
-
-          <ArtBarChart
-            variableCount={artCount}
-            visDataTotal={visDataTotal}
-            dashboardWidth={chartWidth}
-          />
-          <KategBarChart
-            variableCount={kategCount}
-            visDataTotal={visDataTotal}
+          <ColumnChartSmallMultiple
+            visData={visData}
             dashboardWidth={chartWidth}
           />
           <LichtDonutChart
@@ -1156,8 +1152,9 @@ function Dashboard({ initialData }) {
             dashboardWidth={chartWidth}
           />
 
-          <ColumnChartSmallMultiple
-            visData={visData}
+          <ArtBarChart
+            variableCount={artCount}
+            visDataTotal={visDataTotal}
             dashboardWidth={chartWidth}
           />
         </VizWrapper>
@@ -1479,6 +1476,9 @@ const vizWrapperVariants = {
 
 const VizWrapper = styled.div`
   ${(props) => vizWrapperVariants[props.layout]}
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 `;
 
 const CheckboxWrapper = styled.div`

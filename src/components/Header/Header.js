@@ -5,6 +5,7 @@ import { COLORS } from '../../utils/constants';
 
 function Header({ chartWidth }) {
   // TODO: css calc margin of titlewrapper
+  // TODO: font size responsive
 
   console.log('chartwidth', chartWidth);
   return (
