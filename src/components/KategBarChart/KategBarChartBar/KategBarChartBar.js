@@ -59,7 +59,7 @@ function KategBarChartBar({
         y={spring.rectY}
         width={spring.rectWidth}
         height={yScale.bandwidth()}
-        fill={COLORS.gray.light}
+        fill={COLORS.yellowOrange.light}
       />
       <animated.text
         x={spring.textX}

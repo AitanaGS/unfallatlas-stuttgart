@@ -6,6 +6,7 @@ import { scaleSequential, scaleBand, scaleOrdinal } from 'd3-scale';
 import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
 import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
+import { COLORS } from '../../utils/constants';
 
 function TreeMap({ treeData, dashboardWidth, visDataTotal }) {
   const width = dashboardWidth; // 250
@@ -42,12 +43,19 @@ function TreeMap({ treeData, dashboardWidth, visDataTotal }) {
 
   const namesArray = treeData.map((item) => item.name);
 
+  // const colorArray = [
+  //   COLORS.categorical.blue,
+  //   COLORS.categorical.green,
+  //   COLORS.categorical.pink,
+  //   COLORS.categorical.yellow,
+  //   COLORS.categorical.gray,
+  // ];
   const colorArray = [
-    'rgba(240, 228, 66, 1)',
-    'rgba(0, 158, 115, 1)',
-    'rgba(204, 121, 167, 1)',
-    'rgba(213, 94, 0, 1)',
-    'rgba(86, 180, 233, 1)',
+    COLORS.categorical2.yellow,
+    COLORS.categorical2.green,
+    COLORS.categorical2.purple,
+    COLORS.categorical2.orangeDark,
+    COLORS.categorical2.blueLight,
   ];
   // https://jfly.uni-koeln.de/color/
 

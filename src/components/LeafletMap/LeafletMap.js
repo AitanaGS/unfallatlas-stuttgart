@@ -13,6 +13,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
 import styled from 'styled-components';
+import { MapPin } from 'react-feather';
 
 // const calculateVisibleData = (map, markerClusterGroup) => {
 //   const bounds = map.getBounds();
@@ -141,8 +142,9 @@ function LeafletMap({
   const customIcon = useMemo(() => {
     return new L.Icon({
       // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
-      iconUrl: '/leaflet-icons/marker-icon-2x.png',
-      iconSize: [25, 28], // [38, 38] [38, 45]
+      // iconUrl: '/leaflet-icons/marker-icon-2x.png',
+      // iconSize: [25, 28], // [38, 38] [38, 45]
+      iconUrl: '/leaflet-icons/map-pin.svg',
     });
   }, []);
 
@@ -264,11 +266,29 @@ function LeafletMap({
       markerClusterGroup.addLayer(marker);
       // markerIdToMarker[d.dataid] = marker; // check if necessary (see above)
 
+      const popupContent = `
+      <div>
+        <strong>Unfallbeteilgung:</strong> 
+          ${d.istfussb ? 'Fußgänger' : ''}
+          ${d.istradb ? 'Rad' : ''}
+          ${d.istkradb ? 'Kraftrad' : ''}
+          ${d.istpkwb ? 'PKW' : ''}
+          ${d.istsonst2b ? 'Sonstige' : ''}
+          <br/>
+        <strong>Schwergrad:</strong> ${d.kateg2}<br/>
+        <strong>Lichtverhältnisse:</strong> ${d.licht2}<br/>
+        <strong>Straßenzustand:</strong> ${d.strzust2}<br/>
+        <strong>Art:</strong> ${d.art} <br/>
+        <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
+        <strong>${d.wochentag}${', '}${d.zeit}</strong>
+      </div>
+    `;
+
       // Add click event to show popup with address
       marker.on('click', () => {
         L.popup()
           .setLatLng(marker.getLatLng())
-          .setContent(d.address)
+          .setContent(popupContent) // d.address
           .openOn(map);
       });
     });

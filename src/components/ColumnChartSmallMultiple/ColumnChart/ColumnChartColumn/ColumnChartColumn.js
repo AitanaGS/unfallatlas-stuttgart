@@ -137,7 +137,7 @@ function ColumnChartColumn({
       // y={yScale(monthData.get(monat) || 0)} //yScale(monthData.get(d) || 0)
       width={xScale.bandwidth()}
       // height={innerHeight - yScale(monthData.get(monat) || 0)} //innerHeight - yScale(monthData.get(d) || 0)
-      fill={COLORS.gray.light}
+      fill={COLORS.yellowOrange.medium}
       y={spring.y}
       height={spring.height}
     />

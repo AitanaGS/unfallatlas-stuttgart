@@ -89,7 +89,8 @@ function StrasseDonutChart({
   const colorScale = scaleOrdinal()
     .domain(kategorienSorted)
     // .range([COLORS.orange.medium, COLORS.orange.dark]);
-    .range([COLORS.gray.light, COLORS.gray.medium]);
+    // .range([COLORS.gray.light, COLORS.gray.medium]);
+    .range([COLORS.yellowOrange.light, COLORS.yellowOrange.medium]);
   // .range([
   //   COLORS.categorical.orangeLight,
   //   COLORS.categorical.orangeDark,

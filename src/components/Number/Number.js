@@ -16,8 +16,8 @@ function Number({ number, label }) {
 
   // const width = 150;
   // const height = 100;
-  const width = 100;
-  const height = 50;
+  const width = 90;
+  const height = 40;
   return (
     <NumberWrapper>
       {label}:
@@ -29,8 +29,8 @@ function Number({ number, label }) {
           <rect
             width={width}
             height={height}
-            rx={'10px'}
-            ry={'10px'}
+            rx={'5px'}
+            ry={'5px'}
             // stroke={COLORS.gray.dark}
             // strokeWidth={'6px'}
             style={{

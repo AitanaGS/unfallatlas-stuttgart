@@ -64,7 +64,7 @@ function KategBarChart({
     top: 30, // 20
     right: 80,
     bottom: 5,
-    left: 190,
+    left: 220, // 190
   };
 
   const innerWidth = width - margin.left - margin.right;

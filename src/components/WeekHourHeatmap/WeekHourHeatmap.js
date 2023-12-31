@@ -4,6 +4,7 @@ import { scaleBand, scaleSequential } from 'd3-scale';
 import {
   interpolateOranges,
   interpolateReds,
+  interpolateYlOrBr,
 } from 'd3-scale-chromatic';
 import { min, max, least, greatest, extent } from 'd3-array';
 import WeekHourAxisX from './WeekHourAxisX';
@@ -87,9 +88,9 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
 
   // console.log(extent(counts));
 
-  const colorScale = scaleSequential(interpolateOranges).domain(
+  const colorScale = scaleSequential(interpolateYlOrBr).domain(
     extentCounts[1] === 0 ? extentCountsZero : extentCounts
-  );
+  ); // interpolateYlOrBr // interpolateOranges
 
   // TODO: colorscale starting with 0 (not within count), zero instead of na (in R) (s.u.)
   // TODO: zero instead of na (in R)?

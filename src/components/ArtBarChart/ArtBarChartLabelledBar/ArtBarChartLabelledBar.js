@@ -105,7 +105,7 @@ function ArtBarChartLabelledBar({
         y={spring.y}
         width={spring.width}
         height={spring.height}
-        fill={COLORS.gray.light}
+        fill={COLORS.yellowOrange.medium}
       />
       <animated.text
         // x={xScale(variableCount.get(d)) + 10}

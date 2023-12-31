@@ -1094,6 +1094,12 @@ function Dashboard({ initialData }) {
           setSelectHeatmap={setSelectHeatmap}
           dashboardWidth={dashboardWidth}
         /> */}
+          <Number
+            number={visDataTotal}
+            label={'Gesamt'}
+            // colorScale={undefined}
+            // max={undefined}
+          />
           <FilterCheckboxes
             filter={filter}
             setFilter={setFilter}
@@ -1113,12 +1119,7 @@ function Dashboard({ initialData }) {
             feature="Schweregrad"
           />
           {/* </CheckboxWrapper> */}
-          <Number
-            number={visDataTotal}
-            label={'Gesamt'}
-            // colorScale={undefined}
-            // max={undefined}
-          />
+
           {/* <Intro /> */}
         </InputWrapper>
         <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>

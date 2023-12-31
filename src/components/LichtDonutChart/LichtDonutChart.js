@@ -92,7 +92,8 @@ function LichtDonutChart({
     //   COLORS.categorical.orangeDark,
     // ]);
     // .range([COLORS.orange, COLORS.yellow.medium]);
-    .range([COLORS.gray.light, COLORS.gray.medium]);
+    .range([COLORS.yellowOrange.light, COLORS.yellowOrange.medium]);
+  // .range([COLORS.gray.light, COLORS.gray.medium]);
   // .range([COLORS.yellow.medium, COLORS.yellow.light]);
 
   // const countArray = useMemo(() => {

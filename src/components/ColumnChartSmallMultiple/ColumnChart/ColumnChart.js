@@ -42,7 +42,7 @@ function ColumnChart({
     top: 25,
     right: 5,
     bottom: 15,
-    left: 30,
+    left: 40,
   };
 
   const innerWidth = width - margin.right - margin.left;
@@ -157,7 +157,7 @@ function ColumnChart({
     // animations.forEach((animation) => {
     //   api.start(animation);
     // });
-  }, [yearVisData]); // , yearVisData
+  }, [yearVisData, maxValueMap, year, maxMonthData, setMaxValueMap]); // , yearVisData
   // [
   //   maxMonthData,
   //   setMaxValueMap,
@@ -292,7 +292,7 @@ function ColumnChart({
   return (
     <ChartContainer width={width} height={height}>
       <text
-        x={5}
+        x={10}
         y={8}
         style={{ fontSize: '0.8rem', fontWeight: 700 }}
         textAnchor="start"
