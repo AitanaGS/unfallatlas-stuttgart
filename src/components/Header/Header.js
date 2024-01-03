@@ -6,8 +6,9 @@ import { COLORS } from '../../utils/constants';
 function Header({ chartWidth }) {
   // TODO: css calc margin of titlewrapper
   // TODO: font size responsive
-
-  console.log('chartwidth', chartWidth);
+  // TODO: info "Der Unfallatlas enthält Unfälle mit Personenschaden. Unfälle, bei denen nur Sachschaden entsteht, werden nicht dargestellt."
+  // TODO: 2016 - 2022
+  // console.log('chartwidth', chartWidth);
   return (
     <HeaderWrapper colors={COLORS}>
       <TitleWrapper colors={COLORS} chartWidth={chartWidth}>

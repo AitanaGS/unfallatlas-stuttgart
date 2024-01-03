@@ -186,12 +186,6 @@ function KategBarChart({
       >
         Schweregrad des Unfalls
       </text>
-      <KategBarKatAxis
-        yScale={yScale}
-        innerHeight={innerHeight}
-        margin={margin}
-        kat={kategorienSorted}
-      />
       <g
         ref={barChartRef}
         transform={`translate(${margin.left}, ${margin.top})`}
@@ -260,6 +254,12 @@ function KategBarChart({
           // </g>
         ))}
       </g>
+      <KategBarKatAxis
+        yScale={yScale}
+        innerHeight={innerHeight}
+        margin={margin}
+        kat={kategorienSorted}
+      />
       {/* <BarXAxis variableArray={kategorien} /> */}
       {/* <Bar /> */}
     </ChartContainer>

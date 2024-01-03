@@ -144,7 +144,7 @@ function LeafletMap({
       // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
       // iconUrl: '/leaflet-icons/marker-icon-2x.png',
       // iconSize: [25, 28], // [38, 38] [38, 45]
-      iconUrl: '/leaflet-icons/map-pin.svg',
+      iconUrl: '/leaflet-icons/alert-triangle-orange.svg',
     });
   }, []);
 
@@ -280,7 +280,7 @@ function LeafletMap({
         <strong>Straßenzustand:</strong> ${d.strzust2}<br/>
         <strong>Art:</strong> ${d.art} <br/>
         <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
-        <strong>${d.wochentag}${', '}${d.zeit}</strong>
+       <strong>${d.wochentag}${', '}${d.zeit}</strong>
       </div>
     `;
 
@@ -292,6 +292,10 @@ function LeafletMap({
           .openOn(map);
       });
     });
+    // {
+    //   autoPan: true, // Enable auto-panning to center-align the popup
+    //   autoPanPadding: [50, 50], // Adjust the auto-pan padding as needed
+    // }
 
     if (selectHeatmap) {
       var heat = L.heatLayer(points, {
@@ -408,7 +412,10 @@ function LeafletMap({
   // TODO: check if setCurrentData
   // TODO: check error
   // TODO: check if error with/without "const bounds = map.getBounds(); if (!bounds) return;" in onzoomend and onmoveend
-
+  // TODO: additional content for popup?
+  // <br/>
+  // <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
+  // <strong>${d.wochentag}${', '}${d.zeit}</strong>
   return (
     dashboardWidth && (
       <MapWrapper

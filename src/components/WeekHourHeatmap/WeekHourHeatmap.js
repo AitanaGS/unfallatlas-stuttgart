@@ -98,6 +98,8 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
   // TODO: colorscale von 0 bis max, statt extent (siehe number)
   // TODO: check if useChartDimensions necessary
 
+  console.log(weekHourCount, extentCounts);
+
   return (
     // <ChartWrapper ref={ref}>
     // <ChartContainer width={dms.width} height={dms.height} ref={ref}>
@@ -109,7 +111,7 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
         dominantBaseline="hanging"
         className="svg-title"
       >
-        Wochentag und Uhrzeit des Unfalls
+        Wochentag und Uhrzeit
       </text>
       <WeekHourAxisX
         xScale={hourScale}

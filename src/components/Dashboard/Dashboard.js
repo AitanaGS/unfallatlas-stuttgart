@@ -43,6 +43,7 @@ import useChartDimensions from '../../hooks/useChartDimensions';
 // import { lato } from '../../utils/fonts';
 import { window } from 'd3-selection';
 import Header from '../Header';
+import Footer from '../Footer';
 // import { Quattrocento, Lato } from 'next/font/google';
 
 // import { timeParse } from 'd3-time-format';
@@ -1062,105 +1063,109 @@ function Dashboard({ initialData }) {
 
   return (
     visData && (
-      <DashboardWrapper
-        ref={dashboardWrapperRef}
-        dashboardWidth={dashboardWidth}
-        scrollbarWidth={scrollbarWidth}
-        layout={layout}
-      >
-        <Header chartWidth={chartWidth} />
-        <InputWrapper layout={layout} dashboardWidth={dashboardWidth}>
-          {/* <Map data={data} setVisData={setVisData} /> */}
-          <LeafletMap
-            data={data}
-            setVisData={setVisData}
-            setMapData={setMapData}
-            // filteredData={filteredData}
-            filteringMode={filteringMode}
-            // setData={setData}
-            filterData={filterData}
-            allFilter={allFilter}
-            filter={filter}
-            filterKategData={filterKategData}
-            allKategFilter={allKategFilter}
-            kategFilter={kategFilter}
-            selectHeatmap={selectHeatmap}
-            setTotalMapData={setTotalMapData}
-            dashboardWidth={chartWidth}
-          />
-          {/* <CheckboxWrapper> */}
-          {/* <LeafletHeatCheckbox
+      <>
+        <DashboardWrapper
+          ref={dashboardWrapperRef}
+          dashboardWidth={dashboardWidth}
+          scrollbarWidth={scrollbarWidth}
+          layout={layout}
+        >
+          <Header chartWidth={chartWidth} />
+          <InputWrapper
+            layout={layout}
+            dashboardWidth={dashboardWidth}
+          >
+            {/* <Map data={data} setVisData={setVisData} /> */}
+            <LeafletMap
+              data={data}
+              setVisData={setVisData}
+              setMapData={setMapData}
+              // filteredData={filteredData}
+              filteringMode={filteringMode}
+              // setData={setData}
+              filterData={filterData}
+              allFilter={allFilter}
+              filter={filter}
+              filterKategData={filterKategData}
+              allKategFilter={allKategFilter}
+              kategFilter={kategFilter}
+              selectHeatmap={selectHeatmap}
+              setTotalMapData={setTotalMapData}
+              dashboardWidth={chartWidth}
+            />
+            {/* <CheckboxWrapper> */}
+            {/* <LeafletHeatCheckbox
           selectHeatmap={selectHeatmap}
           setSelectHeatmap={setSelectHeatmap}
           dashboardWidth={dashboardWidth}
         /> */}
-          <Number
-            number={visDataTotal}
-            label={'Gesamt'}
-            // colorScale={undefined}
-            // max={undefined}
-          />
-          <FilterCheckboxes
-            filter={filter}
-            setFilter={setFilter}
-            allFilter={allFilter}
-            setAllFilter={setAllFilter}
-            setFilteringMode={setFilteringMode}
-            dashboardWidth={chartWidth}
-            feature="Unfallbeteiligung"
-          />
-          <FilterCheckboxes
-            filter={kategFilter}
-            setFilter={setKategFilter}
-            allFilter={allKategFilter}
-            setAllFilter={setAllKategFilter}
-            setFilteringMode={setFilteringMode}
-            dashboardWidth={chartWidth}
-            feature="Schweregrad"
-          />
-          {/* </CheckboxWrapper> */}
+            <Number
+              number={visDataTotal}
+              label={'Gesamt'}
+              // colorScale={undefined}
+              // max={undefined}
+            />
+            <FilterCheckboxes
+              filter={filter}
+              setFilter={setFilter}
+              allFilter={allFilter}
+              setAllFilter={setAllFilter}
+              setFilteringMode={setFilteringMode}
+              dashboardWidth={chartWidth}
+              feature="Unfallbeteiligung"
+            />
+            <FilterCheckboxes
+              filter={kategFilter}
+              setFilter={setKategFilter}
+              allFilter={allKategFilter}
+              setAllFilter={setAllKategFilter}
+              setFilteringMode={setFilteringMode}
+              dashboardWidth={chartWidth}
+              feature="Schweregrad"
+            />
+            {/* </CheckboxWrapper> */}
 
-          {/* <Intro /> */}
-        </InputWrapper>
-        <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
-          <TreeMap
-            treeData={treemapDataArray}
-            dashboardWidth={chartWidth}
-            visDataTotal={visDataTotal}
-          />
-          <KategBarChart
-            variableCount={kategCount}
-            visDataTotal={visDataTotal}
-            dashboardWidth={chartWidth}
-          />
-          <WeekHourHeatmap
-            visData={visData}
-            weekHourCount={weekHourCount}
-            dashboardWidth={chartWidth}
-          />
-          <ColumnChartSmallMultiple
-            visData={visData}
-            dashboardWidth={chartWidth}
-          />
-          <LichtDonutChart
-            variableCount={lichtCount}
-            visDataTotal={visDataTotal}
-            dashboardWidth={chartWidth}
-          />
-          <StrasseDonutChart
-            variableCount={strasseCount}
-            visDataTotal={visDataTotal}
-            dashboardWidth={chartWidth}
-          />
+            {/* <Intro /> */}
+          </InputWrapper>
+          <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
+            <TreeMap
+              treeData={treemapDataArray}
+              dashboardWidth={chartWidth}
+              visDataTotal={visDataTotal}
+            />
+            <KategBarChart
+              variableCount={kategCount}
+              visDataTotal={visDataTotal}
+              dashboardWidth={chartWidth}
+            />
+            <WeekHourHeatmap
+              visData={visData}
+              weekHourCount={weekHourCount}
+              dashboardWidth={chartWidth}
+            />
+            <ColumnChartSmallMultiple
+              visData={visData}
+              dashboardWidth={chartWidth}
+            />
+            <LichtDonutChart
+              variableCount={lichtCount}
+              visDataTotal={visDataTotal}
+              dashboardWidth={chartWidth}
+            />
+            <StrasseDonutChart
+              variableCount={strasseCount}
+              visDataTotal={visDataTotal}
+              dashboardWidth={chartWidth}
+            />
 
-          <ArtBarChart
-            variableCount={artCount}
-            visDataTotal={visDataTotal}
-            dashboardWidth={chartWidth}
-          />
-        </VizWrapper>
-        {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
-        {/* <LichtLollipopChart
+            <ArtBarChart
+              variableCount={artCount}
+              visDataTotal={visDataTotal}
+              dashboardWidth={chartWidth}
+            />
+          </VizWrapper>
+          {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
+          {/* <LichtLollipopChart
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
@@ -1170,19 +1175,19 @@ function Dashboard({ initialData }) {
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         /> */}
-        {/* <StrasseBarChart
+          {/* <StrasseBarChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         /> */}
-        {/* </BarChartWrapper> */}
-        {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
-        {/* <KategStackedBarChart
+          {/* </BarChartWrapper> */}
+          {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
+          {/* <KategStackedBarChart
           variableCount={kategCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         /> */}
-        {/* <Number
+          {/* <Number
         width={75}
         height={50}
         number={fussCount.get('Unfall mit Fußgängerbeteiligung') || 0}
@@ -1226,8 +1231,8 @@ function Dashboard({ initialData }) {
         colorScale={numberColorScale}
         max={numberMax}
       /> */}
-        {/* <MonthYearHeatmap visData={visData} /> */}
-        {/* <LineChart
+          {/* <MonthYearHeatmap visData={visData} /> */}
+          {/* <LineChart
           visData={visData}
           dataTotal={dataTotal}
           aggregatedTimeData={aggregatedTimeData}
@@ -1235,9 +1240,11 @@ function Dashboard({ initialData }) {
           timeCountExtent={timeCountExtent}
           timeDataDates={timeDataDates}
         /> */}
-        {/* <LineChartYear visData={visData} /> */}
-        {/* <LineChartMonth visData={visData} /> */}
-      </DashboardWrapper>
+          {/* <LineChartYear visData={visData} /> */}
+          {/* <LineChartMonth visData={visData} /> */}
+        </DashboardWrapper>
+        <Footer chartWidth={chartWidth} />
+      </>
     )
   );
 }
@@ -1293,120 +1300,6 @@ const DashboardWrapper = styled.div`
     /* position: relative; */
   }
 `;
-
-// const DashboardWrapper = styled.div`
-//   /* display: flex;
-//   flex-direction: column;
-//   flex-wrap: wrap;
-//   gap: 25px; */
-//   width: 100%;
-//   height: 100%;
-//   max-width: 1200px; // 500px
-//   margin: 0 auto;
-//   padding: 10px 50px;
-//   /* @media only screen and (min-width: ${(props) =>
-//     `${props.scrollbarWidth + 801}px`}) {
-//     display: grid;
-//     display: grid;
-//     grid-template-columns:
-//       1fr
-//       1fr;
-//     width: 100%;
-//     grid-column: 1 / 3;
-//     grid-column-gap: 20px;
-//     isolation: isolate;
-//     max-width: 1200px;
-//     margin: 0 auto;
-//   } */
-// `;
-
-// const GridWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   flex-wrap: wrap;
-//   gap: 25px;
-//   width: 100%;
-//   /* width: ${(props) => props.dashboardWidth}px; */
-//   height: 100%;
-//   max-width: 1200px; // 500px
-//   margin: 0 auto;
-//   /* position: relative; */
-//   padding: 10px 50px;
-//   // @media (min-width: 820px)
-//   @media only screen and (min-width: ${(props) =>
-//       `${props.scrollbarWidth + 801}px`}) {
-//     display: grid;
-//     display: grid;
-//     grid-template-columns:
-//       1fr
-//       1fr;
-//     width: 100%;
-//     grid-column: 1 / 3;
-//     grid-column-gap: 20px;
-//     isolation: isolate;
-//     /* flex-direction: column;
-//   flex-wrap: wrap;
-//   gap: 25px; */
-//     /* width: 100%; */
-//     /* max-width: ${(props) => props.dashboardWidth}px; */
-//     max-width: 1200px;
-//     /* height: 100%; */
-//     /* max-width: 1000px; */
-//     /* width: ${(props) => props.dashboardWidth}px; // 1000px 500px */
-//     margin: 0 auto;
-//     /* position: relative; */
-//   }
-// `;
-
-// const InputWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   justify-content: start;
-//   grid-column: 1;
-//   height: max-content;
-//   position: sticky;
-//   top: 0px;
-//   z-index: 2;
-
-//   width: 100%;
-
-//   @media only screen and (min-width: ${(props) =>
-//     `${props.scrollbarWidth + 801}px`}) {
-//   /* grid-column: 1;
-//     position: sticky;
-//     top: 0px;
-//     z-index: 1;
-//     isolation: isolate;
-
-//     width: 100%;
-//     border: 2px solid red; */
-
-//   /* height: 100%; */
-//   /* display: flex;
-//     flex-direction: column;
-//     align-items: flex-start;
-//     justify-content: start; */
-//   }
-
-/* width: 100%;
-  border: 2px solid red; */
-/* grid-column: 1;
-  position: sticky;
-  top: 0px;
-  z-index: 1;
-  isolation: isolate; */
-
-/* height: 100%; */
-/* border: 2px solid red; */
-
-/* height: 100%; */
-/* display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: start; */
-/* overflow: auto; */
-// `;
 
 const inputWrapperVariants = {
   flex: ``,

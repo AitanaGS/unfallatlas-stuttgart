@@ -92,7 +92,7 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
           dominantBaseline="hanging"
           className="svg-title"
         >
-          Monat und Jahr des Unfalls
+          Monat und Jahr
         </text>
       </svg>
       <SmallMultipleWrapper dashboardWidth={dashboardWidth}>

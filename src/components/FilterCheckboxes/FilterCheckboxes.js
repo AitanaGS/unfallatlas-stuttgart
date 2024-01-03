@@ -103,7 +103,7 @@ function FilterCheckboxes({
 
   // TODO: accessibility
   // TODO: add css transion of checkmarks
-  console.log(COLORS);
+  // console.log(COLORS);
 
   return (
     <>

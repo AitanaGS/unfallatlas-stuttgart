@@ -41,9 +41,12 @@ function StrasseDonutChart({
   //   left: 160,
   // };
 
-  const width = dashboardWidth > 400 ? dashboardWidth : 300;
+  const responsiveThreshold = 500; // 400
 
-  const height = dashboardWidth > 400 ? 250 : 350;
+  const width =
+    dashboardWidth > responsiveThreshold ? dashboardWidth : 300;
+
+  const height = dashboardWidth > responsiveThreshold ? 250 : 350;
 
   // const margin = {
   //   top: 20,
@@ -53,7 +56,7 @@ function StrasseDonutChart({
   // };
 
   const margin = {
-    top: dashboardWidth > 400 ? 60 : 80, // 100
+    top: dashboardWidth > responsiveThreshold ? 60 : 80, // 100
     right: 50,
     bottom: 10,
     left: 50,
@@ -143,11 +146,12 @@ function StrasseDonutChart({
   //     : margin.left; // 10
 
   const leftLabelXPosition =
-    dashboardWidth > 400
+    dashboardWidth > responsiveThreshold
       ? innerWidth / 2 - radius * 2 + margin.left
       : innerWidth / 2 + margin.right - 20; // 10
 
-  const leftLabelYPosition = dashboardWidth > 400 ? 60 : 60; // 80
+  const leftLabelYPosition =
+    dashboardWidth > responsiveThreshold ? 60 : 60; // 80
 
   // const leftLabelTextAnchor = dashboardWidth > 400 ? 'end' : 'start';
   const leftLabelTextAnchor = 'end';
@@ -158,7 +162,7 @@ function StrasseDonutChart({
   //     : width - margin.right; // -10
 
   const rightLabelXPosition =
-    dashboardWidth > 400
+    dashboardWidth > responsiveThreshold
       ? innerWidth / 2 + radius * 2 + margin.left
       : innerWidth / 2 + margin.right + 20; // -10
 
@@ -197,7 +201,7 @@ function StrasseDonutChart({
         dominantBaseline="hanging"
         className="svg-title"
       >
-        Straßenzustand beim Unfall
+        Straßenzustand
       </text>
       <text
         // x={20}

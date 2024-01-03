@@ -10,6 +10,17 @@ function WeekHourRect({
   weekHourCount,
   extentCounts,
 }) {
+  console.log(
+    'hour',
+    hour,
+    'week',
+    week,
+    'weekHourCount',
+    weekHourCount,
+    'extentcounts',
+    extentCounts,
+    weekHourCount[week]?.[hour]
+  );
   // const spring = useSpring({
   //   // // rectX: xScale(0),
   //   // rectY: yScale(kat),
