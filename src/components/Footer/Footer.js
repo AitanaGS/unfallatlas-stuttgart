@@ -31,13 +31,13 @@ function Footer({ chartWidth }) {
         --githubHoverColor: {COLORS.primary["800"]};
         "> */}
             <a
-              href="https://github.com/AitanaGS/unfaelle-stgt"
+              href="https://github.com/AitanaGS/unfallatlas-stuttgart"
               target="_blank"
               rel="noreferrer"
             >
               {/* <GithubIcon size="24"/> */}
               <GitHub size="24" color="rgba(255, 179, 0, 1)" />
-              github.com/AitanaGS/unfaelle-stgt
+              github.com/AitanaGS/unfallatlas-stuttgart
             </a>
             {/* </span> */}
           </p>
