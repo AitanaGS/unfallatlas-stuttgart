@@ -11,28 +11,29 @@ import { useSpring, useSprings, animated } from '@react-spring/web';
 import ColumnChartColumn from './ColumnChartColumn';
 import ColumnChartLine from './ColumnChartLine';
 
-const monate = [
-  'Januar',
-  'Februar',
-  'März',
-  'April',
-  'Mai',
-  'Juni',
-  'Juli',
-  'August',
-  'September',
-  'Oktober',
-  'November',
-  'Dezember',
-];
+// const monate = [
+//   'Januar',
+//   'Februar',
+//   'März',
+//   'April',
+//   'Mai',
+//   'Juni',
+//   'Juli',
+//   'August',
+//   'September',
+//   'Oktober',
+//   'November',
+//   'Dezember',
+// ];
 
 function ColumnChart({
   yearVisData,
-  year,
+  jahr,
   setMaxValueMap,
   maxValue,
   maxValueMap,
   chartWidth,
+  monate,
 }) {
   // const [isAnimating, setIsAnimating] = useState(false);
 
@@ -54,19 +55,23 @@ function ColumnChart({
   //   (d) => d.monatn // Grouping key: the "datum" property representing the month
   // );
 
-  const monthData = useMemo(
-    () =>
-      rollup(
-        yearVisData,
-        (v) => v.length,
-        (d) => d.monatn
-      ),
-    [yearVisData]
-  );
+  // const monthData = useMemo(
+  //   () =>
+  //     rollup(
+  //       yearVisData,
+  //       (v) => v.length,
+  //       (d) => d.monatn
+  //     ),
+  //   [yearVisData]
+  // );
 
-  const maxMonthData = max(Array.from(monthData.values()));
-  const meanMonthData = mean(Array.from(monthData.values()));
+  // console.log('monthdata', monthData);
+
+  // const maxMonthData = max(Array.from(monthData.values()));
+  // const meanMonthData = mean(Array.from(monthData.values()));
   // const medianMonthData = median(Array.from(monthData.values()));
+  const maxMonthData = max(Array.from(yearVisData.values()));
+  const meanMonthData = mean(Array.from(yearVisData.values()));
 
   const xScale = scaleBand()
     .domain(monate) // kategorienSorted
@@ -81,7 +86,7 @@ function ColumnChart({
 
   const yScale = useMemo(() => {
     return scaleLinear()
-      .domain([0, maxValue]) // maxMonthData dataTotal
+      .domain([0, maxValue > 0 ? maxValue : 1]) // maxMonthData dataTotal
       .range([innerHeight, 0])
       .nice();
   }, [maxValue, innerHeight]); // innerHeight
@@ -114,7 +119,7 @@ function ColumnChart({
 
   useEffect(() => {
     // console.log(monthData);
-    setMaxValueMap(maxValueMap.set(year, maxMonthData));
+    setMaxValueMap(maxValueMap.set(jahr, maxMonthData));
     // setIsAnimating(true);
     // const animationPropsArray = monate.map((d) => {
     //   console.log(
@@ -157,7 +162,7 @@ function ColumnChart({
     // animations.forEach((animation) => {
     //   api.start(animation);
     // });
-  }, [yearVisData, maxValueMap, year, maxMonthData, setMaxValueMap]); // , yearVisData
+  }, [yearVisData, maxValueMap, jahr, maxMonthData, setMaxValueMap]); // , yearVisData
   // [
   //   maxMonthData,
   //   setMaxValueMap,
@@ -267,30 +272,30 @@ function ColumnChart({
   // TODO: check if yscale of each chart is the same, if not move it up to small multiple
   // TODO: usesprings instead of usespring see "here with springs"
 
-  if (yearVisData.length === 0)
-    return (
-      <ChartContainer width={width} height={height}>
-        <text
-          // x={5}
-          // y={8}
-          // style={{ fontSize: '0.6rem' }}
-          x={10}
-          y={8}
-          style={{ fontSize: '0.8rem', fontWeight: 700 }}
-          textAnchor="start"
-          dominantBaseline={'middle'}
-        >
-          {year}
-        </text>
-        <ColumnChartMonthAxis
-          xScale={xScale}
-          innerWidth={innerWidth}
-          margin={margin}
-          monate={monate}
-          innerHeight={innerHeight}
-        />
-      </ChartContainer>
-    );
+  // if (yearVisData.length === 0)
+  //   return (
+  //     <ChartContainer width={width} height={height}>
+  //       <text
+  //         // x={5}
+  //         // y={8}
+  //         // style={{ fontSize: '0.6rem' }}
+  //         x={10}
+  //         y={8}
+  //         style={{ fontSize: '0.8rem', fontWeight: 700 }}
+  //         textAnchor="start"
+  //         dominantBaseline={'middle'}
+  //       >
+  //         {year}
+  //       </text>
+  //       <ColumnChartMonthAxis
+  //         xScale={xScale}
+  //         innerWidth={innerWidth}
+  //         margin={margin}
+  //         monate={monate}
+  //         innerHeight={innerHeight}
+  //       />
+  //     </ChartContainer>
+  //   );
 
   return (
     <ChartContainer width={width} height={height}>
@@ -301,7 +306,7 @@ function ColumnChart({
         textAnchor="start"
         dominantBaseline={'middle'}
       >
-        {year}
+        {jahr}
       </text>
       <ColumnChartValueAxis
         yScale={yScale}
@@ -338,7 +343,7 @@ function ColumnChart({
             innerHeight={innerHeight}
             xScale={xScale}
             yScale={yScale}
-            monthData={monthData}
+            monthData={yearVisData.get(monat)}
           />
         ))}
         {/* // here with springs

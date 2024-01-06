@@ -17,8 +17,10 @@ function ColumnChartColumn({
       height: 0,
     },
     to: {
-      y: yScale(monthData.get(monat) || 0),
-      height: innerHeight - yScale(monthData.get(monat) || 0),
+      y: yScale(monthData),
+      // y: yScale(monthData.get(monat) || 0),
+      // height: innerHeight - yScale(monthData.get(monat) || 0),
+      height: innerHeight - yScale(monthData),
       // height: Math.max(
       //   innerHeight - yScale(monthData.get(monat) || 0),
       //   0
