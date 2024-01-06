@@ -47,6 +47,9 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
   const dataByYear = useMemo(() => {
     const dataMap = new Map();
 
+    // for (let year = 2016; year <= 2022; year++) {
+    //   dataMap.set(year, []);
+    // }
     for (let year = 2016; year <= 2022; year++) {
       dataMap.set(year, []);
     }
@@ -61,6 +64,8 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
 
     return dataMap;
   }, [visData]);
+
+  console.log('databyyear', dataByYear);
 
   // const yScale = scaleLinear()
   //   .domain([0, maxValue]) // maxMonthData dataTotal

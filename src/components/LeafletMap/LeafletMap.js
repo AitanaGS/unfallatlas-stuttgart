@@ -139,12 +139,21 @@ function LeafletMap({
     };
   }, []);
 
-  const customIcon = useMemo(() => {
+  const yellowIcon = useMemo((d) => {
     return new L.Icon({
       // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
       // iconUrl: '/leaflet-icons/marker-icon-2x.png',
       // iconSize: [25, 28], // [38, 38] [38, 45]
-      iconUrl: '/leaflet-icons/alert-triangle-orange.svg',
+      iconUrl: '/leaflet-icons/alert-triangle-orange-light.svg',
+    });
+  }, []);
+
+  const orangeIcon = useMemo((d) => {
+    return new L.Icon({
+      // iconUrl: require('/leaflet-icons/marker-icon-2x.png'),
+      // iconUrl: '/leaflet-icons/marker-icon-2x.png',
+      // iconSize: [25, 28], // [38, 38] [38, 45]
+      iconUrl: '/leaflet-icons/alert-triangle-orange-dark.svg',
     });
   }, []);
 
@@ -196,6 +205,7 @@ function LeafletMap({
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         useCache: true,
+        // maxZoom: 18,
       }
     ).addTo(map);
 
@@ -220,8 +230,10 @@ function LeafletMap({
     // ).addTo(map);
 
     const markerClusterGroup = L.markerClusterGroup({
+      spiderfyOnMaxZoom: true,
+      // removeOutsideVisibleBounds: true,
       chunkedLoading: true, // Enable chunked loading
-      disableClusteringAtZoom: 17, // Disable clustering at higher zoom levels
+      // disableClusteringAtZoom: 17, // 17 Disable clustering at higher zoom levels
       iconCreateFunction: selectHeatmap
         ? function (cluster) {
             return L.divIcon({
@@ -260,7 +272,11 @@ function LeafletMap({
       points.push([d.lat, d.lon]);
       // const marker = L.marker([d.lat, d.lon]);
       const marker = L.marker([d.lat, d.lon], {
-        icon: customIcon, // Set the custom icon for each marker
+        // icon: customIcon, // Set the custom icon for each marker
+        icon:
+          d.kateg2 === 'Unfall mit Leichtverletzten'
+            ? yellowIcon
+            : orangeIcon,
       });
       marker.options.data = d;
       markerClusterGroup.addLayer(marker);
@@ -278,11 +294,12 @@ function LeafletMap({
         <strong>Schwergrad:</strong> ${d.kateg2}<br/>
         <strong>Lichtverhältnisse:</strong> ${d.licht2}<br/>
         <strong>Straßenzustand:</strong> ${d.strzust2}<br/>
-        <strong>Art:</strong> ${d.art} <br/>
-        <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
-       <strong>${d.wochentag}${', '}${d.zeit}</strong>
-      </div>
+        <strong>Art:</strong> ${d.art}
     `;
+      // <br/>
+      // //   <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
+      // //  <strong>${d.wochentag}${', '}${d.zeit}</strong>
+      // </div>
 
       // Add click event to show popup with address
       marker.on('click', () => {
@@ -290,7 +307,7 @@ function LeafletMap({
           .setLatLng(marker.getLatLng())
           .setContent(popupContent) // d.address
           .openOn(map);
-      });
+      }); // click
     });
     // {
     //   autoPan: true, // Enable auto-panning to center-align the popup
@@ -325,7 +342,10 @@ function LeafletMap({
         // ]);
         // console.log('move');
         // setMapData(calculateVisibleData(map, markerClusterGroup)); //here
-        setTotalMapData(calculateTotalVisibleData(map, data));
+        // const calculatedData = calculateTotalVisibleData(map, data);
+        setTotalMapData(calculateTotalVisibleData(map, data)); // funktioniert
+        // setTotalMapData(calculatedData);
+        // setVisData(calculatedData);
         setZoom(event.target.getZoom());
         setCenter([
           event.target.getCenter().lat,
@@ -357,7 +377,10 @@ function LeafletMap({
       ]);
 
       // setMapData(calculateVisibleData(map, markerClusterGroup)); //here
-      setTotalMapData(calculateTotalVisibleData(map, data)); //here
+      // const calculatedData = calculateTotalVisibleData(map, data);
+      setTotalMapData(calculateTotalVisibleData(map, data)); // funktiioniert
+      // setTotalMapData(calculatedData);
+      // setVisData(calculatedData);
       // setCurrentData(calculateVisibleData(map, markerClusterGroup));
     };
     const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500); // 500
@@ -384,7 +407,7 @@ function LeafletMap({
     filter,
     filterData,
     selectHeatmap,
-    customIcon,
+    // customIcon,
     filteringMode,
     setTotalMapData,
     calculateTotalVisibleData,
@@ -392,6 +415,8 @@ function LeafletMap({
     filterKategData,
     allKategFilter,
     kategFilter,
+    yellowIcon,
+    orangeIcon,
   ]);
 
   // const customIcon = new L.Icon({
@@ -413,6 +438,8 @@ function LeafletMap({
   // TODO: check error
   // TODO: check if error with/without "const bounds = map.getBounds(); if (!bounds) return;" in onzoomend and onmoveend
   // TODO: additional content for popup?
+  // TODO: remove heatmap
+  // TODO: check which data/setData is used and remove the rest
   // <br/>
   // <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
   // <strong>${d.wochentag}${', '}${d.zeit}</strong>

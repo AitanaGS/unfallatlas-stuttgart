@@ -271,9 +271,12 @@ function ColumnChart({
     return (
       <ChartContainer width={width} height={height}>
         <text
-          x={5}
+          // x={5}
+          // y={8}
+          // style={{ fontSize: '0.6rem' }}
+          x={10}
           y={8}
-          style={{ fontSize: '0.6rem' }}
+          style={{ fontSize: '0.8rem', fontWeight: 700 }}
           textAnchor="start"
           dominantBaseline={'middle'}
         >

@@ -212,6 +212,8 @@ function Dashboard({ initialData }) {
   const [filter, setFilter] = useState(initialFilter);
   const [kategFilter, setKategFilter] = useState(initialKategFilter); // added filter
   const [filteringMode, setFilteringMode] = useState('none');
+  const [kategFilteringMode, setKategFilteringMode] =
+    useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const [layout, setLayout] = useState('grid'); // flex
@@ -481,7 +483,8 @@ function Dashboard({ initialData }) {
   // added filter (depencencies and inside function)
 
   useEffect(() => {
-    if (filteringMode === 'none') {
+    // if (filteringMode === 'none')
+    if (filteringMode === 'none' && kategFilteringMode === 'none') {
       // setFilteredData(mapData); // here
       // setVisData(mapData); // here
       setFilteredData(totalMapData);
@@ -497,6 +500,7 @@ function Dashboard({ initialData }) {
     totalMapData,
     allKategFilter,
     kategFilter,
+    kategFilteringMode,
   ]); // here: mapData
   // added filter (dependencies)
 
@@ -1119,7 +1123,7 @@ function Dashboard({ initialData }) {
               setFilter={setKategFilter}
               allFilter={allKategFilter}
               setAllFilter={setAllKategFilter}
-              setFilteringMode={setFilteringMode}
+              setFilteringMode={setKategFilteringMode}
               dashboardWidth={chartWidth}
               feature="Schweregrad"
             />
