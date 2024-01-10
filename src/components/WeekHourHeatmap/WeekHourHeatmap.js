@@ -1,12 +1,12 @@
 'use client';
-import React from 'react';
+import React, { useMemo, useEffect, useCallback } from 'react';
 import { scaleBand, scaleSequential } from 'd3-scale';
 import {
   interpolateOranges,
   interpolateReds,
   interpolateYlOrBr,
 } from 'd3-scale-chromatic';
-import { min, max, least, greatest, extent } from 'd3-array';
+import { min, max, least, greatest, extent, rollup } from 'd3-array';
 import WeekHourAxisX from './WeekHourAxisX';
 import WeekHourAxisY from './WeekHourAxisY';
 import ChartContainer from '../ChartContainer';
@@ -25,7 +25,23 @@ import WeekHourRect from './WeekHourRect';
 //   height: 300, // 300
 // };
 
-function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
+const weekSorted = [
+  'Montag',
+  'Dienstag',
+  'Mittwoch',
+  'Donnerstag',
+  'Freitag',
+  'Samstag',
+  'Sonntag',
+];
+
+// const hourSorted =
+//   dashboardWidth > 400
+//     ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
+//     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
+const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
+
+function WeekHourHeatmap({ visData, dashboardWidth }) {
   // const [ref, dms] = useChartDimensions(chartSettings);
 
   // console.log('chartDimension', dms);
@@ -46,21 +62,21 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
 
   const innerHeight = height - margin.top - margin.bottom;
 
-  const weekSorted = [
-    'Montag',
-    'Dienstag',
-    'Mittwoch',
-    'Donnerstag',
-    'Freitag',
-    'Samstag',
-    'Sonntag',
-  ];
+  // const weekSorted = [
+  //   'Montag',
+  //   'Dienstag',
+  //   'Mittwoch',
+  //   'Donnerstag',
+  //   'Freitag',
+  //   'Samstag',
+  //   'Sonntag',
+  // ];
 
-  // const hourSorted =
-  //   dashboardWidth > 400
-  //     ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
-  //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
-  const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
+  // // const hourSorted =
+  // //   dashboardWidth > 400
+  // //     ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
+  // //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
+  // const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
 
   const hourLabel =
     dashboardWidth > 400
@@ -79,23 +95,132 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
     .padding(0.1)
     .paddingOuter(0.1);
 
+  // const uniqueWeekdays = [
+  //   'Montag',
+  //   'Dienstag',
+  //   'Mittwoch',
+  //   'Donnerstag',
+  //   'Freitag',
+  //   'Samstag',
+  //   'Sonntag',
+  // ];
+
+  // const uniqueTimes = [
+  //   ...new Set(
+  //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
+  //   ),
+  // ];
+
+  // const uniqueTimes = [
+  //   '0-6 Uhr',
+  //   '6-12 Uhr',
+  //   '12-18 Uhr',
+  //   '18-0 Uhr',
+  // ];
+
   // const counts = Array.from(weekHourCount.values())
   //   .flatMap((innerMap) => Array.from(innerMap.values()))
   //   .flat();
 
   // const extentCounts = extent(counts);
 
-  const counts = Object.values(weekHourCount)
-    .map((innerObj) => Object.values(innerObj))
-    .flat();
+  const weekHourCount = useMemo(() => {
+    // const uniqueWeekdays = [
+    //   ...new Set(
+    //     visData.map((d) =>
+    //       d.options ? d.options.data.wochentag : d.wochentag
+    //     )
+    //   ),
+    // ];
+
+    // const uniqueWeekdays = [
+    //   'Montag',
+    //   'Dienstag',
+    //   'Mittwoch',
+    //   'Donnerstag',
+    //   'Freitag',
+    //   'Samstag',
+    //   'Sonntag',
+    // ];
+
+    // const uniqueTimes = [
+    //   ...new Set(
+    //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
+    //   ),
+    // ];
+
+    // const uniqueTimes = [
+    //   '0-6 Uhr',
+    //   '6-12 Uhr',
+    //   '12-18 Uhr',
+    //   '18-0 Uhr',
+    // ];
+
+    const resultMap = new Map();
+
+    weekSorted.forEach((day) => {
+      resultMap.set(day, new Map());
+
+      hourSorted.forEach((hour) => {
+        resultMap.get(day).set(hour, 0);
+      });
+    });
+
+    const rolledUpMap = rollup(
+      visData,
+      (v) => v.length || 0, // Count instances
+      (d) => d.wochentag, // Group by year
+      (d) => d.zeit // Group by month name
+    );
+
+    // const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
+    //   acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
+    //     innerAcc[time] = 0; // Initialize with 0 cases
+    //     return innerAcc;
+    //   }, {});
+    //   return acc;
+    // }, {});
+
+    // // Populate nestedObj with actual counts
+    // visData.forEach((d) => {
+    //   const weekday = d.options
+    //     ? d.options.data.wochentag
+    //     : d.wochentag;
+    //   const time = d.options ? d.options.data.zeit : d.zeit;
+    //   nestedObj[weekday][time]++;
+    // });
+
+    rolledUpMap.forEach((dayMap, day) => {
+      dayMap.forEach((count, time) => {
+        resultMap.get(day).set(time, count);
+      });
+    });
+
+    return resultMap;
+  }, [visData]);
+
+  // const counts = Object.values(weekHourCount)
+  //   .map((innerObj) => Object.values(innerObj))
+  //   .flat();
+
+  const counts = useMemo(() => {
+    const countsArray = Array.from(
+      weekHourCount.values(),
+      (innerMap) => Array.from(innerMap.values())
+    ).flat();
+
+    return countsArray;
+  }, [weekHourCount]);
+
+  // console.log('weekhourcount', weekHourCount, 'counts', counts);
 
   const extentCounts = [0, max(counts)]; //extent(counts);
-  const extentCountsZero = [0, 1];
+  // const extentCountsZero = [0, 1];
 
   // console.log(extent(counts));
 
   const colorScale = scaleSequential(interpolateYlOrBr).domain(
-    extentCounts[1] === 0 ? extentCountsZero : extentCounts
+    extentCounts[1] === 0 ? [0, 1] : extentCounts
   ); // interpolateYlOrBr // interpolateOranges
 
   // TODO: colorscale starting with 0 (not within count), zero instead of na (in R) (s.u.)
@@ -104,7 +229,7 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
   // TODO: colorscale von 0 bis max, statt extent (siehe number)
   // TODO: check if useChartDimensions necessary
 
-  console.log('weekhourcount', weekHourCount);
+  // console.log('weekhourcount', weekHourCount);
 
   return (
     // <ChartWrapper ref={ref}>
@@ -134,17 +259,18 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
       />
       {/* <g transform={`translate(${dms.marginLeft}, ${dms.marginTop})`}> */}
       <g transform={`translate(${margin.left}, ${margin.top})`}>
-        {weekSorted.map((d, i) => {
-          return hourSorted.map((e, i) => {
+        {weekSorted.map((day, i) => {
+          return hourSorted.map((hour, i) => {
             return (
               <WeekHourRect
-                key={`${d}${e}`}
-                hour={e}
-                week={d}
+                key={`${day}${hour}`}
+                hour={hour}
+                week={day}
                 hourScale={hourScale}
                 weekScale={weekScale}
                 colorScale={colorScale}
-                weekHourCount={weekHourCount}
+                // weekHourCount={weekHourCount}
+                count={weekHourCount.get(day).get(hour)}
                 extentCounts={extentCounts}
               />
               // <g key={`${d}${e}`}>

@@ -635,59 +635,174 @@ function Dashboard({ initialData }) {
   //   return nestedObj;
   // }, [visData]);
 
-  const weekHourCount = useMemo(() => {
-    // const uniqueWeekdays = [
-    //   ...new Set(
-    //     visData.map((d) =>
-    //       d.options ? d.options.data.wochentag : d.wochentag
-    //     )
-    //   ),
-    // ];
+  // const weekHourCount = useMemo(() => {
+  //   // const uniqueWeekdays = [
+  //   //   ...new Set(
+  //   //     visData.map((d) =>
+  //   //       d.options ? d.options.data.wochentag : d.wochentag
+  //   //     )
+  //   //   ),
+  //   // ];
 
-    const uniqueWeekdays = [
-      'Montag',
-      'Dienstag',
-      'Mittwoch',
-      'Donnerstag',
-      'Freitag',
-      'Samstag',
-      'Sonntag',
-    ];
+  //   const uniqueWeekdays = [
+  //     'Montag',
+  //     'Dienstag',
+  //     'Mittwoch',
+  //     'Donnerstag',
+  //     'Freitag',
+  //     'Samstag',
+  //     'Sonntag',
+  //   ];
 
-    // const uniqueTimes = [
-    //   ...new Set(
-    //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
-    //   ),
-    // ];
+  //   // const uniqueTimes = [
+  //   //   ...new Set(
+  //   //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
+  //   //   ),
+  //   // ];
 
-    const uniqueTimes = [
-      '0-6 Uhr',
-      '6-12 Uhr',
-      '12-18 Uhr',
-      '18-0 Uhr',
-    ];
+  //   const uniqueTimes = [
+  //     '0-6 Uhr',
+  //     '6-12 Uhr',
+  //     '12-18 Uhr',
+  //     '18-0 Uhr',
+  //   ];
 
-    const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
-      acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
-        innerAcc[time] = 0; // Initialize with 0 cases
-        return innerAcc;
-      }, {});
-      return acc;
-    }, {});
+  //   const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
+  //     acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
+  //       innerAcc[time] = 0; // Initialize with 0 cases
+  //       return innerAcc;
+  //     }, {});
+  //     return acc;
+  //   }, {});
 
-    // Populate nestedObj with actual counts
-    visData.forEach((d) => {
-      const weekday = d.options
-        ? d.options.data.wochentag
-        : d.wochentag;
-      const time = d.options ? d.options.data.zeit : d.zeit;
-      nestedObj[weekday][time]++;
-    });
+  //   // Populate nestedObj with actual counts
+  //   visData.forEach((d) => {
+  //     const weekday = d.options
+  //       ? d.options.data.wochentag
+  //       : d.wochentag;
+  //     const time = d.options ? d.options.data.zeit : d.zeit;
+  //     nestedObj[weekday][time]++;
+  //   });
 
-    return nestedObj;
-  }, [visData]);
+  //   return nestedObj;
+  // }, [visData]);
 
-  // console.log(weekHourCount);
+  // const dataByYear = useMemo(() => {
+  //   // const resultMap = new Map();
+  //   // jahre.forEach((jahr) => {
+  //   //   resultMap.set(jahr, new Map());
+
+  //   //   monate.forEach((monat) => {
+  //   //     resultMap.get(jahr).set(monat, 0);
+  //   //   });
+  //   // });
+
+  //   // const rolledUpMap = rollup(
+  //   //   visData,
+  //   //   (v) => v.length || 0, // Count instances
+  //   //   (d) => d.jahr, // Group by year
+  //   //   (d) => d.monatn // Group by month name
+  //   // );
+
+  //   rolledUpMap.forEach((yearMap, year) => {
+  //     yearMap.forEach((count, month) => {
+  //       resultMap.get(year).set(month, count);
+  //     });
+  //   });
+
+  //   // const dataMap = new Map();
+
+  //   // for (let year = 2016; year <= 2022; year++) {
+  //   //   dataMap.set(year, []);
+  //   // }
+
+  //   // visData.forEach((d) => {
+  //   //   const year = d.jahr;
+  //   //   if (!dataMap.has(year)) {
+  //   //     dataMap.set(year, []);
+  //   //   }
+  //   //   dataMap.get(year).push(d);
+  //   // });
+
+  //   return resultMap;
+  // }, [visData]);
+
+  // const weekHourCount = useMemo(() => {
+  //   // const uniqueWeekdays = [
+  //   //   ...new Set(
+  //   //     visData.map((d) =>
+  //   //       d.options ? d.options.data.wochentag : d.wochentag
+  //   //     )
+  //   //   ),
+  //   // ];
+
+  //   const uniqueWeekdays = [
+  //     'Montag',
+  //     'Dienstag',
+  //     'Mittwoch',
+  //     'Donnerstag',
+  //     'Freitag',
+  //     'Samstag',
+  //     'Sonntag',
+  //   ];
+
+  //   // const uniqueTimes = [
+  //   //   ...new Set(
+  //   //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
+  //   //   ),
+  //   // ];
+
+  //   const uniqueTimes = [
+  //     '0-6 Uhr',
+  //     '6-12 Uhr',
+  //     '12-18 Uhr',
+  //     '18-0 Uhr',
+  //   ];
+
+  //   const resultMap = new Map();
+
+  //   uniqueWeekdays.forEach((day) => {
+  //     resultMap.set(day, new Map());
+
+  //     uniqueTimes.forEach((time) => {
+  //       resultMap.get(day).set(time, 0);
+  //     });
+  //   });
+
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0, // Count instances
+  //     (d) => d.wochentag, // Group by year
+  //     (d) => d.zeit // Group by month name
+  //   );
+
+  //   // const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
+  //   //   acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
+  //   //     innerAcc[time] = 0; // Initialize with 0 cases
+  //   //     return innerAcc;
+  //   //   }, {});
+  //   //   return acc;
+  //   // }, {});
+
+  //   // // Populate nestedObj with actual counts
+  //   // visData.forEach((d) => {
+  //   //   const weekday = d.options
+  //   //     ? d.options.data.wochentag
+  //   //     : d.wochentag;
+  //   //   const time = d.options ? d.options.data.zeit : d.zeit;
+  //   //   nestedObj[weekday][time]++;
+  //   // });
+
+  //   rolledUpMap.forEach((dayMap, day) => {
+  //     dayMap.forEach((count, time) => {
+  //       resultMap.get(day).set(time, count);
+  //     });
+  //   });
+
+  //   return resultMap;
+  // }, [visData]);
+
+  // console.log('dashboard weekHourCount', weekHourCount);
 
   const radCount = useMemo(() => {
     return rollup(
@@ -1144,7 +1259,7 @@ function Dashboard({ initialData }) {
             />
             <WeekHourHeatmap
               visData={visData}
-              weekHourCount={weekHourCount}
+              // weekHourCount={weekHourCount}
               dashboardWidth={chartWidth}
             />
             <ColumnChartSmallMultiple

@@ -7,20 +7,21 @@ function WeekHourRect({
   hourScale,
   weekScale,
   colorScale,
-  weekHourCount,
+  count,
+  // weekHourCount,
   extentCounts,
 }) {
-  console.log(
-    'hour',
-    hour,
-    'week',
-    week,
-    'weekHourCount',
-    weekHourCount,
-    'extentcounts',
-    extentCounts,
-    weekHourCount[week]?.[hour]
-  );
+  // console.log(
+  //   'hour',
+  //   hour,
+  //   'week',
+  //   week,
+  //   'weekHourCount',
+  //   weekHourCount,
+  //   'extentcounts',
+  //   extentCounts,
+  //   weekHourCount[week]?.[hour]
+  // );
   // const spring = useSpring({
   //   // // rectX: xScale(0),
   //   // rectY: yScale(kat),
@@ -54,8 +55,9 @@ function WeekHourRect({
           // stroke: 'blue',
           // strokeWidth: '2px',
           // fill: spring.rectFill,
-          fill:
-            colorScale(weekHourCount[week]?.[hour] || 0) || 'white',
+          fill: colorScale(count) || 'white',
+          // fill:
+          // colorScale(weekHourCount[week]?.[hour] || 0) || 'white',
           // fill:
           //   colorScale(weekHourCount.get(d).get(e)) ||
           //   'white',
@@ -69,14 +71,20 @@ function WeekHourRect({
         dominantBaseline="middle"
         // fill={spring.textFill}
         fill={
-          (weekHourCount[week]?.[hour] || 0) > extentCounts[1] / 2
+          count > extentCounts[1] / 2
             ? 'rgba(255, 238, 199, 1)'
             : 'rgba(53, 49, 40, 1)'
         }
+        // fill={
+        //   (weekHourCount[week]?.[hour] || 0) > extentCounts[1] / 2
+        //     ? 'rgba(255, 238, 199, 1)'
+        //     : 'rgba(53, 49, 40, 1)'
+        // }
       >
         {/* {weekHourCount.get(d).get(e) || 0} */}
         {/* {weekHourCount[d]?.[e] || 0} */}
-        {weekHourCount[week]?.[hour] || 0}
+        {/* {weekHourCount[week]?.[hour] || 0} */}
+        {count}
       </animated.text>
     </g>
   );
