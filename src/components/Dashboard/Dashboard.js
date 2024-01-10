@@ -804,45 +804,45 @@ function Dashboard({ initialData }) {
 
   // console.log('dashboard weekHourCount', weekHourCount);
 
-  const radCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istradb : d.istradb)
-    );
-  }, [visData]);
+  // const radCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.istradb : d.istradb)
+  //   );
+  // }, [visData]);
 
-  const fussCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istfussb : d.istfussb)
-    );
-  }, [visData]);
+  // const fussCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.istfussb : d.istfussb)
+  //   );
+  // }, [visData]);
 
-  const pkwCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istpkwb : d.istpkwb)
-    );
-  }, [visData]);
+  // const pkwCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.istpkwb : d.istpkwb)
+  //   );
+  // }, [visData]);
 
-  const kradCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istkradb : d.istkradb)
-    );
-  }, [visData]);
+  // const kradCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.istkradb : d.istkradb)
+  //   );
+  // }, [visData]);
 
-  const sonstCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istsonst2b : d.istsonst2b)
-    );
-  }, [visData]);
+  // const sonstCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.istsonst2b : d.istsonst2b)
+  //   );
+  // }, [visData]);
 
   const kategCount = useMemo(() => {
     // console.log('check data', data); // d.kateg // d.properties.kateg
@@ -956,20 +956,20 @@ function Dashboard({ initialData }) {
   //   ]);
   // }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
 
-  const numberData = useMemo(() => {
-    return new Map([
-      ['Fußgänger', fussCount.get(true) || 0],
-      ['Rad', radCount.get(true) || 0],
-      ['Kraftrad', kradCount.get(true) || 0],
-      ['PKW', pkwCount.get(true) || 0],
-      ['Sonstige', sonstCount.get(true) || 0],
-    ]);
-  }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
+  // const numberData = useMemo(() => {
+  //   return new Map([
+  //     ['Fußgänger', fussCount.get(true) || 0],
+  //     ['Rad', radCount.get(true) || 0],
+  //     ['Kraftrad', kradCount.get(true) || 0],
+  //     ['PKW', pkwCount.get(true) || 0],
+  //     ['Sonstige', sonstCount.get(true) || 0],
+  //   ]);
+  // }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
 
-  const treemapDataArray = Array.from(
-    numberData,
-    ([name, value]) => ({ name, value })
-  );
+  // const treemapDataArray = Array.from(
+  //   numberData,
+  //   ([name, value]) => ({ name, value })
+  // );
 
   // console.log('numberdata', numberData);
   // console.log('treemapdataarray', treemapDataArray);
@@ -1046,13 +1046,13 @@ function Dashboard({ initialData }) {
 
   // console.log('numberdata', numberData);
 
-  const numberLabels = [
-    'Fußgänger',
-    'Rad',
-    'Kraftrad',
-    'PKW',
-    'Sonstige',
-  ];
+  // const numberLabels = [
+  //   'Fußgänger',
+  //   'Rad',
+  //   'Kraftrad',
+  //   'PKW',
+  //   'Sonstige',
+  // ];
 
   // const numberValues = [
   //   fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
@@ -1064,25 +1064,25 @@ function Dashboard({ initialData }) {
   //   ) || 0,
   // ];
 
-  const numberValues = [
-    fussCount.get(true) || 0,
-    radCount.get(true) || 0,
-    kradCount.get(true) || 0,
-    pkwCount.get(true) || 0,
-    sonstCount.get(true) || 0,
-  ];
+  // const numberValues = [
+  //   fussCount.get(true) || 0,
+  //   radCount.get(true) || 0,
+  //   kradCount.get(true) || 0,
+  //   pkwCount.get(true) || 0,
+  //   sonstCount.get(true) || 0,
+  // ];
 
-  const numberMax = max(numberValues);
+  // const numberMax = max(numberValues);
 
-  const numberExtentCounts = [0, max(numberValues)];
+  // const numberExtentCounts = [0, max(numberValues)];
 
-  const numberExtentCountsZero = [0, 1];
+  // const numberExtentCountsZero = [0, 1];
 
-  const numberColorScale = scaleSequential(interpolateOranges).domain(
-    numberExtentCounts[1] === 0
-      ? numberExtentCountsZero
-      : numberExtentCounts
-  );
+  // const numberColorScale = scaleSequential(interpolateOranges).domain(
+  //   numberExtentCounts[1] === 0
+  //     ? numberExtentCountsZero
+  //     : numberExtentCounts
+  // );
 
   // console.log(
   //   'sonstige',
@@ -1109,27 +1109,27 @@ function Dashboard({ initialData }) {
   //   max(numberValues)
   // );
 
-  const dataTotal = data.length;
+  // const dataTotal = data.length;
 
   // const parseDate = timeParse('%Y-%m-%d');
 
-  const aggregatedTimeData = useMemo(() => {
-    return rollup(
-      data,
-      (v) => v.length, // Aggregation function: count the length of each group
-      (d) => d.datum // Grouping key: the "datum" property representing the month
-    );
-  }, [data]); // Recalculate when data changes
+  // const aggregatedTimeData = useMemo(() => {
+  //   return rollup(
+  //     data,
+  //     (v) => v.length, // Aggregation function: count the length of each group
+  //     (d) => d.datum // Grouping key: the "datum" property representing the month
+  //   );
+  // }, [data]); // Recalculate when data changes
 
   // const timeDataDates = useMemo(() => {
   //   return Array.from(aggregatedTimeData.keys());
   // }, [aggregatedTimeData]); // Recalculate when aggregatedTimeData changes
 
-  const timeDataDates = useMemo(() => {
-    const keys = Array.from(aggregatedTimeData.keys());
-    keys.sort((a, b) => new Date(a) - new Date(b));
-    return keys;
-  }, [aggregatedTimeData]);
+  // const timeDataDates = useMemo(() => {
+  //   const keys = Array.from(aggregatedTimeData.keys());
+  //   keys.sort((a, b) => new Date(a) - new Date(b));
+  //   return keys;
+  // }, [aggregatedTimeData]);
 
   // const aggregatedTimeData = rollup(
   //   data,
@@ -1137,7 +1137,7 @@ function Dashboard({ initialData }) {
   //   (d) => d.datum // Grouping key: the "datum" property representing the month
   // );
   // const timeDataDates = Array.from(aggregatedTimeData.keys()); // Assuming keys are Date objects
-  const timeDataCounts = Array.from(aggregatedTimeData.values());
+  // const timeDataCounts = Array.from(aggregatedTimeData.values());
 
   // const dataDatumMin = parseDate(min(data, (d) => d.datum)); //data[0].datum
   // const dataDatumMax = parseDate(max(data, (d) => d.datum)); //data[dataTotal - 1].datum
@@ -1145,9 +1145,9 @@ function Dashboard({ initialData }) {
   // const countExtent = [0, dataTotal];
   // const timeExtent = [dataDatumMin, dataDatumMax];
 
-  const timeDateExtent = extent(timeDataDates);
+  // const timeDateExtent = extent(timeDataDates);
   // const countExtent = extent(timeDataCounts);
-  const timeCountExtent = [0, max(timeDataCounts)];
+  // const timeCountExtent = [0, max(timeDataCounts)];
   // console.log(timeDateExtent, timeCountExtent);
 
   // TODO: check client component in next
@@ -1248,9 +1248,10 @@ function Dashboard({ initialData }) {
           </InputWrapper>
           <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
             <TreeMap
-              treeData={treemapDataArray}
+              // treeData={treemapDataArray}
               dashboardWidth={chartWidth}
               visDataTotal={visDataTotal}
+              visData={visData}
             />
             <KategBarChart
               variableCount={kategCount}

@@ -1,5 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useMemo, useState } from 'react';
+import { min, max, least, greatest, extent, rollup } from 'd3-array';
 import { stratify, treemap, hierarchy } from 'd3-hierarchy';
 import { select, selectAll } from 'd3-selection';
 import { scaleSequential, scaleBand, scaleOrdinal } from 'd3-scale';
@@ -8,7 +9,7 @@ import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
 import { COLORS } from '../../utils/constants';
 
-function TreeMap({ treeData, dashboardWidth, visDataTotal }) {
+function TreeMap({ dashboardWidth, visDataTotal, visData }) {
   const width = dashboardWidth; // 250
   const height = 255;
   const margin = {
@@ -30,6 +31,61 @@ function TreeMap({ treeData, dashboardWidth, visDataTotal }) {
   // const root = treemapLayout(
   //   hierarchy({ children: treeData }).sum((d) => d.value)
   // );
+
+  const radCount = useMemo(() => {
+    return rollup(
+      visData,
+      (v) => v.length,
+      (d) => (d.options ? d.options.data.istradb : d.istradb)
+    );
+  }, [visData]);
+
+  const fussCount = useMemo(() => {
+    return rollup(
+      visData,
+      (v) => v.length,
+      (d) => (d.options ? d.options.data.istfussb : d.istfussb)
+    );
+  }, [visData]);
+
+  const pkwCount = useMemo(() => {
+    return rollup(
+      visData,
+      (v) => v.length,
+      (d) => (d.options ? d.options.data.istpkwb : d.istpkwb)
+    );
+  }, [visData]);
+
+  const kradCount = useMemo(() => {
+    return rollup(
+      visData,
+      (v) => v.length,
+      (d) => (d.options ? d.options.data.istkradb : d.istkradb)
+    );
+  }, [visData]);
+
+  const sonstCount = useMemo(() => {
+    return rollup(
+      visData,
+      (v) => v.length,
+      (d) => (d.options ? d.options.data.istsonst2b : d.istsonst2b)
+    );
+  }, [visData]);
+
+  const numberData = useMemo(() => {
+    return new Map([
+      ['Fußgänger', fussCount.get(true) || 0],
+      ['Rad', radCount.get(true) || 0],
+      ['Kraftrad', kradCount.get(true) || 0],
+      ['PKW', pkwCount.get(true) || 0],
+      ['Sonstige', sonstCount.get(true) || 0],
+    ]);
+  }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
+
+  const treeData = Array.from(numberData, ([name, value]) => ({
+    name,
+    value,
+  }));
 
   const root = useMemo(() => {
     const treemapLayout = treemap()
