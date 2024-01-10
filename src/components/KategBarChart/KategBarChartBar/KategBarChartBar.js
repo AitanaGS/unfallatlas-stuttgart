@@ -6,8 +6,9 @@ import { COLORS } from '../../../utils/constants';
 function KategBarChartBar({
   xScale,
   yScale,
-  variableCount,
-  visDataTotal,
+  kategCount,
+  // variableCount,
+  // visDataTotal,
   kat,
 }) {
   // const springs = useSprings(
@@ -37,11 +38,16 @@ function KategBarChartBar({
   const spring = useSpring({
     // rectX: xScale(0),
     rectY: yScale(kat),
-    rectWidth: xScale(variableCount.get(kat) || 0),
+    rectWidth: xScale(kategCount),
+    // rectWidth: xScale(variableCount.get(kat) || 0),
     // rectHeight: yScale.bandwidth(),
+    // textX:
+    //   variableCount.get(kat) > 0
+    //     ? xScale(variableCount.get(kat)) + 5 // -2
+    //     : 20,
     textX:
-      variableCount.get(kat) > 0
-        ? xScale(variableCount.get(kat)) + 5 // -2
+      kategCount > 0
+        ? xScale(kategCount) + 5 // -2
         : 20,
     textY: yScale(kat) + yScale.bandwidth() / 2,
     config: {
@@ -52,7 +58,45 @@ function KategBarChartBar({
   });
 
   // TODO: springs for all props (?)
-  return variableCount.get(kat) > 0 ? (
+  //   return variableCount.get(kat) > 0 ? (
+  //     <g>
+  //       <animated.rect
+  //         x={xScale(0)}
+  //         y={spring.rectY}
+  //         width={spring.rectWidth}
+  //         height={yScale.bandwidth()}
+  //         fill={COLORS.yellowOrange.light}
+  //       />
+  //       <animated.text
+  //         x={spring.textX}
+  //         y={spring.textY}
+  //         // style={{ fontSize: '0.8rem' }}
+  //         textAnchor="start"
+  //         dominantBaseline="middle"
+  //       >
+  //         {numberWithSeparator(variableCount.get(kat))}
+  //         {/* {`${Math.round(
+  //       (variableCount.get(d) / visDataTotal) * 100
+  //     )} %`} */}
+  //       </animated.text>
+  //     </g>
+  //   ) : (
+  //     <g>
+  //       <animated.text
+  //         x={spring.textX}
+  //         y={spring.textY}
+  //         style={{ fontSize: '0.8rem' }}
+  //         textAnchor="end"
+  //         dominantBaseline="middle"
+  //       >
+  //         {0}
+  //         {/* {`${Math.round(
+  //   (variableCount.get(d) / visDataTotal) * 100
+  // )} %`} */}
+  //       </animated.text>
+  //     </g>
+  //   );
+  return (
     <g>
       <animated.rect
         x={xScale(0)}
@@ -68,25 +112,10 @@ function KategBarChartBar({
         textAnchor="start"
         dominantBaseline="middle"
       >
-        {numberWithSeparator(variableCount.get(kat))}
+        {numberWithSeparator(kategCount)}
         {/* {`${Math.round(
-      (variableCount.get(d) / visDataTotal) * 100
-    )} %`} */}
-      </animated.text>
-    </g>
-  ) : (
-    <g>
-      <animated.text
-        x={spring.textX}
-        y={spring.textY}
-        style={{ fontSize: '0.8rem' }}
-        textAnchor="end"
-        dominantBaseline="middle"
-      >
-        {0}
-        {/* {`${Math.round(
-  (variableCount.get(d) / visDataTotal) * 100
-)} %`} */}
+    (variableCount.get(d) / visDataTotal) * 100
+  )} %`} */}
       </animated.text>
     </g>
   );

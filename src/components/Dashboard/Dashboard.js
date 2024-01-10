@@ -844,22 +844,22 @@ function Dashboard({ initialData }) {
   //   );
   // }, [visData]);
 
-  const kategCount = useMemo(() => {
-    // console.log('check data', data); // d.kateg // d.properties.kateg
-    // console.log('check visData', visData); //d.options.data.kateg
-    // if (!visData) {
-    //   return undefined;
-    // }
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
-      // d.properties ? d.properties.kateg : d.options.data.kateg
-      // (d) => d.options.data.kateg
-      // (d) => d.properties.kateg
-      // (d) => (d.options ? d.options.data.kateg : d.kateg)
-    );
-  }, [visData]);
+  // const kategCount = useMemo(() => {
+  //   // console.log('check data', data); // d.kateg // d.properties.kateg
+  //   // console.log('check visData', visData); //d.options.data.kateg
+  //   // if (!visData) {
+  //   //   return undefined;
+  //   // }
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+  //     // d.properties ? d.properties.kateg : d.options.data.kateg
+  //     // (d) => d.options.data.kateg
+  //     // (d) => d.properties.kateg
+  //     // (d) => (d.options ? d.options.data.kateg : d.kateg)
+  //   );
+  // }, [visData]);
 
   // console.log(visData);
 
@@ -1254,9 +1254,10 @@ function Dashboard({ initialData }) {
               visData={visData}
             />
             <KategBarChart
-              variableCount={kategCount}
-              visDataTotal={visDataTotal}
+              // variableCount={kategCount}
+              // visDataTotal={visDataTotal}
               dashboardWidth={chartWidth}
+              visData={visData}
             />
             <WeekHourHeatmap
               visData={visData}

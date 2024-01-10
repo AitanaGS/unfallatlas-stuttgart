@@ -10,15 +10,17 @@ import { useSpring, useSprings, animated } from '@react-spring/web';
 import KategBarChartBar from './KategBarChartBar';
 import styled from 'styled-components';
 
+const kategorienSorted = [
+  'Unfall mit Schwerverletzten/Getöteten',
+  'Unfall mit Leichtverletzten',
+];
+
 function KategBarChart({
-  variableCount,
-  visDataTotal,
+  // variableCount,
+  // visDataTotal,
   dashboardWidth,
+  visData,
 }) {
-  const kategorienSorted = [
-    'Unfall mit Schwerverletzten/Getöteten',
-    'Unfall mit Leichtverletzten',
-  ];
   // const [visData, setVisData] = useState(data);
 
   // useEffect(() => {
@@ -56,6 +58,70 @@ function KategBarChart({
   //   setKategCount(newKategCount);
   // }, [visibleData]);
 
+  const kategCountMap = useMemo(() => {
+    // console.log('check data', data); // d.kateg // d.properties.kateg
+    // console.log('check visData', visData); //d.options.data.kateg
+    // if (!visData) {
+    //   return undefined;
+    // }
+
+    const resultMap = new Map();
+
+    kategorienSorted.forEach((kat) => {
+      resultMap.set(kat, 0);
+    });
+
+    // console.log('res 1', resultMap);
+
+    const rolledUpMap = rollup(
+      visData,
+      (v) => v.length || 0,
+      (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+      // d.properties ? d.properties.kateg : d.options.data.kateg
+      // (d) => d.options.data.kateg
+      // (d) => d.properties.kateg
+      // (d) => (d.options ? d.options.data.kateg : d.kateg)
+    );
+
+    // console.log('rol1', rolledUpMap);
+
+    rolledUpMap.forEach((count, kat) => {
+      resultMap.set(kat, count);
+    });
+
+    // console.log('res2', resultMap);
+
+    // const kategorienSorted = [
+    //   'Unfall mit Schwerverletzten/Getöteten',
+    //   'Unfall mit Leichtverletzten',
+    // ];
+
+    // const kategCounts = [
+    //     {
+    //       key: 'Unfall mit Leichtverletzten',
+    //       value: variableCount.get('Unfall mit Leichtverletzten') || 0,
+    //     },
+    //     {
+    //       key: 'Unfall mit Schwerverletzten/Getöteten',
+    //       value: variableCount.get('Unfall mit Schwerverletzten/Getöteten') || 0,
+    //     },
+    //   ]
+
+    return resultMap;
+
+    // return rollup(
+    //   visData,
+    //   (v) => v.length,
+    //   (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+    // d.properties ? d.properties.kateg : d.options.data.kateg
+    // (d) => d.options.data.kateg
+    // (d) => d.properties.kateg
+    // (d) => (d.options ? d.options.data.kateg : d.kateg)
+    // );
+  }, [visData]);
+
+  // console.log('kategCount', kategCount);
+
   const width = dashboardWidth > 400 ? dashboardWidth : 300;
 
   const height = 160; // 120
@@ -88,29 +154,38 @@ function KategBarChart({
   //     ? 'Unfall mit Leichtverletzten'
   //     : 'Unfall mit Schwerverletzten/Getöteten';
 
-  const leichtCount =
-    variableCount.get('Unfall mit Leichtverletzten') || 0;
-  const schwerCount =
-    variableCount.get('Unfall mit Schwerverletzten/Getöteten') || 0;
+  const leichtCount = kategCountMap.get(
+    'Unfall mit Leichtverletzten'
+  );
+  const schwerCount = kategCountMap.get(
+    'Unfall mit Schwerverletzten/Getöteten'
+  );
+
+  // const leichtCount =
+  //   kategCount.get('Unfall mit Leichtverletzten') || 0;
+  // const schwerCount =
+  //   kategCount.get('Unfall mit Schwerverletzten/Getöteten') || 0;
 
   const maxKateg =
     leichtCount >= schwerCount
       ? 'Unfall mit Leichtverletzten'
       : 'Unfall mit Schwerverletzten/Getöteten';
 
-  const maxValue = variableCount.get(maxKateg) || 0;
+  const maxValue = kategCountMap.get(maxKateg);
+
+  // const maxValue = kategCount.get(maxKateg) || 0;
 
   // console.log('maxkateg', maxKateg, 'maxvalue', maxValue);
 
   // console.log('maxkateg, maxvalue', maxKateg, maxValue);
 
-  const barChartRef = useRef();
-  useEffect(() => {
-    const barChart = select(barChartRef.current);
-  }, [variableCount]);
+  // const barChartRef = useRef();
+  // useEffect(() => {
+  //   const barChart = select(barChartRef.current);
+  // }, [variableCount]);
 
   const xScale = scaleLinear()
-    .domain([0, maxValue]) // visDataTotal
+    .domain([0, maxValue > 0 ? maxValue : 1]) // visDataTotal
     .range([0, innerWidth])
     .nice();
 
@@ -187,7 +262,7 @@ function KategBarChart({
         Schweregrad des Unfalls
       </text>
       <g
-        ref={barChartRef}
+        // ref={barChartRef}
         transform={`translate(${margin.left}, ${margin.top})`}
       >
         {/* {springs.map((spring, i) => (
@@ -224,14 +299,15 @@ function KategBarChart({
         /> */}
         {/* {children} */}
         {/* <BarXAxis variableArray={kategorien} /> */}
-        {kategorien.map((d, i) => (
+        {kategorien.map((kat, i) => (
           <KategBarChartBar
-            key={d}
+            key={kat}
             xScale={xScale}
             yScale={yScale}
-            variableCount={variableCount}
-            visDataTotal={visDataTotal}
-            kat={d}
+            kategCount={kategCountMap.get(kat)}
+            // kategCountNumber={kategCount.get(d)}
+            // visDataTotal={visDataTotal}
+            kat={kat}
           />
           // <g key={d}>
           //   <rect
