@@ -56,7 +56,13 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
     'Sonntag',
   ];
 
-  const hourSorted =
+  // const hourSorted =
+  //   dashboardWidth > 400
+  //     ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
+  //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
+  const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
+
+  const hourLabel =
     dashboardWidth > 400
       ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
       : ['0-6 Uhr', '6-12', '12-18', '18-0'];
@@ -98,7 +104,7 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
   // TODO: colorscale von 0 bis max, statt extent (siehe number)
   // TODO: check if useChartDimensions necessary
 
-  console.log(weekHourCount, extentCounts);
+  console.log('weekhourcount', weekHourCount);
 
   return (
     // <ChartWrapper ref={ref}>
@@ -118,6 +124,7 @@ function WeekHourHeatmap({ visData, weekHourCount, dashboardWidth }) {
         innerWidth={innerWidth}
         margin={margin}
         kat={hourSorted}
+        katLabel={hourLabel}
       />
       <WeekHourAxisY
         yScale={weekScale}

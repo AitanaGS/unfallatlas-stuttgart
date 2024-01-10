@@ -1,13 +1,19 @@
 'use client';
 import React from 'react';
 
-function WeekHourAxisX({ xScale, innerWidth, margin, kat }) {
+function WeekHourAxisX({
+  xScale,
+  innerWidth,
+  margin,
+  kat,
+  katLabel,
+}) {
   // console.log(yScale(innerHeight));
   // console.log('yscale', yScale, 'innerheight', innerHeight);
   return (
     <g transform={`translate(${margin.left}, ${margin.top})`}>
       {/* <line x1={0} y1={0} x2={innerWidth} y2={0} stroke={'black'} /> */}
-      {kat.map((d) => (
+      {kat.map((d, i) => (
         <text
           key={d}
           // x={-5}
@@ -18,7 +24,7 @@ function WeekHourAxisX({ xScale, innerWidth, margin, kat }) {
           dominantBaseline="middle"
           // style={{ fontSize: '0.8rem' }}
         >
-          <tspan>{d}</tspan>
+          <tspan>{katLabel[i]}</tspan>
         </text>
       ))}
     </g>
