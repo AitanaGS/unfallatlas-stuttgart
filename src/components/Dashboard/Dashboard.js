@@ -898,20 +898,20 @@ function Dashboard({ initialData }) {
   //   return sortedData;
   // }, [visData]);
 
-  const artCount = useMemo(() => {
-    const sortedArtCount = new Map(
-      Array.from(
-        rollup(
-          visData,
-          (v) => v.length,
-          (d) => (d.options ? d.options.data.art : d.art)
-        ),
-        ([key, value]) => [key, value]
-      ).sort((a, b) => a[1] - b[1]) // Sort the entries by count (length)
-    );
+  // const artCount = useMemo(() => {
+  //   const sortedArtCount = new Map(
+  //     Array.from(
+  //       rollup(
+  //         visData,
+  //         (v) => v.length,
+  //         (d) => (d.options ? d.options.data.art : d.art)
+  //       ),
+  //       ([key, value]) => [key, value]
+  //     ).sort((a, b) => a[1] - b[1]) // Sort the entries by count (length)
+  //   );
 
-    return sortedArtCount;
-  }, [visData]);
+  //   return sortedArtCount;
+  // }, [visData]);
 
   // console.log(artCount);
 
@@ -1280,9 +1280,10 @@ function Dashboard({ initialData }) {
             />
 
             <ArtBarChart
-              variableCount={artCount}
+              // variableCount={artCount}
               visDataTotal={visDataTotal}
               dashboardWidth={chartWidth}
+              visData={visData}
             />
           </VizWrapper>
           {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}

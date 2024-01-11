@@ -2,20 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
 import { COLORS } from '../../../utils/constants';
+import { splitStringByHalf } from '@/utils/strings';
 
-function splitStringByHalf(inputString) {
-  // Split the input string into an array of words
-  const words = inputString.split(' ');
+// function splitStringByHalf(inputString) {
+//   // Split the input string into an array of words
+//   const words = inputString.split(' ');
 
-  // Calculate the middle index
-  const middleIndex = Math.ceil(words.length / 2);
+//   // Calculate the middle index
+//   const middleIndex = Math.ceil(words.length / 2);
 
-  // Create two separate arrays
-  const firstHalf = words.slice(0, middleIndex);
-  const secondHalf = words.slice(middleIndex);
+//   // Create two separate arrays
+//   const firstHalf = words.slice(0, middleIndex);
+//   const secondHalf = words.slice(middleIndex);
 
-  return [firstHalf.join(' '), secondHalf.join(' ')];
-}
+//   return [firstHalf.join(' '), secondHalf.join(' ')];
+// }
 
 function ArtBarChartLabelledBar({
   xScale,
