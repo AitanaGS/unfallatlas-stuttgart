@@ -18,7 +18,7 @@ const kategorienSorted = [
 function KategBarChart({
   // variableCount,
   // visDataTotal,
-  dashboardWidth,
+  chartWidth,
   visData,
 }) {
   // const [visData, setVisData] = useState(data);
@@ -122,7 +122,7 @@ function KategBarChart({
 
   // console.log('kategCount', kategCount);
 
-  const width = dashboardWidth > 400 ? dashboardWidth : 300;
+  const width = chartWidth > 400 ? chartWidth : 300;
 
   const height = 160; // 120
 

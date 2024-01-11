@@ -36,19 +36,19 @@ const weekSorted = [
 ];
 
 // const hourSorted =
-//   dashboardWidth > 400
+//   chartWidth > 400
 //     ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
 //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
 const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
 
-function WeekHourHeatmap({ visData, dashboardWidth }) {
+function WeekHourHeatmap({ visData, chartWidth }) {
   // const [ref, dms] = useChartDimensions(chartSettings);
 
   // console.log('chartDimension', dms);
   // console.log('width', dms.width);
   // console.log('innerwidt', dms.innerWidth);
 
-  const width = dashboardWidth; // 360
+  const width = chartWidth; // 360
   const height = 300;
 
   const margin = {
@@ -73,13 +73,13 @@ function WeekHourHeatmap({ visData, dashboardWidth }) {
   // ];
 
   // // const hourSorted =
-  // //   dashboardWidth > 400
+  // //   chartWidth > 400
   // //     ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
   // //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
   // const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
 
   const hourLabel =
-    dashboardWidth > 400
+    chartWidth > 400
       ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
       : ['0-6 Uhr', '6-12', '12-18', '18-0'];
 

@@ -23,7 +23,7 @@ import { COLORS } from '../../utils/constants';
 function LichtDonutChart({
   // variableCount,
   // visDataTotal,
-  dashboardWidth,
+  chartWidth,
   visData,
 }) {
   // const kategorienSorted = ['Dämmerung/Dunkelheit', 'Tageslicht'];
@@ -42,12 +42,11 @@ function LichtDonutChart({
 
   const responsiveThreshold = 500; // 400
 
-  const width =
-    dashboardWidth > responsiveThreshold ? dashboardWidth : 300;
+  const width = chartWidth > responsiveThreshold ? chartWidth : 300;
 
-  // const width = dashboardWidth;
+  // const width = chartWidth;
 
-  const height = dashboardWidth > responsiveThreshold ? 250 : 350;
+  const height = chartWidth > responsiveThreshold ? 250 : 350;
 
   // const margin = {
   //   top: 20,
@@ -57,7 +56,7 @@ function LichtDonutChart({
   // };
 
   const margin = {
-    top: dashboardWidth > responsiveThreshold ? 60 : 80, //100
+    top: chartWidth > responsiveThreshold ? 60 : 80, //100
     right: 50,
     bottom: 10,
     left: 50,
@@ -149,38 +148,38 @@ function LichtDonutChart({
   // console.log('arcs', arcs);
 
   // const leftLabelXPosition =
-  //   dashboardWidth > 450 ? innerWidth / 2 - radius : 10;
+  //   chartWidth > 450 ? innerWidth / 2 - radius : 10;
 
   // const leftLabelXPosition =
-  //   dashboardWidth > 400
+  //   chartWidth > 400
   //     ? innerWidth / 2 - radius * 2 + margin.left
   //     : margin.left; // 10
 
   const leftLabelXPosition =
-    dashboardWidth > responsiveThreshold
+    chartWidth > responsiveThreshold
       ? innerWidth / 2 - radius * 2 + margin.left
       : innerWidth / 2 + margin.right - 20; // 10
 
   const leftLabelYPosition =
-    dashboardWidth > responsiveThreshold ? 60 : 60; // 80
+    chartWidth > responsiveThreshold ? 60 : 60; // 80
 
-  // const leftLabelTextAnchor = dashboardWidth > 400 ? 'end' : 'start';
+  // const leftLabelTextAnchor = chartWidth > 400 ? 'end' : 'start';
   const leftLabelTextAnchor = 'end';
 
   // const rightLabelXPosition =
-  //   dashboardWidth > 400
+  //   chartWidth > 400
   //     ? innerWidth / 2 + radius * 2 + margin.left
   //     : width - margin.right; // -10
 
   const rightLabelXPosition =
-    dashboardWidth > responsiveThreshold
+    chartWidth > responsiveThreshold
       ? innerWidth / 2 + radius * 2 + margin.left
       : innerWidth / 2 + margin.right + 20; // -10
 
   const rightLabelYPosition =
-    dashboardWidth > responsiveThreshold ? 60 : 60; // 80
+    chartWidth > responsiveThreshold ? 60 : 60; // 80
 
-  // const rightLabelTextAnchor = dashboardWidth > 400 ? 'start' : 'end';
+  // const rightLabelTextAnchor = chartWidth > 400 ? 'start' : 'end';
   const rightLabelTextAnchor = 'start';
 
   // TODO: check rendering (useState is called to often vs. useEffect)

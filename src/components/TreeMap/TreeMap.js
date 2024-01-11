@@ -9,8 +9,8 @@ import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
 import { COLORS } from '../../utils/constants';
 
-function TreeMap({ dashboardWidth, visDataTotal, visData }) {
-  const width = dashboardWidth; // 250
+function TreeMap({ chartWidth, visDataTotal, visData }) {
+  const width = chartWidth; // 250
   const height = 255;
   const margin = {
     top: 25, // 20

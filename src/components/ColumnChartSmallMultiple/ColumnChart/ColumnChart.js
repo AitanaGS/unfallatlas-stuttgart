@@ -32,12 +32,12 @@ function ColumnChart({
   setMaxValueMap,
   maxValue,
   maxValueMap,
-  chartWidth,
+  smallChartWidth,
   monate,
 }) {
   // const [isAnimating, setIsAnimating] = useState(false);
 
-  const width = chartWidth; //150;
+  const width = smallChartWidth; //150;
   const height = 150;
   const margin = {
     top: 25,

@@ -40,7 +40,7 @@ const monate = [
 //   monatn: monat,
 // }));
 
-function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
+function ColumnChartSmallMultiple({ visData, chartWidth }) {
   // const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
   const [maxValueMap, setMaxValueMap] = useState(new Map());
@@ -62,14 +62,14 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
 
   const widthNudge = 10;
 
-  const chartWidth =
-    dashboardWidth > 450
-      ? (dashboardWidth - widthNudge) / 3
-      : dashboardWidth > 300
-      ? (dashboardWidth - widthNudge) / 2
-      : dashboardWidth;
+  const smallChartWidth =
+    chartWidth > 450
+      ? (chartWidth - widthNudge) / 3
+      : chartWidth > 300
+      ? (chartWidth - widthNudge) / 2
+      : chartWidth;
 
-  // console.log(dashboardWidth);
+  // console.log(chartWidth);
 
   // const dataByYear = group(visData, (d) => d.jahr);
 
@@ -169,10 +169,10 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
   // TODO: numberwithseperator?
 
   return (
-    <SvgWrapper dashboardWidth={dashboardWidth}>
+    <SvgWrapper chartWidth={chartWidth}>
       <svg
-        viewBox={`0 0 ${dashboardWidth} ${20}`}
-        width={dashboardWidth}
+        viewBox={`0 0 ${chartWidth} ${20}`}
+        width={chartWidth}
         height={40}
       >
         <text
@@ -185,7 +185,7 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
           Monat und Jahr
         </text>
       </svg>
-      <SmallMultipleWrapper dashboardWidth={dashboardWidth}>
+      <SmallMultipleWrapper chartWidth={chartWidth}>
         {/* {Array.from(dataByYear, ([year, yearVisData]) => (
           <ColumnChart
             key={year}
@@ -194,7 +194,7 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
             maxValue={maxValue}
             setMaxValueMap={setMaxValueMap}
             maxValueMap={maxValueMap}
-            chartWidth={chartWidth}
+            smallChartWidth={smallChartWidth}
           />
         ))} */}
         {jahre.map((jahr) => (
@@ -205,7 +205,7 @@ function ColumnChartSmallMultiple({ visData, dashboardWidth }) {
             maxValue={maxValue}
             setMaxValueMap={setMaxValueMap}
             maxValueMap={maxValueMap}
-            chartWidth={chartWidth}
+            smallChartWidth={smallChartWidth}
             monate={monate}
           />
         ))}
@@ -225,16 +225,16 @@ const SmallMultipleWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   /* max-width: 500px; */
-  /* max-width: ${(props) => props.dashboardWidth}; */
-  width: ${(props) => props.dashboardWidth}px;
+  /* max-width: ${(props) => props.chartWidth}; */
+  width: ${(props) => props.chartWidth}px;
 `;
 
 const SvgWrapper = styled.div`
   /* display: flex;
   flex-wrap: wrap; */
   /* max-width: 500px; */
-  /* max-width: ${(props) => props.dashboardWidth}; */
-  width: ${(props) => props.dashboardWidth}px;
+  /* max-width: ${(props) => props.chartWidth}; */
+  width: ${(props) => props.chartWidth}px;
 `;
 
 export default ColumnChartSmallMultiple;

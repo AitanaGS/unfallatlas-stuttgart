@@ -62,7 +62,7 @@ const arten = [
 function ArtBarChart({
   // variableCount,
   // visDataTotal,
-  dashboardWidth,
+  chartWidth,
   visData,
 }) {
   // const kategorien = [
@@ -82,7 +82,7 @@ function ArtBarChart({
 
   // const kategorienSorted = Array.from(variableCount.keys());
 
-  // console.log('artbar dashboardwidth', dashboardWidth);
+  // console.log('artbar chartWidth', chartWidth);
 
   // const kategorienSorted = useMemo(() => {
   //   return Array.from(variableCount.keys()).filter((key) => {
@@ -243,7 +243,7 @@ function ArtBarChart({
   // console.log(variableCount, kategorienSorted);
 
   // const width = 600; // 600 // 300
-  const width = dashboardWidth;
+  const width = chartWidth;
 
   // const height =
   //   kategorienSorted.length <= 2
@@ -310,9 +310,9 @@ function ArtBarChart({
 
   // const margin = {
   //   top: 20,
-  //   right: dashboardWidth > 400 ? 5 : 2, // 5
+  //   right: chartWidth > 400 ? 5 : 2, // 5
   //   bottom: 5,
-  //   left: dashboardWidth > 400 ? 275 : 250, // 275 // 450 // 500 // 160
+  //   left: chartWidth > 400 ? 275 : 250, // 275 // 450 // 500 // 160
   // };
 
   const margin = {

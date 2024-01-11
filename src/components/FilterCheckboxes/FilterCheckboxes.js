@@ -34,7 +34,7 @@ function FilterCheckboxes({
   allFilter,
   setAllFilter,
   setFilteringMode,
-  dashboardWidth,
+  chartWidth,
   feature,
 }) {
   // const [allFilter, setAllFilter] = useState(true);
@@ -108,7 +108,7 @@ function FilterCheckboxes({
   return (
     <>
       <FormWrapper
-        dashboardWidth={dashboardWidth}
+        chartWidth={chartWidth}
         onSubmit={(event) => {
           event.preventDefault();
         }}
@@ -246,7 +246,7 @@ const FormWrapper = styled.form`
   /* display: flex;
   flex-wrap: wrap;
   max-width: 100%; // 500px */
-  width: ${(props) => props.dashboardWidth}px;
+  width: ${(props) => props.chartWidth}px;
   margin: 10px 0;
   /* border: none; */
 `;

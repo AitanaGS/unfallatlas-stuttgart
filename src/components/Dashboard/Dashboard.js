@@ -1210,7 +1210,7 @@ function Dashboard({ initialData }) {
               kategFilter={kategFilter}
               selectHeatmap={selectHeatmap}
               setTotalMapData={setTotalMapData}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
             />
             {/* <CheckboxWrapper> */}
             {/* <LeafletHeatCheckbox
@@ -1230,7 +1230,7 @@ function Dashboard({ initialData }) {
               allFilter={allFilter}
               setAllFilter={setAllFilter}
               setFilteringMode={setFilteringMode}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
               feature="Unfallbeteiligung"
             />
             <FilterCheckboxes
@@ -1239,7 +1239,7 @@ function Dashboard({ initialData }) {
               allFilter={allKategFilter}
               setAllFilter={setAllKategFilter}
               setFilteringMode={setKategFilteringMode}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
               feature="Schweregrad"
             />
             {/* </CheckboxWrapper> */}
@@ -1249,42 +1249,42 @@ function Dashboard({ initialData }) {
           <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
             <TreeMap
               // treeData={treemapDataArray}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
               visDataTotal={visDataTotal}
               visData={visData}
             />
             <KategBarChart
               // variableCount={kategCount}
               // visDataTotal={visDataTotal}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
               visData={visData}
             />
             <WeekHourHeatmap
               visData={visData}
               // weekHourCount={weekHourCount}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
             />
             <ColumnChartSmallMultiple
               visData={visData}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
             />
             <LichtDonutChart
               // variableCount={lichtCount}
               // visDataTotal={visDataTotal}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
               visData={visData}
             />
             <StrasseDonutChart
               // variableCount={strasseCount}
               // visDataTotal={visDataTotal}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
               visData={visData}
             />
 
             <ArtBarChart
               // variableCount={artCount}
               // visDataTotal={visDataTotal}
-              dashboardWidth={chartWidth}
+              chartWidth={chartWidth}
               visData={visData}
             />
           </VizWrapper>

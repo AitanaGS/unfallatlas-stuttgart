@@ -71,7 +71,7 @@ function LeafletMap({
   filter,
   selectHeatmap,
   setTotalMapData,
-  dashboardWidth,
+  chartWidth,
   filterKategData,
   allKategFilter,
   kategFilter,
@@ -411,7 +411,7 @@ function LeafletMap({
     filteringMode,
     setTotalMapData,
     calculateTotalVisibleData,
-    dashboardWidth,
+    chartWidth,
     filterKategData,
     allKategFilter,
     kategFilter,
@@ -444,9 +444,9 @@ function LeafletMap({
   // <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
   // <strong>${d.wochentag}${', '}${d.zeit}</strong>
   return (
-    dashboardWidth && (
+    chartWidth && (
       <MapWrapper
-        dashboardWidth={dashboardWidth}
+        chartWidth={chartWidth}
         // id="map"
         // className="leaflet-map"
         // ref={mapRef}
@@ -473,7 +473,7 @@ const MapWrapper = styled.div`
   /* height: 50vh; */
   /* width: 400px; */
   position: relative;
-  width: ${(props) => props.dashboardWidth}px; // 400px
+  width: ${(props) => props.chartWidth}px; // 400px
   margin-top: 20px;
 `;
 
