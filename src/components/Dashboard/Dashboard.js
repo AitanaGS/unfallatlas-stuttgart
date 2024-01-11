@@ -863,21 +863,21 @@ function Dashboard({ initialData }) {
 
   // console.log(visData);
 
-  const lichtCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.licht2 : d.licht2)
-    );
-  }, [visData]);
+  // const lichtCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.licht2 : d.licht2)
+  //   );
+  // }, [visData]);
 
-  const strasseCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.strzust2 : d.strzust2)
-    );
-  }, [visData]);
+  // const strasseCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.strzust2 : d.strzust2)
+  //   );
+  // }, [visData]);
 
   // const artCount = useMemo(() => {
   //   const data = rollup(
@@ -1269,14 +1269,16 @@ function Dashboard({ initialData }) {
               dashboardWidth={chartWidth}
             />
             <LichtDonutChart
-              variableCount={lichtCount}
-              visDataTotal={visDataTotal}
+              // variableCount={lichtCount}
+              // visDataTotal={visDataTotal}
               dashboardWidth={chartWidth}
+              visData={visData}
             />
             <StrasseDonutChart
-              variableCount={strasseCount}
-              visDataTotal={visDataTotal}
+              // variableCount={strasseCount}
+              // visDataTotal={visDataTotal}
               dashboardWidth={chartWidth}
+              visData={visData}
             />
 
             <ArtBarChart

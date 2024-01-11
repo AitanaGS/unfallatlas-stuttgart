@@ -21,9 +21,10 @@ import { numberWithSeparator } from '../../utils/calc';
 import { COLORS } from '../../utils/constants';
 
 function LichtDonutChart({
-  variableCount,
-  visDataTotal,
+  // variableCount,
+  // visDataTotal,
   dashboardWidth,
+  visData,
 }) {
   // const kategorienSorted = ['Dämmerung/Dunkelheit', 'Tageslicht'];
   const kategorienSorted = ['Tageslicht', 'Dämmerung/Dunkelheit'];
@@ -66,16 +67,24 @@ function LichtDonutChart({
 
   const innerHeight = height - margin.top - margin.bottom;
 
-  const kategorien = [...variableCount.keys()];
+  const variableCount = useMemo(() => {
+    return rollup(
+      visData,
+      (v) => v.length,
+      (d) => (d.options ? d.options.data.licht2 : d.licht2)
+    );
+  }, [visData]);
+
+  // const kategorien = [...variableCount.keys()];
 
   // console.log('bar kategcount', variableCount);
   // console.log('keys', kategorien); // [...kategCount.keys()]
   // console.log(variableCount.get(kategorien[0]));
 
-  const barChartRef = useRef();
-  useEffect(() => {
-    const barChart = select(barChartRef.current);
-  }, [variableCount]);
+  // const barChartRef = useRef();
+  // useEffect(() => {
+  //   const barChart = select(barChartRef.current);
+  // }, [variableCount]);
 
   // const maxKateg =
   //   variableCount.get('Tageslicht') ||
@@ -250,7 +259,7 @@ function LichtDonutChart({
       </text>
       {/* )} */}
       <g
-        ref={barChartRef}
+        // ref={barChartRef}
         transform={`translate(${margin.left + innerWidth / 2}, ${
           margin.top + innerHeight / 2
         })`}
