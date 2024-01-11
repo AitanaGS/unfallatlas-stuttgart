@@ -22,7 +22,7 @@ function ArtBarChartLabelledBar({
   xScale,
   yScale,
   variableCount,
-  visDataTotal,
+  // visDataTotal,
   kat,
   yScaleBandwidth,
 }) {

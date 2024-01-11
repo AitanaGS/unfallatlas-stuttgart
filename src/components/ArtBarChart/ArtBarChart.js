@@ -61,7 +61,7 @@ const arten = [
 
 function ArtBarChart({
   // variableCount,
-  visDataTotal,
+  // visDataTotal,
   dashboardWidth,
   visData,
 }) {
@@ -447,7 +447,7 @@ function ArtBarChart({
                 xScale={xScale}
                 yScale={yScale}
                 variableCount={variableCount}
-                visDataTotal={visDataTotal}
+                // visDataTotal={visDataTotal}
                 kat={art}
                 yScaleBandwidth={yScaleBandwidth}
               />

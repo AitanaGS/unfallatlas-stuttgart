@@ -13,7 +13,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
 import styled from 'styled-components';
-import { MapPin } from 'react-feather';
+// import { MapPin } from 'react-feather';
 
 // const calculateVisibleData = (map, markerClusterGroup) => {
 //   const bounds = map.getBounds();

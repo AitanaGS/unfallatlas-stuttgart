@@ -1283,7 +1283,7 @@ function Dashboard({ initialData }) {
 
             <ArtBarChart
               // variableCount={artCount}
-              visDataTotal={visDataTotal}
+              // visDataTotal={visDataTotal}
               dashboardWidth={chartWidth}
               visData={visData}
             />
