@@ -75,10 +75,12 @@ function ColumnChart({
 
   // console.log('max value', maxValue, 'maxMonthdata', maxMonthData);
 
-  const xScale = scaleBand()
-    .domain(monate) // kategorienSorted
-    .range([0, innerWidth])
-    .padding(0.1);
+  const xScale = useMemo(() => {
+    return scaleBand()
+      .domain(monate) // kategorienSorted
+      .range([0, innerWidth])
+      .padding(0.1);
+  }, [innerWidth, monate]);
   // .padding(0.4);
 
   // const yScale = scaleLinear()

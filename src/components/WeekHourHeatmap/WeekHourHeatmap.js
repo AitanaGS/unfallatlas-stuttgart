@@ -85,17 +85,21 @@ function WeekHourHeatmap({ visData, chartWidth }) {
       ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
       : ['0-6 Uhr', '6-12', '12-18', '18-0'];
 
-  const hourScale = scaleBand()
-    .domain(hourSorted)
-    .range([0, innerWidth]) // dms.innerWidth
-    .padding(0.05)
-    .paddingOuter(0.1);
+  const hourScale = useMemo(() => {
+    return scaleBand()
+      .domain(hourSorted)
+      .range([0, innerWidth]) // dms.innerWidth
+      .padding(0.05)
+      .paddingOuter(0.1);
+  }, [innerWidth]);
 
-  const weekScale = scaleBand()
-    .domain(weekSorted)
-    .range([0, innerHeight]) // dms.innerHeight
-    .padding(0.1)
-    .paddingOuter(0.1);
+  const weekScale = useMemo(() => {
+    return scaleBand()
+      .domain(weekSorted)
+      .range([0, innerHeight]) // dms.innerHeight
+      .padding(0.1)
+      .paddingOuter(0.1);
+  }, [innerHeight]);
 
   // const uniqueWeekdays = [
   //   'Montag',
@@ -267,14 +271,23 @@ function WeekHourHeatmap({ visData, chartWidth }) {
 
   // console.log('weekhourcount', weekHourCount, 'counts', counts);
 
-  const extentCounts = [0, max(counts)]; //extent(counts);
+  const extentCounts = useMemo(() => {
+    return [0, max(counts)];
+  }, [counts]); //extent(counts);
   // const extentCountsZero = [0, 1];
 
   // console.log(extent(counts));
 
-  const colorScale = scaleSequential(interpolateYlOrBr).domain(
-    extentCounts[1] === 0 ? [0, 1] : extentCounts
-  ); // interpolateYlOrBr // interpolateOranges
+  // const colorScale = scaleSequential(interpolateYlOrBr).domain(
+  //   extentCounts[1] === 0 ? [0, 1] : extentCounts
+  // ); // interpolateYlOrBr // interpolateOranges
+
+  const colorScale = useMemo(() => {
+    // const extentCounts = [0, max(counts)];
+    return scaleSequential(interpolateYlOrBr).domain(
+      extentCounts[1] === 0 ? [0, 1] : extentCounts
+    );
+  }, [extentCounts]);
 
   // TODO: colorscale starting with 0 (not within count), zero instead of na (in R) (s.u.)
   // TODO: zero instead of na (in R)?

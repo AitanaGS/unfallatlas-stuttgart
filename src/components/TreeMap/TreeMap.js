@@ -129,22 +129,27 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
   //   COLORS.categorical.yellow,
   //   COLORS.categorical.gray,
   // ];
-  const colorArray = [
-    COLORS.categorical2.yellow,
-    COLORS.categorical2.green,
-    COLORS.categorical2.purple,
-    COLORS.categorical2.orangeDark,
-    COLORS.categorical2.blueLight,
-  ];
+
   // https://jfly.uni-koeln.de/color/
 
   // const colorScale = scaleBand(schemeDark2).domain(namesArray);
   // const colorScale = scaleOrdinal()
   //   .domain(namesArray)
   //   .range(schemeDark2);
-  const colorScale = scaleOrdinal()
-    .domain(namesArray)
-    .range(colorArray);
+  // const colorScale = scaleOrdinal()
+  //   .domain(namesArray)
+  //   .range(colorArray);
+
+  const colorScale = useMemo(() => {
+    const colorArray = [
+      COLORS.categorical2.yellow,
+      COLORS.categorical2.green,
+      COLORS.categorical2.purple,
+      COLORS.categorical2.orangeDark,
+      COLORS.categorical2.blueLight,
+    ];
+    return scaleOrdinal().domain(namesArray).range(colorArray);
+  }, [namesArray]);
 
   // console.log('root leaves', root.leaves());
 

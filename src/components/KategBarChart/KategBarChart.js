@@ -218,10 +218,17 @@ function KategBarChart({
   //   const barChart = select(barChartRef.current);
   // }, [variableCount]);
 
-  const xScale = scaleLinear()
-    .domain([0, maxValue > 0 ? maxValue : 1]) // visDataTotal
-    .range([0, innerWidth])
-    .nice();
+  // const xScale = scaleLinear()
+  //   .domain([0, maxValue > 0 ? maxValue : 1]) // visDataTotal
+  //   .range([0, innerWidth])
+  //   .nice();
+
+  const xScale = useMemo(() => {
+    return scaleLinear()
+      .domain([0, maxValue > 0 ? maxValue : 1]) // visDataTotal
+      .range([0, innerWidth])
+      .nice();
+  }, [innerWidth, maxValue]);
 
   // const kategorienSorted = [
   //   'Unfall mit Getöteten',
@@ -229,11 +236,18 @@ function KategBarChart({
   //   'Unfall mit Leichtverletzten',
   // ];
 
-  const yScale = scaleBand()
-    .domain(kategorienSorted) // kategorienSorted
-    .range([0, innerHeight])
-    // .range([innerHeight, 0])
-    .padding(0.2);
+  // const yScale = scaleBand()
+  //   .domain(kategorienSorted) // kategorienSorted
+  //   .range([0, innerHeight])
+  //   // .range([innerHeight, 0])
+  //   .padding(0.2);
+
+  const yScale = useMemo(() => {
+    return scaleBand()
+      .domain(kategorienSorted) // kategorienSorted
+      .range([0, innerHeight])
+      .padding(0.2);
+  }, [innerHeight]);
 
   // console.log(
   //   'Leicht',

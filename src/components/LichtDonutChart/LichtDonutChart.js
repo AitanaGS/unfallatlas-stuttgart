@@ -21,6 +21,8 @@ import { numberWithSeparator } from '../../utils/calc';
 import { COLORS } from '../../utils/constants';
 import useRolledUpMap from '@/hooks/useRolledUpMap';
 
+const kategorienSorted = ['Tageslicht', 'Dämmerung/Dunkelheit'];
+
 function LichtDonutChart({
   // variableCount,
   // visDataTotal,
@@ -28,7 +30,9 @@ function LichtDonutChart({
   visData,
 }) {
   // const kategorienSorted = ['Dämmerung/Dunkelheit', 'Tageslicht'];
-  const kategorienSorted = ['Tageslicht', 'Dämmerung/Dunkelheit'];
+  // const kategorienSorted = useMemo(() => {
+  //   return ['Tageslicht', 'Dämmerung/Dunkelheit'];
+  // }, []);
 
   // const width = 300;
 
@@ -100,15 +104,22 @@ function LichtDonutChart({
   // var radius = Math.min(innerWidth, innerHeight) / 2;
   const radius = Math.min(innerWidth, innerHeight) / 3; // 2.5
 
-  const colorScale = scaleOrdinal()
-    .domain(kategorienSorted)
-    // .range([COLORS.orange.medium, COLORS.orange.dark]);
-    // .range([
-    //   COLORS.categorical.orangeLight,
-    //   COLORS.categorical.orangeDark,
-    // ]);
-    // .range([COLORS.orange, COLORS.yellow.medium]);
-    .range([COLORS.yellowOrange.light, COLORS.yellowOrange.medium]);
+  const colorScale = useMemo(() => {
+    return (
+      scaleOrdinal()
+        .domain(kategorienSorted)
+        // .range([COLORS.orange.medium, COLORS.orange.dark]);
+        // .range([
+        //   COLORS.categorical.orangeLight,
+        //   COLORS.categorical.orangeDark,
+        // ]);
+        // .range([COLORS.orange, COLORS.yellow.medium]);
+        .range([
+          COLORS.yellowOrange.light,
+          COLORS.yellowOrange.medium,
+        ])
+    );
+  }, [kategorienSorted]);
   // .range([COLORS.gray.light, COLORS.gray.medium]);
   // .range([COLORS.yellow.medium, COLORS.yellow.light]);
 

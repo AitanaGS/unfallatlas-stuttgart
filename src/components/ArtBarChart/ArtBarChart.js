@@ -438,10 +438,12 @@ function ArtBarChart({
   //   sortedVariableCount,
   //   kategorienSorted
   // );
-  const xScale = scaleLinear()
-    .domain([0, maxKatCount > 0 ? maxKatCount : 1]) // visDataTotal dataTotal
-    .range([0, innerWidth]) // innerWidthLabelled
-    .nice();
+  const xScale = useMemo(() => {
+    return scaleLinear()
+      .domain([0, maxKatCount > 0 ? maxKatCount : 1]) // visDataTotal dataTotal
+      .range([0, innerWidth]) // innerWidthLabelled
+      .nice();
+  }, [innerWidth, maxKatCount]);
 
   const yScaleBandwidth = 20; // 40
 
@@ -450,11 +452,15 @@ function ArtBarChart({
   //   .range([innerHeight, 0])
   //   .padding(0.2);
 
-  const yScale = scaleBand()
-    .domain(artenSorted) // kategorienSorted
-    .range([0, innerHeight])
-    // .range([innerHeight, 0])
-    .padding(0.2);
+  const yScale = useMemo(() => {
+    return (
+      scaleBand()
+        .domain(artenSorted) // kategorienSorted
+        .range([0, innerHeight])
+        // .range([innerHeight, 0])
+        .padding(0.2)
+    );
+  }, [artenSorted, innerHeight]);
   // .paddingInner(0.3) // 2.5 0.8
   // .paddingOuter(0.3);
 

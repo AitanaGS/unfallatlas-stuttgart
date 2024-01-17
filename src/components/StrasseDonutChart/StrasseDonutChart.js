@@ -21,6 +21,8 @@ import { numberWithSeparator } from '../../utils/calc';
 import { COLORS } from '../../utils/constants';
 import useRolledUpMap from '@/hooks/useRolledUpMap';
 
+const kategorienSorted = ['trocken', 'nass/glatt'];
+
 function StrasseDonutChart({
   // variableCount,
   // visDataTotal,
@@ -30,7 +32,9 @@ function StrasseDonutChart({
   // const kategorienSorted = ['Dämmerung/Dunkelheit', 'Tageslicht'];
   // const kategorienSorted = ['Tageslicht', 'Dämmerung/Dunkelheit'];
   // const kategorienSorted = ['nass/glatt', 'trocken'];
-  const kategorienSorted = ['trocken', 'nass/glatt'];
+  // const kategorienSorted = useMemo(() => {
+  //   return ['trocken', 'nass/glatt'];
+  // }, []);
 
   // const width = 300;
 
@@ -100,11 +104,18 @@ function StrasseDonutChart({
   // var radius = Math.min(innerWidth, innerHeight) / 2;
   const radius = Math.min(innerWidth, innerHeight) / 3; // 2.5
 
-  const colorScale = scaleOrdinal()
-    .domain(kategorienSorted)
-    // .range([COLORS.orange.medium, COLORS.orange.dark]);
-    // .range([COLORS.gray.light, COLORS.gray.medium]);
-    .range([COLORS.yellowOrange.light, COLORS.yellowOrange.medium]);
+  const colorScale = useMemo(() => {
+    return (
+      scaleOrdinal()
+        .domain(kategorienSorted)
+        // .range([COLORS.orange.medium, COLORS.orange.dark]);
+        // .range([COLORS.gray.light, COLORS.gray.medium]);
+        .range([
+          COLORS.yellowOrange.light,
+          COLORS.yellowOrange.medium,
+        ])
+    );
+  }, [kategorienSorted]);
   // .range([
   //   COLORS.categorical.orangeLight,
   //   COLORS.categorical.orangeDark,
