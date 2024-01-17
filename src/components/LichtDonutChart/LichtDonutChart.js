@@ -279,4 +279,4 @@ function LichtDonutChart({
   );
 }
 
-export default LichtDonutChart;
+export default React.memo(LichtDonutChart);

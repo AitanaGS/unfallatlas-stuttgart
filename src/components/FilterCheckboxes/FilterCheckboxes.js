@@ -104,6 +104,7 @@ function FilterCheckboxes({
   // TODO: accessibility
   // TODO: add css transion of checkmarks
   // console.log(COLORS);
+  // console.log('render');
 
   return (
     <>
@@ -239,8 +240,6 @@ function FilterCheckboxes({
     </>
   );
 }
-
-export default FilterCheckboxes;
 
 const FormWrapper = styled.form`
   /* display: flex;
@@ -397,3 +396,5 @@ const Checkmark = styled.span`
     transform: rotate(45deg);
   }
 `;
+
+export default React.memo(FilterCheckboxes);

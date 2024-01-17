@@ -274,4 +274,4 @@ function StrasseDonutChart({
   );
 }
 
-export default StrasseDonutChart;
+export default React.memo(StrasseDonutChart);

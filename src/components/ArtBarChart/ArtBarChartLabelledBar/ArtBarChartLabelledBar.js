@@ -94,6 +94,8 @@ function ArtBarChartLabelledBar({
     },
   });
 
+  // console.log('render');
+
   return (
     // variableCount.get(kat) > 0 && (
     <g>

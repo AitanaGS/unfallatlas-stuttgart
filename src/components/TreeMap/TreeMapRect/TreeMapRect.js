@@ -28,6 +28,8 @@ function TreeMapRect({ d, colorScale }) {
     },
   });
 
+  // console.log('render');
+
   return (
     <g>
       <animated.rect

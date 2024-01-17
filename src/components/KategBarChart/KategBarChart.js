@@ -377,7 +377,7 @@ function KategBarChart({
   );
 }
 
-export default KategBarChart;
+export default React.memo(KategBarChart);
 
 // const ChartWrapper = styled.div`
 //   flex: 1;

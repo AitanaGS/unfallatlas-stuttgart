@@ -409,7 +409,7 @@ function WeekHourHeatmap({ visData, chartWidth }) {
 //   background-color: blue;
 // `;
 
-export default WeekHourHeatmap;
+export default React.memo(WeekHourHeatmap);
 // export default forwardRef(WeekHourHeatmap);
 
 // // const LogoWrapper = styled.div`

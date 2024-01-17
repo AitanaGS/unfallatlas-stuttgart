@@ -44,17 +44,17 @@ const monate = [
 function ColumnChartSmallMultiple({ visData, chartWidth }) {
   // const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
-  const [maxValueMap, setMaxValueMap] = useState(new Map());
+  // const [maxValueMap, setMaxValueMap] = useState(new Map());
   const [maxValue, setMaxValue] = useState(0);
 
-  const setMaxValueCallback = useCallback(() => {
-    const newMaxValue = max(Array.from(maxValueMap.values()));
-    setMaxValue(newMaxValue);
-  }, [maxValueMap]);
+  // const setMaxValueCallback = useCallback(() => {
+  //   const newMaxValue = max(Array.from(maxValueMap.values()));
+  //   setMaxValue(newMaxValue);
+  // }, [maxValueMap]);
 
-  useEffect(() => {
-    setMaxValueCallback();
-  }, [setMaxValueCallback, visData]);
+  // useEffect(() => {
+  //   setMaxValueCallback();
+  // }, [setMaxValueCallback, visData]);
 
   // useEffect(() => {
   //   const newMaxValue = max(Array.from(maxValueMap.values()));
@@ -181,6 +181,28 @@ function ColumnChartSmallMultiple({ visData, chartWidth }) {
     monate
   );
 
+  useEffect(() => {
+    const maxValueMap = new Map();
+
+    jahre.forEach((jahr) => {
+      const yearVisData = dataByYear.get(jahr);
+      const maxMonthData = max(Array.from(yearVisData.values()));
+      maxValueMap.set(jahr, maxMonthData);
+    });
+
+    const newMaxValue = max(Array.from(maxValueMap.values()));
+    setMaxValue(newMaxValue);
+  }, [dataByYear]);
+
+  // const setMaxValueCallback = useCallback(() => {
+  //   const newMaxValue = max(Array.from(maxValueMap.values()));
+  //   setMaxValue(newMaxValue);
+  // }, [maxValueMap]);
+
+  // useEffect(() => {
+  //   setMaxValueCallback();
+  // }, [setMaxValueCallback, visData]);
+
   // console.log('dataByYear', dataByYear);
 
   // console.log(
@@ -209,6 +231,8 @@ function ColumnChartSmallMultiple({ visData, chartWidth }) {
   // TODO: yScale construction here instead of ColumnChart (?)
   // TODO: chart srtuktur zeigen, wenn gar keine fälle
   // TODO: numberwithseperator?
+
+  // console.log('render');
 
   return (
     <SvgWrapper chartWidth={chartWidth}>
@@ -245,8 +269,8 @@ function ColumnChartSmallMultiple({ visData, chartWidth }) {
             yearVisData={dataByYear.get(jahr)}
             jahr={jahr}
             maxValue={maxValue}
-            setMaxValueMap={setMaxValueMap}
-            maxValueMap={maxValueMap}
+            // setMaxValueMap={setMaxValueMap}
+            // maxValueMap={maxValueMap}
             smallChartWidth={smallChartWidth}
             monate={monate}
           />
@@ -279,4 +303,4 @@ const SvgWrapper = styled.div`
   width: ${(props) => props.chartWidth}px;
 `;
 
-export default ColumnChartSmallMultiple;
+export default React.memo(ColumnChartSmallMultiple);

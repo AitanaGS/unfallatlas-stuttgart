@@ -1,8 +1,9 @@
 'use client';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, memo } from 'react';
 import styled from 'styled-components';
 
 function ChartContainer({ width, height, children }, ref) {
+  // console.log('render');
   return (
     <ChartWrapper ref={ref}>
       <svg
@@ -25,4 +26,4 @@ const ChartWrapper = styled.div`
   /* margin: 40px 0px 5px 0px; */
 `;
 
-export default forwardRef(ChartContainer);
+export default React.memo(forwardRef(ChartContainer));

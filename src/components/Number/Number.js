@@ -85,4 +85,4 @@ const NumberWrapper = styled.div`
   font-weight: 700;
 `;
 
-export default Number;
+export default React.memo(Number);

@@ -1,5 +1,11 @@
 'use client';
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+  memo,
+} from 'react';
 import { select } from 'd3-selection';
 import { rollup, extent, max, min } from 'd3-array';
 // import BarXAxis from '../BarXAxis/BarXAxis';
@@ -465,7 +471,7 @@ function ArtBarChart({
   // TODO: check if springs alle werte enthalten solllte (u.a. wegen responsiveness, etc.)
   // TODO: absolute oder relative zahlen
 
-  console.log('render');
+  // console.log('render');
 
   return (
     <ChartContainer width={width} height={height}>
@@ -577,4 +583,4 @@ function ArtBarChart({
   );
 }
 
-export default ArtBarChart;
+export default React.memo(ArtBarChart);

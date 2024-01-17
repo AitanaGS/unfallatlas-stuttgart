@@ -6,14 +6,15 @@ function ColumnChartValueAxis({
   yScale,
   margin,
   innerHeight,
-  maxMonthData,
+  // maxMonthData,
+  maxValue,
 }) {
   const ticks = useMemo(() => {
-    return yScale.ticks(maxMonthData > 5 ? 4 : 2).map((value) => ({
+    return yScale.ticks(maxValue > 5 ? 4 : 2).map((value) => ({
       value,
       yOffset: yScale(value),
     }));
-  }, [yScale]);
+  }, [yScale, maxValue]);
 
   // const spring = useSpring({
   //   from: {

@@ -29,9 +29,9 @@ import ColumnChartLine from './ColumnChartLine';
 function ColumnChart({
   yearVisData,
   jahr,
-  setMaxValueMap,
+  // setMaxValueMap,
   maxValue,
-  maxValueMap,
+  // maxValueMap,
   smallChartWidth,
   monate,
 }) {
@@ -70,8 +70,10 @@ function ColumnChart({
   // const maxMonthData = max(Array.from(monthData.values()));
   // const meanMonthData = mean(Array.from(monthData.values()));
   // const medianMonthData = median(Array.from(monthData.values()));
-  const maxMonthData = max(Array.from(yearVisData.values()));
+  // const maxMonthData = max(Array.from(yearVisData.values()));
   const meanMonthData = mean(Array.from(yearVisData.values()));
+
+  // console.log('max value', maxValue, 'maxMonthdata', maxMonthData);
 
   const xScale = scaleBand()
     .domain(monate) // kategorienSorted
@@ -117,52 +119,52 @@ function ColumnChart({
   //   }));
   // });
 
-  useEffect(() => {
-    // console.log(monthData);
-    setMaxValueMap(maxValueMap.set(jahr, maxMonthData));
-    // setIsAnimating(true);
-    // const animationPropsArray = monate.map((d) => {
-    //   console.log(
-    //     'd',
-    //     d,
-    //     'get(d)',
-    //     monthData.get(d),
-    //     'yscale',
-    //     yScale(monthData.get(d) || 0)
-    //   );
-    //   return {
-    //     from: { y: innerHeight, height: 0 },
-    //     // from: { y: 0, height: 0 },
-    //     to: {
-    //       y: yScale(monthData.get(d) || 0),
-    //       height: innerHeight - yScale(monthData.get(d) || 0),
-    //     },
-    //     onRest: () => setIsAnimating(false),
-    //   };
-    // });
+  // useEffect(() => {
+  //   // console.log(monthData);
+  //   setMaxValueMap(maxValueMap.set(jahr, maxMonthData));
+  //   // setIsAnimating(true);
+  //   // const animationPropsArray = monate.map((d) => {
+  //   //   console.log(
+  //   //     'd',
+  //   //     d,
+  //   //     'get(d)',
+  //   //     monthData.get(d),
+  //   //     'yscale',
+  //   //     yScale(monthData.get(d) || 0)
+  //   //   );
+  //   //   return {
+  //   //     from: { y: innerHeight, height: 0 },
+  //   //     // from: { y: 0, height: 0 },
+  //   //     to: {
+  //   //       y: yScale(monthData.get(d) || 0),
+  //   //       height: innerHeight - yScale(monthData.get(d) || 0),
+  //   //     },
+  //   //     onRest: () => setIsAnimating(false),
+  //   //   };
+  //   // });
 
-    // console.log('animations', animationPropsArray);
+  //   // console.log('animations', animationPropsArray);
 
-    // setAnimationProps(animationPropsArray);
-    // const animations = monate.map((d) => ({
-    //   from: {
-    //     // y: 0,
-    //     // y: yScale(monthData.get(d) || 0),
-    //     y: innerHeight,
-    //     height: 0,
-    //   },
-    //   to: {
-    //     y: yScale(monthData.get(d) || 0),
-    //     height: innerHeight - yScale(monthData.get(d) || 0),
-    //   },
-    // }));
-    // console.log('animations', animations);
+  //   // setAnimationProps(animationPropsArray);
+  //   // const animations = monate.map((d) => ({
+  //   //   from: {
+  //   //     // y: 0,
+  //   //     // y: yScale(monthData.get(d) || 0),
+  //   //     y: innerHeight,
+  //   //     height: 0,
+  //   //   },
+  //   //   to: {
+  //   //     y: yScale(monthData.get(d) || 0),
+  //   //     height: innerHeight - yScale(monthData.get(d) || 0),
+  //   //   },
+  //   // }));
+  //   // console.log('animations', animations);
 
-    // // Start each animation
-    // animations.forEach((animation) => {
-    //   api.start(animation);
-    // });
-  }, [yearVisData, maxValueMap, jahr, maxMonthData, setMaxValueMap]); // , yearVisData
+  //   // // Start each animation
+  //   // animations.forEach((animation) => {
+  //   //   api.start(animation);
+  //   // });
+  // }, [yearVisData, maxValueMap, jahr, maxMonthData, setMaxValueMap]); // , yearVisData
   // [
   //   maxMonthData,
   //   setMaxValueMap,
@@ -173,6 +175,12 @@ function ColumnChart({
   //   innerHeight,
   //   yScale,
   // ]
+
+  // useEffect(() => {
+  //   // console.log(monthData);
+  //   setMaxValueMap(maxValueMap.set(jahr, maxMonthData));
+
+  // }, [yearVisData, maxValueMap, jahr, maxMonthData, setMaxValueMap]); // , yearVisData
 
   // const kategorienSorted = [
   //   'Unfall mit Getöteten',
@@ -296,6 +304,7 @@ function ColumnChart({
   //       />
   //     </ChartContainer>
   //   );
+  // console.log('render');
 
   return (
     <ChartContainer width={width} height={height}>
@@ -312,7 +321,8 @@ function ColumnChart({
         yScale={yScale}
         margin={margin}
         innerHeight={innerHeight}
-        maxMonthData={maxMonthData}
+        // maxMonthData={maxMonthData}
+        maxValue={maxValue}
       />
       <ColumnChartMonthAxis
         xScale={xScale}
@@ -395,7 +405,7 @@ function ColumnChart({
   );
 }
 
-export default ColumnChart;
+export default React.memo(ColumnChart);
 
 // <g key={d}>
 {

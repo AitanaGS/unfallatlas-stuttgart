@@ -80,4 +80,4 @@ const IntroText = styled.div`
   border-radius: 10px; */
 `;
 
-export default Header;
+export default React.memo(Header);

@@ -5,6 +5,7 @@ import React, {
   useRef,
   useCallback,
   useState,
+  memo,
 } from 'react';
 import L, { Icon, divIcon } from 'leaflet';
 import 'leaflet.markercluster';
@@ -443,6 +444,8 @@ function LeafletMap({
   // <br/>
   // <strong>${d.monatn}${' '}${d.jahr}</strong> <br/>
   // <strong>${d.wochentag}${', '}${d.zeit}</strong>
+
+  // console.log('render');
   return (
     chartWidth && (
       <MapWrapper
@@ -466,8 +469,6 @@ function LeafletMap({
   );
 }
 
-export default LeafletMap;
-
 const MapWrapper = styled.div`
   height: 300px; // 400px
   /* height: 50vh; */
@@ -476,6 +477,8 @@ const MapWrapper = styled.div`
   width: ${(props) => props.chartWidth}px; // 400px
   margin-top: 20px;
 `;
+
+export default React.memo(LeafletMap);
 
 // import React, { useEffect, useRef } from 'react';
 // import L from 'leaflet';

@@ -10,6 +10,7 @@ function WeekHourAxisX({
 }) {
   // console.log(yScale(innerHeight));
   // console.log('yscale', yScale, 'innerheight', innerHeight);
+  // console.log('render');
   return (
     <g transform={`translate(${margin.left}, ${margin.top})`}>
       {/* <line x1={0} y1={0} x2={innerWidth} y2={0} stroke={'black'} /> */}

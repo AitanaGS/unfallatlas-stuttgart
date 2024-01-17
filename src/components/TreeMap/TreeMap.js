@@ -152,6 +152,8 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
 
   // TODO: add info text about sonstige
 
+  // console.log('render');
+
   return (
     <ChartContainer width={width} height={height}>
       <text
@@ -213,4 +215,4 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
   );
 }
 
-export default TreeMap;
+export default React.memo(TreeMap);
