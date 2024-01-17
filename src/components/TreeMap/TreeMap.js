@@ -8,6 +8,7 @@ import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
 import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
 import { COLORS } from '../../utils/constants';
+import useRolledUpMap from '@/hooks/useRolledUpMap';
 
 function TreeMap({ chartWidth, visDataTotal, visData }) {
   const width = chartWidth; // 250
@@ -32,60 +33,82 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
   //   hierarchy({ children: treeData }).sum((d) => d.value)
   // );
 
-  const radCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istradb : d.istradb)
-    );
-  }, [visData]);
+  // const fussCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => d.istfussb
+  //     // (d) => (d.options ? d.options.data.istfussb : d.istfussb)
+  //   );
+  // }, [visData]);
 
-  const fussCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istfussb : d.istfussb)
-    );
-  }, [visData]);
+  // const radCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => d.istradb
+  //     // (d) => (d.options ? d.options.data.istradb : d.istradb)
+  //   );
+  // }, [visData]);
 
-  const pkwCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istpkwb : d.istpkwb)
-    );
-  }, [visData]);
+  // const pkwCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => d.istpkwb
+  //     // (d) => (d.options ? d.options.data.istpkwb : d.istpkwb)
+  //   );
+  // }, [visData]);
 
-  const kradCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istkradb : d.istkradb)
-    );
-  }, [visData]);
+  // const kradCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => d.istkradb
+  //     // (d) => (d.options ? d.options.data.istkradb : d.istkradb)
+  //   );
+  // }, [visData]);
 
-  const sonstCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.istsonst2b : d.istsonst2b)
-    );
-  }, [visData]);
+  // const sonstCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => d.istsonst2b
+  //     // (d) => (d.options ? d.options.data.istsonst2b : d.istsonst2b)
+  //   );
+  // }, [visData]);
+
+  const fussCount = useRolledUpMap(visData, 'istfussb');
+
+  const radCount = useRolledUpMap(visData, 'istradb');
+
+  const pkwCount = useRolledUpMap(visData, 'istpkwb');
+
+  const kradCount = useRolledUpMap(visData, 'istkradb');
+
+  const sonstCount = useRolledUpMap(visData, 'istsonst2b');
 
   const numberData = useMemo(() => {
     return new Map([
-      ['Fußgänger', fussCount.get(true) || 0],
-      ['Rad', radCount.get(true) || 0],
-      ['Kraftrad', kradCount.get(true) || 0],
-      ['PKW', pkwCount.get(true) || 0],
-      ['Sonstige', sonstCount.get(true) || 0],
+      ['Fußgänger', fussCount.get(true)],
+      ['Rad', radCount.get(true)],
+      ['Kraftrad', kradCount.get(true)],
+      ['PKW', pkwCount.get(true)],
+      ['Sonstige', sonstCount.get(true)],
+      // ['Fußgänger', fussCount.get(true) || 0],
+      // ['Rad', radCount.get(true) || 0],
+      // ['Kraftrad', kradCount.get(true) || 0],
+      // ['PKW', pkwCount.get(true) || 0],
+      // ['Sonstige', sonstCount.get(true) || 0],
     ]);
   }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
 
-  const treeData = Array.from(numberData, ([name, value]) => ({
-    name,
-    value,
-  }));
+  const treeData = useMemo(() => {
+    return Array.from(numberData, ([name, value]) => ({
+      name,
+      value,
+    }));
+  }, [numberData]);
 
   const root = useMemo(() => {
     const treemapLayout = treemap()

@@ -18,6 +18,7 @@ import {
   median,
   cross,
 } from 'd3-array';
+import useFixedRolledUpMapTwoVariables from '@/hooks/useFixedRolledUpMapTwoVariables';
 
 const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 const monate = [
@@ -106,45 +107,86 @@ function ColumnChartSmallMultiple({ visData, chartWidth }) {
   //   return dataMap;
   // }, [visData]);
 
-  const dataByYear = useMemo(() => {
-    const resultMap = new Map();
-    jahre.forEach((jahr) => {
-      resultMap.set(jahr, new Map());
+  // const dataByYear = useMemo(() => {
+  //   const resultMap = new Map();
+  //   jahre.forEach((jahr) => {
+  //     resultMap.set(jahr, new Map());
 
-      monate.forEach((monat) => {
-        resultMap.get(jahr).set(monat, 0);
-      });
-    });
+  //     monate.forEach((monat) => {
+  //       resultMap.get(jahr).set(monat, 0);
+  //     });
+  //   });
 
-    const rolledUpMap = rollup(
-      visData,
-      (v) => v.length || 0, // Count instances
-      (d) => d.jahr, // Group by year
-      (d) => d.monatn // Group by month name
-    );
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0, // Count instances
+  //     (d) => d.jahr, // Group by year
+  //     (d) => d.monatn // Group by month name
+  //   );
 
-    rolledUpMap.forEach((yearMap, year) => {
-      yearMap.forEach((count, month) => {
-        resultMap.get(year).set(month, count);
-      });
-    });
+  //   rolledUpMap.forEach((yearMap, year) => {
+  //     yearMap.forEach((count, month) => {
+  //       resultMap.get(year).set(month, count);
+  //     });
+  //   });
 
-    // const dataMap = new Map();
+  //   // const dataMap = new Map();
 
-    // for (let year = 2016; year <= 2022; year++) {
-    //   dataMap.set(year, []);
-    // }
+  //   // for (let year = 2016; year <= 2022; year++) {
+  //   //   dataMap.set(year, []);
+  //   // }
 
-    // visData.forEach((d) => {
-    //   const year = d.jahr;
-    //   if (!dataMap.has(year)) {
-    //     dataMap.set(year, []);
-    //   }
-    //   dataMap.get(year).push(d);
-    // });
+  //   // visData.forEach((d) => {
+  //   //   const year = d.jahr;
+  //   //   if (!dataMap.has(year)) {
+  //   //     dataMap.set(year, []);
+  //   //   }
+  //   //   dataMap.get(year).push(d);
+  //   // });
 
-    return resultMap;
-  }, [visData]);
+  //   return resultMap;
+  // }, [visData]);
+
+  // const dataByYear = useMemo(() => {
+  //   const resultMap = new Map();
+  //   jahre.forEach((jahr) => {
+  //     resultMap.set(jahr, new Map());
+
+  //     monate.forEach((monat) => {
+  //       resultMap.get(jahr).set(monat, 0);
+  //     });
+  //   });
+
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0, // Count instances
+  //     (d) => d.jahr, // Group by year
+  //     (d) => d.monatn // Group by month name
+  //   );
+
+  //   rolledUpMap.forEach((yearMap, year) => {
+  //     yearMap.forEach((count, month) => {
+  //       resultMap.get(year).set(month, count);
+  //     });
+  //   });
+
+  //   return resultMap;
+  // }, [visData]);
+
+  const dataByYear = useFixedRolledUpMapTwoVariables(
+    visData,
+    'jahr',
+    'monatn',
+    jahre,
+    monate
+  );
+
+  // console.log('dataByYear', dataByYear);
+
+  // console.log(
+  //   'databyyear example',
+  //   dataByYear.get(2016).get('Januar')
+  // );
 
   // console.log('databyyear', dataByYear);
 

@@ -11,6 +11,7 @@ import { useSpring, useSprings, animated } from '@react-spring/web';
 // import ArtBarChartBar from './ArtBarChartBar';
 import ArtBarChartLabelledBar from './ArtBarChartLabelledBar';
 import { sortArrayByReferenceArray } from '@/utils/sort';
+import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
 
 // const sortArrayByReferenceArray = (referenceArray) => {
 //   return (a, b) => {
@@ -123,101 +124,166 @@ function ArtBarChart({
   //   return sortedArtCount;
   // }, [visData]);
 
-  const variableCount = useMemo(() => {
-    // console.log('check data', data); // d.kateg // d.properties.kateg
-    // console.log('check visData', visData); //d.options.data.kateg
-    // if (!visData) {
-    //   return undefined;
-    // }
+  // const variableCount = useMemo(() => {
+  //   // console.log('check data', data); // d.kateg // d.properties.kateg
+  //   // console.log('check visData', visData); //d.options.data.kateg
+  //   // if (!visData) {
+  //   //   return undefined;
+  //   // }
 
-    const resultMap = new Map();
+  //   const resultMap = new Map();
 
-    arten.forEach((art) => {
-      resultMap.set(art, 0);
-    });
+  //   arten.forEach((art) => {
+  //     resultMap.set(art, 0);
+  //   });
 
-    // console.log('res1', resultMap);
+  //   // console.log('res1', resultMap);
 
-    // console.log('res 1', resultMap);
+  //   // console.log('res 1', resultMap);
 
-    // const rolledUpMap = rollup(
-    //   visData,
-    //   (v) => v.length || 0,
-    //   (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
-    //   // d.properties ? d.properties.kateg : d.options.data.kateg
-    //   // (d) => d.options.data.kateg
-    //   // (d) => d.properties.kateg
-    //   // (d) => (d.options ? d.options.data.kateg : d.kateg)
-    // );
+  //   // const rolledUpMap = rollup(
+  //   //   visData,
+  //   //   (v) => v.length || 0,
+  //   //   (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+  //   //   // d.properties ? d.properties.kateg : d.options.data.kateg
+  //   //   // (d) => d.options.data.kateg
+  //   //   // (d) => d.properties.kateg
+  //   //   // (d) => (d.options ? d.options.data.kateg : d.kateg)
+  //   // );
 
-    // const sortedRolledUpMap = new Map(
-    //   Array.from(
-    //     rollup(
-    //       visData,
-    //       (v) => v.length || 0,
-    //       (d) => (d.options ? d.options.data.art : d.art)
-    //     ),
-    //     ([key, value]) => [key, value]
-    //   ).sort((a, b) => a[1] - b[1]) // Sort the entries by count (length)
-    // );
+  //   // const sortedRolledUpMap = new Map(
+  //   //   Array.from(
+  //   //     rollup(
+  //   //       visData,
+  //   //       (v) => v.length || 0,
+  //   //       (d) => (d.options ? d.options.data.art : d.art)
+  //   //     ),
+  //   //     ([key, value]) => [key, value]
+  //   //   ).sort((a, b) => a[1] - b[1]) // Sort the entries by count (length)
+  //   // );
 
-    const rolledUpMap = rollup(
-      visData,
-      (v) => v.length || 0,
-      (d) => (d.options ? d.options.data.art : d.art)
-    );
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => (d.options ? d.options.data.art : d.art)
+  //   );
 
-    rolledUpMap.forEach((count, art) => {
-      resultMap.set(art, count);
-    });
+  //   rolledUpMap.forEach((count, art) => {
+  //     resultMap.set(art, count);
+  //   });
 
-    // console.log('res2', resultMap);
+  //   // console.log('res2', resultMap);
 
-    // const sortedResultMap = new Map(
-    //   Array.from(resultMap, ([key, value]) => [key, value]).sort(
-    //     (a, b) => a[1] - b[1]
-    //   ) // Sort the entries by count (length)
-    // );
+  //   // const sortedResultMap = new Map(
+  //   //   Array.from(resultMap, ([key, value]) => [key, value]).sort(
+  //   //     (a, b) => a[1] - b[1]
+  //   //   ) // Sort the entries by count (length)
+  //   // );
+  //   const sortedResultMap = new Map(
+  //     Array.from(resultMap, ([key, value]) => [key, value]).sort(
+  //       (a, b) => b[1] - a[1]
+  //     ) // Sort the entries by count (length)
+  //   );
+
+  //   // console.log('sortedres', sortedResultMap);
+
+  //   // console.log('rol1', rolledUpMap);
+
+  //   // console.log('res2', resultMap);
+
+  //   // const kategorienSorted = [
+  //   //   'Unfall mit Schwerverletzten/Getöteten',
+  //   //   'Unfall mit Leichtverletzten',
+  //   // ];
+
+  //   // const kategCounts = [
+  //   //     {
+  //   //       key: 'Unfall mit Leichtverletzten',
+  //   //       value: variableCount.get('Unfall mit Leichtverletzten') || 0,
+  //   //     },
+  //   //     {
+  //   //       key: 'Unfall mit Schwerverletzten/Getöteten',
+  //   //       value: variableCount.get('Unfall mit Schwerverletzten/Getöteten') || 0,
+  //   //     },
+  //   //   ]
+
+  //   return sortedResultMap;
+
+  //   // return rollup(
+  //   //   visData,
+  //   //   (v) => v.length,
+  //   //   (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+  //   // d.properties ? d.properties.kateg : d.options.data.kateg
+  //   // (d) => d.options.data.kateg
+  //   // (d) => d.properties.kateg
+  //   // (d) => (d.options ? d.options.data.kateg : d.kateg)
+  //   // );
+  // }, [visData]);
+
+  // const sortedVariableCount = useMemo(() => {
+  //   const resultMap = new Map();
+
+  //   arten.forEach((art) => {
+  //     resultMap.set(art, 0);
+  //   });
+
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => (d.options ? d.options.data.art : d.art)
+  //   );
+
+  //   rolledUpMap.forEach((count, art) => {
+  //     resultMap.set(art, count);
+  //   });
+
+  //   const sortedResultMap = new Map(
+  //     Array.from(resultMap, ([key, value]) => [key, value]).sort(
+  //       (a, b) => b[1] - a[1]
+  //     ) // Sort the entries by count (length)
+  //   );
+
+  //   return sortedResultMap;
+  // }, [visData]);
+
+  const variableCount = useFixedRolledUpMap(visData, 'art', arten);
+
+  const sortedVariableCount = useMemo(() => {
     const sortedResultMap = new Map(
-      Array.from(resultMap, ([key, value]) => [key, value]).sort(
+      Array.from(variableCount, ([key, value]) => [key, value]).sort(
         (a, b) => b[1] - a[1]
       ) // Sort the entries by count (length)
     );
 
-    // console.log('sortedres', sortedResultMap);
-
-    // console.log('rol1', rolledUpMap);
-
-    // console.log('res2', resultMap);
-
-    // const kategorienSorted = [
-    //   'Unfall mit Schwerverletzten/Getöteten',
-    //   'Unfall mit Leichtverletzten',
-    // ];
-
-    // const kategCounts = [
-    //     {
-    //       key: 'Unfall mit Leichtverletzten',
-    //       value: variableCount.get('Unfall mit Leichtverletzten') || 0,
-    //     },
-    //     {
-    //       key: 'Unfall mit Schwerverletzten/Getöteten',
-    //       value: variableCount.get('Unfall mit Schwerverletzten/Getöteten') || 0,
-    //     },
-    //   ]
-
     return sortedResultMap;
+  }, [variableCount]);
 
-    // return rollup(
-    //   visData,
-    //   (v) => v.length,
-    //   (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
-    // d.properties ? d.properties.kateg : d.options.data.kateg
-    // (d) => d.options.data.kateg
-    // (d) => d.properties.kateg
-    // (d) => (d.options ? d.options.data.kateg : d.kateg)
-    // );
-  }, [visData]);
+  // const sortedVariableCount = useMemo(() => {
+
+  //   const resultMap = new Map();
+
+  //   arten.forEach((art) => {
+  //     resultMap.set(art, 0);
+  //   });
+
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => (d.options ? d.options.data.art : d.art)
+  //   );
+
+  //   rolledUpMap.forEach((count, art) => {
+  //     resultMap.set(art, count);
+  //   });
+
+  //   const sortedResultMap = new Map(
+  //     Array.from(resultMap, ([key, value]) => [key, value]).sort(
+  //       (a, b) => b[1] - a[1]
+  //     ) // Sort the entries by count (length)
+  //   );
+
+  //   return sortedResultMap;
+  // }, [visData]);
 
   const artenSorted = useMemo(() => {
     // const kategorien = [
@@ -233,14 +299,18 @@ function ArtBarChart({
     //   'Unfall anderer Art',
     // ];
 
-    const variableCountArray = Array.from(variableCount.keys());
+    const sortedVariableCountArray = Array.from(
+      sortedVariableCount.keys()
+    );
 
-    const sortArten = sortArrayByReferenceArray(variableCountArray);
+    const sortArten = sortArrayByReferenceArray(
+      sortedVariableCountArray
+    );
 
     return [...arten].sort(sortArten);
-  }, [variableCount]);
+  }, [sortedVariableCount]);
 
-  // console.log(variableCount, kategorienSorted);
+  // console.log(sortedVariableCount, kategorienSorted);
 
   // const width = 600; // 600 // 300
   const width = chartWidth;
@@ -280,10 +350,10 @@ function ArtBarChart({
   //   // visDataTotal > 0 ? kategorienSorted.length * 60 : 200
   //   // x: xScale(0),
   //   // y: yScale(kat),
-  //   // width: xScale(variableCount.get(kat)),
+  //   // width: xScale(sortedVariableCount.get(kat)),
   //   // // height: yScale.bandwidth(),
   //   // height: yScaleBandwidth,
-  //   // textNumberX: xScale(variableCount.get(kat)) - 2, // xScale(variableCount.get(kat)) + 3
+  //   // textNumberX: xScale(sortedVariableCount.get(kat)) - 2, // xScale(sortedVariableCount.get(kat)) + 3
   //   // textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
   //   // textLabelX: xScale(0),
   //   // // textLabelY: yScale(kat) - 8,
@@ -330,16 +400,16 @@ function ArtBarChart({
 
   const innerHeight = height - margin.top - margin.bottom;
 
-  // const kategorien = [...variableCount.keys()];
+  // const kategorien = [...sortedVariableCount.keys()];
 
-  // console.log('bar kategcount', variableCount);
+  // console.log('bar kategcount', sortedVariableCount);
   // console.log('keys', kategorien); // [...kategCount.keys()]
-  // console.log(variableCount.get(kategorien[0]));
+  // console.log(sortedVariableCount.get(kategorien[0]));
 
   // const barChartRef = useRef();
   // useEffect(() => {
   //   const barChart = select(barChartRef.current);
-  // }, [variableCount]);
+  // }, [sortedVariableCount]);
 
   // const xScale = scaleLinear()
   //   .domain([0, visDataTotal]) // dataTotal
@@ -351,15 +421,15 @@ function ArtBarChart({
   // const maxKat = artenSorted[artenSorted.length - 1] || '';
   const maxKat = artenSorted[0] || '';
 
-  const maxKatCount = variableCount.get(maxKat) || 0;
+  const maxKatCount = sortedVariableCount.get(maxKat) || 0;
 
   // console.log('maxkat', maxKat, 'maxkatcount', maxKatCount);
 
   // console.log('maxkat', maxKat, maxKatCount);
 
   // console.log(
-  //   'variableCount kategoriensprted',
-  //   variableCount,
+  //   'sortedVariableCount kategoriensprted',
+  //   sortedVariableCount,
   //   kategorienSorted
   // );
   const xScale = scaleLinear()
@@ -394,6 +464,8 @@ function ArtBarChart({
   // TODO: Dunkelheit und dämmerung zusammenfassen
   // TODO: check if springs alle werte enthalten solllte (u.a. wegen responsiveness, etc.)
   // TODO: absolute oder relative zahlen
+
+  console.log('render');
 
   return (
     <ChartContainer width={width} height={height}>
@@ -434,7 +506,7 @@ function ArtBarChart({
             //   key={d}
             //   xScale={xScale}
             //   yScale={yScale}
-            //   variableCount={variableCount}
+            //   sortedVariableCount={sortedVariableCount}
             //   visDataTotal={visDataTotal}
             //   kat={d}
             //   yScaleBandwidth={yScaleBandwidth}
@@ -446,7 +518,7 @@ function ArtBarChart({
                 key={art}
                 xScale={xScale}
                 yScale={yScale}
-                variableCount={variableCount}
+                sortedVariableCount={sortedVariableCount}
                 // visDataTotal={visDataTotal}
                 kat={art}
                 yScaleBandwidth={yScaleBandwidth}
@@ -457,25 +529,25 @@ function ArtBarChart({
           //   <rect
           //     x={xScale(0)}
           //     y={yScale(d)}
-          //     width={xScale(variableCount.get(d))}
+          //     width={xScale(sortedVariableCount.get(d))}
           //     height={yScale.bandwidth()}
           //     fill="#69b3a2"
           //   />
           //   <text
-          //     x={xScale(variableCount.get(d)) + 10}
+          //     x={xScale(sortedVariableCount.get(d)) + 10}
           //     y={yScale(d) + yScale.bandwidth() / 2}
           //     style={{ fontSize: '0.8rem' }}
           //   >
-          //     {/* {variableCount.get(d)} */}
+          //     {/* {sortedVariableCount.get(d)} */}
           //     {`${Math.round(
-          //       (variableCount.get(d) / visDataTotal) * 100
+          //       (sortedVariableCount.get(d) / visDataTotal) * 100
           //     )} %`}
           //   </text>
           // </g>
         )}
         {/* {kategorien.map((d, i) => {
           if (
-            Math.round((variableCount.get(d) / visDataTotal) * 100) >
+            Math.round((sortedVariableCount.get(d) / visDataTotal) * 100) >
             0
           ) {
             return (
@@ -483,12 +555,12 @@ function ArtBarChart({
                 <rect
                   x={xScale(0)}
                   y={yScale(d)}
-                  width={xScale(variableCount.get(d))}
+                  width={xScale(sortedVariableCount.get(d))}
                   height={yScale.bandwidth()}
                   fill="#69b3a2"
                 />
                 <text
-                  x={xScale(variableCount.get(d)) + 10}
+                  x={xScale(sortedVariableCount.get(d)) + 10}
                   y={yScale(d) + yScale.bandwidth() / 2}
                   style={{ fontSize: '0.8rem' }}
                 >

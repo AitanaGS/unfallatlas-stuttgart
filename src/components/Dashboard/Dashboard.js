@@ -44,6 +44,8 @@ import useChartDimensions from '../../hooks/useChartDimensions';
 import { window } from 'd3-selection';
 import Header from '../Header';
 import Footer from '../Footer';
+import useScrollbarWidth from '@/hooks/useScrollbarWidth';
+// import { tidy, select } from '@tidyjs/tidy';
 // import { Quattrocento, Lato } from 'next/font/google';
 
 // import { timeParse } from 'd3-time-format';
@@ -61,19 +63,19 @@ import Footer from '../Footer';
 //   variable: '--font-lato',
 // });
 
-const getScrollbarWidth = () => {
-  const scrollDiv = document.createElement('div');
-  scrollDiv.style.width = '100px';
-  scrollDiv.style.height = '100px';
-  scrollDiv.style.overflow = 'scroll';
-  scrollDiv.style.position = 'absolute';
-  scrollDiv.style.top = '-9999px';
-  document.body.appendChild(scrollDiv);
-  const scrollbarWidth =
-    scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  document.body.removeChild(scrollDiv);
-  return scrollbarWidth;
-};
+// const getScrollbarWidth = () => {
+//   const scrollDiv = document.createElement('div');
+//   scrollDiv.style.width = '100px';
+//   scrollDiv.style.height = '100px';
+//   scrollDiv.style.overflow = 'scroll';
+//   scrollDiv.style.position = 'absolute';
+//   scrollDiv.style.top = '-9999px';
+//   document.body.appendChild(scrollDiv);
+//   const scrollbarWidth =
+//     scrollDiv.offsetWidth - scrollDiv.clientWidth;
+//   document.body.removeChild(scrollDiv);
+//   return scrollbarWidth;
+// };
 
 const initialFilter = {
   Fußgänger: true,
@@ -215,7 +217,7 @@ function Dashboard({ initialData }) {
   const [kategFilteringMode, setKategFilteringMode] =
     useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  // const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const [layout, setLayout] = useState('grid'); // flex
 
   // TODO: check mapdata, filtereddata, etc. - is it used?
@@ -232,10 +234,10 @@ function Dashboard({ initialData }) {
 
   const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
 
-  useEffect(() => {
-    const width = getScrollbarWidth();
-    setScrollbarWidth(width);
-  }, []);
+  // useEffect(() => {
+  //   const width = getScrollbarWidth();
+  //   setScrollbarWidth(width);
+  // }, []);
 
   // console.log('dashboardwidth', dashboardWidth);
 
@@ -1150,6 +1152,21 @@ function Dashboard({ initialData }) {
   // const timeCountExtent = [0, max(timeDataCounts)];
   // console.log(timeDateExtent, timeCountExtent);
 
+  // const beteiligteData = useMemo(() => {
+  //   return tidy(
+  //     visData,
+  //     select([
+  //       'istfussb',
+  //       'istradb',
+  //       'istpkwb',
+  //       'istkradb',
+  //       'istsonst2b',
+  //     ])
+  //   );
+  // }, [visData]);
+
+  const scrollbarWidth = useScrollbarWidth();
+
   // TODO: check client component in next
   // TODO: dataTotal/visDataTotal performance/correct use of useMemo
   // TODO: gkfz und sonstige mit reinnehmen? ja, als sonstige gesamt
@@ -1251,6 +1268,7 @@ function Dashboard({ initialData }) {
               // treeData={treemapDataArray}
               chartWidth={chartWidth}
               visDataTotal={visDataTotal}
+              // chartData={beteiligteData}
               visData={visData}
             />
             <KategBarChart

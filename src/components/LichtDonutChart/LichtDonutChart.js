@@ -19,6 +19,7 @@ import LichtDonutChartArc from './LichtDonutChartArc';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 import { numberWithSeparator } from '../../utils/calc';
 import { COLORS } from '../../utils/constants';
+import useRolledUpMap from '@/hooks/useRolledUpMap';
 
 function LichtDonutChart({
   // variableCount,
@@ -66,13 +67,15 @@ function LichtDonutChart({
 
   const innerHeight = height - margin.top - margin.bottom;
 
-  const variableCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.licht2 : d.licht2)
-    );
-  }, [visData]);
+  // const variableCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.licht2 : d.licht2)
+  //   );
+  // }, [visData]);
+
+  const variableCount = useRolledUpMap(visData, 'licht2');
 
   // const kategorien = [...variableCount.keys()];
 
@@ -120,11 +123,11 @@ function LichtDonutChart({
     return [
       {
         key: 'Tageslicht',
-        value: variableCount.get('Tageslicht') || 0,
+        value: variableCount.get('Tageslicht'), //  || 0
       },
       {
         key: 'Dämmerung/Dunkelheit',
-        value: variableCount.get('Dämmerung/Dunkelheit') || 0,
+        value: variableCount.get('Dämmerung/Dunkelheit'), //  || 0
       },
     ];
   }, [variableCount]);

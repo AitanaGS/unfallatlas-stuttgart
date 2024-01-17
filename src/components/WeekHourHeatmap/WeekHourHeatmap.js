@@ -15,6 +15,8 @@ import ChartContainer from '../ChartContainer';
 import useChartDimensions from '../../hooks/useChartDimensions';
 import styled from 'styled-components';
 import WeekHourRect from './WeekHourRect';
+// import useRolledUpMapTwoVariables from '@/hooks/useRolledUpMapTwoVariables';
+import useFixedRolledUpMapTwoVariables from '@/hooks/useFixedRolledUpMapTwoVariables';
 
 // const chartSettings = {
 //   marginTop: 40,
@@ -124,84 +126,135 @@ function WeekHourHeatmap({ visData, chartWidth }) {
 
   // const extentCounts = extent(counts);
 
-  const weekHourCount = useMemo(() => {
-    // const uniqueWeekdays = [
-    //   ...new Set(
-    //     visData.map((d) =>
-    //       d.options ? d.options.data.wochentag : d.wochentag
-    //     )
-    //   ),
-    // ];
+  // const weekHourCount = useMemo(() => {
+  //   // const uniqueWeekdays = [
+  //   //   ...new Set(
+  //   //     visData.map((d) =>
+  //   //       d.options ? d.options.data.wochentag : d.wochentag
+  //   //     )
+  //   //   ),
+  //   // ];
 
-    // const uniqueWeekdays = [
-    //   'Montag',
-    //   'Dienstag',
-    //   'Mittwoch',
-    //   'Donnerstag',
-    //   'Freitag',
-    //   'Samstag',
-    //   'Sonntag',
-    // ];
+  //   // const uniqueWeekdays = [
+  //   //   'Montag',
+  //   //   'Dienstag',
+  //   //   'Mittwoch',
+  //   //   'Donnerstag',
+  //   //   'Freitag',
+  //   //   'Samstag',
+  //   //   'Sonntag',
+  //   // ];
 
-    // const uniqueTimes = [
-    //   ...new Set(
-    //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
-    //   ),
-    // ];
+  //   // const uniqueTimes = [
+  //   //   ...new Set(
+  //   //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
+  //   //   ),
+  //   // ];
 
-    // const uniqueTimes = [
-    //   '0-6 Uhr',
-    //   '6-12 Uhr',
-    //   '12-18 Uhr',
-    //   '18-0 Uhr',
-    // ];
+  //   // const uniqueTimes = [
+  //   //   '0-6 Uhr',
+  //   //   '6-12 Uhr',
+  //   //   '12-18 Uhr',
+  //   //   '18-0 Uhr',
+  //   // ];
 
-    const resultMap = new Map();
+  //   const resultMap = new Map();
 
-    weekSorted.forEach((day) => {
-      resultMap.set(day, new Map());
+  //   weekSorted.forEach((day) => {
+  //     resultMap.set(day, new Map());
 
-      hourSorted.forEach((hour) => {
-        resultMap.get(day).set(hour, 0);
-      });
-    });
+  //     hourSorted.forEach((hour) => {
+  //       resultMap.get(day).set(hour, 0);
+  //     });
+  //   });
 
-    const rolledUpMap = rollup(
-      visData,
-      (v) => v.length || 0, // Count instances
-      (d) => d.wochentag, // Group by year
-      (d) => d.zeit // Group by month name
-    );
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0, // Count instances
+  //     (d) => d.wochentag, // Group by year
+  //     (d) => d.zeit // Group by month name
+  //   );
 
-    // const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
-    //   acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
-    //     innerAcc[time] = 0; // Initialize with 0 cases
-    //     return innerAcc;
-    //   }, {});
-    //   return acc;
-    // }, {});
+  //   // const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
+  //   //   acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
+  //   //     innerAcc[time] = 0; // Initialize with 0 cases
+  //   //     return innerAcc;
+  //   //   }, {});
+  //   //   return acc;
+  //   // }, {});
 
-    // // Populate nestedObj with actual counts
-    // visData.forEach((d) => {
-    //   const weekday = d.options
-    //     ? d.options.data.wochentag
-    //     : d.wochentag;
-    //   const time = d.options ? d.options.data.zeit : d.zeit;
-    //   nestedObj[weekday][time]++;
-    // });
+  //   // // Populate nestedObj with actual counts
+  //   // visData.forEach((d) => {
+  //   //   const weekday = d.options
+  //   //     ? d.options.data.wochentag
+  //   //     : d.wochentag;
+  //   //   const time = d.options ? d.options.data.zeit : d.zeit;
+  //   //   nestedObj[weekday][time]++;
+  //   // });
 
-    rolledUpMap.forEach((dayMap, day) => {
-      dayMap.forEach((count, time) => {
-        resultMap.get(day).set(time, count);
-      });
-    });
+  //   rolledUpMap.forEach((dayMap, day) => {
+  //     dayMap.forEach((count, time) => {
+  //       resultMap.get(day).set(time, count);
+  //     });
+  //   });
 
-    return resultMap;
-  }, [visData]);
+  //   return resultMap;
+  // }, [visData]);
+
+  // const rolledUpMap = useRolledUpMapTwoVariables(
+  //   visData,
+  //   'wochentag',
+  //   'zeit'
+  // );
+
+  // const weekHourCount = useMemo(() => {
+  //   const resultMap = new Map();
+
+  //   weekSorted.forEach((day) => {
+  //     resultMap.set(day, new Map());
+
+  //     hourSorted.forEach((hour) => {
+  //       resultMap.get(day).set(hour, 0);
+  //     });
+  //   });
+
+  //   // const rolledUpMap = rollup(
+  //   //   visData,
+  //   //   (v) => v.length || 0, // Count instances
+  //   //   (d) => d.wochentag, // Group by year
+  //   //   (d) => d.zeit // Group by month name
+  //   // );
+
+  //   rolledUpMap.forEach((dayMap, day) => {
+  //     dayMap.forEach((count, time) => {
+  //       resultMap.get(day).set(time, count);
+  //     });
+  //   });
+
+  //   return resultMap;
+  // }, [rolledUpMap]);
 
   // const counts = Object.values(weekHourCount)
   //   .map((innerObj) => Object.values(innerObj))
   //   .flat();
+
+  const weekHourCount = useFixedRolledUpMapTwoVariables(
+    visData,
+    'wochentag',
+    'zeit',
+    weekSorted,
+    hourSorted
+    // (variableOne = 'wochentag'),
+    // (variableTwo = 'zeit'),
+    // (kategorienSortedOne = weekSorted),
+    // (kategorienSortedTwo = hourSorted)
+  );
+
+  // console.log('weekHourCount', weekHourCount);
+  // console.log(
+  //   'weekhourcount example',
+  //   weekHourCount.get('Freitag').get('0-6 Uhr')
+  // );
 
   const counts = useMemo(() => {
     const countsArray = Array.from(

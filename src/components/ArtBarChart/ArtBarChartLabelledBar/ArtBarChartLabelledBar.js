@@ -21,7 +21,7 @@ import { splitStringByHalf } from '@/utils/strings';
 function ArtBarChartLabelledBar({
   xScale,
   yScale,
-  variableCount,
+  sortedVariableCount,
   // visDataTotal,
   kat,
   yScaleBandwidth,
@@ -79,10 +79,10 @@ function ArtBarChartLabelledBar({
   const spring = useSpring({
     x: xScale(0),
     y: yScale(kat),
-    width: xScale(variableCount.get(kat) || 0),
+    width: xScale(sortedVariableCount.get(kat) || 0),
     // height: yScale.bandwidth(),
     height: yScaleBandwidth,
-    textNumberX: xScale(variableCount.get(kat) || 0) + 5, // xScale(variableCount.get(kat) || 0) - 2
+    textNumberX: xScale(sortedVariableCount.get(kat) || 0) + 5, // xScale(variableCount.get(kat) || 0) - 2
     textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
@@ -154,7 +154,7 @@ function ArtBarChartLabelledBar({
         dominantBaseline="middle"
         textAnchor="start"
       >
-        {numberWithSeparator(variableCount.get(kat) || 0)}
+        {numberWithSeparator(sortedVariableCount.get(kat) || 0)}
         {/* {`${Math.round(
             (variableCount.get(kat) / visDataTotal) * 100
           )} %`} */}

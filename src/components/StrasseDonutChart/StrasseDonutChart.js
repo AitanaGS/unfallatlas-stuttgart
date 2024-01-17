@@ -19,6 +19,7 @@ import StrasseDonutChartArc from './StrasseDonutChartArc';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 import { numberWithSeparator } from '../../utils/calc';
 import { COLORS } from '../../utils/constants';
+import useRolledUpMap from '@/hooks/useRolledUpMap';
 
 function StrasseDonutChart({
   // variableCount,
@@ -66,13 +67,15 @@ function StrasseDonutChart({
 
   const innerHeight = height - margin.top - margin.bottom;
 
-  const variableCount = useMemo(() => {
-    return rollup(
-      visData,
-      (v) => v.length,
-      (d) => (d.options ? d.options.data.strzust2 : d.strzust2)
-    );
-  }, [visData]);
+  // const variableCount = useMemo(() => {
+  //   return rollup(
+  //     visData,
+  //     (v) => v.length,
+  //     (d) => (d.options ? d.options.data.strzust2 : d.strzust2)
+  //   );
+  // }, [visData]);
+
+  const variableCount = useRolledUpMap(visData, 'strzust2');
 
   // const kategorien = [...variableCount.keys()];
 
@@ -118,11 +121,11 @@ function StrasseDonutChart({
     return [
       {
         key: 'trocken',
-        value: variableCount.get('trocken') || 0,
+        value: variableCount.get('trocken'), //  || 0
       },
       {
         key: 'nass/glatt',
-        value: variableCount.get('nass/glatt') || 0,
+        value: variableCount.get('nass/glatt'), //  || 0
       },
     ];
   }, [variableCount]);

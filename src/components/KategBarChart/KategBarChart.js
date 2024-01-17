@@ -9,10 +9,16 @@ import ChartContainer from '../ChartContainer';
 import { useSpring, useSprings, animated } from '@react-spring/web';
 import KategBarChartBar from './KategBarChartBar';
 import styled from 'styled-components';
+import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
+
+// const kategorienSorted = [
+//   'Unfall mit Schwerverletzten/Getöteten',
+//   'Unfall mit Leichtverletzten',
+// ];
 
 const kategorienSorted = [
-  'Unfall mit Schwerverletzten/Getöteten',
   'Unfall mit Leichtverletzten',
+  'Unfall mit Schwerverletzten/Getöteten',
 ];
 
 function KategBarChart({
@@ -58,69 +64,97 @@ function KategBarChart({
   //   setKategCount(newKategCount);
   // }, [visibleData]);
 
-  const kategCountMap = useMemo(() => {
-    // console.log('check data', data); // d.kateg // d.properties.kateg
-    // console.log('check visData', visData); //d.options.data.kateg
-    // if (!visData) {
-    //   return undefined;
-    // }
+  // const kategCountMap = useMemo(() => {
+  //   // console.log('check data', data); // d.kateg // d.properties.kateg
+  //   // console.log('check visData', visData); //d.options.data.kateg
+  //   // if (!visData) {
+  //   //   return undefined;
+  //   // }
 
-    const resultMap = new Map();
+  //   const resultMap = new Map();
 
-    kategorienSorted.forEach((kat) => {
-      resultMap.set(kat, 0);
-    });
+  //   kategorienSorted.forEach((kat) => {
+  //     resultMap.set(kat, 0);
+  //   });
 
-    // console.log('res 1', resultMap);
+  //   // console.log('res 1', resultMap);
 
-    const rolledUpMap = rollup(
-      visData,
-      (v) => v.length || 0,
-      (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
-      // d.properties ? d.properties.kateg : d.options.data.kateg
-      // (d) => d.options.data.kateg
-      // (d) => d.properties.kateg
-      // (d) => (d.options ? d.options.data.kateg : d.kateg)
-    );
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+  //     // d.properties ? d.properties.kateg : d.options.data.kateg
+  //     // (d) => d.options.data.kateg
+  //     // (d) => d.properties.kateg
+  //     // (d) => (d.options ? d.options.data.kateg : d.kateg)
+  //   );
 
-    // console.log('rol1', rolledUpMap);
+  //   // console.log('rol1', rolledUpMap);
 
-    rolledUpMap.forEach((count, kat) => {
-      resultMap.set(kat, count);
-    });
+  //   rolledUpMap.forEach((count, kat) => {
+  //     resultMap.set(kat, count);
+  //   });
 
-    // console.log('res2', resultMap);
+  //   // console.log('res2', resultMap);
 
-    // const kategorienSorted = [
-    //   'Unfall mit Schwerverletzten/Getöteten',
-    //   'Unfall mit Leichtverletzten',
-    // ];
+  //   // const kategorienSorted = [
+  //   //   'Unfall mit Schwerverletzten/Getöteten',
+  //   //   'Unfall mit Leichtverletzten',
+  //   // ];
 
-    // const kategCounts = [
-    //     {
-    //       key: 'Unfall mit Leichtverletzten',
-    //       value: variableCount.get('Unfall mit Leichtverletzten') || 0,
-    //     },
-    //     {
-    //       key: 'Unfall mit Schwerverletzten/Getöteten',
-    //       value: variableCount.get('Unfall mit Schwerverletzten/Getöteten') || 0,
-    //     },
-    //   ]
+  //   // const kategCounts = [
+  //   //     {
+  //   //       key: 'Unfall mit Leichtverletzten',
+  //   //       value: variableCount.get('Unfall mit Leichtverletzten') || 0,
+  //   //     },
+  //   //     {
+  //   //       key: 'Unfall mit Schwerverletzten/Getöteten',
+  //   //       value: variableCount.get('Unfall mit Schwerverletzten/Getöteten') || 0,
+  //   //     },
+  //   //   ]
 
-    return resultMap;
+  //   return resultMap;
 
-    // return rollup(
-    //   visData,
-    //   (v) => v.length,
-    //   (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
-    // d.properties ? d.properties.kateg : d.options.data.kateg
-    // (d) => d.options.data.kateg
-    // (d) => d.properties.kateg
-    // (d) => (d.options ? d.options.data.kateg : d.kateg)
-    // );
-  }, [visData]);
+  //   // return rollup(
+  //   //   visData,
+  //   //   (v) => v.length,
+  //   //   (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+  //   // d.properties ? d.properties.kateg : d.options.data.kateg
+  //   // (d) => d.options.data.kateg
+  //   // (d) => d.properties.kateg
+  //   // (d) => (d.options ? d.options.data.kateg : d.kateg)
+  //   // );
+  // }, [visData]);
 
   // console.log('kategCount', kategCount);
+
+  // const kategCountMap = useMemo(() => {
+
+  //   const resultMap = new Map();
+
+  //   kategorienSorted.forEach((kat) => {
+  //     resultMap.set(kat, 0);
+  //   });
+
+  //   const rolledUpMap = rollup(
+  //     visData,
+  //     (v) => v.length || 0,
+  //     (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+  //   );
+
+  //   rolledUpMap.forEach((count, kat) => {
+  //     resultMap.set(kat, count);
+  //   });
+
+  //   return resultMap;
+
+  // }, [visData]);
+
+  const kategCountMap = useFixedRolledUpMap(
+    visData,
+    'kateg2',
+    kategorienSorted
+  );
 
   const width = chartWidth > 400 ? chartWidth : 300;
 
@@ -139,10 +173,10 @@ function KategBarChart({
 
   // const kategorien = [...variableCount.keys()];
 
-  const kategorien = [
-    'Unfall mit Leichtverletzten',
-    'Unfall mit Schwerverletzten/Getöteten',
-  ];
+  // const kategorien = [
+  //   'Unfall mit Leichtverletzten',
+  //   'Unfall mit Schwerverletzten/Getöteten',
+  // ];
 
   // console.log('bar kategcount', variableCount);
   // console.log('keys', kategorien); // [...kategCount.keys()]
@@ -197,7 +231,8 @@ function KategBarChart({
 
   const yScale = scaleBand()
     .domain(kategorienSorted) // kategorienSorted
-    .range([innerHeight, 0])
+    .range([0, innerHeight])
+    // .range([innerHeight, 0])
     .padding(0.2);
 
   // console.log(
@@ -299,7 +334,7 @@ function KategBarChart({
         /> */}
         {/* {children} */}
         {/* <BarXAxis variableArray={kategorien} /> */}
-        {kategorien.map((kat, i) => (
+        {kategorienSorted.map((kat, i) => (
           <KategBarChartBar
             key={kat}
             xScale={xScale}
