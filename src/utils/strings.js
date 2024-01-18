@@ -11,3 +11,49 @@ export function splitStringByHalf(inputString) {
 
   return [firstHalf.join(' '), secondHalf.join(' ')];
 }
+
+export function splitStringOnSlash(inputString) {
+  return inputString
+    .split(/(\s*\/\s*)/)
+    .filter((part) => part.trim() !== '')
+    .reduce(
+      (acc, part, index, array) => (
+        index % 2 === 0
+          ? acc.push(part + (array[index + 1] || ''))
+          : acc,
+        acc
+      ),
+      []
+    );
+
+  // const containsSlash = /\//.test(inputString);
+
+  // const result = containsSlash
+  //   ? inputString
+  //       .split(/(\s*\/\s*)/)
+  //       .filter((part) => part.trim() !== '')
+  //       .reduce((acc, part, index, array) => {
+  //         if (index % 2 === 0) {
+  //           acc.push(part + (array[index + 1] || ''));
+  //         }
+  //         return acc;
+  //       }, [])
+  //   : [inputString];
+
+  // return result;
+  // return /\//.test(inputString)
+  //   ? inputString
+  //       .split(/\s*\/\s*/)
+  //       .filter((part) => part.trim() !== '')
+  //   : [inputString];
+  // const containsSlash = /\//.test(inputString);
+
+  // if (containsSlash) {
+  //   const separatedParts = inputString
+  //     .split(/\s*\/\s*/)
+  //     .filter((part) => part.trim() !== '');
+  //   return separatedParts;
+  // } else {
+  //   return [inputString];
+  // }
+}
