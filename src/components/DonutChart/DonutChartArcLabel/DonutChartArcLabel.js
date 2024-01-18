@@ -4,7 +4,7 @@ import { splitStringOnSlash } from '@/utils/strings';
 
 function DonutChartArcLabel({ label, count, labelPosition }) {
   const labelArray = splitStringOnSlash(label);
-  // console.log('labelarray', labelArray);
+  console.log('labelarray', labelArray);
   // console.log(count);
   return (
     <text

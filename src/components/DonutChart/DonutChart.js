@@ -60,6 +60,8 @@ function DonutChart({
 
   // console.log(variableCount);
 
+  // console.log(variableCount);
+
   const radius = Math.min(innerWidth, innerHeight) / 3; // 2.5
 
   const colorScale = useMemo(() => {
