@@ -123,62 +123,62 @@ const initialKategFilter = {
 //   });
 // };
 
-const filterData = (dataToFilter, allFilter, filter) => {
-  // console.log(dataToFilter);
-  return dataToFilter.filter((item) => {
-    if (allFilter) {
-      return true; // If allFilter is true, return all items
-    }
+// const filterData = (dataToFilter, allFilter, filter) => {
+//   // console.log(dataToFilter);
+//   return dataToFilter.filter((item) => {
+//     if (allFilter) {
+//       return true; // If allFilter is true, return all items
+//     }
 
-    // Check each category filter and filter out items accordingly
-    if (filter.Fußgänger && item.istfussb) {
-      return true; // Filter out items where Fußgänger filter is false and istfussb is true
-    }
-    if (filter.Fahrrad && item.istradb) {
-      return true; // Filter out items where Fahrrad filter is false and istradb is true
-    }
-    if (filter.Kraftrad && item.istkradb) {
-      return true; // Filter out items where Kraftrad filter is false and istkradb is true
-    }
-    if (filter.PKW && item.istpkwb) {
-      return true; // Filter out items where PKW filter is false and istpkwb is true
-    }
-    if (filter.Sonstige && item.istsonst2b) {
-      return true; // Filter out items where Sonstige filter is false and istsonst2b is true
-    }
-    // If none of the above conditions match, keep the item
-    return false;
-  });
-};
+//     // Check each category filter and filter out items accordingly
+//     if (filter.Fußgänger && item.istfussb) {
+//       return true; // Filter out items where Fußgänger filter is false and istfussb is true
+//     }
+//     if (filter.Fahrrad && item.istradb) {
+//       return true; // Filter out items where Fahrrad filter is false and istradb is true
+//     }
+//     if (filter.Kraftrad && item.istkradb) {
+//       return true; // Filter out items where Kraftrad filter is false and istkradb is true
+//     }
+//     if (filter.PKW && item.istpkwb) {
+//       return true; // Filter out items where PKW filter is false and istpkwb is true
+//     }
+//     if (filter.Sonstige && item.istsonst2b) {
+//       return true; // Filter out items where Sonstige filter is false and istsonst2b is true
+//     }
+//     // If none of the above conditions match, keep the item
+//     return false;
+//   });
+// };
 
-// added filter
-const filterKategData = (dataToFilter, allFilter, filter) => {
-  // console.log(dataToFilter);
-  const data = dataToFilter.filter((item) => {
-    if (allFilter) {
-      return true; // If allFilter is true, return all items
-    }
+// // added filter
+// const filterKategData = (dataToFilter, allFilter, filter) => {
+//   // console.log(dataToFilter);
+//   const data = dataToFilter.filter((item) => {
+//     if (allFilter) {
+//       return true; // If allFilter is true, return all items
+//     }
 
-    if (
-      filter['Unfall mit Leichtverletzten'] &&
-      item.kateg2 === 'Unfall mit Leichtverletzten'
-    ) {
-      return true;
-    }
+//     if (
+//       filter['Unfall mit Leichtverletzten'] &&
+//       item.kateg2 === 'Unfall mit Leichtverletzten'
+//     ) {
+//       return true;
+//     }
 
-    if (
-      filter['Unfall mit Schwerverletzten/Getöteten'] &&
-      item.kateg2 === 'Unfall mit Schwerverletzten/Getöteten'
-    ) {
-      return true;
-    }
+//     if (
+//       filter['Unfall mit Schwerverletzten/Getöteten'] &&
+//       item.kateg2 === 'Unfall mit Schwerverletzten/Getöteten'
+//     ) {
+//       return true;
+//     }
 
-    // If none of the above conditions match, keep the item
-    return false;
-  });
-  // console.log('data in function', data);
-  return data;
-};
+//     // If none of the above conditions match, keep the item
+//     return false;
+//   });
+//   // console.log('data in function', data);
+//   return data;
+// };
 
 // const updatedFilteredData = mapData.filter((item) => {
 //   if (allFilter) {
@@ -247,6 +247,125 @@ function Dashboard({ initialData }) {
   ); // layout  * 0.75
 
   const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
+
+  // const filterData = (dataToFilter, allFilter, filter) => {
+  //   // console.log(dataToFilter);
+  //   return dataToFilter.filter((item) => {
+  //     if (allFilter) {
+  //       return true; // If allFilter is true, return all items
+  //     }
+
+  //     // Check each category filter and filter out items accordingly
+  //     if (filter.Fußgänger && item.istfussb) {
+  //       return true; // Filter out items where Fußgänger filter is false and istfussb is true
+  //     }
+  //     if (filter.Fahrrad && item.istradb) {
+  //       return true; // Filter out items where Fahrrad filter is false and istradb is true
+  //     }
+  //     if (filter.Kraftrad && item.istkradb) {
+  //       return true; // Filter out items where Kraftrad filter is false and istkradb is true
+  //     }
+  //     if (filter.PKW && item.istpkwb) {
+  //       return true; // Filter out items where PKW filter is false and istpkwb is true
+  //     }
+  //     if (filter.Sonstige && item.istsonst2b) {
+  //       return true; // Filter out items where Sonstige filter is false and istsonst2b is true
+  //     }
+  //     // If none of the above conditions match, keep the item
+  //     return false;
+  //   });
+  // };
+
+  // // added filter
+  // const filterKategData = (dataToFilter, allFilter, filter) => {
+  //   // console.log(dataToFilter);
+  //   const data = dataToFilter.filter((item) => {
+  //     if (allFilter) {
+  //       return true; // If allFilter is true, return all items
+  //     }
+
+  //     if (
+  //       filter['Unfall mit Leichtverletzten'] &&
+  //       item.kateg2 === 'Unfall mit Leichtverletzten'
+  //     ) {
+  //       return true;
+  //     }
+
+  //     if (
+  //       filter['Unfall mit Schwerverletzten/Getöteten'] &&
+  //       item.kateg2 === 'Unfall mit Schwerverletzten/Getöteten'
+  //     ) {
+  //       return true;
+  //     }
+
+  //     // If none of the above conditions match, keep the item
+  //     return false;
+  //   });
+  //   // console.log('data in function', data);
+  //   return data;
+  // };
+
+  const filterData = useCallback(
+    (dataToFilter, allFilter, filter) => {
+      // console.log(dataToFilter);
+      return dataToFilter.filter((item) => {
+        if (allFilter) {
+          return true; // If allFilter is true, return all items
+        }
+
+        // Check each category filter and filter out items accordingly
+        if (filter.Fußgänger && item.istfussb) {
+          return true; // Filter out items where Fußgänger filter is false and istfussb is true
+        }
+        if (filter.Fahrrad && item.istradb) {
+          return true; // Filter out items where Fahrrad filter is false and istradb is true
+        }
+        if (filter.Kraftrad && item.istkradb) {
+          return true; // Filter out items where Kraftrad filter is false and istkradb is true
+        }
+        if (filter.PKW && item.istpkwb) {
+          return true; // Filter out items where PKW filter is false and istpkwb is true
+        }
+        if (filter.Sonstige && item.istsonst2b) {
+          return true; // Filter out items where Sonstige filter is false and istsonst2b is true
+        }
+        // If none of the above conditions match, keep the item
+        return false;
+      });
+    },
+    []
+  );
+
+  const filterKategData = useCallback(
+    (dataToFilter, allFilter, filter) => {
+      // console.log(dataToFilter);
+      const data = dataToFilter.filter((item) => {
+        if (allFilter) {
+          return true; // If allFilter is true, return all items
+        }
+
+        if (
+          filter['Unfall mit Leichtverletzten'] &&
+          item.kateg2 === 'Unfall mit Leichtverletzten'
+        ) {
+          return true;
+        }
+
+        if (
+          filter['Unfall mit Schwerverletzten/Getöteten'] &&
+          item.kateg2 === 'Unfall mit Schwerverletzten/Getöteten'
+        ) {
+          return true;
+        }
+
+        // If none of the above conditions match, keep the item
+        return false;
+      });
+      // console.log('data in function', data);
+      return data;
+    },
+    []
+  );
 
   // const springConfig = {
   //   mass: 1,
@@ -501,7 +620,14 @@ function Dashboard({ initialData }) {
     setFilteredData(updatedFilteredData);
     setVisData(updatedFilteredData);
     // setData(updatedFilteredData);
-  }, [filter, allFilter, totalMapData, allKategFilter, kategFilter]); // here: mapData
+  }, [
+    filter,
+    allFilter,
+    totalMapData,
+    allKategFilter,
+    kategFilter,
+    filterData,
+  ]); // here: mapData
   // added filter (depencencies and inside function)
 
   useEffect(() => {
