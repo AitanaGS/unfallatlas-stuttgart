@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { COLORS } from '../../../../utils/constants';
+import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
 
 function ColumnChartLine({
   yScale,
@@ -8,6 +9,8 @@ function ColumnChartLine({
   innerWidth,
   innerHeight,
 }) {
+  const springConfig = React.useContext(SpringConfigContext);
+
   const spring = useSpring({
     from: {
       // y: 0,
@@ -26,11 +29,12 @@ function ColumnChartLine({
     // config: {
     //   friction: 100,
     // },
-    config: {
-      mass: 1,
-      tension: 120,
-      friction: 20,
-    },
+    // config: {
+    //   mass: 1,
+    //   tension: 120,
+    //   friction: 20,
+    // },
+    config: springConfig,
   });
 
   // if (

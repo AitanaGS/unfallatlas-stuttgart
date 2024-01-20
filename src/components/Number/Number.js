@@ -3,6 +3,7 @@ import { numberWithSeparator } from '../../utils/calc';
 import ChartContainer from '../ChartContainer';
 import { COLORS } from '../../utils/constants';
 import styled from 'styled-components';
+// import { useSpring, animated } from '@react-spring/web';
 
 function Number({ number, label }) {
   // console.log(
@@ -18,6 +19,37 @@ function Number({ number, label }) {
   // const height = 100;
   const width = 90;
   const height = 40;
+
+  // const spring = useSpring({
+  //   // // rectX: xScale(0),
+  //   // rectY: yScale(kat),
+  //   // rectWidth: xScale(variableCount.get(kat)),
+  //   // // rectHeight: yScale.bandwidth(),
+  //   // textX: xScale(variableCount.get(kat)) + 10,
+  //   // textY: yScale(kat) + yScale.bandwidth() / 2,
+  //   // rectFill: colorScale(weekHourCount[week]?.[hour] || 0) || 'white',
+  //   // textFill:
+  //   //   (weekHourCount[week]?.[hour] || 0) > extentCounts[1] / 2
+  //   //     ? 'white'
+  //   //     : 'black',
+  //   // text: weekHourCount[week]?.[hour] || 0,
+  //   // x: d.x0,
+  //   // y: d.y0,
+  //   // y2: d.y0 + 16,
+  //   // width: d.x1 - d.x0,
+  //   // height: d.y1 - d.y0,
+  //   // rectX: hourScale(hour),
+  //   // rectY: weekScale(week),
+  //   rectWidth: width,
+  //   // rectHeight: weekScale.bandwidth(),
+  //   // textX: hourScale(hour) + hourScale.bandwidth() / 2,
+  //   // textY: weekScale(week) + weekScale.bandwidth() / 2,
+  //   config: {
+  //     mass: 1,
+  //     tension: 120,
+  //     friction: 20,
+  //   },
+  // });
   return (
     <NumberWrapper>
       {label}:
@@ -28,6 +60,7 @@ function Number({ number, label }) {
         <g>
           <rect
             width={width}
+            // width={spring.rectWidth}
             height={height}
             rx={'5px'}
             ry={'5px'}

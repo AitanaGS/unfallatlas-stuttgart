@@ -45,6 +45,10 @@ import { window } from 'd3-selection';
 import Header from '../Header';
 import Footer from '../Footer';
 import useScrollbarWidth from '@/hooks/useScrollbarWidth';
+import {
+  SpringConfigContext,
+  springConfig,
+} from '@/contextProvider/SpringConfigContextProvider';
 // import { tidy, select } from '@tidyjs/tidy';
 // import { Quattrocento, Lato } from 'next/font/google';
 
@@ -202,6 +206,16 @@ const filterKategData = (dataToFilter, allFilter, filter) => {
 //   return true;
 // });
 
+// export const TestContext = React.createContext();
+
+// export const SpringConfigContext = React.createContext();
+
+// const springConfig = {
+//   mass: 1,
+//   tension: 120,
+//   friction: 20,
+// };
+
 function Dashboard({ initialData }) {
   // const parseDate = timeParse('%Y-%m-%d');
   const [data, setData] = useState(initialData);
@@ -233,6 +247,12 @@ function Dashboard({ initialData }) {
   ); // layout  * 0.75
 
   const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
+
+  // const springConfig = {
+  //   mass: 1,
+  //   tension: 120,
+  //   friction: 20,
+  // };
 
   // useEffect(() => {
   //   const width = getScrollbarWidth();
@@ -1264,47 +1284,51 @@ function Dashboard({ initialData }) {
             {/* <Intro /> */}
           </InputWrapper>
           <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
-            <TreeMap
-              // treeData={treemapDataArray}
-              chartWidth={chartWidth}
-              visDataTotal={visDataTotal}
-              // chartData={beteiligteData}
-              visData={visData}
-            />
-            <KategBarChart
-              // variableCount={kategCount}
-              // visDataTotal={visDataTotal}
-              chartWidth={chartWidth}
-              visData={visData}
-            />
-            <WeekHourHeatmap
-              visData={visData}
-              // weekHourCount={weekHourCount}
-              chartWidth={chartWidth}
-            />
-            <ColumnChartSmallMultiple
-              visData={visData}
-              chartWidth={chartWidth}
-            />
-            <LichtDonutChart
-              // variableCount={lichtCount}
-              // visDataTotal={visDataTotal}
-              chartWidth={chartWidth}
-              visData={visData}
-            />
-            <StrasseDonutChart
-              // variableCount={strasseCount}
-              // visDataTotal={visDataTotal}
-              chartWidth={chartWidth}
-              visData={visData}
-            />
+            <SpringConfigContext.Provider value={springConfig}>
+              {/* <TestContext.Provider value={springConfig}> */}
+              <TreeMap
+                // treeData={treemapDataArray}
+                chartWidth={chartWidth}
+                visDataTotal={visDataTotal}
+                // chartData={beteiligteData}
+                visData={visData}
+              />
+              <KategBarChart
+                // variableCount={kategCount}
+                // visDataTotal={visDataTotal}
+                chartWidth={chartWidth}
+                visData={visData}
+              />
+              <WeekHourHeatmap
+                visData={visData}
+                // weekHourCount={weekHourCount}
+                chartWidth={chartWidth}
+              />
+              <ColumnChartSmallMultiple
+                visData={visData}
+                chartWidth={chartWidth}
+              />
+              <LichtDonutChart
+                // variableCount={lichtCount}
+                // visDataTotal={visDataTotal}
+                chartWidth={chartWidth}
+                visData={visData}
+              />
+              <StrasseDonutChart
+                // variableCount={strasseCount}
+                // visDataTotal={visDataTotal}
+                chartWidth={chartWidth}
+                visData={visData}
+              />
 
-            <ArtBarChart
-              // variableCount={artCount}
-              // visDataTotal={visDataTotal}
-              chartWidth={chartWidth}
-              visData={visData}
-            />
+              <ArtBarChart
+                // variableCount={artCount}
+                // visDataTotal={visDataTotal}
+                chartWidth={chartWidth}
+                visData={visData}
+              />
+              {/* </TestContext.Provider> */}
+            </SpringConfigContext.Provider>
           </VizWrapper>
           {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
           {/* <LichtLollipopChart

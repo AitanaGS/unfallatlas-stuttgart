@@ -1,8 +1,15 @@
-import React from 'react';
-import { useSpring, animated } from '@react-spring/web';
+'use client';
+import React, { useContext } from 'react';
+import { useSpring, animated, config } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
+import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+// import { SpringConfigContext } from '@/components/Dashboard';
 
 function TreeMapRect({ d, colorScale }) {
+  const springConfig = React.useContext(SpringConfigContext);
+
+  // console.log(springConfigObject);
+
   const spring = useSpring({
     // // rectX: xScale(0),
     // rectY: yScale(kat),
@@ -21,11 +28,12 @@ function TreeMapRect({ d, colorScale }) {
     y2: d.y0 + 16,
     width: d.x1 - d.x0,
     height: d.y1 - d.y0,
-    config: {
-      mass: 1,
-      tension: 120,
-      friction: 20,
-    },
+    // config: {
+    //   mass: 1,
+    //   tension: 120,
+    //   friction: 20,
+    // },
+    config: springConfig,
   });
 
   // console.log('render');

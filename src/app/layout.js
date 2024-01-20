@@ -1,5 +1,6 @@
 import './globals.css';
 import { Quattrocento, Noto_Sans, Lato } from 'next/font/google';
+// import React from 'react';
 // import { Inter } from 'next/font/google';
 
 const quattrocento = Quattrocento({
@@ -30,6 +31,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    // <SpringConfigContext.Provider value={springConfig}>
     <html lang="en">
       {/* <body className={quattrocento.className}>{children}</body> */}
       {/* <meta
@@ -47,5 +49,6 @@ export default function RootLayout({ children }) {
         {children}
       </body>
     </html>
+    // </SpringConfigContext.Provider>
   );
 }

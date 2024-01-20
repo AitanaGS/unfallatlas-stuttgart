@@ -3,6 +3,7 @@ import { useSpring, animated } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
 import { COLORS } from '../../../utils/constants';
 import { splitStringByHalf } from '@/utils/strings';
+import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
 
 // function splitStringByHalf(inputString) {
 //   // Split the input string into an array of words
@@ -76,6 +77,8 @@ function ArtBarChartLabelledBar({
       ? ['Unfall', 'anderer Art']
       : splitStringByHalf(kat);
 
+  const springConfig = React.useContext(SpringConfigContext);
+
   const spring = useSpring({
     x: xScale(0),
     y: yScale(kat),
@@ -87,11 +90,12 @@ function ArtBarChartLabelledBar({
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
     textLabelY: yScale(kat) - 25, // -20
-    config: {
-      mass: 1,
-      tension: 120,
-      friction: 20,
-    },
+    // config: {
+    //   mass: 1,
+    //   tension: 120,
+    //   friction: 20,
+    // },
+    config: springConfig,
   });
 
   // console.log('render');

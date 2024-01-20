@@ -356,6 +356,7 @@ function ColumnChart({
             xScale={xScale}
             yScale={yScale}
             monthData={yearVisData.get(monat)}
+            maxValue={maxValue}
           />
         ))}
         {/* // here with springs

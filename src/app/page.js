@@ -1,3 +1,4 @@
+// 'use client';
 // import Image from 'next/image';
 // import styles from './page.module.css';
 // import Map from '../components/Map';
@@ -8,6 +9,18 @@ import dataJSON from '../../data/processed/accidents.json';
 import dynamic from 'next/dynamic';
 // import { json } from 'd3-fetch';
 import { timeParse } from 'd3-time-format';
+// import {
+//   SpringConfigContext,
+//   springConfig,
+// } from '@/contextProvider/SpringConfigContextProvider';
+
+// export const SpringConfigContext = React.createContext();
+
+// const springConfig = {
+//   mass: 1,
+//   tension: 120,
+//   friction: 20,
+// };
 
 const Dashboard = dynamic(() => import('../components/Dashboard'), {
   ssr: false,
@@ -86,7 +99,9 @@ export default function Home() {
 
   return (
     <main>
+      {/* <SpringConfigContext.Provider value={springConfig}> */}
       {initialData && <Dashboard initialData={initialData} />}
+      {/* </SpringConfigContext.Provider> */}
 
       {/* {loading && <div>Loading...</div>} */}
       {/* {!loading && <Dashboard data={data} />} */}

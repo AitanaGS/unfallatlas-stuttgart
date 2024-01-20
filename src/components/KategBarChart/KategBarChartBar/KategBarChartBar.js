@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
 import { COLORS } from '../../../utils/constants';
+import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
 
 function KategBarChartBar({
   xScale,
@@ -35,6 +36,8 @@ function KategBarChartBar({
   //   variableCount.get(kat)
   // );
 
+  const springConfig = React.useContext(SpringConfigContext);
+
   const spring = useSpring({
     // rectX: xScale(0),
     rectY: yScale(kat),
@@ -50,11 +53,12 @@ function KategBarChartBar({
         ? xScale(kategCount) + 5 // -2
         : 20,
     textY: yScale(kat) + yScale.bandwidth() / 2,
-    config: {
-      mass: 1,
-      tension: 120,
-      friction: 20,
-    },
+    // config: {
+    //   mass: 1,
+    //   tension: 120,
+    //   friction: 20,
+    // },
+    config: springConfig,
   });
 
   // TODO: springs for all props (?)

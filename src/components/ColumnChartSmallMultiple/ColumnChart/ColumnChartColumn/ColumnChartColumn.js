@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSpring, animated } from '@react-spring/web';
+import { useSpring, animated, config } from '@react-spring/web';
 import { COLORS } from '../../../../utils/constants';
+import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
 
 function ColumnChartColumn({
   monat,
@@ -8,37 +9,60 @@ function ColumnChartColumn({
   yScale,
   monthData,
   xScale,
+  maxValue,
 }) {
+  // const spring = useSpring({
+  //   from: {
+  //     // y: 0,
+  //     // y: yScale(monthData.get(d) || 0),
+  //     y: innerHeight, // innerHeight
+  //     height: 0,
+  //   },
+  //   to: {
+  //     y: yScale(monthData),
+  //     // y: yScale(monthData.get(monat) || 0),
+  //     // height: innerHeight - yScale(monthData.get(monat) || 0),
+  //     height: innerHeight - yScale(monthData),
+  //     // height: Math.max(
+  //     //   innerHeight - yScale(monthData.get(monat) || 0),
+  //     //   0
+  //     // ),
+  //     // y: Math.min(yScale(monthData.get(monat) || 0), innerHeight),
+  //     // height: Math.max(
+  //     //   innerHeight - yScale(monthData.get(monat) || 0),
+  //     //   0
+  //     // ),
+  //   },
+  //   // config: {
+  //   //   friction: 10,
+  //   // },
+  //   config: {
+  //     mass: 1,
+  //     tension: 120,
+  //     friction: 20,
+  //   },
+  // });
+
+  const springConfig = React.useContext(SpringConfigContext);
+
   const spring = useSpring({
     from: {
-      // y: 0,
-      // y: yScale(monthData.get(d) || 0),
-      y: innerHeight, // innerHeight
+      y: innerHeight,
       height: 0,
     },
     to: {
       y: yScale(monthData),
-      // y: yScale(monthData.get(monat) || 0),
-      // height: innerHeight - yScale(monthData.get(monat) || 0),
       height: innerHeight - yScale(monthData),
-      // height: Math.max(
-      //   innerHeight - yScale(monthData.get(monat) || 0),
-      //   0
-      // ),
-      // y: Math.min(yScale(monthData.get(monat) || 0), innerHeight),
-      // height: Math.max(
-      //   innerHeight - yScale(monthData.get(monat) || 0),
-      //   0
-      // ),
     },
     // config: {
-    //   friction: 10,
+    //   mass: 1,
+    //   tension: 120,
+    //   friction: 20,
     // },
-    config: {
-      mass: 1,
-      tension: 120,
-      friction: 20,
-    },
+    config: springConfig,
+    // height: `clamp(0px, ${yScale(monthData)}px, ${yScale(
+    //   maxValue
+    // )}px`,
   });
 
   // const [isAnimating, setIsAnimating] = useState(false);
@@ -142,6 +166,8 @@ function ColumnChartColumn({
       fill={COLORS.yellowOrange.medium}
       y={spring.y}
       height={spring.height}
+      // y={yScale(monthData)}
+      // height={innerHeight - yScale(monthData)}
     />
     // <rect
     //   x={xScale(monat)}

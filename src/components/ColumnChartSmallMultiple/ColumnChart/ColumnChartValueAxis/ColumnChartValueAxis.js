@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useSpring, useSprings, animated } from '@react-spring/web';
+import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
 
 function ColumnChartValueAxis({
   yScale,
@@ -9,6 +10,8 @@ function ColumnChartValueAxis({
   // maxMonthData,
   maxValue,
 }) {
+  const springConfig = React.useContext(SpringConfigContext);
+
   const ticks = useMemo(() => {
     return yScale.ticks(maxValue > 5 ? 4 : 2).map((value) => ({
       value,
@@ -39,11 +42,12 @@ function ColumnChartValueAxis({
     ticks.map(({ value, yOffset }, index) => ({
       y: yOffset,
       value: value,
-      config: {
-        mass: 1,
-        tension: 120,
-        friction: 20,
-      },
+      // config: {
+      //   mass: 1,
+      //   tension: 120,
+      //   friction: 20,
+      // },
+      config: springConfig,
       // onResume: (props) => {
       //   setFinalValues((prev) => [...prev, props.value]);
       // },
