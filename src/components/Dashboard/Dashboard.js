@@ -81,19 +81,19 @@ import {
 //   return scrollbarWidth;
 // };
 
-const initialFilter = {
-  Fußgänger: true,
-  Fahrrad: true,
-  Kraftrad: true,
-  PKW: true,
-  Sonstige: true,
-};
+// const initialFilter = {
+//   Fußgänger: true,
+//   Fahrrad: true,
+//   Kraftrad: true,
+//   PKW: true,
+//   Sonstige: true,
+// };
 
-// added filter
-const initialKategFilter = {
-  'Unfall mit Leichtverletzten': true, // new
-  'Unfall mit Schwerverletzten/Getöteten': true, // new
-};
+// // added filter
+// const initialKategFilter = {
+//   'Unfall mit Leichtverletzten': true, // new
+//   'Unfall mit Schwerverletzten/Getöteten': true, // new
+// };
 
 // const filterData = (dataToFilter, allFilter, filter) => {
 //   return dataToFilter.filter((item) => {
@@ -225,6 +225,21 @@ function Dashboard({ initialData }) {
   const [filteredData, setFilteredData] = useState(visData); // Initially set to visData
   const [allFilter, setAllFilter] = useState(true);
   const [allKategFilter, setAllKategFilter] = useState(true); // added filter
+
+  const initialFilter = {
+    Fußgänger: true,
+    Fahrrad: true,
+    Kraftrad: true,
+    PKW: true,
+    Sonstige: true,
+  };
+
+  // added filter
+  const initialKategFilter = {
+    'Unfall mit Leichtverletzten': true, // new
+    'Unfall mit Schwerverletzten/Getöteten': true, // new
+  };
+
   const [filter, setFilter] = useState(initialFilter);
   const [kategFilter, setKategFilter] = useState(initialKategFilter); // added filter
   const [filteringMode, setFilteringMode] = useState('none');
