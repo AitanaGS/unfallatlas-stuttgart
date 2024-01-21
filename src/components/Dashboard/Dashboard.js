@@ -226,6 +226,8 @@ function Dashboard({ initialData }) {
   const [allFilter, setAllFilter] = useState(true);
   const [allKategFilter, setAllKategFilter] = useState(true); // added filter
 
+  // console.log('data', data, 'visData', visData);
+
   const initialFilter = {
     Fußgänger: true,
     Fahrrad: true,

@@ -19,7 +19,7 @@ import StrasseDonutChartArc from './StrasseDonutChartArc';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 import { numberWithSeparator } from '../../utils/calc';
 import { COLORS } from '../../utils/constants';
-import useRolledUpMap from '@/hooks/useRolledUpMap';
+// import useRolledUpMap from '@/hooks/useRolledUpMap';
 import DonutChart from '../DonutChart';
 
 function StrasseDonutChart({

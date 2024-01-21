@@ -19,7 +19,7 @@ import ChartContainer from '../ChartContainer';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 import { numberWithSeparator } from '@/utils/calc';
 import { COLORS } from '@/utils/constants';
-import useRolledUpMap from '@/hooks/useRolledUpMap';
+// import useRolledUpMap from '@/hooks/useRolledUpMap';
 import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
 import DonutChartArc from './DonutChartArc';
 import DonutChartArcLabel from './DonutChartArcLabel';

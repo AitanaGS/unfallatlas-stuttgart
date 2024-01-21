@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { rollup, extent, max, min } from 'd3-array';
-import useRolledUpMapTwoVariables from './useRolledUpMapTwoVariables';
+// import useRolledUpMapTwoVariables from './useRolledUpMapTwoVariables';
 
 // const weekHourCount = useMemo(() => {
 //     const resultMap = new Map();
@@ -33,22 +33,36 @@ function useFixedRolledUpMapTwoVariables(
   data,
   variableOne,
   variableTwo,
-  kategorienSortedOne,
-  kategorienSortedTwo
+  kategorienOne,
+  kategorienTwo
 ) {
-  const rolledUpMap = useRolledUpMapTwoVariables(
-    data,
-    variableOne,
-    variableTwo
-  );
+  // const rolledUpMap = useRolledUpMapTwoVariables(
+  //   data,
+  //   variableOne,
+  //   variableTwo
+  // );
+
+  const rolledUpMap = useMemo(() => {
+    return rollup(
+      data,
+      (v) => v.length || 0,
+      (d) => d[variableOne], // Group by year
+      (d) => d[variableTwo] // Group by month name
+      // (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
+      // d.properties ? d.properties.kateg : d.options.data.kateg
+      // (d) => d.options.data.kateg
+      // (d) => d.properties.kateg
+      // (d) => (d.options ? d.options.data.kateg : d.kateg)
+    );
+  }, [data, variableOne, variableTwo]);
 
   const fixedRolledUpMapTwoVariables = useMemo(() => {
     const resultMap = new Map();
 
-    kategorienSortedOne.forEach((katOne) => {
+    kategorienOne.forEach((katOne) => {
       resultMap.set(katOne, new Map());
 
-      kategorienSortedTwo.forEach((katTwo) => {
+      kategorienTwo.forEach((katTwo) => {
         resultMap.get(katOne).set(katTwo, 0);
       });
     });
@@ -73,7 +87,7 @@ function useFixedRolledUpMapTwoVariables(
     });
 
     return resultMap;
-  }, [rolledUpMap, kategorienSortedOne, kategorienSortedTwo]);
+  }, [rolledUpMap, kategorienOne, kategorienTwo]);
 
   //   const resultMap = new Map();
 

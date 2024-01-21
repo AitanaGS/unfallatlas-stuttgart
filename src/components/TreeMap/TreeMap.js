@@ -8,7 +8,8 @@ import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
 import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
 import { COLORS } from '../../utils/constants';
-import useRolledUpMap from '@/hooks/useRolledUpMap';
+// import useRolledUpMap from '@/hooks/useRolledUpMap';
+import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
 
 function TreeMap({ chartWidth, visDataTotal, visData }) {
   const width = chartWidth; // 250
@@ -78,15 +79,40 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
   //   );
   // }, [visData]);
 
-  const fussCount = useRolledUpMap(visData, 'istfussb');
+  // const fussCount = useRolledUpMap(visData, 'istfussb');
 
-  const radCount = useRolledUpMap(visData, 'istradb');
+  // const radCount = useRolledUpMap(visData, 'istradb');
 
-  const pkwCount = useRolledUpMap(visData, 'istpkwb');
+  // const pkwCount = useRolledUpMap(visData, 'istpkwb');
 
-  const kradCount = useRolledUpMap(visData, 'istkradb');
+  // const kradCount = useRolledUpMap(visData, 'istkradb');
 
-  const sonstCount = useRolledUpMap(visData, 'istsonst2b');
+  // const sonstCount = useRolledUpMap(visData, 'istsonst2b');
+
+  const fussCount = useFixedRolledUpMap(visData, 'istfussb', [
+    true,
+    false,
+  ]);
+
+  const radCount = useFixedRolledUpMap(visData, 'istradb', [
+    true,
+    false,
+  ]);
+
+  const pkwCount = useFixedRolledUpMap(visData, 'istpkwb', [
+    true,
+    false,
+  ]);
+
+  const kradCount = useFixedRolledUpMap(visData, 'istkradb', [
+    true,
+    false,
+  ]);
+
+  const sonstCount = useFixedRolledUpMap(visData, 'istsonst2b', [
+    true,
+    false,
+  ]);
 
   const numberData = useMemo(() => {
     return new Map([
