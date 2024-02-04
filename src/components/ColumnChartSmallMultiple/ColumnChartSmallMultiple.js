@@ -41,7 +41,12 @@ const monate = [
 //   monatn: monat,
 // }));
 
-function ColumnChartSmallMultiple({ visData, chartWidth }) {
+function ColumnChartSmallMultiple({
+  visData,
+  chartWidth,
+  svgFontSize,
+  // chartWidthDomain,
+}) {
   // const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
   // const [maxValueMap, setMaxValueMap] = useState(new Map());
@@ -63,10 +68,17 @@ function ColumnChartSmallMultiple({ visData, chartWidth }) {
 
   const widthNudge = 10;
 
+  // const smallChartWidth =
+  //   chartWidth > 450
+  //     ? (chartWidth - widthNudge) / 3
+  //     : chartWidth > 300
+  //     ? (chartWidth - widthNudge) / 2
+  //     : chartWidth;
+
   const smallChartWidth =
-    chartWidth > 450
+    chartWidth > 500
       ? (chartWidth - widthNudge) / 3
-      : chartWidth > 300
+      : chartWidth > 330
       ? (chartWidth - widthNudge) / 2
       : chartWidth;
 
@@ -243,10 +255,11 @@ function ColumnChartSmallMultiple({ visData, chartWidth }) {
       >
         <text
           x={10}
-          y={4}
+          y={8}
           textAnchor="auto"
           dominantBaseline="hanging"
           className="svg-title"
+          fontSize={`${svgFontSize.title}rem`}
         >
           Monat und Jahr
         </text>
@@ -273,6 +286,7 @@ function ColumnChartSmallMultiple({ visData, chartWidth }) {
             // maxValueMap={maxValueMap}
             smallChartWidth={smallChartWidth}
             monate={monate}
+            svgFontSize={svgFontSize}
           />
         ))}
         {/* {jahre.map((jahr, i) => (

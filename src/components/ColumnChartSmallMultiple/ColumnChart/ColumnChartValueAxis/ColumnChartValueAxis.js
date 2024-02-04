@@ -9,6 +9,7 @@ function ColumnChartValueAxis({
   innerHeight,
   // maxMonthData,
   maxValue,
+  svgFontSize,
 }) {
   const springConfig = React.useContext(SpringConfigContext);
 
@@ -93,7 +94,8 @@ function ColumnChartValueAxis({
             y={props.y}
             textAnchor="end" // Align text to the end of the axis
             dominantBaseline="middle"
-            style={{ fontSize: '0.8rem' }}
+            // style={{ fontSize: '0.8rem' }}
+            fontSize={`${svgFontSize.text}rem`}
           >
             {ticks[i].value < 1 && ticks[i].value > 0
               ? null

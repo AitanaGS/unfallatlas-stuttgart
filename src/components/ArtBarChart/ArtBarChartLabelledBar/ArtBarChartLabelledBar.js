@@ -26,6 +26,7 @@ function ArtBarChartLabelledBar({
   // visDataTotal,
   kat,
   yScaleBandwidth,
+  svgFontSize,
 }) {
   // const spring = useSpring({
   //   from: {
@@ -89,7 +90,7 @@ function ArtBarChartLabelledBar({
     textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
-    textLabelY: yScale(kat) - 25, // -20
+    textLabelY: yScale(kat) - 22, // -25
     // config: {
     //   mass: 1,
     //   tension: 120,
@@ -122,6 +123,7 @@ function ArtBarChartLabelledBar({
         // style={{ fontSize: '0.8rem' }}
         // textAnchor="start"
         // dominantBaseline="middle"
+        fontSize={`${svgFontSize.text}rem`}
       >
         {/* {kat} */}
         {/* {`${Math.round(
@@ -159,6 +161,7 @@ function ArtBarChartLabelledBar({
         // style={{ fontSize: '0.8rem' }}
         dominantBaseline="middle"
         textAnchor="start"
+        fontSize={`${svgFontSize.text}rem`}
       >
         {numberWithSeparator(sortedVariableCount.get(kat) || 0)}
         {/* {`${Math.round(

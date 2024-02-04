@@ -5,7 +5,7 @@ import { numberWithSeparator } from '../../../utils/calc';
 import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
 // import { SpringConfigContext } from '@/components/Dashboard';
 
-function TreeMapRect({ d, colorScale }) {
+function TreeMapRect({ d, colorScale, svgFontSize }) {
   const springConfig = React.useContext(SpringConfigContext);
 
   // console.log(springConfigObject);
@@ -53,6 +53,7 @@ function TreeMapRect({ d, colorScale }) {
         y={spring.y}
         textAnchor="start"
         dominantBaseline="hanging"
+        fontSize={`${svgFontSize.text}rem`}
         // fill="rgba(32, 35, 56, 1)"
       >
         {d.value > 0 ? d.data.name : ''}
@@ -62,6 +63,7 @@ function TreeMapRect({ d, colorScale }) {
         y={spring.y2}
         textAnchor="start"
         dominantBaseline="hanging"
+        fontSize={`${svgFontSize.text}rem`}
         // fill="rgba(32, 35, 56, 1)"
       >
         {d.value > 0 ? numberWithSeparator(d.value) : ''}

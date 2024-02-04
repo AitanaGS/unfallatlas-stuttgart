@@ -32,14 +32,24 @@ function DonutChart({
   title,
   // splitString,
   // responsiveThreshold,
+  svgFontSize,
+  chartWidthDomain,
+  mobileBreakpoint,
 }) {
   const responsiveThreshold = 500; // 400
+
+  // const width = scaleLinear()
+  //   .domain(chartWidthDomain)
+  //   .range([300, chartWidth])
+  //   .clamp(true);
 
   const width = chartWidth > responsiveThreshold ? chartWidth : 300;
 
   // const width = chartWidth;
+  // const height = 300;
 
-  const height = chartWidth > responsiveThreshold ? 250 : 350;
+  // const height = chartWidth > responsiveThreshold ? 250 : 350;
+  const height = chartWidth > responsiveThreshold ? 250 : 300;
 
   const margin = {
     top: chartWidth > responsiveThreshold ? 60 : 80, //100
@@ -182,6 +192,7 @@ function DonutChart({
         textAnchor="auto"
         dominantBaseline="hanging"
         className="svg-title"
+        fontSize={`${svgFontSize.title}rem`}
       >
         {title}
       </text>
@@ -191,6 +202,7 @@ function DonutChart({
           label={kat}
           count={variableCount.get(kat)}
           labelPosition={labelPosition[i]}
+          svgFontSize={svgFontSize}
           // splitString={splitString}
         />
       ))}

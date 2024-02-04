@@ -11,6 +11,7 @@ function WeekHourRect({
   count,
   // weekHourCount,
   extentCounts,
+  svgFontSize,
 }) {
   // console.log(
   //   'hour',
@@ -117,6 +118,7 @@ function WeekHourRect({
             ? 'rgba(255, 238, 199, 1)'
             : 'rgba(53, 49, 40, 1)'
         }
+        fontSize={`${svgFontSize.text}rem`}
         // fill={
         //   (weekHourCount[week]?.[hour] || 0) > extentCounts[1] / 2
         //     ? 'rgba(255, 238, 199, 1)'

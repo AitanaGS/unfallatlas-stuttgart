@@ -11,6 +11,7 @@ function KategBarChartBar({
   // variableCount,
   // visDataTotal,
   kat,
+  svgFontSize,
 }) {
   // const springs = useSprings(
   //   kategorienSorted.length,
@@ -115,6 +116,7 @@ function KategBarChartBar({
         // style={{ fontSize: '0.8rem' }}
         textAnchor="start"
         dominantBaseline="middle"
+        fontSize={`${svgFontSize.text}rem`}
       >
         {numberWithSeparator(kategCount)}
         {/* {`${Math.round(

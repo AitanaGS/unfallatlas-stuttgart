@@ -34,6 +34,7 @@ function ColumnChart({
   // maxValueMap,
   smallChartWidth,
   monate,
+  svgFontSize,
 }) {
   // const [isAnimating, setIsAnimating] = useState(false);
 
@@ -313,9 +314,11 @@ function ColumnChart({
       <text
         x={10}
         y={8}
-        style={{ fontSize: '0.8rem', fontWeight: 700 }}
+        // style={{ fontSize: '0.8rem', fontWeight: 700 }}
         textAnchor="start"
         dominantBaseline={'middle'}
+        className="svg-title"
+        fontSize={`${svgFontSize.title - 0.1}rem`}
       >
         {jahr}
       </text>
@@ -325,6 +328,7 @@ function ColumnChart({
         innerHeight={innerHeight}
         // maxMonthData={maxMonthData}
         maxValue={maxValue}
+        svgFontSize={svgFontSize}
       />
       <ColumnChartMonthAxis
         xScale={xScale}
@@ -332,6 +336,7 @@ function ColumnChart({
         margin={margin}
         monate={monate}
         innerHeight={innerHeight}
+        svgFontSize={svgFontSize}
       />
       <g transform={`translate(${margin.left},${margin.top})`}>
         {/* <rect

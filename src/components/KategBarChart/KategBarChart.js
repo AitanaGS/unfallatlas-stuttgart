@@ -26,6 +26,9 @@ function KategBarChart({
   // visDataTotal,
   chartWidth,
   visData,
+  smallMobileBreakpoint,
+  svgFontSize,
+  chartWidthDomain,
 }) {
   // const [visData, setVisData] = useState(data);
 
@@ -156,20 +159,57 @@ function KategBarChart({
     kategorienSorted
   );
 
-  const width = chartWidth > 400 ? chartWidth : 300;
+  // const width = chartWidth > 400 ? chartWidth : 300;
+  const width = chartWidth || 300;
 
   const height = 160; // 120
 
-  const margin = {
-    top: 30, // 20
-    right: 80,
-    bottom: 5,
-    left: 220, // 190
-  };
+  const marginLeftScale = scaleLinear()
+    // .domain([0.75, 1]) //based on FontSize in rem
+    .domain(chartWidthDomain) // based on chartWidth
+    // .range([170, 220])
+    .range([170, 220])
+    // .range([100, 220])
+    .clamp(true);
+
+  const marginRightScale = scaleLinear()
+    // .domain([0.75, 1]) //based on FontSize in rem
+    .domain(chartWidthDomain) // based on chartWidth
+    .range([50, 80])
+    .clamp(true);
+
+  // const margin = {
+  //   top: 30, // 20
+  //   right: chartWidth > smallMobileBreakpoint ? 80 : 30, // 80
+  //   bottom: 5,
+  //   left: chartWidth > smallMobileBreakpoint ? 220 : 190, // 220
+  // };
+
+  const margin = useMemo(() => {
+    return {
+      top: 45, // 30
+      // right: marginRightScale(svgFontSize.text), // 80
+      right: marginRightScale(chartWidth), // 80
+      bottom: 5,
+      // left: marginLeftScale(svgFontSize.text), // 220
+      // left: marginLeftScale(chartWidth), // 220
+      left:
+        chartWidth <= smallMobileBreakpoint
+          ? 125
+          : marginLeftScale(chartWidth),
+    };
+  }, [
+    marginLeftScale,
+    marginRightScale,
+    chartWidth,
+    smallMobileBreakpoint,
+  ]);
 
   const innerWidth = width - margin.left - margin.right;
 
   const innerHeight = height - margin.top - margin.bottom;
+
+  // console.log(chartWidth);
 
   // const kategorien = [...variableCount.keys()];
 
@@ -303,13 +343,25 @@ function KategBarChart({
     <ChartContainer width={width} height={height}>
       <text
         x={10}
+        // y={4}
         y={4}
         textAnchor="auto"
         dominantBaseline="hanging"
         className="svg-title"
+        fontSize={`${svgFontSize.title}rem`}
       >
         Schweregrad des Unfalls
       </text>
+      {/* <text
+        x={10}
+        y={25}
+        textAnchor="auto"
+        dominantBaseline="hanging"
+        // className="svg-title"
+        fontSize={`${svgFontSize.text}rem`}
+      >
+        Unfall mit
+      </text> */}
       <g
         // ref={barChartRef}
         transform={`translate(${margin.left}, ${margin.top})`}
@@ -348,6 +400,7 @@ function KategBarChart({
         /> */}
         {/* {children} */}
         {/* <BarXAxis variableArray={kategorien} /> */}
+
         {kategorienSorted.map((kat, i) => (
           <KategBarChartBar
             key={kat}
@@ -357,6 +410,7 @@ function KategBarChart({
             // kategCountNumber={kategCount.get(d)}
             // visDataTotal={visDataTotal}
             kat={kat}
+            svgFontSize={svgFontSize}
           />
           // <g key={d}>
           //   <rect
@@ -384,6 +438,9 @@ function KategBarChart({
         innerHeight={innerHeight}
         margin={margin}
         kat={kategorienSorted}
+        svgFontSize={svgFontSize}
+        chartWidth={chartWidth}
+        smallMobileBreakpoint={smallMobileBreakpoint}
       />
       {/* <BarXAxis variableArray={kategorien} /> */}
       {/* <Bar /> */}

@@ -14,7 +14,7 @@ import { pie, arc } from 'd3-shape';
 import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale';
 // import LichtLollipopChartXAxis from './LichtLollipopChartXAxis';
 import ChartContainer from '../ChartContainer';
-import StrasseDonutChartArc from './StrasseDonutChartArc';
+// import StrasseDonutChartArc from './StrasseDonutChartArc';
 // import LichtLollipopChartLine from './LichtLollipopChartLine';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 import { numberWithSeparator } from '../../utils/calc';
@@ -27,6 +27,9 @@ function StrasseDonutChart({
   // visDataTotal,
   chartWidth,
   visData,
+  svgFontSize,
+  chartWidthDomain,
+  mobileBreakpoint,
 }) {
   const kategorien = ['nass/glatt', 'trocken'];
   // const kategorien = ['trocken', 'nass/glatt'];
@@ -46,6 +49,9 @@ function StrasseDonutChart({
       kategorien={kategorien}
       title="Straßenzustand"
       // splitString={FALSE}
+      svgFontSize={svgFontSize}
+      chartWidthDomain={chartWidthDomain}
+      mobileBreakpoint={mobileBreakpoint}
     />
   );
 }

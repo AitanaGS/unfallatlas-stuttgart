@@ -14,13 +14,13 @@ import {
   interpolateReds,
 } from 'd3-scale-chromatic';
 import { min, max, least, greatest, extent } from 'd3-array';
-import { scaleBand, scaleSequential } from 'd3-scale';
+import { scaleBand, scaleSequential, scaleLinear } from 'd3-scale';
 import { throttle } from 'lodash';
 
 import LeafletMap from '../LeafletMap';
 import KategBarChart from '../KategBarChart';
-import LichtBarChart from '../LichtBarChart';
-import StrasseBarChart from '../StrasseBarChart';
+// import LichtBarChart from '../LichtBarChart';
+// import StrasseBarChart from '../StrasseBarChart';
 import Number from '../Number';
 import WeekHourHeatmap from '../WeekHourHeatmap';
 import TreeMap from '../TreeMap';
@@ -33,7 +33,7 @@ import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
 // import KategStackedBarChart from '../KategStackedBarChart';
-import LichtLollipopChart from '../LichtLollipopChart';
+// import LichtLollipopChart from '../LichtLollipopChart';
 import LichtDonutChart from '../LichtDonutChart';
 import StrasseDonutChart from '../StrasseDonutChart';
 // import ColumnChart from '../ColumnChart';
@@ -49,6 +49,7 @@ import {
   SpringConfigContext,
   springConfig,
 } from '@/contextProvider/SpringConfigContextProvider';
+// import { SVGFontSizeContext } from '@/contextProvider/SVGFontSizeContextProvider';
 // import { tidy, select } from '@tidyjs/tidy';
 // import { Quattrocento, Lato } from 'next/font/google';
 
@@ -250,20 +251,71 @@ function Dashboard({ initialData }) {
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
   // const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const [layout, setLayout] = useState('grid'); // flex
+  // const [dashboardPaddingX, setDashboardPaddingX] = useState(50);
 
   // TODO: check mapdata, filtereddata, etc. - is it used?
 
   const [windowWidth, setWindowWidth] = useState(1000); // 700 window.innerWidth || 700
   // Step 2: State to hold window width
   // const [dashboardWidth, setDashboardWidth] = useState(windowWidth);
+  const mobileBreakpoint = 700; // 700
+
+  const smallMobileBreakpoint = 400;
+
+  const chartWidthDomain = [200, 700];
+
   const [dashboardWidth, setDashboardWidth] = useState(
-    windowWidth > 700 ? windowWidth : windowWidth
+    windowWidth > mobileBreakpoint ? windowWidth : windowWidth
   ); // layout
   const [chartWidth, setChartWidth] = useState(
-    windowWidth > 700 ? windowWidth / 2 : windowWidth
+    windowWidth > mobileBreakpoint ? windowWidth / 2 : windowWidth
   ); // layout  * 0.75
 
   const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
+
+  // const dashboardPaddingScale = scaleLinear()
+  //   .domain([300, 1000])
+  //   .range([10, 50])
+  //   .clamp(true);
+
+  const textFontSizeScale = scaleLinear()
+    .domain(chartWidthDomain) //based on width
+    .range([0.75, 1])
+    .clamp(true);
+
+  const titleFontSizeScale = scaleLinear()
+    .domain(chartWidthDomain) //based on width
+    .range([0.9, 1.3])
+    .clamp(true);
+
+  // const [svgFontSize, setSvgFontSize] = useState(
+  //   fontSizeScale(chartWidth)
+  // );
+  // const [svgFontSize, setSvgFontSize] = useState({
+  //   text: `${textFontSizeScale(chartWidth)}rem`,
+  //   title: `${titleFontSizeScale(chartWidth)}rem`,
+  // });
+
+  // const [svgFontSize, setSvgFontSize] = useState({
+  //   text: `${textFontSizeScale(chartWidth)}rem`,
+  //   title: `${titleFontSizeScale(chartWidth)}rem`,
+  // });
+
+  // const svgFontSize = useMemo(() => {
+  //   return {
+  //     text: `${textFontSizeScale(chartWidth)}rem`,
+  //     title: `${titleFontSizeScale(chartWidth)}rem`,
+  //   };
+  // }, [chartWidth, textFontSizeScale, titleFontSizeScale]);
+
+  const svgFontSize = useMemo(() => {
+    return {
+      text: textFontSizeScale(chartWidth),
+      title: titleFontSizeScale(chartWidth),
+    };
+  }, [chartWidth, textFontSizeScale, titleFontSizeScale]);
+
+  // const svgFontSize = fontSizeScale(chartWidth)
 
   // const filterData = (dataToFilter, allFilter, filter) => {
   //   // console.log(dataToFilter);
@@ -514,11 +566,41 @@ function Dashboard({ initialData }) {
           const size = entry.contentRect.width; // + 12
           setWindowWidth(size); // layout
           // setDashboardWidth(min([entry.contentRect.width, 700])); // layout
-          setDashboardWidth(size <= 700 ? min([size, 700]) : size);
+          setDashboardWidth(
+            size <= mobileBreakpoint
+              ? min([size, mobileBreakpoint])
+              : size
+          );
 
-          setChartWidth(size <= 700 ? min([size, 700]) : size / 2);
+          const newChartWidth =
+            size <= mobileBreakpoint
+              ? min([size, mobileBreakpoint])
+              : size / 2;
 
-          setLayout(size <= 700 ? 'flex' : 'grid');
+          // setChartWidth(
+          //   size <= mobileBreakpoint
+          //     ? min([size, mobileBreakpoint])
+          //     : size / 2
+          // );
+
+          // console.log(
+          //   'chartwidth',
+          //   chartWidth,
+          //   'newchartwidth',
+          //   newChartWidth
+          // );
+
+          setChartWidth(newChartWidth);
+
+          setLayout(size <= mobileBreakpoint ? 'flex' : 'grid');
+          // setDashboardPaddingX(size < mobileBreakpoint ? 15 : 50);
+
+          // setSvgFontSize({
+          //   text: `${textFontSizeScale(newChartWidth)}rem`,
+          //   title: `${titleFontSizeScale(newChartWidth)}rem`,
+          // });
+
+          // setSvgFontSize(fontSizeScale(newChartWidth));
           // console.log(
           //   'entry.contentrect.width',
           //   entry.contentRect.width
@@ -543,7 +625,14 @@ function Dashboard({ initialData }) {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [dashboardWrapperRef, windowWidth, dashboardWidth, chartWidth]);
+  }, [
+    dashboardWrapperRef,
+    windowWidth,
+    dashboardWidth,
+    chartWidth,
+    textFontSizeScale,
+    titleFontSizeScale,
+  ]);
 
   // console.log('mapData', mapData, 'totalMapData', totalMapData);
 
@@ -644,6 +733,7 @@ function Dashboard({ initialData }) {
     allKategFilter,
     kategFilter,
     filterData,
+    filterKategData,
   ]); // here: mapData
   // added filter (depencencies and inside function)
 
@@ -1368,6 +1458,9 @@ function Dashboard({ initialData }) {
           dashboardWidth={dashboardWidth}
           scrollbarWidth={scrollbarWidth}
           layout={layout}
+          // dashboardPaddingScale={dashboardPaddingScale}
+          // mobileBreakpoint={mobileBreakpoint}
+          // dashboardPaddingX={dashboardPaddingX}
         >
           <Header chartWidth={chartWidth} />
           <InputWrapper
@@ -1428,6 +1521,7 @@ function Dashboard({ initialData }) {
           </InputWrapper>
           <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
             <SpringConfigContext.Provider value={springConfig}>
+              {/* <SVGFontSizeContext.Provider value={SVGFontSize}> */}
               {/* <TestContext.Provider value={springConfig}> */}
               <TreeMap
                 // treeData={treemapDataArray}
@@ -1435,33 +1529,52 @@ function Dashboard({ initialData }) {
                 visDataTotal={visDataTotal}
                 // chartData={beteiligteData}
                 visData={visData}
+                smallMobileBreakpoint={smallMobileBreakpoint}
+                // fontSizeScale={fontSizeScale}
+                // svgFontSize={svgFontSize}
+                svgFontSize={svgFontSize}
+                chartWidthDomain={chartWidthDomain}
               />
               <KategBarChart
                 // variableCount={kategCount}
                 // visDataTotal={visDataTotal}
                 chartWidth={chartWidth}
                 visData={visData}
+                smallMobileBreakpoint={smallMobileBreakpoint}
+                svgFontSize={svgFontSize}
+                chartWidthDomain={chartWidthDomain}
               />
               <WeekHourHeatmap
                 visData={visData}
                 // weekHourCount={weekHourCount}
                 chartWidth={chartWidth}
+                // smallMobileBreakpoint={smallMobileBreakpoint}
+                svgFontSize={svgFontSize}
+                chartWidthDomain={chartWidthDomain}
               />
               <ColumnChartSmallMultiple
                 visData={visData}
                 chartWidth={chartWidth}
+                svgFontSize={svgFontSize}
+                // chartWidthDomain={chartWidthDomain}
               />
               <LichtDonutChart
                 // variableCount={lichtCount}
                 // visDataTotal={visDataTotal}
                 chartWidth={chartWidth}
                 visData={visData}
+                svgFontSize={svgFontSize}
+                chartWidthDomain={chartWidthDomain}
+                mobileBreakpoint={mobileBreakpoint}
               />
               <StrasseDonutChart
                 // variableCount={strasseCount}
                 // visDataTotal={visDataTotal}
                 chartWidth={chartWidth}
                 visData={visData}
+                svgFontSize={svgFontSize}
+                chartWidthDomain={chartWidthDomain}
+                mobileBreakpoint={mobileBreakpoint}
               />
 
               <ArtBarChart
@@ -1469,8 +1582,10 @@ function Dashboard({ initialData }) {
                 // visDataTotal={visDataTotal}
                 chartWidth={chartWidth}
                 visData={visData}
+                svgFontSize={svgFontSize}
               />
               {/* </TestContext.Provider> */}
+              {/* </SVGFontSizeContext.Provider> */}
             </SpringConfigContext.Provider>
           </VizWrapper>
           {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
@@ -1572,6 +1687,24 @@ function Dashboard({ initialData }) {
 // `;
 
 // layout
+
+const dashboardWrapperVariants = {
+  flex: ``,
+  grid: `
+  display: grid;
+  display: grid;
+  grid-template-columns:
+    1fr
+    1fr;
+  width: 100%;
+  grid-column: 1 / 3;
+  grid-column-gap: 20px;
+  isolation: isolate;
+  max-width: 1200px;
+  margin: 0 auto;
+  `,
+};
+
 const DashboardWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -1583,10 +1716,34 @@ const DashboardWrapper = styled.div`
   max-width: 1200px; // 500px
   margin: 0 auto;
   /* position: relative; */
-  padding: 10px 50px;
+  /* padding: 10px 25px; */
+  padding: 1% 5%;
+  /* padding: 10px 30px 10px 20px; */
+  /* padding: ${(props) => `10px ${props.dashboardPaddingX}px`}; */
   // @media (min-width: 820px)
-  @media only screen and (min-width: ${(props) =>
-      `${props.scrollbarWidth + 801}px`}) {
+  /* @media only screen and (min-width: ${(props) =>
+    `${props.scrollbarWidth + 801}px`}) { */
+  /* @media only screen and (min-width: ${(props) =>
+    `${
+      props.scrollbarWidth +
+      (props.layout === 'grid' ? 50 : 15) * 2 +
+      props.mobileBreakpoint +
+      1
+    }px`}) { */
+  /* @media only screen and (min-width: ${(props) =>
+    `${
+      props.scrollbarWidth +
+      props.dashboardPaddingX * 2 +
+      props.mobileBreakpoint +
+      1
+    }px`}) { */
+  ${(props) =>
+    dashboardWrapperVariants[
+      props.layout
+    ]}/* @media only screen and (min-width: ${(props) =>
+    `${
+      props.scrollbarWidth + 25 * 2 + props.mobileBreakpoint + 1
+    }px`}) {
     display: grid;
     display: grid;
     grid-template-columns:
@@ -1596,18 +1753,9 @@ const DashboardWrapper = styled.div`
     grid-column: 1 / 3;
     grid-column-gap: 20px;
     isolation: isolate;
-    /* flex-direction: column;
-  flex-wrap: wrap;
-  gap: 25px; */
-    /* width: 100%; */
-    /* max-width: ${(props) => props.dashboardWidth}px; */
     max-width: 1200px;
-    /* height: 100%; */
-    /* max-width: 1000px; */
-    /* width: ${(props) => props.dashboardWidth}px; // 1000px 500px */
     margin: 0 auto;
-    /* position: relative; */
-  }
+  } */
 `;
 
 const inputWrapperVariants = {

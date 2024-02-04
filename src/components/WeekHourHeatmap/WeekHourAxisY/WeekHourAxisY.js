@@ -1,7 +1,13 @@
 'use client';
 import React from 'react';
 
-function WeekHourAxisY({ yScale, innerHeight, margin, kat }) {
+function WeekHourAxisY({
+  yScale,
+  innerHeight,
+  margin,
+  kat,
+  svgFontSize,
+}) {
   // console.log(yScale(innerHeight));
   // console.log('yscale', yScale, 'innerheight', innerHeight);
   return (
@@ -14,6 +20,7 @@ function WeekHourAxisY({ yScale, innerHeight, margin, kat }) {
           y={yScale(d) + yScale.bandwidth() / 2}
           textAnchor="end"
           dominantBaseline="middle"
+          fontSize={`${svgFontSize.text}rem`}
           // style={{ fontSize: '0.8rem' }}
         >
           <tspan>{d}</tspan>

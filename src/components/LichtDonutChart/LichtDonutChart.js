@@ -14,7 +14,7 @@ import { pie, arc } from 'd3-shape';
 import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale';
 // import LichtLollipopChartXAxis from './LichtLollipopChartXAxis';
 import ChartContainer from '../ChartContainer';
-import LichtDonutChartArc from './LichtDonutChartArc';
+// import LichtDonutChartArc from './LichtDonutChartArc';
 // import LichtLollipopChartLine from './LichtLollipopChartLine';
 // import LichtLollipopChartYAxis from './LichtLollipopChartYAxis';
 import { numberWithSeparator } from '../../utils/calc';
@@ -28,6 +28,9 @@ function LichtDonutChart({
   // visDataTotal,
   chartWidth,
   visData,
+  svgFontSize,
+  chartWidthDomain,
+  mobileBreakpoint,
 }) {
   const kategorien = ['Dämmerung/Dunkelheit', 'Tageslicht'];
   // const kategorien = ['Tageslicht', 'Dämmerung/Dunkelheit'];
@@ -46,6 +49,9 @@ function LichtDonutChart({
       variable="licht2"
       kategorien={kategorien}
       title="Lichtverhältnisse"
+      svgFontSize={svgFontSize}
+      chartWidthDomain={chartWidthDomain}
+      mobileBreakpoint={mobileBreakpoint}
       // splitString={TRUE}
     />
   );

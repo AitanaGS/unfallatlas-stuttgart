@@ -142,7 +142,7 @@ body {
 
 svg {
   font-family: var(--font-noto-sans);
-  font-size: 1rem;
+  /* font-size: 1rem; */
   /* fill: rgba(53, 49, 40, 1); */
   color: rgba(59, 59, 59, 1);
   /* color: red; */
@@ -161,7 +161,7 @@ svg {
 .svg-title {
   font-family: var(--font-quattrocento);
   font-weight: 700;
-  font-size: 1.3rem;
+  /* font-size: 1.3rem; */
   /* fill: rgba(32, 35, 56, 1); */
   color: rgba(59, 59, 59, 1);
 }

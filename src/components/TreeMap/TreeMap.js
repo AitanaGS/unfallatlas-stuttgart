@@ -3,26 +3,62 @@ import React, { useRef, useEffect, useMemo, useState } from 'react';
 import { min, max, least, greatest, extent, rollup } from 'd3-array';
 import { stratify, treemap, hierarchy } from 'd3-hierarchy';
 import { select, selectAll } from 'd3-selection';
-import { scaleSequential, scaleBand, scaleOrdinal } from 'd3-scale';
+import {
+  scaleSequential,
+  scaleBand,
+  scaleOrdinal,
+  scaleLinear,
+} from 'd3-scale';
 import { interpolateOranges, schemeDark2 } from 'd3-scale-chromatic';
 import ChartContainer from '../ChartContainer';
 import TreeMapRect from './TreeMapRect';
 import { COLORS } from '../../utils/constants';
 // import useRolledUpMap from '@/hooks/useRolledUpMap';
 import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
+// import { SVGFontSizeContext } from '@/contextProvider/SVGFontSizeContextProvider';
 
-function TreeMap({ chartWidth, visDataTotal, visData }) {
-  const width = chartWidth; // 250
+function TreeMap({
+  chartWidth,
+  visDataTotal,
+  visData,
+  // smallMobileBreakpoint,
+  svgFontSize,
+  chartWidthDomain,
+  // fontSizeScale,
+  // svgFontSize,
+}) {
+  const width = chartWidth; //|| 300; // 250
   const height = 255;
-  const margin = {
-    top: 25, // 20
-    right: 40,
-    bottom: 10,
-    left: 10,
-  };
+  // const margin = {
+  //   top: 25, // 20
+  //   right: chartWidth > smallMobileBreakpoint ? 40 : 20, //40
+  //   bottom: 10,
+  //   left: 10,
+  // };
+
+  const marginRightScale = scaleLinear()
+    // .domain([0.75, 1]) //based on FontSize in rem
+    .domain(chartWidthDomain) // based on chartWidth
+    .range([20, 40])
+    .clamp(true);
+
+  const margin = useMemo(() => {
+    return {
+      top: 25, // 20
+      right: marginRightScale(chartWidth), //40
+      bottom: 10,
+      left: 10,
+    };
+  }, [marginRightScale, chartWidth]);
 
   const innerWidth = width - margin.right - margin.left;
   const innerHeight = height - margin.top - margin.bottom;
+
+  // const [textFontSize, titleFontSize] = React.useContext(
+  //   SVGFontSizeContext
+  // );
+
+  // console.log(textFontSize, titleFontSize);
 
   // const svgRef = useRef(null);
 
@@ -139,7 +175,8 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
   const root = useMemo(() => {
     const treemapLayout = treemap()
       .size([innerWidth, innerHeight])
-      .padding(1);
+      .padding(0.1);
+    // .padding(1);
 
     return treemapLayout(
       hierarchy({ children: treeData }).sum((d) => d.value)
@@ -185,6 +222,9 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
 
   // console.log('render');
 
+  // console.log('svgfontsize', svgFontSize);
+  // console.log('chartwidth', chartWidth);
+
   return (
     <ChartContainer width={width} height={height}>
       <text
@@ -193,6 +233,7 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
         textAnchor="auto"
         dominantBaseline="hanging"
         className="svg-title"
+        fontSize={`${svgFontSize.title}rem`}
       >
         Beteiligte Verkehrsteilnehmer
       </text>
@@ -202,6 +243,7 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
           y={50}
           textAnchor="auto"
           dominantBaseline="hanging"
+          fontSize={`${svgFontSize.text}rem`}
           // className="svg-title"
         >
           keine Unfälle / keine Informationen verfügbar
@@ -213,6 +255,8 @@ function TreeMap({ chartWidth, visDataTotal, visData }) {
             key={d.data.name}
             d={d}
             colorScale={colorScale}
+            svgFontSize={svgFontSize}
+            // svgFontSize={svgFontSize}
           />
           // <g key={d.data.name}>
           //   <rect

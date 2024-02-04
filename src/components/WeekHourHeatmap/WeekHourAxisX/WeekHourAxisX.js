@@ -7,6 +7,7 @@ function WeekHourAxisX({
   margin,
   kat,
   katLabel,
+  svgFontSize,
 }) {
   // console.log(yScale(innerHeight));
   // console.log('yscale', yScale, 'innerheight', innerHeight);
@@ -23,6 +24,7 @@ function WeekHourAxisX({
           y={-5}
           textAnchor="middle"
           dominantBaseline="middle"
+          fontSize={`${svgFontSize.text}rem`}
           // style={{ fontSize: '0.8rem' }}
         >
           <tspan>{katLabel[i]}</tspan>

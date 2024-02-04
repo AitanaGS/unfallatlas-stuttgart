@@ -1,6 +1,6 @@
 'use client';
 import React, { useMemo, useEffect, useCallback } from 'react';
-import { scaleBand, scaleSequential } from 'd3-scale';
+import { scaleBand, scaleSequential, scaleLinear } from 'd3-scale';
 import {
   interpolateOranges,
   interpolateReds,
@@ -43,7 +43,13 @@ const weekSorted = [
 //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
 const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
 
-function WeekHourHeatmap({ visData, chartWidth }) {
+function WeekHourHeatmap({
+  visData,
+  chartWidth,
+  // smallMobileBreakpoint,
+  svgFontSize,
+  chartWidthDomain,
+}) {
   // const [ref, dms] = useChartDimensions(chartSettings);
 
   // console.log('chartDimension', dms);
@@ -53,12 +59,27 @@ function WeekHourHeatmap({ visData, chartWidth }) {
   const width = chartWidth; // 360
   const height = 300;
 
-  const margin = {
-    top: 45, // 40
-    right: 5,
-    bottom: 5,
-    left: 100,
-  };
+  const marginLeftScale = scaleLinear()
+    .domain(chartWidthDomain) // based on chartWidth
+    //.domain([0.75, 1]) //based on FontSize in rem
+    .range([75, 100])
+    .clamp(true);
+
+  const margin = useMemo(() => {
+    return {
+      top: 45, // 40
+      right: 5,
+      bottom: 5,
+      left: marginLeftScale(chartWidth), // 100
+    };
+  }, [chartWidth, marginLeftScale]);
+
+  // const margin = {
+  //   top: 45, // 40
+  //   right: 5,
+  //   bottom: 5,
+  //   left: 100, // 100
+  // };
 
   const innerWidth = width - margin.right - margin.left;
 
@@ -80,10 +101,19 @@ function WeekHourHeatmap({ visData, chartWidth }) {
   // //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
   // const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
 
-  const hourLabel =
-    chartWidth > 400
-      ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
-      : ['0-6 Uhr', '6-12', '12-18', '18-0'];
+  // const hourLabel =
+  //   chartWidth > 400
+  //     ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
+  //     : ['0-6 Uhr', '6-12', '12-18', '18-0'];
+  const hourLabel = useMemo(() => {
+    const label =
+      chartWidth > 400
+        ? ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr']
+        : chartWidth > 300
+        ? ['0-6 Uhr', '6-12', '12-18', '18-0']
+        : ['0-6', '6-12', '12-18', '18-0'];
+    return label;
+  }, [chartWidth]);
 
   const hourScale = useMemo(() => {
     return scaleBand()
@@ -307,6 +337,7 @@ function WeekHourHeatmap({ visData, chartWidth }) {
         textAnchor="auto"
         dominantBaseline="hanging"
         className="svg-title"
+        fontSize={`${svgFontSize.title}rem`}
       >
         Wochentag und Uhrzeit
       </text>
@@ -316,12 +347,14 @@ function WeekHourHeatmap({ visData, chartWidth }) {
         margin={margin}
         kat={hourSorted}
         katLabel={hourLabel}
+        svgFontSize={svgFontSize}
       />
       <WeekHourAxisY
         yScale={weekScale}
         innerWidth={innerWidth}
         margin={margin}
         kat={weekSorted}
+        svgFontSize={svgFontSize}
       />
       {/* <g transform={`translate(${dms.marginLeft}, ${dms.marginTop})`}> */}
       <g transform={`translate(${margin.left}, ${margin.top})`}>
@@ -338,6 +371,7 @@ function WeekHourHeatmap({ visData, chartWidth }) {
                 // weekHourCount={weekHourCount}
                 count={weekHourCount.get(day).get(hour)}
                 extentCounts={extentCounts}
+                svgFontSize={svgFontSize}
               />
               // <g key={`${d}${e}`}>
               //   <rect

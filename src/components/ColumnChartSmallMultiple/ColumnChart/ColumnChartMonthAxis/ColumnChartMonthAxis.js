@@ -7,6 +7,7 @@ function ColumnChartMonthAxis({
   margin,
   monate,
   innerHeight,
+  svgFontSize,
 }) {
   return (
     <g
@@ -27,7 +28,8 @@ function ColumnChartMonthAxis({
             y={10}
             textAnchor="middle"
             dominantBaseline="middle"
-            style={{ fontSize: '0.8rem' }}
+            // style={{ fontSize: '0.8rem' }}
+            fontSize={`${svgFontSize.text}rem`}
           >
             {d[0]}
             {/* {/* {i % 6 == 0 ? (

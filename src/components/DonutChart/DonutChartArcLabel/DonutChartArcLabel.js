@@ -2,7 +2,12 @@ import React from 'react';
 import { numberWithSeparator } from '@/utils/calc';
 import { splitStringOnSlash } from '@/utils/strings';
 
-function DonutChartArcLabel({ label, count, labelPosition }) {
+function DonutChartArcLabel({
+  label,
+  count,
+  labelPosition,
+  svgFontSize,
+}) {
   const labelArray = splitStringOnSlash(label);
   // console.log('labelarray', labelArray);
   // console.log(count);
@@ -13,6 +18,7 @@ function DonutChartArcLabel({ label, count, labelPosition }) {
       textAnchor={labelPosition.textAnchor}
       dominantBaseline="middle"
       // style={{ fontSize: '0.8rem' }}
+      fontSize={`${svgFontSize.text}rem`}
     >
       {/* <tspan x={labelPosition.x} dy="0">
         Dämmerung/

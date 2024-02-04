@@ -71,6 +71,7 @@ function ArtBarChart({
   // visDataTotal,
   chartWidth,
   visData,
+  svgFontSize,
 }) {
   // const kategorien = [
   //   'Unfall anderer Art',
@@ -347,7 +348,7 @@ function ArtBarChart({
 
   // const height = kategorienSorted.length * 60; // 65
 
-  const height = 780; // 750 620 65
+  const height = 780; // 780
 
   // kategorienSorted.length * 70 : 200; // 65
 
@@ -392,7 +393,7 @@ function ArtBarChart({
   // };
 
   const margin = {
-    top: 50, // 20
+    top: 55, // 20
     right: 50, // 5
     bottom: 0,
     left: 10, // 20 // 275 // 450 // 500 // 160
@@ -458,7 +459,9 @@ function ArtBarChart({
         .domain(artenSorted) // kategorienSorted
         .range([0, innerHeight])
         // .range([innerHeight, 0])
-        .padding(0.2)
+        // .padding(0.2)
+        .paddingInner(0.1)
+        .paddingOuter(0.2)
     );
   }, [artenSorted, innerHeight]);
   // .paddingInner(0.3) // 2.5 0.8
@@ -490,10 +493,11 @@ function ArtBarChart({
       /> */}
       <text
         x={10}
-        y={3}
+        y={2}
         textAnchor="auto"
         dominantBaseline="hanging"
         className="svg-title"
+        fontSize={`${svgFontSize.title}rem`}
       >
         Art des Unfalls
       </text>
@@ -534,6 +538,7 @@ function ArtBarChart({
                 // visDataTotal={visDataTotal}
                 kat={art}
                 yScaleBandwidth={yScaleBandwidth}
+                svgFontSize={svgFontSize}
               />
             );
           }
