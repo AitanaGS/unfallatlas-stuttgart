@@ -1564,8 +1564,9 @@ function Dashboard({ initialData }) {
                 chartWidth={chartWidth}
                 visData={visData}
                 svgFontSize={svgFontSize}
-                chartWidthDomain={chartWidthDomain}
-                mobileBreakpoint={mobileBreakpoint}
+                // chartWidthDomain={chartWidthDomain}
+                // mobileBreakpoint={mobileBreakpoint}
+                // smallMobileBreakpoint={smallMobileBreakpoint}
               />
               <StrasseDonutChart
                 // variableCount={strasseCount}
@@ -1573,8 +1574,9 @@ function Dashboard({ initialData }) {
                 chartWidth={chartWidth}
                 visData={visData}
                 svgFontSize={svgFontSize}
-                chartWidthDomain={chartWidthDomain}
-                mobileBreakpoint={mobileBreakpoint}
+                // chartWidthDomain={chartWidthDomain}
+                // mobileBreakpoint={mobileBreakpoint}
+                // smallMobileBreakpoint={smallMobileBreakpoint}
               />
 
               <ArtBarChart

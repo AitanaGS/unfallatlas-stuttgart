@@ -26,7 +26,7 @@ function DonutChartArc({ arcDatum, radius, fillColor, strokeColor }) {
     <animated.path
       d={spring.pos.to((start, end) => {
         return arcPathGenerator({
-          innerRadius: 100, // 40
+          innerRadius: radius / 2, // 100 40
           outerRadius: radius,
           startAngle: start,
           endAngle: end,

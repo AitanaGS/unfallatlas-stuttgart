@@ -33,30 +33,43 @@ function DonutChart({
   // splitString,
   // responsiveThreshold,
   svgFontSize,
-  chartWidthDomain,
-  mobileBreakpoint,
+  // chartWidthDomain,
+  // mobileBreakpoint,
+  // smallMobileBreakpoint,
 }) {
-  const responsiveThreshold = 500; // 400
+  const donutChartMobileBreakpoint = 500; // 400
 
   // const width = scaleLinear()
   //   .domain(chartWidthDomain)
   //   .range([300, chartWidth])
   //   .clamp(true);
 
-  const width = chartWidth > responsiveThreshold ? chartWidth : 300;
+  // const width = chartWidth > responsiveThreshold ? chartWidth : 300;
+
+  const width = chartWidth;
 
   // const width = chartWidth;
   // const height = 300;
 
   // const height = chartWidth > responsiveThreshold ? 250 : 350;
-  const height = chartWidth > responsiveThreshold ? 250 : 300;
+  // const height = chartWidth > responsiveThreshold ? 250 : 300;
+  const height = 250;
 
-  const margin = {
-    top: chartWidth > responsiveThreshold ? 60 : 80, //100
-    right: 50,
-    bottom: 10,
-    left: 50,
-  };
+  // const margin = {
+  //   top: chartWidth > responsiveThreshold ? 60 : 80, //100
+  //   right: 50,
+  //   bottom: 10,
+  //   left: 50,
+  // };
+  const margin = useMemo(() => {
+    return {
+      // top: chartWidth > donutChartMobileBreakpoint ? 60 : 100, //100
+      top: chartWidth > donutChartMobileBreakpoint ? 60 : 100, //100
+      right: 50,
+      bottom: 5, // 10
+      left: 50,
+    };
+  }, [chartWidth, donutChartMobileBreakpoint]);
 
   const innerWidth = width - margin.left - margin.right;
 
@@ -72,7 +85,9 @@ function DonutChart({
 
   // console.log(variableCount);
 
-  const radius = Math.min(innerWidth, innerHeight) / 3; // 2.5
+  const radius = Math.min(innerWidth, innerHeight) / 2.5; // 2.5
+
+  // const radius = innerWidth / 4; // 2.5
 
   const colorScale = useMemo(() => {
     return (
@@ -142,23 +157,59 @@ function DonutChart({
   // console.log(kategorien[0], colorScale(kategorien[0]));
   // console.log(kategorien[1], colorScale(kategorien[1]));
 
-  const leftLabelPosition = {
-    x:
-      chartWidth > responsiveThreshold
-        ? innerWidth / 2 - radius * 2 + margin.left
-        : innerWidth / 2 + margin.right - 20, // 10
-    y: chartWidth > responsiveThreshold ? 60 : 60,
-    textAnchor: 'end',
-  };
+  // const leftLabelPosition = {
+  //   x:
+  //     chartWidth > responsiveThreshold
+  //       ? innerWidth / 2 - radius * 2 + margin.left
+  //       : innerWidth / 2 + margin.right - 20, // 10
+  //   y: chartWidth > responsiveThreshold ? 60 : 60,
+  //   textAnchor: 'end',
+  // };
 
-  const rightLabelPosition = {
-    x:
-      chartWidth > responsiveThreshold
-        ? innerWidth / 2 + radius * 2 + margin.left
-        : innerWidth / 2 + margin.right + 20, // -10
-    y: chartWidth > responsiveThreshold ? 60 : 60,
-    textAnchor: 'start',
-  };
+  const leftLabelPosition = useMemo(() => {
+    return {
+      x:
+        chartWidth > donutChartMobileBreakpoint
+          ? // ? innerWidth / 2 - radius * 2 + margin.left
+            innerWidth / 2 + margin.left - radius
+          : innerWidth / 2 + margin.right - 10, // -20 10
+      y: chartWidth > donutChartMobileBreakpoint ? 65 : 65,
+      textAnchor: 'end',
+    };
+  }, [
+    chartWidth,
+    donutChartMobileBreakpoint,
+    margin,
+    radius,
+    innerWidth,
+  ]);
+
+  // const rightLabelPosition = {
+  //   x:
+  //     chartWidth > responsiveThreshold
+  //       ? innerWidth / 2 + radius * 2 + margin.left
+  //       : innerWidth / 2 + margin.right + 20, // -10
+  //   y: chartWidth > responsiveThreshold ? 60 : 60,
+  //   textAnchor: 'start',
+  // };
+
+  const rightLabelPosition = useMemo(() => {
+    return {
+      x:
+        chartWidth > donutChartMobileBreakpoint
+          ? // ? innerWidth / 2 + radius * 2 + margin.left
+            innerWidth / 2 + margin.left + radius
+          : innerWidth / 2 + margin.right + 10, // + 20  -10
+      y: chartWidth > donutChartMobileBreakpoint ? 65 : 65,
+      textAnchor: 'start',
+    };
+  }, [
+    chartWidth,
+    donutChartMobileBreakpoint,
+    margin,
+    radius,
+    innerWidth,
+  ]);
 
   const labelPosition = [leftLabelPosition, rightLabelPosition];
 
