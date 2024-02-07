@@ -37,7 +37,11 @@ function Footer({ chartWidth }) {
             >
               {/* <GithubIcon size="24"/> */}
               <GitHub size="24" color="rgba(255, 179, 0, 1)" />
-              github.com/AitanaGS/unfallatlas-stuttgart
+              <span
+              // style={{ flex: 1 }}
+              >
+                github.com/AitanaGS/unfallatlas-stuttgart
+              </span>
             </a>
             {/* </span> */}
           </p>
@@ -71,6 +75,7 @@ const DataInfo = styled.div`
     color: rgba(255, 179, 0, 1);
   }
 `;
+
 const CodeInfo = styled.div`
   margin-top: 20px;
   /* margin-bottom: 50px; */
@@ -79,6 +84,11 @@ const CodeInfo = styled.div`
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
+    /* flex: 1; */
+    word-break: break-all;
+    /* Prevent the link from overflowing its container */
+    /* max-width: 100%; */
   }
 `;
 
