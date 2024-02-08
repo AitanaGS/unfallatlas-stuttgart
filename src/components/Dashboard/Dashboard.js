@@ -1462,7 +1462,11 @@ function Dashboard({ initialData }) {
           // mobileBreakpoint={mobileBreakpoint}
           // dashboardPaddingX={dashboardPaddingX}
         >
-          <Header chartWidth={chartWidth} />
+          <Header
+            chartWidth={chartWidth}
+            layout={layout}
+            chartWidthDomain={chartWidthDomain}
+          />
           <InputWrapper
             layout={layout}
             dashboardWidth={dashboardWidth}
