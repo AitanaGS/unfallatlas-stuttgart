@@ -92,7 +92,8 @@ const TitleWrapper = styled.div`
     /* margin: 30px 0px 20px 0px; */
     /* margin: 30px 0px 20px 1000px; */
     margin: ${({ chartWidth }) => `30px 0px 20px ${chartWidth}px`};
-    padding: 20px 10px;
+    /* padding: 20px 10px; */
+    padding: 20px 10px 20px 0px;
     /* margin: ${(props) =>
       props.layout === 'grid'
         ? `30px 0px 20px ${props.chartWidth}px`
