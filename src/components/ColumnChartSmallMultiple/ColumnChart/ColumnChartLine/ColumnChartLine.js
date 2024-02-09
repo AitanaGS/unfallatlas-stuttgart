@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useSpring, animated } from '@react-spring/web';
+import React, { useEffect, useState, useContext } from 'react';
+import { useSpring, animated, config } from '@react-spring/web';
 import { COLORS } from '../../../../utils/constants';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationContext } from '@/context/AnimationContext';
 
 function ColumnChartLine({
   yScale,
@@ -9,33 +10,32 @@ function ColumnChartLine({
   innerWidth,
   innerHeight,
 }) {
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   const spring = useSpring({
-    from: {
-      // y: 0,
-      // y: yScale(monthData.get(d) || 0),
-      // y: innerHeight, // innerHeight
-      // height: 0,
-      // y1: yScale(meanMonthData || 0),
-      // y2: yScale(meanMonthData || 0),
-    },
+    from: {},
     to: {
-      // y: yScale(monthData.get(monat) || 0),
-      // height: innerHeight - yScale(monthData.get(monat) || 0),
-      y1: yScale(meanMonthData) || innerHeight, // yScale(meanMonthData || 0)
-      y2: yScale(meanMonthData) || innerHeight, // yScale(meanMonthData || 0)
+      y1: yScale(meanMonthData) || innerHeight,
+      y2: yScale(meanMonthData) || innerHeight,
     },
-    // config: {
-    //   friction: 100,
-    // },
-    // config: {
-    //   mass: 1,
-    //   tension: 120,
-    //   friction: 20,
-    // },
     config: springConfig,
+    immediate: reduceMotion,
   });
+
+  // const spring = useSpring({
+  //   from: {},
+  //   to: async (next, cancel) => {
+  //     const y1 = yScale(meanMonthData) || innerHeight;
+  //     const y2 = yScale(meanMonthData) || innerHeight;
+
+  //     await next({ y1, y2, config: springConfig }); // Smooth transition for non-reduced motion
+  //     if (reduceMotion) {
+  //       await next({ immediate: true }); // Apply properties immediately for reduced motion
+  //     }
+  //   },
+  //   config: config.default, // Default config for smoother transition
+  // });
 
   // if (
   //   !spring.y1 ||

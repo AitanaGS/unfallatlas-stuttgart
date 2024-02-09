@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useSpring, animated } from '@react-spring/web';
-import { numberWithSeparator } from '../../../utils/calc';
-import { COLORS } from '../../../utils/constants';
+import { numberWithSeparator } from '@/utils/calc';
+import { COLORS } from '@/utils/constants';
 import { splitStringByHalf } from '@/utils/strings';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationContext } from '@/context/AnimationContext';
 
 // function splitStringByHalf(inputString) {
 //   // Split the input string into an array of words
@@ -78,7 +79,8 @@ function ArtBarChartLabelledBar({
       ? ['Unfall', 'anderer Art']
       : splitStringByHalf(kat);
 
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   const spring = useSpring({
     x: xScale(0),
@@ -97,6 +99,7 @@ function ArtBarChartLabelledBar({
     //   friction: 20,
     // },
     config: springConfig,
+    immediate: reduceMotion,
   });
 
   // console.log('render');

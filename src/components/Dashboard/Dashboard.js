@@ -45,10 +45,11 @@ import { window } from 'd3-selection';
 import Header from '../Header';
 import Footer from '../Footer';
 import useScrollbarWidth from '@/hooks/useScrollbarWidth';
-import {
-  SpringConfigContext,
-  springConfig,
-} from '@/contextProvider/SpringConfigContextProvider';
+// import {
+//   SpringConfigContext,
+//   springConfig,
+// } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationProvider } from '@/context/AnimationContext';
 // import { SVGFontSizeContext } from '@/contextProvider/SVGFontSizeContextProvider';
 // import { tidy, select } from '@tidyjs/tidy';
 // import { Quattrocento, Lato } from 'next/font/google';
@@ -1524,7 +1525,8 @@ function Dashboard({ initialData }) {
             {/* <Intro /> */}
           </InputWrapper>
           <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
-            <SpringConfigContext.Provider value={springConfig}>
+            {/* <SpringConfigContext.Provider value={springConfig}> */}
+            <AnimationProvider>
               {/* <SVGFontSizeContext.Provider value={SVGFontSize}> */}
               {/* <TestContext.Provider value={springConfig}> */}
               <TreeMap
@@ -1592,7 +1594,8 @@ function Dashboard({ initialData }) {
               />
               {/* </TestContext.Provider> */}
               {/* </SVGFontSizeContext.Provider> */}
-            </SpringConfigContext.Provider>
+              {/* </SpringConfigContext.Provider> */}
+            </AnimationProvider>
           </VizWrapper>
           {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
           {/* <LichtLollipopChart

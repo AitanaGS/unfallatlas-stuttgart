@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
 import { COLORS } from '../../../utils/constants';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationContext } from '@/context/AnimationContext';
 
 function KategBarChartBar({
   xScale,
@@ -37,7 +38,8 @@ function KategBarChartBar({
   //   variableCount.get(kat)
   // );
 
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   const spring = useSpring({
     // rectX: xScale(0),
@@ -60,6 +62,7 @@ function KategBarChartBar({
     //   friction: 20,
     // },
     config: springConfig,
+    immediate: reduceMotion,
   });
 
   // TODO: springs for all props (?)

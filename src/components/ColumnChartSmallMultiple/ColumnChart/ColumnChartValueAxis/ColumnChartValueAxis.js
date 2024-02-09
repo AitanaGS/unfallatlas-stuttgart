@@ -1,7 +1,18 @@
 'use client';
-import React, { useEffect, useState, useMemo } from 'react';
-import { useSpring, useSprings, animated } from '@react-spring/web';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useContext,
+} from 'react';
+import {
+  useSpring,
+  useSprings,
+  animated,
+  config,
+} from '@react-spring/web';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationContext } from '@/context/AnimationContext';
 
 function ColumnChartValueAxis({
   yScale,
@@ -11,7 +22,8 @@ function ColumnChartValueAxis({
   maxValue,
   svgFontSize,
 }) {
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   const ticks = useMemo(() => {
     return yScale.ticks(maxValue > 5 ? 4 : 2).map((value) => ({
@@ -43,17 +55,22 @@ function ColumnChartValueAxis({
     ticks.map(({ value, yOffset }, index) => ({
       y: yOffset,
       value: value,
-      // config: {
-      //   mass: 1,
-      //   tension: 120,
-      //   friction: 20,
-      // },
       config: springConfig,
-      // onResume: (props) => {
-      //   setFinalValues((prev) => [...prev, props.value]);
-      // },
+      immediate: reduceMotion,
     }))
   );
+
+  // const springs = useSprings(
+  //   ticks.length,
+  //   ticks.map(({ value, yOffset }, index) => ({
+  //     y: yOffset,
+  //     value: value,
+  //     config: reduceMotion
+  //       ? { tension: 0, friction: 0 }
+  //       : springConfig,
+  //     immediate: reduceMotion,
+  //   }))
+  // );
 
   // const axisSpring = useSpring({
   //   from: {

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSpring, animated, config } from '@react-spring/web';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationContext } from '@/context/AnimationContext';
 
 function WeekHourRect({
   hour,
@@ -44,7 +45,8 @@ function WeekHourRect({
   //   },
   // });
 
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   const spring = useSpring({
     // // rectX: xScale(0),
@@ -76,6 +78,7 @@ function WeekHourRect({
     //   friction: 20,
     // },
     config: springConfig,
+    immediate: reduceMotion,
   });
 
   // TODO: numberwithseperator?

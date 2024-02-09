@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useSpring, animated, config } from '@react-spring/web';
-import { COLORS } from '../../../../utils/constants';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { COLORS } from '@/utils/constants';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationContext } from '@/context/AnimationContext';
 
 function ColumnChartColumn({
   monat,
@@ -43,7 +44,8 @@ function ColumnChartColumn({
   //   },
   // });
 
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   const spring = useSpring({
     from: {
@@ -54,16 +56,27 @@ function ColumnChartColumn({
       y: yScale(monthData),
       height: innerHeight - yScale(monthData),
     },
-    // config: {
-    //   mass: 1,
-    //   tension: 120,
-    //   friction: 20,
-    // },
     config: springConfig,
-    // height: `clamp(0px, ${yScale(monthData)}px, ${yScale(
-    //   maxValue
-    // )}px`,
+    immediate: reduceMotion,
   });
+
+  // const spring = useSpring({
+  //   from: {
+  //     y: innerHeight,
+  //     height: 0,
+  //   },
+  //   to: async (next, cancel) => {
+  //     await next({
+  //       y: yScale(monthData),
+  //       height: innerHeight - yScale(monthData),
+  //       config: springConfig,
+  //     }); // Smooth transition for non-reduced motion
+  //     if (reduceMotion) {
+  //       await next({ immediate: true }); // Apply properties immediately for reduced motion
+  //     }
+  //   },
+  //   config: config.default, // Default config for smoother transition
+  // });
 
   // const [isAnimating, setIsAnimating] = useState(false);
 

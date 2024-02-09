@@ -2,11 +2,14 @@
 import React, { useContext } from 'react';
 import { useSpring, animated, config } from '@react-spring/web';
 import { numberWithSeparator } from '../../../utils/calc';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
 // import { SpringConfigContext } from '@/components/Dashboard';
+import { AnimationContext } from '@/context/AnimationContext';
 
 function TreeMapRect({ d, colorScale, svgFontSize }) {
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   // console.log(springConfigObject);
 
@@ -34,6 +37,7 @@ function TreeMapRect({ d, colorScale, svgFontSize }) {
     //   friction: 20,
     // },
     config: springConfig,
+    immediate: reduceMotion,
   });
 
   // console.log('render');

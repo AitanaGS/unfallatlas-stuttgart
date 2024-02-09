@@ -1,5 +1,11 @@
 'use client';
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+  useContext,
+} from 'react';
 import {
   useSprings,
   animated,
@@ -7,12 +13,14 @@ import {
   SpringValue,
 } from '@react-spring/web';
 import { pie, arc } from 'd3-shape';
-import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+// import { SpringConfigContext } from '@/contextProvider/SpringConfigContextProvider';
+import { AnimationContext } from '@/context/AnimationContext';
 
 function DonutChartArc({ arcDatum, radius, fillColor, strokeColor }) {
   const arcPathGenerator = arc();
 
-  const springConfig = React.useContext(SpringConfigContext);
+  // const springConfig = React.useContext(SpringConfigContext);
+  const { reduceMotion, springConfig } = useContext(AnimationContext);
 
   const spring = useSpring({
     to: {
@@ -20,6 +28,7 @@ function DonutChartArc({ arcDatum, radius, fillColor, strokeColor }) {
     },
     // config: { mass: 1, tension: 120, friction: 20 },
     config: springConfig,
+    immediate: reduceMotion,
   });
 
   return (
