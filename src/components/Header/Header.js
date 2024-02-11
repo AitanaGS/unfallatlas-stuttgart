@@ -87,11 +87,17 @@ const TitleWrapper = styled.div`
   /* border-radius: 10px; */
   border-radius: ${({ layout }) =>
     layout === 'grid' ? '10px' : '0px'};
+  /* border-radius: 10px; */
   /* padding: 0px 0px 0px 0px; */
   h1 {
     /* margin: 30px 0px 20px 0px; */
     /* margin: 30px 0px 20px 1000px; */
-    margin: ${({ chartWidth }) => `30px 0px 20px ${chartWidth}px`};
+    /* margin: ${({ chartWidth }) =>
+      `30px 0px 20px ${chartWidth}px`}; */
+    margin: ${({ chartWidth, layout }) =>
+      layout === 'grid'
+        ? `30px 0px 20px ${chartWidth}px`
+        : `30px 20px 20px ${chartWidth}px`};
     /* padding: 20px 10px; */
     padding: 20px 10px 20px 0px;
     /* margin: ${(props) =>

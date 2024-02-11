@@ -14,6 +14,10 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
 import styled from 'styled-components';
+// import 'leaflet-spin';
+// import 'leaflet-loading';
+// import 'leaflet-loading/src/Control.Loading.css';
+// import { Spinner } from 'spin.js';
 // import { MapPin } from 'react-feather';
 
 // const calculateVisibleData = (map, markerClusterGroup) => {
@@ -138,7 +142,7 @@ function LeafletMap({
 
       return visibleData;
     };
-  }, []);
+  }, []); // useMemo
 
   const yellowIcon = useMemo((d) => {
     return new L.Icon({
@@ -196,9 +200,17 @@ function LeafletMap({
     // setCurrentData(filterData(data, allFilter, filter));
 
     // here
+
     const map = L.map(mapRef.current, {
       preferCanvas: true, // Enable canvas rendering,
     }).setView(center, zoom); // [48.7758, 9.1829] 11 // 13
+
+    // var loadingControl = L.Control.loading({
+    //   spinjs: true,
+    // });
+    // map.addControl(loadingControl);
+
+    // map.spin(true);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -209,6 +221,8 @@ function LeafletMap({
         // maxZoom: 18,
       }
     ).addTo(map);
+
+    // L.Control.loading().addTo(map);
 
     // L.tileLayer(
     //   'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -323,18 +337,24 @@ function LeafletMap({
 
     map.addLayer(markerClusterGroup);
 
+    // L.control.spinner().addTo(map);
+
     // here, for zoom below 11 - dont remove
     // setVisData(calculateVisibleData(map, markerClusterGroup));
 
     let isZoomEnd = false;
 
+    // map.spin(true);
+
     const onMoveEnd = (event) => {
+      // map.spin(true);
       if (!map || !markerClusterGroup) return; // Check if the map object is valid
 
       // const bounds = map.getBounds();
       // if (!bounds) return;
 
       // console.log('move event', event, map, markerClusterGroup);
+
       if (!isZoomEnd) {
         // console.log('move');
         // setCenter([
@@ -344,6 +364,7 @@ function LeafletMap({
         // console.log('move');
         // setMapData(calculateVisibleData(map, markerClusterGroup)); //here
         // const calculatedData = calculateTotalVisibleData(map, data);
+        // map.spin(true);
         setTotalMapData(calculateTotalVisibleData(map, data)); // funktioniert
         // setTotalMapData(calculatedData);
         // setVisData(calculatedData);
@@ -352,6 +373,8 @@ function LeafletMap({
           event.target.getCenter().lat,
           event.target.getCenter().lng,
         ]);
+        // map.spin(false);
+        // map.spin(true);
       }
     };
 
@@ -363,6 +386,8 @@ function LeafletMap({
       // console.log('zoom', event.target.getZoom());
       // console.log('center', event.target.getCenter());
 
+      // map.spin(true);
+
       if (!map || !markerClusterGroup) return; // Check if the map object is valid
 
       // const bounds = map.getBounds();
@@ -371,6 +396,7 @@ function LeafletMap({
       isZoomEnd = true; // here
       // console.log('zoom event', event, map, markerClusterGroup);
       // console.log('zoom');
+      // map.spin(true);
       setZoom(event.target.getZoom());
       setCenter([
         event.target.getCenter().lat,
@@ -383,19 +409,49 @@ function LeafletMap({
       // setTotalMapData(calculatedData);
       // setVisData(calculatedData);
       // setCurrentData(calculateVisibleData(map, markerClusterGroup));
+      // map.spin(false);
+      // map.spin(true);
     };
     const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500); // 500
 
+    // const stopSpinnerOnLoad = () => {
+    //   map.spin(false);
+    // };
+
     map.on('zoomend', debouncedOnZoomEnd); // debouncedOnZoomEnd
     map.on('moveend', debouncedOnMoveEnd); // debouncedOnMoveEnd
+
+    // map.on('tilesloaded', () => {
+    //   // Stop the spinner when the tiles are loaded
+    //   map.spin(false);
+    // });
+
+    // const onMoveStart = () => {
+    //   map.spin(true);
+    // };
+    // map.on('movestart', onMoveStart);
+
+    // const onZoomStart = () => {
+    //   map.spin(true);
+    // };
+    // map.on('zoomstart', onZoomStart);
+    // map.on('load', stopSpinnerOnLoad);
+
+    // map.spin(false);
 
     // map.on('zoomend', ({ target }) => {
     //   setZoom(target.getZoom());
     // });
 
+    // map.spin(false);
+
+    // map.spin(false);
+
     return () => {
       map.off('moveend', debouncedOnMoveEnd);
       map.off('zoomend', debouncedOnZoomEnd);
+      // map.off('zoomstart', onZoomStart);
+      // map.off('movestart', onMoveStart);
       map.remove();
     };
   }, [
@@ -450,6 +506,7 @@ function LeafletMap({
     chartWidth && (
       <MapWrapper
         chartWidth={chartWidth}
+        // loadingControl={true}
         // id="map"
         // className="leaflet-map"
         // ref={mapRef}
@@ -458,6 +515,7 @@ function LeafletMap({
           id="map"
           className="leaflet-map"
           ref={mapRef}
+          // loadingControl={true}
           style={{
             // border: '5px solid rgba(97, 90, 74, 1)',
             border: '5px solid rgba(104, 104, 104, 1)',

@@ -50,173 +50,13 @@ import useScrollbarWidth from '@/hooks/useScrollbarWidth';
 //   springConfig,
 // } from '@/contextProvider/SpringConfigContextProvider';
 import { AnimationProvider } from '@/context/AnimationContext';
+import { Triangle } from 'react-loader-spinner';
 // import { SVGFontSizeContext } from '@/contextProvider/SVGFontSizeContextProvider';
 // import { tidy, select } from '@tidyjs/tidy';
 // import { Quattrocento, Lato } from 'next/font/google';
 
 // import { timeParse } from 'd3-time-format';
 // import dynamic from 'next/dynamic';
-
-// const Map = dynamic(() => import('../Map'), {
-//   ssr: false,
-// });
-
-// const lato = Lato({
-//   weight: ['400', '700'],
-//   style: ['normal'],
-//   subsets: ['latin'],
-//   display: 'swap',
-//   variable: '--font-lato',
-// });
-
-// const getScrollbarWidth = () => {
-//   const scrollDiv = document.createElement('div');
-//   scrollDiv.style.width = '100px';
-//   scrollDiv.style.height = '100px';
-//   scrollDiv.style.overflow = 'scroll';
-//   scrollDiv.style.position = 'absolute';
-//   scrollDiv.style.top = '-9999px';
-//   document.body.appendChild(scrollDiv);
-//   const scrollbarWidth =
-//     scrollDiv.offsetWidth - scrollDiv.clientWidth;
-//   document.body.removeChild(scrollDiv);
-//   return scrollbarWidth;
-// };
-
-// const initialFilter = {
-//   Fußgänger: true,
-//   Fahrrad: true,
-//   Kraftrad: true,
-//   PKW: true,
-//   Sonstige: true,
-// };
-
-// // added filter
-// const initialKategFilter = {
-//   'Unfall mit Leichtverletzten': true, // new
-//   'Unfall mit Schwerverletzten/Getöteten': true, // new
-// };
-
-// const filterData = (dataToFilter, allFilter, filter) => {
-//   return dataToFilter.filter((item) => {
-//     if (allFilter) {
-//       return true; // If allFilter is true, return all items
-//     }
-
-//     // Check each category filter and filter out items accordingly
-//     if (!filter.Fußgänger && item.istfussb) {
-//       return false; // Filter out items where Fußgänger filter is false and istfussb is true
-//     }
-//     if (!filter.Fahrrad && item.istradb) {
-//       return false; // Filter out items where Fahrrad filter is false and istradb is true
-//     }
-//     if (!filter.Kraftrad && item.istkradb) {
-//       return false; // Filter out items where Kraftrad filter is false and istkradb is true
-//     }
-//     if (!filter.PKW && item.istpkwb) {
-//       return false; // Filter out items where PKW filter is false and istpkwb is true
-//     }
-//     if (!filter.Sonstige && item.istsonst2b) {
-//       return false; // Filter out items where Sonstige filter is false and istsonst2b is true
-//     }
-
-//     // If none of the above conditions match, keep the item
-//     return true;
-//   });
-// };
-
-// const filterData = (dataToFilter, allFilter, filter) => {
-//   // console.log(dataToFilter);
-//   return dataToFilter.filter((item) => {
-//     if (allFilter) {
-//       return true; // If allFilter is true, return all items
-//     }
-
-//     // Check each category filter and filter out items accordingly
-//     if (filter.Fußgänger && item.istfussb) {
-//       return true; // Filter out items where Fußgänger filter is false and istfussb is true
-//     }
-//     if (filter.Fahrrad && item.istradb) {
-//       return true; // Filter out items where Fahrrad filter is false and istradb is true
-//     }
-//     if (filter.Kraftrad && item.istkradb) {
-//       return true; // Filter out items where Kraftrad filter is false and istkradb is true
-//     }
-//     if (filter.PKW && item.istpkwb) {
-//       return true; // Filter out items where PKW filter is false and istpkwb is true
-//     }
-//     if (filter.Sonstige && item.istsonst2b) {
-//       return true; // Filter out items where Sonstige filter is false and istsonst2b is true
-//     }
-//     // If none of the above conditions match, keep the item
-//     return false;
-//   });
-// };
-
-// // added filter
-// const filterKategData = (dataToFilter, allFilter, filter) => {
-//   // console.log(dataToFilter);
-//   const data = dataToFilter.filter((item) => {
-//     if (allFilter) {
-//       return true; // If allFilter is true, return all items
-//     }
-
-//     if (
-//       filter['Unfall mit Leichtverletzten'] &&
-//       item.kateg2 === 'Unfall mit Leichtverletzten'
-//     ) {
-//       return true;
-//     }
-
-//     if (
-//       filter['Unfall mit Schwerverletzten/Getöteten'] &&
-//       item.kateg2 === 'Unfall mit Schwerverletzten/Getöteten'
-//     ) {
-//       return true;
-//     }
-
-//     // If none of the above conditions match, keep the item
-//     return false;
-//   });
-//   // console.log('data in function', data);
-//   return data;
-// };
-
-// const updatedFilteredData = mapData.filter((item) => {
-//   if (allFilter) {
-//     return true; // If allFilter is true, return all items
-//   }
-
-//   // Check each category filter and filter out items accordingly
-//   if (!filter.Fußgänger && item.istfussb) {
-//     return false; // Filter out items where Fußgänger filter is false and istfussb is true
-//   }
-//   if (!filter.Fahrrad && item.istradb) {
-//     return false; // Filter out items where Fahrrad filter is false and istradb is true
-//   }
-//   if (!filter.Kraftrad && item.istkradb) {
-//     return false; // Filter out items where Kraftrad filter is false and istkradb is true
-//   }
-//   if (!filter.PKW && item.istpkwb) {
-//     return false; // Filter out items where PKW filter is false and istpkwb is true
-//   }
-//   if (!filter.Sonstige && item.istsonst2b) {
-//     return false; // Filter out items where Sonstige filter is false and istsonst2b is true
-//   }
-
-//   // If none of the above conditions match, keep the item
-//   return true;
-// });
-
-// export const TestContext = React.createContext();
-
-// export const SpringConfigContext = React.createContext();
-
-// const springConfig = {
-//   mass: 1,
-//   tension: 120,
-//   friction: 20,
-// };
 
 function Dashboard({ initialData }) {
   // const parseDate = timeParse('%Y-%m-%d');
@@ -251,12 +91,14 @@ function Dashboard({ initialData }) {
     useState('none');
   const [selectHeatmap, setSelectHeatmap] = useState(false); // true
   // const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  const [layout, setLayout] = useState('grid'); // flex
+  const [layout, setLayout] = useState('grid'); // grid flex
   // const [dashboardPaddingX, setDashboardPaddingX] = useState(50);
 
   // TODO: check mapdata, filtereddata, etc. - is it used?
 
-  const [windowWidth, setWindowWidth] = useState(1000); // 700 window.innerWidth || 700
+  const [windowWidth, setWindowWidth] = useState(1000); // 1000 700 window.innerWidth || 700
+
+  const [loading, setLoading] = useState(true);
   // Step 2: State to hold window width
   // const [dashboardWidth, setDashboardWidth] = useState(windowWidth);
   const mobileBreakpoint = 700; // 700
@@ -272,7 +114,9 @@ function Dashboard({ initialData }) {
     windowWidth > mobileBreakpoint ? windowWidth / 2 : windowWidth
   ); // layout  * 0.75
 
-  const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
+  // const dashboardWrapperRef = useRef(null); // Step 2: Create a ref for Resize Observer
+  // const spinnerWrapperRef = useRef(null);
+  const wrapperRef = useRef(null);
 
   // const dashboardPaddingScale = scaleLinear()
   //   .domain([300, 1000])
@@ -288,26 +132,6 @@ function Dashboard({ initialData }) {
     .domain(chartWidthDomain) //based on width
     .range([0.9, 1.3])
     .clamp(true);
-
-  // const [svgFontSize, setSvgFontSize] = useState(
-  //   fontSizeScale(chartWidth)
-  // );
-  // const [svgFontSize, setSvgFontSize] = useState({
-  //   text: `${textFontSizeScale(chartWidth)}rem`,
-  //   title: `${titleFontSizeScale(chartWidth)}rem`,
-  // });
-
-  // const [svgFontSize, setSvgFontSize] = useState({
-  //   text: `${textFontSizeScale(chartWidth)}rem`,
-  //   title: `${titleFontSizeScale(chartWidth)}rem`,
-  // });
-
-  // const svgFontSize = useMemo(() => {
-  //   return {
-  //     text: `${textFontSizeScale(chartWidth)}rem`,
-  //     title: `${titleFontSizeScale(chartWidth)}rem`,
-  //   };
-  // }, [chartWidth, textFontSizeScale, titleFontSizeScale]);
 
   const svgFontSize = useMemo(() => {
     return {
@@ -437,86 +261,6 @@ function Dashboard({ initialData }) {
     []
   );
 
-  // const springConfig = {
-  //   mass: 1,
-  //   tension: 120,
-  //   friction: 20,
-  // };
-
-  // useEffect(() => {
-  //   const width = getScrollbarWidth();
-  //   setScrollbarWidth(width);
-  // }, []);
-
-  // console.log('dashboardwidth', dashboardWidth);
-
-  // console.log(
-  //   'window width',
-  //   windowWidth,
-  //   'dashboard width',
-  //   dashboardWidth
-  // );
-
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  //     setDashboardWidth(min([window.innerWidth, 700]));
-  //   };
-
-  //   const resizeObserver = new ResizeObserver(handleResize);
-  //   resizeObserver.observe(window);
-
-  //   return () => {
-  //     resizeObserver.disconnect();
-  //   };
-  // }, []); // Empty dependency array means this effect runs once on component mount
-
-  // console.log(windowWidth);
-  // console.log(resizeObserverRef.current)
-
-  // Step 3: Observe window width
-  // useEffect(() => {
-  //   console.log(dashboardWrapperRef.current);
-  //   console.log('window with', windowWidth);
-  //   // resizeObserverRef.current = new ResizeObserver((entries) => {
-  //   //   for (let entry of entries) {
-  //   //     if (entry.target === window && entry.contentRect) {
-  //   //       setWindowWidth(entry.contentRect.width);
-  //   //     }
-  //   //   }
-  //   // });
-
-  //   // resizeObserverRef.current.observe(window);
-
-  //   // return () => {
-  //   //   resizeObserverRef.current.disconnect();
-  //   // };
-  //   if (dashboardWrapperRef.current) {
-  //     const resizeObserver = new ResizeObserver((entries) => {
-  //       for (let entry of entries) {
-  //         if (entry.target === window && entry.contentRect) {
-  //           setWindowWidth(entry.contentRect.width);
-  //         }
-  //       }
-  //     });
-
-  //     resizeObserver.observe(dashboardWrapperRef.current);
-
-  //     return () => {
-  //       resizeObserver.disconnect();
-  //     };
-  //   }
-  // }, [dashboardWrapperRef, windowWidth]);
-
-  // useEffect(() => {
-  //   const onLoadScrollbarWidth =
-  //     document.body.offsetWidth - document.body.clientWidth;
-  //   console.log(onLoadScrollbarWidth);
-  //   setScrollbarWidth(onLoadScrollbarWidth);
-  // }, []);
-
   // here
   useEffect(() => {
     // const handleResize = throttle((entries) => {
@@ -543,27 +287,12 @@ function Dashboard({ initialData }) {
     const resizeObserver = new ResizeObserver((entries) => {
       for (let entry of entries) {
         if (
-          entry.target === dashboardWrapperRef.current &&
+          entry.target === wrapperRef.current &&
           entry.contentRect
+          // (entry.target === dashboardWrapperRef.current ||
+          //   entry.target === spinnerWrapperRef.current) &&
+          // entry.contentRect
         ) {
-          // console.log(
-          //   'check 1',
-          //   entry.contentRect.width,
-          //   dashboardWidth
-          // );
-
-          // console.log(
-          //   'entry.target, entry.contentRect',
-          //   entry.target,
-          //   entry.contentRect
-          // );
-          // const [borderBoxSize] = entry.borderBoxSize;
-          // console.log(
-          //   'size',
-          //   size,
-          //   'entry.borderBoxSize',
-          //   entry.borderBoxSize
-          // );
           const size = entry.contentRect.width; // + 12
           setWindowWidth(size); // layout
           // setDashboardWidth(min([entry.contentRect.width, 700])); // layout
@@ -578,36 +307,17 @@ function Dashboard({ initialData }) {
               ? min([size, mobileBreakpoint])
               : size / 2;
 
-          // setChartWidth(
-          //   size <= mobileBreakpoint
-          //     ? min([size, mobileBreakpoint])
-          //     : size / 2
-          // );
-
-          // console.log(
-          //   'chartwidth',
-          //   chartWidth,
-          //   'newchartwidth',
-          //   newChartWidth
-          // );
-
           setChartWidth(newChartWidth);
 
           setLayout(size <= mobileBreakpoint ? 'flex' : 'grid');
-          // setDashboardPaddingX(size < mobileBreakpoint ? 15 : 50);
 
-          // setSvgFontSize({
-          //   text: `${textFontSizeScale(newChartWidth)}rem`,
-          //   title: `${titleFontSizeScale(newChartWidth)}rem`,
-          // });
+          // setLoading(false);
+          const delay = 2000;
+          const timer = setTimeout(() => {
+            setLoading(false);
+          }, delay);
 
-          // setSvgFontSize(fontSizeScale(newChartWidth));
-          // console.log(
-          //   'entry.contentrect.width',
-          //   entry.contentRect.width
-          //   // 'entry.borderBoxSize.inlineSize',
-          //   // borderBoxSize.inlineSize
-          // );
+          return () => clearTimeout(timer);
         }
       }
     });
@@ -616,23 +326,42 @@ function Dashboard({ initialData }) {
       box: 'border-box',
     };
 
-    if (dashboardWrapperRef.current) {
-      resizeObserver.observe(
-        dashboardWrapperRef.current,
-        observerOptions
-      );
+    // if (dashboardWrapperRef.current) {
+    //   resizeObserver.observe(
+    //     dashboardWrapperRef.current,
+    //     observerOptions
+    //   );
+    // }
+
+    // if (loading && spinnerWrapperRef.current) {
+    //   resizeObserver.observe(
+    //     spinnerWrapperRef.current,
+    //     observerOptions
+    //   );
+    // } else if (!loading && dashboardWrapperRef.current) {
+    //   resizeObserver.observe(
+    //     dashboardWrapperRef.current,
+    //     observerOptions
+    //   );
+    // }
+
+    if (wrapperRef.current) {
+      resizeObserver.observe(wrapperRef.current, observerOptions);
     }
 
     return () => {
       resizeObserver.disconnect();
     };
   }, [
-    dashboardWrapperRef,
+    // dashboardWrapperRef,
     windowWidth,
     dashboardWidth,
     chartWidth,
     textFontSizeScale,
     titleFontSizeScale,
+    wrapperRef,
+    // loading,
+    // spinnerWrapperRef,
   ]);
 
   // console.log('mapData', mapData, 'totalMapData', totalMapData);
@@ -760,417 +489,6 @@ function Dashboard({ initialData }) {
   ]); // here: mapData
   // added filter (dependencies)
 
-  // console.log('filtereddata', filteredData, 'visdata', visData);
-  // console.log('filter', filter, 'allfilter', allFilter);
-  // console.log(
-  //   'kategfilter',
-  //   kategFilter,
-  //   'allkategfilter',
-  //   allKategFilter
-  // );
-  // TODO: check if all dependencies necessary
-
-  // useEffect(() => {
-  //   // Update visData independently from filteredData
-  //   if (filteringMode === 'none') {
-  //     setVisData(mapData);
-  //   } else {
-  //     setVisData(filteredData);
-  //   }
-  // }, [filteringMode, mapData, filteredData]);
-
-  // const filterData = () => {
-  //   const updatedFilteredData = visData.filter((item) => {
-  //     if (allFilter) {
-  //       return true; // Wenn "Alle" aktiviert ist, alle Elemente zurückgeben
-  //     }
-  //     // Ansonsten, die individuellen Filter gegen die Eigenschaften der Elemente überprüfen
-  //     if (filter['Fußgänger'] && item.istfussb) {
-  //       return true;
-  //     }
-  //     if (filter.Fahrrad && item.istradb) {
-  //       return true;
-  //     }
-  //     if (filter.Kraftrad && item.istkradb) {
-  //       return true;
-  //     }
-  //     if (filter['PKW'] && item.istpkwb) {
-  //       return true;
-  //     }
-  //     if (filter.Sonstige && item.istsonst2b) {
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-
-  //   setFilteredData(updatedFilteredData);
-  // };
-
-  // useEffect(() => {
-  //   if (filteringMode === 'none') {
-  //     setFilteredData(visData); // Reset filteredData to visData when filteringMode is 'none'
-  //   } else {
-  //     filterData();
-  //   }
-  // }, [filter, allFilter, visData, filteringMode]);
-
-  // const parseDate = timeParse('%Y-%m-%d');
-  // const [visData, setVisData] = useState(() => {
-  //   return data.map((d) => {
-  //     return {
-  //       ...d,
-  //       datum: parseDate(d.datum),
-  //     };
-  //   });
-  // }); //data
-
-  //   data.forEach(function (d) {
-  //   d.datum = parseDate(d.datum);
-  // });
-
-  // console.log('dashboard', visData.length);
-  // const [kategCount, setKategCount] = useState(new Map());
-
-  // useEffect(() => {
-  //   console.log('here einzeln', visibleData[0].kateg);
-  //   console.log('here alle', visibleData);
-  //   const newKategCount = rollup(
-  //     visibleData,
-  //     (v) => v.length,
-  //     (d) => d.kateg
-  //     // (d) => d.options.data.kateg
-  //   );
-
-  //   setKategCount(newKategCount);
-  // }, [visibleData]);
-
-  // // console.log('dashboard', visibleData);
-  // console.log(data);
-
-  // const weekHourCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.wochentag : d.wochentag),
-  //     (d) => (d.options ? d.options.data.zeit : d.zeit)
-  //   );
-  // }, [visData]);
-
-  // const weekHourCount = useMemo(() => {
-  //   const uniqueWeekdays = [
-  //     ...new Set(
-  //       visData.map((d) =>
-  //         d.options ? d.options.data.wochentag : d.wochentag
-  //       )
-  //     ),
-  //   ];
-  //   const uniqueTimes = [
-  //     ...new Set(
-  //       visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
-  //     ),
-  //   ];
-
-  //   const nestedObj = {};
-
-  //   uniqueWeekdays.forEach((weekday) => {
-  //     nestedObj[weekday] = {};
-  //     uniqueTimes.forEach((time) => {
-  //       nestedObj[weekday][time] = 0; // Initialize with 0 cases
-  //     });
-  //   });
-
-  //   // Populate nestedObj with actual counts
-  //   visData.forEach((d) => {
-  //     const weekday = d.options
-  //       ? d.options.data.wochentag
-  //       : d.wochentag;
-  //     const time = d.options ? d.options.data.zeit : d.zeit;
-  //     nestedObj[weekday][time]++;
-  //   });
-
-  //   return nestedObj;
-  // }, [visData]);
-
-  // const weekHourCount = useMemo(() => {
-  //   // const uniqueWeekdays = [
-  //   //   ...new Set(
-  //   //     visData.map((d) =>
-  //   //       d.options ? d.options.data.wochentag : d.wochentag
-  //   //     )
-  //   //   ),
-  //   // ];
-
-  //   const uniqueWeekdays = [
-  //     'Montag',
-  //     'Dienstag',
-  //     'Mittwoch',
-  //     'Donnerstag',
-  //     'Freitag',
-  //     'Samstag',
-  //     'Sonntag',
-  //   ];
-
-  //   // const uniqueTimes = [
-  //   //   ...new Set(
-  //   //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
-  //   //   ),
-  //   // ];
-
-  //   const uniqueTimes = [
-  //     '0-6 Uhr',
-  //     '6-12 Uhr',
-  //     '12-18 Uhr',
-  //     '18-0 Uhr',
-  //   ];
-
-  //   const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
-  //     acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
-  //       innerAcc[time] = 0; // Initialize with 0 cases
-  //       return innerAcc;
-  //     }, {});
-  //     return acc;
-  //   }, {});
-
-  //   // Populate nestedObj with actual counts
-  //   visData.forEach((d) => {
-  //     const weekday = d.options
-  //       ? d.options.data.wochentag
-  //       : d.wochentag;
-  //     const time = d.options ? d.options.data.zeit : d.zeit;
-  //     nestedObj[weekday][time]++;
-  //   });
-
-  //   return nestedObj;
-  // }, [visData]);
-
-  // const dataByYear = useMemo(() => {
-  //   // const resultMap = new Map();
-  //   // jahre.forEach((jahr) => {
-  //   //   resultMap.set(jahr, new Map());
-
-  //   //   monate.forEach((monat) => {
-  //   //     resultMap.get(jahr).set(monat, 0);
-  //   //   });
-  //   // });
-
-  //   // const rolledUpMap = rollup(
-  //   //   visData,
-  //   //   (v) => v.length || 0, // Count instances
-  //   //   (d) => d.jahr, // Group by year
-  //   //   (d) => d.monatn // Group by month name
-  //   // );
-
-  //   rolledUpMap.forEach((yearMap, year) => {
-  //     yearMap.forEach((count, month) => {
-  //       resultMap.get(year).set(month, count);
-  //     });
-  //   });
-
-  //   // const dataMap = new Map();
-
-  //   // for (let year = 2016; year <= 2022; year++) {
-  //   //   dataMap.set(year, []);
-  //   // }
-
-  //   // visData.forEach((d) => {
-  //   //   const year = d.jahr;
-  //   //   if (!dataMap.has(year)) {
-  //   //     dataMap.set(year, []);
-  //   //   }
-  //   //   dataMap.get(year).push(d);
-  //   // });
-
-  //   return resultMap;
-  // }, [visData]);
-
-  // const weekHourCount = useMemo(() => {
-  //   // const uniqueWeekdays = [
-  //   //   ...new Set(
-  //   //     visData.map((d) =>
-  //   //       d.options ? d.options.data.wochentag : d.wochentag
-  //   //     )
-  //   //   ),
-  //   // ];
-
-  //   const uniqueWeekdays = [
-  //     'Montag',
-  //     'Dienstag',
-  //     'Mittwoch',
-  //     'Donnerstag',
-  //     'Freitag',
-  //     'Samstag',
-  //     'Sonntag',
-  //   ];
-
-  //   // const uniqueTimes = [
-  //   //   ...new Set(
-  //   //     visData.map((d) => (d.options ? d.options.data.zeit : d.zeit))
-  //   //   ),
-  //   // ];
-
-  //   const uniqueTimes = [
-  //     '0-6 Uhr',
-  //     '6-12 Uhr',
-  //     '12-18 Uhr',
-  //     '18-0 Uhr',
-  //   ];
-
-  //   const resultMap = new Map();
-
-  //   uniqueWeekdays.forEach((day) => {
-  //     resultMap.set(day, new Map());
-
-  //     uniqueTimes.forEach((time) => {
-  //       resultMap.get(day).set(time, 0);
-  //     });
-  //   });
-
-  //   const rolledUpMap = rollup(
-  //     visData,
-  //     (v) => v.length || 0, // Count instances
-  //     (d) => d.wochentag, // Group by year
-  //     (d) => d.zeit // Group by month name
-  //   );
-
-  //   // const nestedObj = uniqueWeekdays.reduce((acc, weekday) => {
-  //   //   acc[weekday] = uniqueTimes.reduce((innerAcc, time) => {
-  //   //     innerAcc[time] = 0; // Initialize with 0 cases
-  //   //     return innerAcc;
-  //   //   }, {});
-  //   //   return acc;
-  //   // }, {});
-
-  //   // // Populate nestedObj with actual counts
-  //   // visData.forEach((d) => {
-  //   //   const weekday = d.options
-  //   //     ? d.options.data.wochentag
-  //   //     : d.wochentag;
-  //   //   const time = d.options ? d.options.data.zeit : d.zeit;
-  //   //   nestedObj[weekday][time]++;
-  //   // });
-
-  //   rolledUpMap.forEach((dayMap, day) => {
-  //     dayMap.forEach((count, time) => {
-  //       resultMap.get(day).set(time, count);
-  //     });
-  //   });
-
-  //   return resultMap;
-  // }, [visData]);
-
-  // console.log('dashboard weekHourCount', weekHourCount);
-
-  // const radCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.istradb : d.istradb)
-  //   );
-  // }, [visData]);
-
-  // const fussCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.istfussb : d.istfussb)
-  //   );
-  // }, [visData]);
-
-  // const pkwCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.istpkwb : d.istpkwb)
-  //   );
-  // }, [visData]);
-
-  // const kradCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.istkradb : d.istkradb)
-  //   );
-  // }, [visData]);
-
-  // const sonstCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.istsonst2b : d.istsonst2b)
-  //   );
-  // }, [visData]);
-
-  // const kategCount = useMemo(() => {
-  //   // console.log('check data', data); // d.kateg // d.properties.kateg
-  //   // console.log('check visData', visData); //d.options.data.kateg
-  //   // if (!visData) {
-  //   //   return undefined;
-  //   // }
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.kateg2 : d.kateg2)
-  //     // d.properties ? d.properties.kateg : d.options.data.kateg
-  //     // (d) => d.options.data.kateg
-  //     // (d) => d.properties.kateg
-  //     // (d) => (d.options ? d.options.data.kateg : d.kateg)
-  //   );
-  // }, [visData]);
-
-  // console.log(visData);
-
-  // const lichtCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.licht2 : d.licht2)
-  //   );
-  // }, [visData]);
-
-  // const strasseCount = useMemo(() => {
-  //   return rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.strzust2 : d.strzust2)
-  //   );
-  // }, [visData]);
-
-  // const artCount = useMemo(() => {
-  //   const data = rollup(
-  //     visData,
-  //     (v) => v.length,
-  //     (d) => (d.options ? d.options.data.art : d.art)
-  //   );
-
-  //   // Convert the Map to an array of objects for sorting
-  //   const sortedData = Array.from(data, ([key, value]) => ({
-  //     key,
-  //     value,
-  //   }));
-
-  //   // Sort the array by count in descending order
-  //   sortedData.sort((a, b) => b.value - a.value);
-
-  //   return sortedData;
-  // }, [visData]);
-
-  // const artCount = useMemo(() => {
-  //   const sortedArtCount = new Map(
-  //     Array.from(
-  //       rollup(
-  //         visData,
-  //         (v) => v.length,
-  //         (d) => (d.options ? d.options.data.art : d.art)
-  //       ),
-  //       ([key, value]) => [key, value]
-  //     ).sort((a, b) => a[1] - b[1]) // Sort the entries by count (length)
-  //   );
-
-  //   return sortedArtCount;
-  // }, [visData]);
-
-  // console.log(artCount);
-
   const visDataTotal = useMemo(() => {
     // console.log('check data', data); // d.kateg // d.properties.kateg
     // console.log('check visData', visData); //d.options.data.kateg
@@ -1179,245 +497,6 @@ function Dashboard({ initialData }) {
     // }
     return visData.length;
   }, [visData]);
-
-  // const accidentsTotal = useMemo(() => {
-  //   return rollup(visData, (v) =>
-  //     sum(v, (d) => (d.options ? d.options.data.kateg : d.kateg))
-  //   );
-  // }, [visData]);
-
-  // console.log('total', dataTotal);
-  // console.log('visdata total', visDataTotal);
-
-  // const accidentsTotal = rollup(athletes, v => d3.sum(v, d => d.earnings), d => d.sport)
-
-  // const numberData = useMemo(() => {
-  //   return new Map([
-  //     [
-  //       'Fußgänger',
-  //       fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
-  //     ],
-  //     ['Rad', radCount.get('Unfall mit Fahrradbeteiligung') || 0],
-  //     [
-  //       'Kraftrad',
-  //       kradCount.get('Unfall mit Kraftradbeteiligung') || 0,
-  //     ],
-  //     ['PKW', pkwCount.get('Unfall mit PKW-Beteiligung') || 0],
-  //     [
-  //       'Sonstige',
-  //       sonstCount.get(
-  //         'Unfall mit Beteiligung eines anderen Verkehrsmittels'
-  //       ) || 0,
-  //     ],
-  //   ]);
-  // }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
-
-  // const numberData = useMemo(() => {
-  //   return new Map([
-  //     ['Fußgänger', fussCount.get(true) || 0],
-  //     ['Rad', radCount.get(true) || 0],
-  //     ['Kraftrad', kradCount.get(true) || 0],
-  //     ['PKW', pkwCount.get(true) || 0],
-  //     ['Sonstige', sonstCount.get(true) || 0],
-  //   ]);
-  // }, [fussCount, radCount, kradCount, pkwCount, sonstCount]);
-
-  // const treemapDataArray = Array.from(
-  //   numberData,
-  //   ([name, value]) => ({ name, value })
-  // );
-
-  // console.log('numberdata', numberData);
-  // console.log('treemapdataarray', treemapDataArray);
-
-  // const treeData = {[
-  //   [
-  //     "Art",
-  //     "Parent",
-  //     "Count"
-  //   ],
-  // ]}
-
-  // const treeMapData = Array.from(numberData, ([name, value]) => ({
-  //   name,
-  //   value,
-  // }));
-
-  // const numberData = new Map();
-
-  // useEffect(() => {
-  //   // const numberData = new Map();
-  //   numberData.set(
-  //     'Fußgänger',
-  //     fussCount.get('Unfall mit Fußgängerbeteiligung') || 0
-  //   );
-  //   numberData.set(
-  //     'Rad',
-  //     radCount.get('Unfall mit Fahrradbeteiligung') || 0
-  //   );
-  //   numberData.set(
-  //     'Kraftrad',
-  //     kradCount.get('Unfall mit Kraftradbeteiligung') || 0
-  //   );
-  //   numberData.set(
-  //     'PKW',
-  //     pkwCount.get('Unfall mit PKW-Beteiligung') || 0
-  //   );
-  //   numberData.set(
-  //     'Sonstige',
-  //     sonstCount.get(
-  //       'Unfall mit Beteiligung eines anderen Verkehrsmittels'
-  //     ) || 0
-  //   );
-  // }, [
-  //   fussCount,
-  //   radCount,
-  //   kradCount,
-  //   pkwCount,
-  //   sonstCount,
-  //   numberData,
-  // ]);
-  // numberData.set(
-  //   'Fußgänger',
-  //   fussCount.get('Unfall mit Fußgängerbeteiligung') || 0
-  // );
-  // numberData.set(
-  //   'Rad',
-  //   radCount.get('Unfall mit Fahrradbeteiligung') || 0
-  // );
-  // numberData.set(
-  //   'Kraftrad',
-  //   kradCount.get('Unfall mit Kraftradbeteiligung') || 0
-  // );
-  // numberData.set(
-  //   'PKW',
-  //   pkwCount.get('Unfall mit PKW-Beteiligung') || 0
-  // );
-  // numberData.set(
-  //   'Sonstige',
-  //   sonstCount.get(
-  //     'Unfall mit Beteiligung eines anderen Verkehrsmittels'
-  //   ) || 0
-  // );
-
-  // console.log('numberdata', numberData);
-
-  // const numberLabels = [
-  //   'Fußgänger',
-  //   'Rad',
-  //   'Kraftrad',
-  //   'PKW',
-  //   'Sonstige',
-  // ];
-
-  // const numberValues = [
-  //   fussCount.get('Unfall mit Fußgängerbeteiligung') || 0,
-  //   radCount.get('Unfall mit Fahrradbeteiligung') || 0,
-  //   kradCount.get('Unfall mit Kraftradbeteiligung') || 0,
-  //   pkwCount.get('Unfall mit PKW-Beteiligung') || 0,
-  //   sonstCount.get(
-  //     'Unfall mit Beteiligung eines anderen Verkehrsmittels'
-  //   ) || 0,
-  // ];
-
-  // const numberValues = [
-  //   fussCount.get(true) || 0,
-  //   radCount.get(true) || 0,
-  //   kradCount.get(true) || 0,
-  //   pkwCount.get(true) || 0,
-  //   sonstCount.get(true) || 0,
-  // ];
-
-  // const numberMax = max(numberValues);
-
-  // const numberExtentCounts = [0, max(numberValues)];
-
-  // const numberExtentCountsZero = [0, 1];
-
-  // const numberColorScale = scaleSequential(interpolateOranges).domain(
-  //   numberExtentCounts[1] === 0
-  //     ? numberExtentCountsZero
-  //     : numberExtentCounts
-  // );
-
-  // console.log(
-  //   'sonstige',
-  //   numberData,
-  //   sonstCount,
-  //   treemapDataArray,
-  //   numberValues
-  // );
-
-  // const numberColorScale = scaleSequential(interpolateOranges).domain(
-  //   numberMax
-  //     ? numberExtentCountsZero
-  //     : numberExtentCounts
-  // );
-
-  // const numberColorScale = scaleSequential(interpolateOranges).domain(
-  //   [0, max(numberValues)]
-  // );
-
-  // console.log(
-  //   'color',
-  //   numberColorScale(0),
-  //   numberColorScale(max(numberValues)),
-  //   max(numberValues)
-  // );
-
-  // const dataTotal = data.length;
-
-  // const parseDate = timeParse('%Y-%m-%d');
-
-  // const aggregatedTimeData = useMemo(() => {
-  //   return rollup(
-  //     data,
-  //     (v) => v.length, // Aggregation function: count the length of each group
-  //     (d) => d.datum // Grouping key: the "datum" property representing the month
-  //   );
-  // }, [data]); // Recalculate when data changes
-
-  // const timeDataDates = useMemo(() => {
-  //   return Array.from(aggregatedTimeData.keys());
-  // }, [aggregatedTimeData]); // Recalculate when aggregatedTimeData changes
-
-  // const timeDataDates = useMemo(() => {
-  //   const keys = Array.from(aggregatedTimeData.keys());
-  //   keys.sort((a, b) => new Date(a) - new Date(b));
-  //   return keys;
-  // }, [aggregatedTimeData]);
-
-  // const aggregatedTimeData = rollup(
-  //   data,
-  //   (v) => v.length, // Aggregation function: count the length of each group
-  //   (d) => d.datum // Grouping key: the "datum" property representing the month
-  // );
-  // const timeDataDates = Array.from(aggregatedTimeData.keys()); // Assuming keys are Date objects
-  // const timeDataCounts = Array.from(aggregatedTimeData.values());
-
-  // const dataDatumMin = parseDate(min(data, (d) => d.datum)); //data[0].datum
-  // const dataDatumMax = parseDate(max(data, (d) => d.datum)); //data[dataTotal - 1].datum
-
-  // const countExtent = [0, dataTotal];
-  // const timeExtent = [dataDatumMin, dataDatumMax];
-
-  // const timeDateExtent = extent(timeDataDates);
-  // const countExtent = extent(timeDataCounts);
-  // const timeCountExtent = [0, max(timeDataCounts)];
-  // console.log(timeDateExtent, timeCountExtent);
-
-  // const beteiligteData = useMemo(() => {
-  //   return tidy(
-  //     visData,
-  //     select([
-  //       'istfussb',
-  //       'istradb',
-  //       'istpkwb',
-  //       'istkradb',
-  //       'istsonst2b',
-  //     ])
-  //   );
-  // }, [visData]);
 
   const scrollbarWidth = useScrollbarWidth();
 
@@ -1454,151 +533,172 @@ function Dashboard({ initialData }) {
   return (
     visData && (
       <>
-        <DashboardWrapper
-          ref={dashboardWrapperRef}
-          dashboardWidth={dashboardWidth}
-          scrollbarWidth={scrollbarWidth}
-          layout={layout}
-          // dashboardPaddingScale={dashboardPaddingScale}
-          // mobileBreakpoint={mobileBreakpoint}
-          // dashboardPaddingX={dashboardPaddingX}
-        >
-          <Header
-            chartWidth={chartWidth}
-            layout={layout}
-            chartWidthDomain={chartWidthDomain}
-          />
-          <InputWrapper
-            layout={layout}
-            dashboardWidth={dashboardWidth}
-          >
-            {/* <Map data={data} setVisData={setVisData} /> */}
-            <LeafletMap
-              data={data}
-              setVisData={setVisData}
-              setMapData={setMapData}
-              // filteredData={filteredData}
-              filteringMode={filteringMode}
-              // setData={setData}
-              filterData={filterData}
-              allFilter={allFilter}
-              filter={filter}
-              filterKategData={filterKategData}
-              allKategFilter={allKategFilter}
-              kategFilter={kategFilter}
-              selectHeatmap={selectHeatmap}
-              setTotalMapData={setTotalMapData}
-              chartWidth={chartWidth}
+        {loading && (
+          <SpinnerWrapper ref={wrapperRef}>
+            <Triangle
+              visible={true}
+              height="80"
+              width="80"
+              color="rgb(255,179,0)"
+              ariaLabel="triangle-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              // style={{
+              //   margin: '0 auto',
+              // }}
             />
-            {/* <CheckboxWrapper> */}
-            {/* <LeafletHeatCheckbox
+          </SpinnerWrapper>
+        )}
+        {!loading && (
+          <>
+            <DashboardWrapper
+              ref={wrapperRef}
+              dashboardWidth={dashboardWidth}
+              scrollbarWidth={scrollbarWidth}
+              layout={layout}
+              // dashboardPaddingScale={dashboardPaddingScale}
+              // mobileBreakpoint={mobileBreakpoint}
+              // dashboardPaddingX={dashboardPaddingX}
+            >
+              <Header
+                chartWidth={chartWidth}
+                layout={layout}
+                chartWidthDomain={chartWidthDomain}
+              />
+              <InputWrapper
+                layout={layout}
+                dashboardWidth={dashboardWidth}
+              >
+                {/* <Map data={data} setVisData={setVisData} /> */}
+                <LeafletMap
+                  data={data}
+                  setVisData={setVisData}
+                  setMapData={setMapData}
+                  // filteredData={filteredData}
+                  filteringMode={filteringMode}
+                  // setData={setData}
+                  filterData={filterData}
+                  allFilter={allFilter}
+                  filter={filter}
+                  filterKategData={filterKategData}
+                  allKategFilter={allKategFilter}
+                  kategFilter={kategFilter}
+                  selectHeatmap={selectHeatmap}
+                  setTotalMapData={setTotalMapData}
+                  chartWidth={chartWidth}
+                />
+                {/* <CheckboxWrapper> */}
+                {/* <LeafletHeatCheckbox
           selectHeatmap={selectHeatmap}
           setSelectHeatmap={setSelectHeatmap}
           dashboardWidth={dashboardWidth}
         /> */}
-            <Number
-              number={visDataTotal}
-              label={'Gesamt'}
-              // colorScale={undefined}
-              // max={undefined}
-            />
-            <FilterCheckboxes
-              filter={filter}
-              setFilter={setFilter}
-              allFilter={allFilter}
-              setAllFilter={setAllFilter}
-              setFilteringMode={setFilteringMode}
-              chartWidth={chartWidth}
-              feature="Unfallbeteiligung"
-            />
-            <FilterCheckboxes
-              filter={kategFilter}
-              setFilter={setKategFilter}
-              allFilter={allKategFilter}
-              setAllFilter={setAllKategFilter}
-              setFilteringMode={setKategFilteringMode}
-              chartWidth={chartWidth}
-              feature="Schweregrad"
-            />
-            {/* </CheckboxWrapper> */}
+                <Number
+                  number={visDataTotal}
+                  label={'Gesamt'}
+                  // colorScale={undefined}
+                  // max={undefined}
+                />
+                <FilterCheckboxes
+                  filter={filter}
+                  setFilter={setFilter}
+                  allFilter={allFilter}
+                  setAllFilter={setAllFilter}
+                  setFilteringMode={setFilteringMode}
+                  chartWidth={chartWidth}
+                  feature="Unfallbeteiligung"
+                />
+                <FilterCheckboxes
+                  filter={kategFilter}
+                  setFilter={setKategFilter}
+                  allFilter={allKategFilter}
+                  setAllFilter={setAllKategFilter}
+                  setFilteringMode={setKategFilteringMode}
+                  chartWidth={chartWidth}
+                  feature="Schweregrad"
+                />
+                {/* </CheckboxWrapper> */}
 
-            {/* <Intro /> */}
-          </InputWrapper>
-          <VizWrapper layout={layout} dashboardWidth={dashboardWidth}>
-            {/* <SpringConfigContext.Provider value={springConfig}> */}
-            <AnimationProvider>
-              {/* <SVGFontSizeContext.Provider value={SVGFontSize}> */}
-              {/* <TestContext.Provider value={springConfig}> */}
-              <TreeMap
-                // treeData={treemapDataArray}
-                chartWidth={chartWidth}
-                visDataTotal={visDataTotal}
-                // chartData={beteiligteData}
-                visData={visData}
-                smallMobileBreakpoint={smallMobileBreakpoint}
-                // fontSizeScale={fontSizeScale}
-                // svgFontSize={svgFontSize}
-                svgFontSize={svgFontSize}
-                chartWidthDomain={chartWidthDomain}
-              />
-              <KategBarChart
-                // variableCount={kategCount}
-                // visDataTotal={visDataTotal}
-                chartWidth={chartWidth}
-                visData={visData}
-                smallMobileBreakpoint={smallMobileBreakpoint}
-                svgFontSize={svgFontSize}
-                chartWidthDomain={chartWidthDomain}
-              />
-              <WeekHourHeatmap
-                visData={visData}
-                // weekHourCount={weekHourCount}
-                chartWidth={chartWidth}
-                // smallMobileBreakpoint={smallMobileBreakpoint}
-                svgFontSize={svgFontSize}
-                chartWidthDomain={chartWidthDomain}
-              />
-              <ColumnChartSmallMultiple
-                visData={visData}
-                chartWidth={chartWidth}
-                svgFontSize={svgFontSize}
-                // chartWidthDomain={chartWidthDomain}
-              />
-              <LichtDonutChart
-                // variableCount={lichtCount}
-                // visDataTotal={visDataTotal}
-                chartWidth={chartWidth}
-                visData={visData}
-                svgFontSize={svgFontSize}
-                // chartWidthDomain={chartWidthDomain}
-                // mobileBreakpoint={mobileBreakpoint}
-                // smallMobileBreakpoint={smallMobileBreakpoint}
-              />
-              <StrasseDonutChart
-                // variableCount={strasseCount}
-                // visDataTotal={visDataTotal}
-                chartWidth={chartWidth}
-                visData={visData}
-                svgFontSize={svgFontSize}
-                // chartWidthDomain={chartWidthDomain}
-                // mobileBreakpoint={mobileBreakpoint}
-                // smallMobileBreakpoint={smallMobileBreakpoint}
-              />
+                {/* <Intro /> */}
+              </InputWrapper>
+              <VizWrapper
+                layout={layout}
+                dashboardWidth={dashboardWidth}
+              >
+                {/* <SpringConfigContext.Provider value={springConfig}> */}
+                <AnimationProvider>
+                  {/* <SVGFontSizeContext.Provider value={SVGFontSize}> */}
+                  {/* <TestContext.Provider value={springConfig}> */}
+                  <TreeMap
+                    // treeData={treemapDataArray}
+                    chartWidth={chartWidth}
+                    visDataTotal={visDataTotal}
+                    // chartData={beteiligteData}
+                    visData={visData}
+                    smallMobileBreakpoint={smallMobileBreakpoint}
+                    // fontSizeScale={fontSizeScale}
+                    // svgFontSize={svgFontSize}
+                    svgFontSize={svgFontSize}
+                    chartWidthDomain={chartWidthDomain}
+                  />
+                  <KategBarChart
+                    // variableCount={kategCount}
+                    // visDataTotal={visDataTotal}
+                    chartWidth={chartWidth}
+                    visData={visData}
+                    smallMobileBreakpoint={smallMobileBreakpoint}
+                    svgFontSize={svgFontSize}
+                    chartWidthDomain={chartWidthDomain}
+                  />
+                  <WeekHourHeatmap
+                    visData={visData}
+                    // weekHourCount={weekHourCount}
+                    chartWidth={chartWidth}
+                    // smallMobileBreakpoint={smallMobileBreakpoint}
+                    svgFontSize={svgFontSize}
+                    chartWidthDomain={chartWidthDomain}
+                  />
+                  <ColumnChartSmallMultiple
+                    visData={visData}
+                    chartWidth={chartWidth}
+                    svgFontSize={svgFontSize}
+                    // chartWidthDomain={chartWidthDomain}
+                  />
+                  <LichtDonutChart
+                    // variableCount={lichtCount}
+                    // visDataTotal={visDataTotal}
+                    chartWidth={chartWidth}
+                    visData={visData}
+                    svgFontSize={svgFontSize}
+                    // chartWidthDomain={chartWidthDomain}
+                    // mobileBreakpoint={mobileBreakpoint}
+                    // smallMobileBreakpoint={smallMobileBreakpoint}
+                  />
+                  <StrasseDonutChart
+                    // variableCount={strasseCount}
+                    // visDataTotal={visDataTotal}
+                    chartWidth={chartWidth}
+                    visData={visData}
+                    svgFontSize={svgFontSize}
+                    // chartWidthDomain={chartWidthDomain}
+                    // mobileBreakpoint={mobileBreakpoint}
+                    // smallMobileBreakpoint={smallMobileBreakpoint}
+                  />
 
-              <ArtBarChart
-                // variableCount={artCount}
-                // visDataTotal={visDataTotal}
-                chartWidth={chartWidth}
-                visData={visData}
-                svgFontSize={svgFontSize}
-              />
-              {/* </TestContext.Provider> */}
-              {/* </SVGFontSizeContext.Provider> */}
-              {/* </SpringConfigContext.Provider> */}
-            </AnimationProvider>
-          </VizWrapper>
-          {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
-          {/* <LichtLollipopChart
+                  <ArtBarChart
+                    // variableCount={artCount}
+                    // visDataTotal={visDataTotal}
+                    chartWidth={chartWidth}
+                    visData={visData}
+                    svgFontSize={svgFontSize}
+                  />
+                  {/* </TestContext.Provider> */}
+                  {/* </SVGFontSizeContext.Provider> */}
+                  {/* </SpringConfigContext.Provider> */}
+                </AnimationProvider>
+              </VizWrapper>
+              {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
+              {/* <LichtLollipopChart
           variableCount={lichtCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
@@ -1608,19 +708,19 @@ function Dashboard({ initialData }) {
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         /> */}
-          {/* <StrasseBarChart
+              {/* <StrasseBarChart
           variableCount={strasseCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         /> */}
-          {/* </BarChartWrapper> */}
-          {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
-          {/* <KategStackedBarChart
+              {/* </BarChartWrapper> */}
+              {/* <BarChartWrapper dashboardWidth={dashboardWidth}> */}
+              {/* <KategStackedBarChart
           variableCount={kategCount}
           visDataTotal={visDataTotal}
           dashboardWidth={dashboardWidth}
         /> */}
-          {/* <Number
+              {/* <Number
         width={75}
         height={50}
         number={fussCount.get('Unfall mit Fußgängerbeteiligung') || 0}
@@ -1664,8 +764,8 @@ function Dashboard({ initialData }) {
         colorScale={numberColorScale}
         max={numberMax}
       /> */}
-          {/* <MonthYearHeatmap visData={visData} /> */}
-          {/* <LineChart
+              {/* <MonthYearHeatmap visData={visData} /> */}
+              {/* <LineChart
           visData={visData}
           dataTotal={dataTotal}
           aggregatedTimeData={aggregatedTimeData}
@@ -1673,10 +773,12 @@ function Dashboard({ initialData }) {
           timeCountExtent={timeCountExtent}
           timeDataDates={timeDataDates}
         /> */}
-          {/* <LineChartYear visData={visData} /> */}
-          {/* <LineChartMonth visData={visData} /> */}
-        </DashboardWrapper>
-        <Footer chartWidth={chartWidth} />
+              {/* <LineChartYear visData={visData} /> */}
+              {/* <LineChartMonth visData={visData} /> */}
+            </DashboardWrapper>
+            <Footer chartWidth={chartWidth} />
+          </>
+        )}
       </>
     )
   );
@@ -1696,6 +798,26 @@ function Dashboard({ initialData }) {
 // `;
 
 // layout
+
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  max-width: 1200px;
+  padding: 1% 5%;
+  margin: 0 auto;
+  height: 100vh;
+`;
+// style={{
+//   width: '100%',
+//   maxWidth: '1200px',
+//   // maxWidth: '5000px',
+
+//   margin: '0 auto',
+//   padding: '1% 5%',
+// }}
 
 const dashboardWrapperVariants = {
   flex: ``,
@@ -1719,11 +841,11 @@ const DashboardWrapper = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   gap: 25px;
-  width: 100%;
   /* width: ${(props) => props.dashboardWidth}px; */
-  height: 100%;
+  width: 100%;
   max-width: 1200px; // 500px
   margin: 0 auto;
+  height: 100%;
   /* position: relative; */
   /* padding: 10px 25px; */
   padding: 1% 5%;
