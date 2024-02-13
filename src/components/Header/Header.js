@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { scaleLinear } from 'd3-scale';
 import styled from 'styled-components';
-import { COLORS } from '../../utils/constants';
+import { COLORS } from '@/utils/constants';
 
 function Header({ chartWidth, layout, chartWidthDomain }) {
   // TODO: css calc margin of titlewrapper

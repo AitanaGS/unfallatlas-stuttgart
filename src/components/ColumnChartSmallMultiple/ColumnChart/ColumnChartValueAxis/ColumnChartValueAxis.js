@@ -108,6 +108,7 @@ function ColumnChartValueAxis({
           <animated.text
             key={ticks[i].value} // props.value.id
             x={-5} // Adjust the horizontal position to move text to the left of the axis
+            // y={reduceMotion ? ticks[i].yOffset : props.y}
             y={props.y}
             textAnchor="end" // Align text to the end of the axis
             dominantBaseline="middle"

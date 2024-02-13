@@ -177,8 +177,12 @@ function ColumnChartColumn({
       width={xScale.bandwidth()}
       // height={innerHeight - yScale(monthData.get(monat) || 0)} //innerHeight - yScale(monthData.get(d) || 0)
       fill={COLORS.yellowOrange.medium}
+      // y={reduceMotion ? yScale(monthData) : spring.y}
       y={spring.y}
-      height={spring.height}
+      height={
+        reduceMotion ? innerHeight - yScale(monthData) : spring.height
+      }
+      // height={spring.height}
       // y={yScale(monthData)}
       // height={innerHeight - yScale(monthData)}
     />

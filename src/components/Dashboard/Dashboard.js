@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useCallback,
   useRef,
+  useContext,
 } from 'react';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { rollup, sum } from 'd3-array';
@@ -49,8 +50,12 @@ import useScrollbarWidth from '@/hooks/useScrollbarWidth';
 //   SpringConfigContext,
 //   springConfig,
 // } from '@/contextProvider/SpringConfigContextProvider';
-import { AnimationProvider } from '@/context/AnimationContext';
+import {
+  AnimationProvider,
+  AnimationContext,
+} from '@/context/AnimationContext';
 import { Triangle } from 'react-loader-spinner';
+import { COLORS } from '@/utils/constants';
 // import { SVGFontSizeContext } from '@/contextProvider/SVGFontSizeContextProvider';
 // import { tidy, select } from '@tidyjs/tidy';
 // import { Quattrocento, Lato } from 'next/font/google';
@@ -312,7 +317,7 @@ function Dashboard({ initialData }) {
           setLayout(size <= mobileBreakpoint ? 'flex' : 'grid');
 
           // setLoading(false);
-          const delay = 2000;
+          const delay = 1500;
           const timer = setTimeout(() => {
             setLoading(false);
           }, delay);
@@ -530,23 +535,30 @@ function Dashboard({ initialData }) {
 
   // layout: chartWidth instead of dashboadwidth
 
+  const { reduceMotion } = useContext(AnimationContext);
+
+  // console.log('reducemotion', reduceMotion);
+
   return (
     visData && (
       <>
         {loading && (
           <SpinnerWrapper ref={wrapperRef}>
-            <Triangle
-              visible={true}
-              height="80"
-              width="80"
-              color="rgb(255,179,0)"
-              ariaLabel="triangle-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              // style={{
-              //   margin: '0 auto',
-              // }}
-            />
+            {!reduceMotion && (
+              <Triangle
+                visible={true}
+                height="80"
+                width="80"
+                color={COLORS.yellow.medium}
+                // color="rgb(255,179,0)"
+                ariaLabel="triangle-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                // style={{
+                //   margin: '0 auto',
+                // }}
+              />
+            )}
           </SpinnerWrapper>
         )}
         {!loading && (
@@ -626,76 +638,76 @@ function Dashboard({ initialData }) {
                 dashboardWidth={dashboardWidth}
               >
                 {/* <SpringConfigContext.Provider value={springConfig}> */}
-                <AnimationProvider>
-                  {/* <SVGFontSizeContext.Provider value={SVGFontSize}> */}
-                  {/* <TestContext.Provider value={springConfig}> */}
-                  <TreeMap
-                    // treeData={treemapDataArray}
-                    chartWidth={chartWidth}
-                    visDataTotal={visDataTotal}
-                    // chartData={beteiligteData}
-                    visData={visData}
-                    smallMobileBreakpoint={smallMobileBreakpoint}
-                    // fontSizeScale={fontSizeScale}
-                    // svgFontSize={svgFontSize}
-                    svgFontSize={svgFontSize}
-                    chartWidthDomain={chartWidthDomain}
-                  />
-                  <KategBarChart
-                    // variableCount={kategCount}
-                    // visDataTotal={visDataTotal}
-                    chartWidth={chartWidth}
-                    visData={visData}
-                    smallMobileBreakpoint={smallMobileBreakpoint}
-                    svgFontSize={svgFontSize}
-                    chartWidthDomain={chartWidthDomain}
-                  />
-                  <WeekHourHeatmap
-                    visData={visData}
-                    // weekHourCount={weekHourCount}
-                    chartWidth={chartWidth}
-                    // smallMobileBreakpoint={smallMobileBreakpoint}
-                    svgFontSize={svgFontSize}
-                    chartWidthDomain={chartWidthDomain}
-                  />
-                  <ColumnChartSmallMultiple
-                    visData={visData}
-                    chartWidth={chartWidth}
-                    svgFontSize={svgFontSize}
-                    // chartWidthDomain={chartWidthDomain}
-                  />
-                  <LichtDonutChart
-                    // variableCount={lichtCount}
-                    // visDataTotal={visDataTotal}
-                    chartWidth={chartWidth}
-                    visData={visData}
-                    svgFontSize={svgFontSize}
-                    // chartWidthDomain={chartWidthDomain}
-                    // mobileBreakpoint={mobileBreakpoint}
-                    // smallMobileBreakpoint={smallMobileBreakpoint}
-                  />
-                  <StrasseDonutChart
-                    // variableCount={strasseCount}
-                    // visDataTotal={visDataTotal}
-                    chartWidth={chartWidth}
-                    visData={visData}
-                    svgFontSize={svgFontSize}
-                    // chartWidthDomain={chartWidthDomain}
-                    // mobileBreakpoint={mobileBreakpoint}
-                    // smallMobileBreakpoint={smallMobileBreakpoint}
-                  />
+                {/* <AnimationProvider> */}
+                {/* <SVGFontSizeContext.Provider value={SVGFontSize}> */}
+                {/* <TestContext.Provider value={springConfig}> */}
+                <TreeMap
+                  // treeData={treemapDataArray}
+                  chartWidth={chartWidth}
+                  visDataTotal={visDataTotal}
+                  // chartData={beteiligteData}
+                  visData={visData}
+                  smallMobileBreakpoint={smallMobileBreakpoint}
+                  // fontSizeScale={fontSizeScale}
+                  // svgFontSize={svgFontSize}
+                  svgFontSize={svgFontSize}
+                  chartWidthDomain={chartWidthDomain}
+                />
+                <KategBarChart
+                  // variableCount={kategCount}
+                  // visDataTotal={visDataTotal}
+                  chartWidth={chartWidth}
+                  visData={visData}
+                  smallMobileBreakpoint={smallMobileBreakpoint}
+                  svgFontSize={svgFontSize}
+                  chartWidthDomain={chartWidthDomain}
+                />
+                <WeekHourHeatmap
+                  visData={visData}
+                  // weekHourCount={weekHourCount}
+                  chartWidth={chartWidth}
+                  // smallMobileBreakpoint={smallMobileBreakpoint}
+                  svgFontSize={svgFontSize}
+                  chartWidthDomain={chartWidthDomain}
+                />
+                <ColumnChartSmallMultiple
+                  visData={visData}
+                  chartWidth={chartWidth}
+                  svgFontSize={svgFontSize}
+                  // chartWidthDomain={chartWidthDomain}
+                />
+                <LichtDonutChart
+                  // variableCount={lichtCount}
+                  // visDataTotal={visDataTotal}
+                  chartWidth={chartWidth}
+                  visData={visData}
+                  svgFontSize={svgFontSize}
+                  // chartWidthDomain={chartWidthDomain}
+                  // mobileBreakpoint={mobileBreakpoint}
+                  // smallMobileBreakpoint={smallMobileBreakpoint}
+                />
+                <StrasseDonutChart
+                  // variableCount={strasseCount}
+                  // visDataTotal={visDataTotal}
+                  chartWidth={chartWidth}
+                  visData={visData}
+                  svgFontSize={svgFontSize}
+                  // chartWidthDomain={chartWidthDomain}
+                  // mobileBreakpoint={mobileBreakpoint}
+                  // smallMobileBreakpoint={smallMobileBreakpoint}
+                />
 
-                  <ArtBarChart
-                    // variableCount={artCount}
-                    // visDataTotal={visDataTotal}
-                    chartWidth={chartWidth}
-                    visData={visData}
-                    svgFontSize={svgFontSize}
-                  />
-                  {/* </TestContext.Provider> */}
-                  {/* </SVGFontSizeContext.Provider> */}
-                  {/* </SpringConfigContext.Provider> */}
-                </AnimationProvider>
+                <ArtBarChart
+                  // variableCount={artCount}
+                  // visDataTotal={visDataTotal}
+                  chartWidth={chartWidth}
+                  visData={visData}
+                  svgFontSize={svgFontSize}
+                />
+                {/* </TestContext.Provider> */}
+                {/* </SVGFontSizeContext.Provider> */}
+                {/* </SpringConfigContext.Provider> */}
+                {/* </AnimationProvider> */}
               </VizWrapper>
               {/* Ab hier Numbers, Line Charts, MonthYearHeatmap */}
               {/* <LichtLollipopChart

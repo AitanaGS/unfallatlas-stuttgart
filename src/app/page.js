@@ -13,6 +13,10 @@ import { timeParse } from 'd3-time-format';
 //   SpringConfigContext,
 //   springConfig,
 // } from '@/contextProvider/SpringConfigContextProvider';
+import {
+  AnimationProvider,
+  AnimationContext,
+} from '@/context/AnimationContext';
 
 // export const SpringConfigContext = React.createContext();
 
@@ -100,7 +104,11 @@ export default function Home() {
   return (
     <main>
       {/* <SpringConfigContext.Provider value={springConfig}> */}
-      {initialData && <Dashboard initialData={initialData} />}
+      {initialData && (
+        <AnimationProvider>
+          <Dashboard initialData={initialData} />
+        </AnimationProvider>
+      )}
       {/* </SpringConfigContext.Provider> */}
 
       {/* {loading && <div>Loading...</div>} */}

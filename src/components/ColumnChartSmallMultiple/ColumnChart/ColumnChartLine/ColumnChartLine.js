@@ -55,10 +55,18 @@ function ColumnChartLine({
     meanMonthData && (
       <animated.line
         x1={0}
-        // y1={yScale(meanMonthData)}
+        // y1={
+        //   reduceMotion
+        //     ? yScale(meanMonthData) || innerHeight
+        //     : spring.y1
+        // }
         y1={spring.y1}
         x2={innerWidth}
-        // y2={yScale(meanMonthData)}
+        // y2={
+        //   reduceMotion
+        //     ? yScale(meanMonthData) || innerHeight
+        //     : spring.y2
+        // }
         y2={spring.y2}
         stroke={COLORS.gray.dark}
         strokeWidth="2"
