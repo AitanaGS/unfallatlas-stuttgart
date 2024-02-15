@@ -246,7 +246,7 @@ const FormWrapper = styled.form`
   flex-wrap: wrap;
   max-width: 100%; // 500px */
   width: ${(props) => props.chartWidth}px;
-  margin: 10px 0;
+  /* margin: 10px 0; */
   /* border: none; */
 `;
 
@@ -326,6 +326,7 @@ const Label = styled.label`
   position: relative;
   padding-left: 30px;
   margin: 5px;
+
   /* margin-bottom: 12px; */
   cursor: pointer;
   /* font-size: 22px; */
@@ -353,8 +354,8 @@ const Checkmark = styled.span`
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px; /* Increased size for the checkmark */
-  width: 25px; /* Increased size for the checkmark */
+  height: 25px;
+  width: 25px;
   /* background-color: rgba(255, 238, 199, 1); */
   /* background-color: rgba(255, 247, 228, 1); */
   background-color: ${(props) => props.colors.yellow.medium};

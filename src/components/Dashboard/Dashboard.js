@@ -56,6 +56,7 @@ import {
 } from '@/context/AnimationContext';
 import { Triangle } from 'react-loader-spinner';
 import { COLORS } from '@/utils/constants';
+import Note from '../Note';
 // import { SVGFontSizeContext } from '@/contextProvider/SVGFontSizeContextProvider';
 // import { tidy, select } from '@tidyjs/tidy';
 // import { Quattrocento, Lato } from 'next/font/google';
@@ -599,6 +600,8 @@ function Dashboard({ initialData }) {
                   selectHeatmap={selectHeatmap}
                   setTotalMapData={setTotalMapData}
                   chartWidth={chartWidth}
+                  svgFontSize={svgFontSize}
+                  layout={layout}
                 />
                 {/* <CheckboxWrapper> */}
                 {/* <LeafletHeatCheckbox
@@ -612,6 +615,26 @@ function Dashboard({ initialData }) {
                   // colorScale={undefined}
                   // max={undefined}
                 />
+                {/* <CheckboxWrapper>
+                  <FilterCheckboxes
+                    filter={filter}
+                    setFilter={setFilter}
+                    allFilter={allFilter}
+                    setAllFilter={setAllFilter}
+                    setFilteringMode={setFilteringMode}
+                    chartWidth={chartWidth}
+                    feature="Unfallbeteiligung"
+                  />
+                  <FilterCheckboxes
+                    filter={kategFilter}
+                    setFilter={setKategFilter}
+                    allFilter={allKategFilter}
+                    setAllFilter={setAllKategFilter}
+                    setFilteringMode={setKategFilteringMode}
+                    chartWidth={chartWidth}
+                    feature="Schweregrad"
+                  />
+                </CheckboxWrapper> */}
                 <FilterCheckboxes
                   filter={filter}
                   setFilter={setFilter}
@@ -643,6 +666,54 @@ function Dashboard({ initialData }) {
                 {/* <AnimationProvider> */}
                 {/* <SVGFontSizeContext.Provider value={SVGFontSize}> */}
                 {/* <TestContext.Provider value={springConfig}> */}
+                {/* <CheckboxWrapper> */}
+                {/* <Note svgFontSize={svgFontSize}>
+                    <p>
+                      Die Datenvisualisierungen beziehen sich auf den
+                      ausgewählten Abschnitt. <br />
+                      Verwende die Checkboxen, um die Unfälle nach
+                      bestimmten Kriterien zu filtern.
+                    </p>
+                  </Note> */}
+                {/* <FilterCheckboxes
+                    filter={filter}
+                    setFilter={setFilter}
+                    allFilter={allFilter}
+                    setAllFilter={setAllFilter}
+                    setFilteringMode={setFilteringMode}
+                    chartWidth={chartWidth}
+                    feature="Unfallbeteiligung"
+                  />
+                  <FilterCheckboxes
+                    filter={kategFilter}
+                    setFilter={setKategFilter}
+                    allFilter={allKategFilter}
+                    setAllFilter={setAllKategFilter}
+                    setFilteringMode={setKategFilteringMode}
+                    chartWidth={chartWidth}
+                    feature="Schweregrad"
+                  />
+                </CheckboxWrapper> */}
+                <Note
+                  svgFontSize={svgFontSize}
+                  margin={`0px 0 -20px 10px`}
+                >
+                  <p>
+                    Bitte beachte, dass die Verkehrsdichte auf den
+                    Straßen variiert und somit auch die
+                    Wahrscheinlichkeit für Unfälle unterschiedlich
+                    ist. Daher sollten Straßen oder Abschnitte nicht
+                    direkt miteinander verglichen werden.
+                  </p>
+                </Note>
+                {/* <Number
+                  number={visDataTotal}
+                  label={'Gesamt'}
+                  svgFontSize={svgFontSize}
+                  // colorScale={undefined}
+                  // max={undefined}
+                /> */}
+
                 <TreeMap
                   // treeData={treemapDataArray}
                   chartWidth={chartWidth}
@@ -851,6 +922,17 @@ const dashboardWrapperVariants = {
   max-width: 1200px;
   margin: 0 auto;
   `,
+  // grid: `
+  // display: grid;
+  // display: grid;
+  // width: 100%;
+  // grid-column: 1 / 3;
+  // grid-column-gap: 20px;
+  // isolation: isolate;
+  // max-width: 1200px;
+  // margin: 0 auto;
+  // grid-template-columns: auto 1fr; /* Assuming the first column is sticky and the second one can scroll */
+  // `,
 };
 
 const DashboardWrapper = styled.div`
@@ -920,6 +1002,18 @@ const inputWrapperVariants = {
     z-index: 2;
     width: 100%;
   `,
+  //   grid: `
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: flex-start;
+  //   justify-content: start;
+  //   grid-column: 1;
+  //   position: sticky;
+  //   top: 0px;
+  //   z-index: 2;
+  //   width: 100%;
+  //   height: 100vh;
+  // `,
 };
 
 const InputWrapper = styled.div`
@@ -969,7 +1063,7 @@ const vizWrapperVariants = {
   flex: ``,
   grid: `
     grid-column: 2;
-    margin-top: 80px;
+    margin-top: 100px;
   `,
 };
 
@@ -981,10 +1075,13 @@ const VizWrapper = styled.div`
   gap: ${({ vizWrapperGap }) => `${vizWrapperGap}px`};
 `;
 
+// const CheckboxWrapper = styled.div``;
+
 const CheckboxWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: 100%; // 500px
+  gap: 5px;
 `;
 
 const BarChartWrapper = styled.div`

@@ -5,7 +5,7 @@ import { COLORS } from '../../utils/constants';
 import styled from 'styled-components';
 // import { useSpring, animated } from '@react-spring/web';
 
-function Number({ number, label }) {
+function Number({ number, label, svgFontSize }) {
   // console.log(
   //   'number',
   //   number,
@@ -18,7 +18,7 @@ function Number({ number, label }) {
   // const width = 150;
   // const height = 100;
   const width = 90;
-  const height = 40;
+  const height = 40; // 40;
 
   // const spring = useSpring({
   //   // // rectX: xScale(0),
@@ -52,12 +52,22 @@ function Number({ number, label }) {
   // });
   return (
     <NumberWrapper>
-      {label}:
+      <p style={{ marginRight: '10px' }}>{label}:</p>
       <ChartContainer width={width} height={height}>
         {/* <text x={10} y={10}>
         {number}
       </text> */}
         <g>
+          {/* <text
+            x={0}
+            y={0}
+            textAnchor="auto"
+            dominantBaseline="hanging"
+            className="svg-title"
+            fontSize={`${svgFontSize.title}rem`}
+          >
+            {label}:
+          </text> */}
           <rect
             width={width}
             // width={spring.rectWidth}
@@ -87,6 +97,8 @@ function Number({ number, label }) {
             // dominantBaseline={'hanging'}
             dominantBaseline={'middle'}
             textAnchor="middle"
+            // className="svg-title"
+            // fontSize={`${svgFontSize.text}rem`}
             style={{
               fontSize: '1.2rem',
               fontWeight: 'bold',
@@ -116,6 +128,9 @@ function Number({ number, label }) {
 
 const NumberWrapper = styled.div`
   font-weight: 700;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
 `;
 
 export default React.memo(Number);

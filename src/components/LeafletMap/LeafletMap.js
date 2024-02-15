@@ -14,6 +14,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../../leaflet-heat/leaflet-heat';
 import styled from 'styled-components';
+import Note from '../Note';
 // import 'leaflet-spin';
 // import 'leaflet-loading';
 // import 'leaflet-loading/src/Control.Loading.css';
@@ -80,6 +81,8 @@ function LeafletMap({
   filterKategData,
   allKategFilter,
   kategFilter,
+  svgFontSize,
+  layout,
 }) {
   // here
   const mapRef = useRef(null);
@@ -504,36 +507,56 @@ function LeafletMap({
   // console.log('render');
   return (
     chartWidth && (
-      <MapWrapper
-        chartWidth={chartWidth}
-        // loadingControl={true}
-        // id="map"
-        // className="leaflet-map"
-        // ref={mapRef}
-      >
-        <div
-          id="map"
-          className="leaflet-map"
-          ref={mapRef}
+      <>
+        {/* <Note svgFontSize={svgFontSize} margin={`10px 0 5px 0`}>
+          <p>
+            Bitte beachte, dass die Verkehrsdichte auf den Straßen
+            variiert und somit auch die Wahrscheinlichkeit für Unfälle
+            unterschiedlich ist. Daher sollten Straßen oder Abschnitte
+            nicht direkt miteinander verglichen werden.
+          </p>
+        </Note> */}
+        <MapWrapper
+          chartWidth={chartWidth}
           // loadingControl={true}
-          style={{
-            // border: '5px solid rgba(97, 90, 74, 1)',
-            border: '5px solid rgba(104, 104, 104, 1)',
-            borderRadius: '10px',
-          }}
-        ></div>
-      </MapWrapper>
+          // id="map"
+          // className="leaflet-map"
+          // ref={mapRef}
+        >
+          <div
+            id="map"
+            className="leaflet-map"
+            ref={mapRef}
+            // loadingControl={true}
+            style={{
+              // border: '5px solid rgba(97, 90, 74, 1)',
+              border: '5px solid rgba(104, 104, 104, 1)',
+              borderRadius: '10px',
+            }}
+          ></div>
+        </MapWrapper>
+        {/* <Note svgFontSize={svgFontSize} margin={`5px 0 5px 0`}>
+          <p>
+            Zoom in einen Abschnitt, um ihn genauer zu betrachten. Für
+            mehr Informationen zu einzelen Unfällen, klick auf die
+            Kreise und Warnschilder.
+          </p>
+        </Note> */}
+      </>
     )
   );
 }
 
 const MapWrapper = styled.div`
-  height: 300px; // 400px
+  /* height: 300px; // 400px */
+  /* height: 10%; // 400px */
   /* height: 50vh; */
   /* width: 400px; */
   position: relative;
   width: ${(props) => props.chartWidth}px; // 400px
-  margin-top: 20px;
+  margin-top: 25px;
+  /* margin-top: 5px; */
+  /* margin-bottom: 100px; */
 `;
 
 export default React.memo(LeafletMap);
