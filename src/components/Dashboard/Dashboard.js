@@ -538,6 +538,7 @@ function Dashboard({ initialData }) {
   const { reduceMotion } = useContext(AnimationContext);
 
   // console.log('reducemotion', reduceMotion);
+  const vizWrapperGap = 40;
 
   return (
     visData && (
@@ -636,6 +637,7 @@ function Dashboard({ initialData }) {
               <VizWrapper
                 layout={layout}
                 dashboardWidth={dashboardWidth}
+                vizWrapperGap={vizWrapperGap}
               >
                 {/* <SpringConfigContext.Provider value={springConfig}> */}
                 {/* <AnimationProvider> */}
@@ -652,6 +654,7 @@ function Dashboard({ initialData }) {
                   // svgFontSize={svgFontSize}
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
+                  vizWrapperGap={vizWrapperGap}
                 />
                 <KategBarChart
                   // variableCount={kategCount}
@@ -661,6 +664,7 @@ function Dashboard({ initialData }) {
                   smallMobileBreakpoint={smallMobileBreakpoint}
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
+                  vizWrapperGap={vizWrapperGap}
                 />
                 <WeekHourHeatmap
                   visData={visData}
@@ -674,6 +678,7 @@ function Dashboard({ initialData }) {
                   visData={visData}
                   chartWidth={chartWidth}
                   svgFontSize={svgFontSize}
+                  vizWrapperGap={vizWrapperGap}
                   // chartWidthDomain={chartWidthDomain}
                 />
                 <LichtDonutChart
@@ -972,7 +977,8 @@ const VizWrapper = styled.div`
   ${(props) => vizWrapperVariants[props.layout]}
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  /* gap: 40px; */
+  gap: ${({ vizWrapperGap }) => `${vizWrapperGap}px`};
 `;
 
 const CheckboxWrapper = styled.div`

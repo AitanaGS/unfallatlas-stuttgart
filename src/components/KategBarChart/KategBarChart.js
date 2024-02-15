@@ -10,6 +10,7 @@ import { useSpring, useSprings, animated } from '@react-spring/web';
 import KategBarChartBar from './KategBarChartBar';
 import styled from 'styled-components';
 import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
+import Note from '../Note';
 
 // const kategorienSorted = [
 //   'Unfall mit Schwerverletzten/Getöteten',
@@ -29,6 +30,7 @@ function KategBarChart({
   smallMobileBreakpoint,
   svgFontSize,
   chartWidthDomain,
+  vizWrapperGap,
 }) {
   // const [visData, setVisData] = useState(data);
 
@@ -340,19 +342,20 @@ function KategBarChart({
   // TODO: check useRef
 
   return (
-    <ChartContainer width={width} height={height}>
-      <text
-        x={10}
-        // y={4}
-        y={4}
-        textAnchor="auto"
-        dominantBaseline="hanging"
-        className="svg-title"
-        fontSize={`${svgFontSize.title}rem`}
-      >
-        Schweregrad des Unfalls
-      </text>
-      {/* <text
+    <>
+      <ChartContainer width={width} height={height}>
+        <text
+          x={10}
+          // y={4}
+          y={4}
+          textAnchor="auto"
+          dominantBaseline="hanging"
+          className="svg-title"
+          fontSize={`${svgFontSize.title}rem`}
+        >
+          Schweregrad des Unfalls
+        </text>
+        {/* <text
         x={10}
         y={25}
         textAnchor="auto"
@@ -362,11 +365,11 @@ function KategBarChart({
       >
         Unfall mit
       </text> */}
-      <g
-        // ref={barChartRef}
-        transform={`translate(${margin.left}, ${margin.top})`}
-      >
-        {/* {springs.map((spring, i) => (
+        <g
+          // ref={barChartRef}
+          transform={`translate(${margin.left}, ${margin.top})`}
+        >
+          {/* {springs.map((spring, i) => (
           <g key={kategorienSorted[i]}>
             <animated.rect
               x={xScale(0)}
@@ -384,7 +387,7 @@ function KategBarChart({
             </animated.text>
           </g>
         ))} */}
-        {/* <rect
+          {/* <rect
           width={innerWidth}
           height={innerHeight}
           // border={'2px solid blue'}
@@ -398,55 +401,85 @@ function KategBarChart({
             // fill: 'transparent',
           }}
         /> */}
-        {/* {children} */}
-        {/* <BarXAxis variableArray={kategorien} /> */}
+          {/* {children} */}
+          {/* <BarXAxis variableArray={kategorien} /> */}
 
-        {kategorienSorted.map((kat, i) => (
-          <KategBarChartBar
-            key={kat}
-            xScale={xScale}
-            yScale={yScale}
-            kategCount={kategCountMap.get(kat)}
-            // kategCountNumber={kategCount.get(d)}
-            // visDataTotal={visDataTotal}
-            kat={kat}
-            svgFontSize={svgFontSize}
-          />
-          // <g key={d}>
-          //   <rect
-          //     x={xScale(0)}
-          //     y={yScale(d)}
-          //     width={xScale(variableCount.get(d))}
-          //     height={yScale.bandwidth()}
-          //     fill="#69b3a2"
-          //   />
-          //   <text
-          //     x={xScale(variableCount.get(d)) + 10}
-          //     y={yScale(d) + yScale.bandwidth() / 2}
-          //     style={{ fontSize: '0.8rem' }}
-          //   >
-          //     {variableCount.get(d)}
-          //     {/* {`${Math.round(
-          //       (variableCount.get(d) / visDataTotal) * 100
-          //     )} %`} */}
-          //   </text>
-          // </g>
-        ))}
-      </g>
-      <KategBarKatAxis
-        yScale={yScale}
-        innerHeight={innerHeight}
-        margin={margin}
-        kat={kategorienSorted}
+          {kategorienSorted.map((kat, i) => (
+            <KategBarChartBar
+              key={kat}
+              xScale={xScale}
+              yScale={yScale}
+              kategCount={kategCountMap.get(kat)}
+              // kategCountNumber={kategCount.get(d)}
+              // visDataTotal={visDataTotal}
+              kat={kat}
+              svgFontSize={svgFontSize}
+            />
+            // <g key={d}>
+            //   <rect
+            //     x={xScale(0)}
+            //     y={yScale(d)}
+            //     width={xScale(variableCount.get(d))}
+            //     height={yScale.bandwidth()}
+            //     fill="#69b3a2"
+            //   />
+            //   <text
+            //     x={xScale(variableCount.get(d)) + 10}
+            //     y={yScale(d) + yScale.bandwidth() / 2}
+            //     style={{ fontSize: '0.8rem' }}
+            //   >
+            //     {variableCount.get(d)}
+            //     {/* {`${Math.round(
+            //       (variableCount.get(d) / visDataTotal) * 100
+            //     )} %`} */}
+            //   </text>
+            // </g>
+          ))}
+        </g>
+        <KategBarKatAxis
+          yScale={yScale}
+          innerHeight={innerHeight}
+          margin={margin}
+          kat={kategorienSorted}
+          svgFontSize={svgFontSize}
+          chartWidth={chartWidth}
+          smallMobileBreakpoint={smallMobileBreakpoint}
+        />
+        {/* <BarXAxis variableArray={kategorien} /> */}
+        {/* <Bar /> */}
+      </ChartContainer>
+      <Note
         svgFontSize={svgFontSize}
-        chartWidth={chartWidth}
-        smallMobileBreakpoint={smallMobileBreakpoint}
-      />
-      {/* <BarXAxis variableArray={kategorien} /> */}
-      {/* <Bar /> */}
-    </ChartContainer>
+        margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 10px`}
+      >
+        <p>
+          Für die Zurodnung war die jeweils schwerste Unfallfolge
+          entscheidend.
+        </p>
+      </Note>
+      {/* <NoteWrapper
+        svgFontSize={svgFontSize}
+        vizWrapperGap={vizWrapperGap}
+        margin={margin}
+      >
+        <p>
+          Für die Zurodnung war die jeweils schwerste Unfallfolge
+          entscheidend.
+        </p>
+      </NoteWrapper> */}
+    </>
   );
 }
+
+const NoteWrapper = styled.div`
+  /* margin-top: -60px; */
+  margin-top: ${({ margin, vizWrapperGap }) =>
+    `${-(margin.bottom + vizWrapperGap + 5)}px`};
+  margin-left: 10px;
+  font-size: ${({ svgFontSize }) => `${svgFontSize.text}rem`};
+  font-family: var(--font-noto-sans);
+  color: rgba(59, 59, 59, 1);
+`;
 
 export default React.memo(KategBarChart);
 

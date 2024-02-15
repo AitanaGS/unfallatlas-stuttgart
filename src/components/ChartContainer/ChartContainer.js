@@ -26,7 +26,7 @@ const ChartWrapper = styled.div`
   /* max-width: 500px; */
   /* margin: 40px 0px 5px 0px; */
   /* width: 100%; */
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 `;
 
 export default React.memo(forwardRef(ChartContainer));

@@ -16,6 +16,8 @@ import { COLORS } from '../../utils/constants';
 // import useRolledUpMap from '@/hooks/useRolledUpMap';
 import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
 // import { SVGFontSizeContext } from '@/contextProvider/SVGFontSizeContextProvider';
+import styled from 'styled-components';
+import Note from '../Note';
 
 function TreeMap({
   chartWidth,
@@ -26,6 +28,7 @@ function TreeMap({
   chartWidthDomain,
   // fontSizeScale,
   // svgFontSize,
+  vizWrapperGap,
 }) {
   const width = chartWidth; //|| 300; // 250
   const height = 255;
@@ -226,68 +229,118 @@ function TreeMap({
   // console.log('chartwidth', chartWidth);
 
   return (
-    <ChartContainer width={width} height={height}>
-      <text
-        x={margin.left}
-        y={4}
-        textAnchor="auto"
-        dominantBaseline="hanging"
-        className="svg-title"
-        fontSize={`${svgFontSize.title}rem`}
-      >
-        Beteiligte Verkehrsteilnehmer
-      </text>
-      {visDataTotal < 1 && (
+    <>
+      <ChartContainer width={width} height={height}>
         <text
           x={margin.left}
-          y={50}
+          y={4}
           textAnchor="auto"
           dominantBaseline="hanging"
-          fontSize={`${svgFontSize.text}rem`}
-          // className="svg-title"
+          className="svg-title"
+          fontSize={`${svgFontSize.title}rem`}
         >
-          keine Unfälle / keine Informationen verfügbar
+          Beteiligte Verkehrsteilnehmer
         </text>
-      )}
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        {root.leaves().map((d) => (
-          <TreeMapRect
-            key={d.data.name}
-            d={d}
-            colorScale={colorScale}
-            svgFontSize={svgFontSize}
-            // svgFontSize={svgFontSize}
-          />
-          // <g key={d.data.name}>
-          //   <rect
-          //     x={d.x0}
-          //     y={d.y0}
-          //     width={d.x1 - d.x0}
-          //     height={d.y1 - d.y0}
-          //     fill={colorScale(d.data.name)}
-          //     // fill={colorScale(d.value)}
-          //   />
-          //   <text
-          //     x={d.x0}
-          //     y={d.y0}
-          //     textAnchor="start"
-          //     dominantBaseline="hanging"
-          //   >
-          //     {d.value > 0 ? d.data.name : ''}
-          //   </text>
-          //   <text
-          //     x={d.x0}
-          //     y={d.y0 + 15}
-          //     textAnchor="start"
-          //     dominantBaseline="hanging"
-          //   >
-          //     {d.value > 0 ? d.value : ''}
-          //   </text>
-          // </g>
-        ))}
-      </g>
-    </ChartContainer>
+        {visDataTotal < 1 && (
+          <text
+            x={margin.left}
+            y={50}
+            textAnchor="auto"
+            dominantBaseline="hanging"
+            fontSize={`${svgFontSize.text}rem`}
+            // className="svg-title"
+          >
+            keine Unfälle / keine Informationen verfügbar
+          </text>
+        )}
+        <g transform={`translate(${margin.left},${margin.top})`}>
+          {root.leaves().map((d) => (
+            <TreeMapRect
+              key={d.data.name}
+              d={d}
+              colorScale={colorScale}
+              svgFontSize={svgFontSize}
+              // svgFontSize={svgFontSize}
+            />
+            // <g key={d.data.name}>
+            //   <rect
+            //     x={d.x0}
+            //     y={d.y0}
+            //     width={d.x1 - d.x0}
+            //     height={d.y1 - d.y0}
+            //     fill={colorScale(d.data.name)}
+            //     // fill={colorScale(d.value)}
+            //   />
+            //   <text
+            //     x={d.x0}
+            //     y={d.y0}
+            //     textAnchor="start"
+            //     dominantBaseline="hanging"
+            //   >
+            //     {d.value > 0 ? d.data.name : ''}
+            //   </text>
+            //   <text
+            //     x={d.x0}
+            //     y={d.y0 + 15}
+            //     textAnchor="start"
+            //     dominantBaseline="hanging"
+            //   >
+            //     {d.value > 0 ? d.value : ''}
+            //   </text>
+            // </g>
+          ))}
+        </g>
+        {/* <text
+          x={margin.left}
+          y={innerHeight + margin.top + margin.bottom}
+        >
+          An einem Unfall können ein oder mehrere Verkehrsmittel /
+          Personen beteiligt sein.
+        </text> */}
+      </ChartContainer>
+      <Note
+        svgFontSize={svgFontSize}
+        margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 ${
+          margin.left
+        }px`}
+        // vizWrapperGap={vizWrapperGap}
+        // margin={margin}
+      >
+        <p>
+          An einem Unfall können ein oder mehrere Verkehrsmittel /
+          Personen beteiligt sein.{' '}
+        </p>
+        <p>
+          Sonstige: zum Beispiel Bus, Straßenbahn oder
+          Güterkraftfahrzeug.
+        </p>
+      </Note>
+      {/* <NoteWrapper
+        svgFontSize={svgFontSize}
+        vizWrapperGap={vizWrapperGap}
+        margin={margin}
+      >
+        <p>
+          An einem Unfall können ein oder mehrere Verkehrsmittel /
+          Personen beteiligt sein.{' '}
+        </p>
+        <p>
+          Sonstige: zum Beispiel Bus, Straßenbahn oder
+          Güterkraftfahrzeug.
+        </p>
+      </NoteWrapper> */}
+    </>
   );
 }
+
+// const NoteWrapper = styled.div`
+//   /* margin-top: -60px; */
+//   margin-top: ${({ margin, vizWrapperGap }) =>
+//     `${-(margin.bottom + vizWrapperGap + 5)}px`};
+//   margin-left: ${({ margin }) => `${margin.left}px`};
+//   font-size: ${({ svgFontSize }) => `${svgFontSize.text}rem`};
+//   font-family: var(--font-noto-sans);
+//   color: rgba(59, 59, 59, 1);
+// `;
 
 export default React.memo(TreeMap);

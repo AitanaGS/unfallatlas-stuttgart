@@ -19,6 +19,7 @@ import {
   cross,
 } from 'd3-array';
 import useFixedRolledUpMapTwoVariables from '@/hooks/useFixedRolledUpMapTwoVariables';
+import Note from '../Note';
 
 const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 const monate = [
@@ -46,6 +47,7 @@ function ColumnChartSmallMultiple({
   chartWidth,
   svgFontSize,
   // chartWidthDomain,
+  vizWrapperGap,
 }) {
   // const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
@@ -297,6 +299,27 @@ function ColumnChartSmallMultiple({
         />
       ))} */}
       </SmallMultipleWrapper>
+      {/* <NoteWrapper
+        svgFontSize={svgFontSize}
+        vizWrapperGap={vizWrapperGap}
+        // margin={margin}
+      >
+        <p>
+          Die Linie gibt die durchschnittle Anzahl von Unfällen pro
+          Monat im jeweiligen Jahr an.
+        </p>
+      </NoteWrapper> */}
+      <Note
+        svgFontSize={svgFontSize}
+        // vizWrapperGap={vizWrapperGap}
+        margin={`0 0 0 10px`}
+        // margin={margin}
+      >
+        <p>
+          Die Linie gibt die durchschnittle Anzahl von Unfällen pro
+          Monat im jeweiligen Jahr an.
+        </p>
+      </Note>
     </SvgWrapper>
   );
 }
@@ -315,6 +338,16 @@ const SvgWrapper = styled.div`
   /* max-width: 500px; */
   /* max-width: ${(props) => props.chartWidth}; */
   width: ${(props) => props.chartWidth}px;
+`;
+
+const NoteWrapper = styled.div`
+  /* margin-top: -60px; */
+  /* margin-top: ${({ vizWrapperGap }) =>
+    `${-(vizWrapperGap + 5)}px`}; */
+  margin-left: 10px;
+  font-size: ${({ svgFontSize }) => `${svgFontSize.text}rem`};
+  font-family: var(--font-noto-sans);
+  color: rgba(59, 59, 59, 1);
 `;
 
 export default React.memo(ColumnChartSmallMultiple);
