@@ -131,6 +131,8 @@ const NumberWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 10px;
+  /* align-items: center; */
+  /* justify-content: center; */
 `;
 
 export default React.memo(Number);

@@ -124,6 +124,16 @@ function Dashboard({ initialData }) {
   // const spinnerWrapperRef = useRef(null);
   const wrapperRef = useRef(null);
 
+  // const [windowHeight, setWindowHeight] = useState(100);
+  // const [totalWindowHeight, setTotalWindowHeight] = useState(100);
+
+  // console.log(
+  //   'windowheight',
+  //   windowHeight,
+  //   'totalwindowheight',
+  //   totalWindowHeight
+  // );
+
   // const dashboardPaddingScale = scaleLinear()
   //   .domain([300, 1000])
   //   .range([10, 50])
@@ -267,6 +277,8 @@ function Dashboard({ initialData }) {
     []
   );
 
+  const scrollbarWidth = useScrollbarWidth();
+
   // here
   useEffect(() => {
     // const handleResize = throttle((entries) => {
@@ -299,23 +311,34 @@ function Dashboard({ initialData }) {
           //   entry.target === spinnerWrapperRef.current) &&
           // entry.contentRect
         ) {
-          const size = entry.contentRect.width; // + 12
-          setWindowWidth(size); // layout
+          const sizeWidth = entry.contentRect.width; // + 12
+          setWindowWidth(sizeWidth); // layout
           // setDashboardWidth(min([entry.contentRect.width, 700])); // layout
           setDashboardWidth(
-            size <= mobileBreakpoint
-              ? min([size, mobileBreakpoint])
-              : size
+            sizeWidth <= mobileBreakpoint
+              ? min([sizeWidth, mobileBreakpoint])
+              : sizeWidth
           );
 
+          // const newChartWidth =
+          //   sizeWidth <= mobileBreakpoint
+          //     ? min([sizeWidth, mobileBreakpoint])
+          //     : sizeWidth / 2;
+
           const newChartWidth =
-            size <= mobileBreakpoint
-              ? min([size, mobileBreakpoint])
-              : size / 2;
+            sizeWidth <= mobileBreakpoint
+              ? min([sizeWidth, mobileBreakpoint]) -
+                scrollbarWidth * 2
+              : sizeWidth / 2 - scrollbarWidth * 2;
 
           setChartWidth(newChartWidth);
 
-          setLayout(size <= mobileBreakpoint ? 'flex' : 'grid');
+          setLayout(sizeWidth <= mobileBreakpoint ? 'flex' : 'grid');
+
+          // const sizeHeight = entry.contentRect.height;
+          // setWindowHeight(sizeHeight);
+          // const wrapperHeight = wrapperRef.current.scrollHeight;
+          // setTotalWindowHeight(wrapperHeight);
 
           // setLoading(false);
           const delay = 1500;
@@ -366,6 +389,7 @@ function Dashboard({ initialData }) {
     textFontSizeScale,
     titleFontSizeScale,
     wrapperRef,
+    scrollbarWidth,
     // loading,
     // spinnerWrapperRef,
   ]);
@@ -504,8 +528,6 @@ function Dashboard({ initialData }) {
     return visData.length;
   }, [visData]);
 
-  const scrollbarWidth = useScrollbarWidth();
-
   // TODO: check client component in next
   // TODO: dataTotal/visDataTotal performance/correct use of useMemo
   // TODO: gkfz und sonstige mit reinnehmen? ja, als sonstige gesamt
@@ -568,7 +590,7 @@ function Dashboard({ initialData }) {
             <DashboardWrapper
               ref={wrapperRef}
               dashboardWidth={dashboardWidth}
-              scrollbarWidth={scrollbarWidth}
+              // scrollbarWidth={scrollbarWidth}
               layout={layout}
               // dashboardPaddingScale={dashboardPaddingScale}
               // mobileBreakpoint={mobileBreakpoint}
@@ -1001,18 +1023,21 @@ const inputWrapperVariants = {
     top: 0px;
     z-index: 2;
     width: 100%;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden
   `,
-  //   grid: `
+  // grid: `
   //   display: flex;
   //   flex-direction: column;
   //   align-items: flex-start;
   //   justify-content: start;
   //   grid-column: 1;
+  //   height: max-content;
   //   position: sticky;
   //   top: 0px;
   //   z-index: 2;
   //   width: 100%;
-  //   height: 100vh;
   // `,
 };
 
