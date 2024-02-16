@@ -523,17 +523,20 @@ function LeafletMap({
           // className="leaflet-map"
           // ref={mapRef}
         >
-          <div
+          <LeafletWrapper
             id="map"
-            className="leaflet-map"
+            // className="leaflet-map"
             ref={mapRef}
             // loadingControl={true}
-            style={{
-              // border: '5px solid rgba(97, 90, 74, 1)',
-              border: '5px solid rgba(104, 104, 104, 1)',
-              borderRadius: '10px',
-            }}
-          ></div>
+            // style={{
+            //   // border: '5px solid rgba(97, 90, 74, 1)',
+            //   border: '5px solid rgba(104, 104, 104, 1)',
+            //   borderRadius: '10px',
+            //   height: '35vh',
+            //   width: '100%',
+            //   position: 'relative',
+            // }}
+          ></LeafletWrapper>
         </MapWrapper>
         {/* <Note svgFontSize={svgFontSize} margin={`5px 0 5px 0`}>
           <p>
@@ -557,6 +560,17 @@ const MapWrapper = styled.div`
   margin-top: 25px;
   /* margin-top: 5px; */
   /* margin-bottom: 100px; */
+`;
+
+const LeafletWrapper = styled.div`
+  /* position: relative;
+  width: ${(props) => props.chartWidth}px; // 400px
+  margin-top: 25px; */
+  border: 5px solid rgba(104, 104, 104, 1);
+  border-radius: 10px;
+  height: 35vh;
+  width: 100%;
+  position: relative;
 `;
 
 export default React.memo(LeafletMap);
