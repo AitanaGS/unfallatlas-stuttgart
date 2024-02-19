@@ -332,7 +332,8 @@ function WeekHourHeatmap({
     // <ChartContainer width={dms.width} height={dms.height} ref={ref}>
     <ChartContainer width={width} height={height}>
       <text
-        x={10}
+        // x={10}
+        x={0}
         y={4}
         textAnchor="auto"
         dominantBaseline="hanging"

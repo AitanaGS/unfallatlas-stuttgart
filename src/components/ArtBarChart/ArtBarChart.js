@@ -396,7 +396,7 @@ function ArtBarChart({
     top: 55, // 20
     right: 50, // 5
     bottom: 0,
-    left: 10, // 20 // 275 // 450 // 500 // 160
+    left: 0, // 10 // 20 // 275 // 450 // 500 // 160
   };
 
   // const innerWidth = width - margin.left - margin.right;
@@ -492,7 +492,8 @@ function ArtBarChart({
         yScaleBandwidth={yScaleBandwidth}
       /> */}
       <text
-        x={10}
+        // x={10}
+        x={margin.left}
         y={2}
         textAnchor="auto"
         dominantBaseline="hanging"

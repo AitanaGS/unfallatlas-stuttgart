@@ -29,6 +29,7 @@ function TreeMap({
   // fontSizeScale,
   // svgFontSize,
   vizWrapperGap,
+  scrollbarWidth,
 }) {
   const width = chartWidth; //|| 300; // 250
   const height = 255;
@@ -50,7 +51,7 @@ function TreeMap({
       top: 25, // 20
       right: marginRightScale(chartWidth), //40
       bottom: 10,
-      left: 10,
+      left: 0, // 10
     };
   }, [marginRightScale, chartWidth]);
 
@@ -301,8 +302,11 @@ function TreeMap({
       <Note
         svgFontSize={svgFontSize}
         margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 ${
-          margin.left
+          margin.left + scrollbarWidth
         }px`}
+        // margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 ${
+        //   margin.left
+        // }px`}
         // vizWrapperGap={vizWrapperGap}
         // margin={margin}
       >

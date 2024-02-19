@@ -719,7 +719,7 @@ function Dashboard({ initialData }) {
                 </CheckboxWrapper> */}
                 <Note
                   svgFontSize={svgFontSize}
-                  margin={`0px 0 -20px 10px`}
+                  margin={`0px 0 -20px ${scrollbarWidth}px`}
                 >
                   <p>
                     Bitte beachte, dass die Verkehrsdichte auf den
@@ -749,6 +749,7 @@ function Dashboard({ initialData }) {
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
                   vizWrapperGap={vizWrapperGap}
+                  scrollbarWidth={scrollbarWidth}
                 />
                 <KategBarChart
                   // variableCount={kategCount}
@@ -759,6 +760,7 @@ function Dashboard({ initialData }) {
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
                   vizWrapperGap={vizWrapperGap}
+                  scrollbarWidth={scrollbarWidth}
                 />
                 <WeekHourHeatmap
                   visData={visData}
@@ -774,6 +776,7 @@ function Dashboard({ initialData }) {
                   svgFontSize={svgFontSize}
                   vizWrapperGap={vizWrapperGap}
                   // chartWidthDomain={chartWidthDomain}
+                  scrollbarWidth={scrollbarWidth}
                 />
                 <LichtDonutChart
                   // variableCount={lichtCount}

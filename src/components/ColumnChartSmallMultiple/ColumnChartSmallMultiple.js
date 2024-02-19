@@ -48,6 +48,7 @@ function ColumnChartSmallMultiple({
   svgFontSize,
   // chartWidthDomain,
   vizWrapperGap,
+  scrollbarWidth,
 }) {
   // const jahre = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
@@ -256,6 +257,7 @@ function ColumnChartSmallMultiple({
         height={40}
       >
         <text
+          // x={10}
           x={10}
           y={8}
           textAnchor="auto"
@@ -312,8 +314,9 @@ function ColumnChartSmallMultiple({
       <Note
         svgFontSize={svgFontSize}
         // vizWrapperGap={vizWrapperGap}
-        margin={`0 0 0 10px`}
+        // margin={`0 0 0 10px`}
         // margin={margin}
+        margin={`0 0 0 ${10}px`}
       >
         <p>
           Die Linie gibt die durchschnittle Anzahl von Unfällen pro

@@ -32,6 +32,7 @@ function KategBarChart({
   svgFontSize,
   chartWidthDomain,
   vizWrapperGap,
+  scrollbarWidth,
 }) {
   // const [visData, setVisData] = useState(data);
 
@@ -346,8 +347,9 @@ function KategBarChart({
     <>
       <ChartContainer width={width} height={height}>
         <text
-          x={10}
+          // x={10}
           // y={4}
+          x={0}
           y={4}
           textAnchor="auto"
           dominantBaseline="hanging"
@@ -456,7 +458,12 @@ function KategBarChart({
       </ChartContainer>
       <Note
         svgFontSize={svgFontSize}
-        margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 10px`}
+        // margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 10px`}
+        margin={`${-(
+          margin.bottom +
+          vizWrapperGap +
+          5
+        )}px 0 0 ${scrollbarWidth}px`}
       >
         <p>
           Für die Zurodnung war die jeweils schwerste Unfallfolge
