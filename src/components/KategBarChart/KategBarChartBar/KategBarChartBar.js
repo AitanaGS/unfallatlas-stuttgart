@@ -13,6 +13,7 @@ function KategBarChartBar({
   // visDataTotal,
   kat,
   svgFontSize,
+  color,
 }) {
   // const springs = useSprings(
   //   kategorienSorted.length,
@@ -111,7 +112,8 @@ function KategBarChartBar({
         y={spring.rectY}
         width={spring.rectWidth}
         height={yScale.bandwidth()}
-        fill={COLORS.yellowOrange.light}
+        // fill={COLORS.yellowOrange.light}
+        fill={color}
       />
       <animated.text
         x={spring.textX}

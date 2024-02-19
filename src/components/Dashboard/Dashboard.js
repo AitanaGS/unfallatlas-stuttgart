@@ -573,8 +573,9 @@ function Dashboard({ initialData }) {
                 visible={true}
                 height="80"
                 width="80"
-                color={COLORS.yellow.medium}
+                // color={COLORS.yellow.medium}
                 // color="rgb(255,179,0)"
+                color={COLORS.orange.light}
                 ariaLabel="triangle-loading"
                 wrapperStyle={{}}
                 wrapperClass=""

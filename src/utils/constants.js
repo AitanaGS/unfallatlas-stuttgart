@@ -13,6 +13,10 @@ export const COLORS = {
     light: 'rgba(254, 196, 79, 1)',
     medium: 'rgba(236, 112, 20, 1)',
   },
+  orange: {
+    light: 'rgba(235, 124, 0, 1)',
+    dark: 'rgba(170, 62, 0, 1)',
+  },
   // orange: {
   //   light: 'rgba(252, 153, 77, 1)',
   //   medium: 'rgba(231, 93, 13, 1)',

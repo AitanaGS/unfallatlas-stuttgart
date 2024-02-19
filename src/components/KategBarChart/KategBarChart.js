@@ -11,6 +11,7 @@ import KategBarChartBar from './KategBarChartBar';
 import styled from 'styled-components';
 import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
 import Note from '../Note';
+import { COLORS } from '@/utils/constants';
 
 // const kategorienSorted = [
 //   'Unfall mit Schwerverletzten/Getöteten',
@@ -414,6 +415,11 @@ function KategBarChart({
               // visDataTotal={visDataTotal}
               kat={kat}
               svgFontSize={svgFontSize}
+              color={
+                kat === 'Unfall mit Leichtverletzten'
+                  ? COLORS.orange.light
+                  : COLORS.orange.dark
+              }
             />
             // <g key={d}>
             //   <rect
