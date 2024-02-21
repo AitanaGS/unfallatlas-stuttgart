@@ -91,6 +91,11 @@ function LeafletMap({
 
   const [zoom, setZoom] = useState(11);
   const [center, setCenter] = useState([48.7758, 9.1829]);
+  const [mapDescription, setMapDescription] = useState(
+    `Zoomstufe ${zoom}. Zentriert bei Breitengrad ${center[0].toFixed(
+      4
+    )} und Längengrad ${center[1].toFixed(4)}.`
+  );
   // const [currentData, setCurrentData] = useState(
   //   filterData(data, allFilter, filter)
   // );
@@ -249,17 +254,23 @@ function LeafletMap({
 
     const markerClusterGroup = L.markerClusterGroup({
       spiderfyOnMaxZoom: true,
-      // removeOutsideVisibleBounds: true,
+      removeOutsideVisibleBounds: true, // check accessibility
       chunkedLoading: true, // Enable chunked loading
       // disableClusteringAtZoom: 17, // 17 Disable clustering at higher zoom levels
       iconCreateFunction: selectHeatmap
         ? function (cluster) {
-            return L.divIcon({
-              html: '<b>' + cluster.getChildCount() + '</b>',
-              className: 'cluster',
-            });
+            const childCount = cluster.getChildCount();
+            const className = 'cluster-marker';
+            const html = `<div class="${className}" aria-label="Cluster mit ${childCount} Unfällen" tabindex="0">${childCount}</div>`;
+            return L.divIcon({ html, className });
           }
-        : undefined,
+        : // function (cluster) {
+          //   return L.divIcon({
+          //     html: '<b>' + cluster.getChildCount() + '</b>',
+          //     className: 'cluster',
+          //   });
+          // }
+          undefined,
     });
 
     // Check if necessary: Create a mapping of marker ID to marker instance
@@ -287,10 +298,12 @@ function LeafletMap({
     // const currentData = filterData(data, allFilter, filter);
 
     currentData.forEach((d) => {
+      // console.log('data in leaflet', d);
       points.push([d.lat, d.lon]);
       // const marker = L.marker([d.lat, d.lon]);
       const marker = L.marker([d.lat, d.lon], {
         // icon: customIcon, // Set the custom icon for each marker
+        alt: d.address2,
         icon:
           d.kateg2 === 'Unfall mit Leichtverletzten'
             ? yellowIcon
@@ -340,6 +353,11 @@ function LeafletMap({
 
     map.addLayer(markerClusterGroup);
 
+    // const updateMapInfo = () => {
+    //   setZoom(map.getZoom());
+    //   setCenter([map.getCenter().lat.toFixed(4), map.getCenter().lng.toFixed(4)]);
+    // };
+
     // L.control.spinner().addTo(map);
 
     // here, for zoom below 11 - dont remove
@@ -371,13 +389,32 @@ function LeafletMap({
         setTotalMapData(calculateTotalVisibleData(map, data)); // funktioniert
         // setTotalMapData(calculatedData);
         // setVisData(calculatedData);
-        setZoom(event.target.getZoom());
-        setCenter([
+
+        // here
+        // setZoom(map.getZoom());
+        // setCenter([
+        //   map.getCenter().lat.toFixed(4),
+        //   map.getCenter().lng.toFixed(4),
+        // ]);
+        // setZoom(event.target.getZoom());
+        // setCenter([
+        //   event.target.getCenter().lat,
+        //   event.target.getCenter().lng,
+        // ]);
+        const newCenter = [
           event.target.getCenter().lat,
           event.target.getCenter().lng,
-        ]);
-        // map.spin(false);
-        // map.spin(true);
+        ];
+
+        const newZoom = event.target.getZoom();
+
+        setCenter(newCenter);
+        setZoom(newZoom);
+        setMapDescription(
+          `Zoomstufe ${newZoom}. Zentriert bei Breitengrad ${newCenter[0].toFixed(
+            4
+          )} und Längengrad ${newCenter[1].toFixed(4)}.`
+        );
       }
     };
 
@@ -400,20 +437,33 @@ function LeafletMap({
       // console.log('zoom event', event, map, markerClusterGroup);
       // console.log('zoom');
       // map.spin(true);
-      setZoom(event.target.getZoom());
-      setCenter([
+
+      // here
+      // setZoom(event.target.getZoom());
+
+      setTotalMapData(calculateTotalVisibleData(map, data)); // funktiioniert
+
+      const newCenter = [
         event.target.getCenter().lat,
         event.target.getCenter().lng,
-      ]);
+      ];
 
-      // setMapData(calculateVisibleData(map, markerClusterGroup)); //here
-      // const calculatedData = calculateTotalVisibleData(map, data);
-      setTotalMapData(calculateTotalVisibleData(map, data)); // funktiioniert
-      // setTotalMapData(calculatedData);
-      // setVisData(calculatedData);
-      // setCurrentData(calculateVisibleData(map, markerClusterGroup));
-      // map.spin(false);
-      // map.spin(true);
+      const newZoom = event.target.getZoom();
+
+      setCenter(newCenter);
+      setZoom(newZoom);
+      // setCenter([
+      //   map.getCenter().lat.toFixed(4),
+      //   map.getCenter().lng.toFixed(4),
+      // ]);
+
+      // setTotalMapData(calculateTotalVisibleData(map, data)); // funktiioniert
+
+      setMapDescription(
+        `Zoomstufe ${newZoom}. Zentriert bei Breitengrad ${newCenter[0].toFixed(
+          4
+        )} und Längengrad ${newCenter[1].toFixed(4)}.`
+      );
     };
     const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500); // 500
 
@@ -479,6 +529,18 @@ function LeafletMap({
     orangeIcon,
   ]);
 
+  // const mapDescription = `Zoomstufe ${zoom}. Zentriert bei Breitengrad ${center[0].toFixed(
+  //   2
+  // )} und Längengrad ${center[1].toFixed(2)}.`;
+
+  // Update ARIA live region with map description
+  // useEffect(() => {
+  //   const liveRegion = document.getElementById('map-description');
+  //   if (liveRegion) {
+  //     liveRegion.textContent = mapDescription;
+  //   }
+  // }, [mapDescription]);
+
   // const customIcon = new L.Icon({
   //   iconUrl: '/leaflet-icons/marker-icon-2x.png',
   //   shadowUrl: '/leaflet-icons/marker-shadow.png',
@@ -523,10 +585,13 @@ function LeafletMap({
           // className="leaflet-map"
           // ref={mapRef}
         >
+          {/* <LiveRegion id="map-description" aria-live="polite" /> */}
           <LeafletWrapper
             id="map"
             // className="leaflet-map"
             ref={mapRef}
+            aria-roledescription="map"
+            aria-label={mapDescription}
             // loadingControl={true}
             // style={{
             //   // border: '5px solid rgba(97, 90, 74, 1)',
@@ -571,6 +636,13 @@ const LeafletWrapper = styled.div`
   height: 35vh;
   width: 100%;
   position: relative;
+`;
+
+const LiveRegion = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip: rect(0, 0, 0, 0);
 `;
 
 export default React.memo(LeafletMap);

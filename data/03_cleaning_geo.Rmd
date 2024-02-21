@@ -669,6 +669,8 @@ arten <- c("Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug",
          "Abkommen von Fahrbahn nach links",
          "Unfall anderer Art")
 
+address_to_remove <-", (Stuttgart, )?Baden-Württemberg, \\d{5}, Deutschland"
+
 accidents_final <- accidents_geo_clean_select %>%
   mutate(lon = xgcswgs84,
          lat = ygcswgs84,
@@ -731,6 +733,7 @@ accidents_final <- accidents_geo_clean_select %>%
          art = if_else(art == "Zusammenstoß mit anfahrendem/ anhaltendem/ruhendem Fahrzeug",
                        "Zusammenstoß mit anfahrendem / anhaltendem / ruhendem Fahrzeug", art),
          art = fct_relevel(art, arten)) %>%
+  mutate(address2 = str_replace_all(as.character(address), address_to_remove, "")) %>%
   relocate(zeit, .after = stunde) %>%
   relocate(kateg2, .after = kateg) %>%
   relocate(licht2, .after = licht) %>%
@@ -743,7 +746,8 @@ accidents_final <- accidents_geo_clean_select %>%
   relocate(istkradb, .after = istkrad) %>%
   relocate(istgkfzb, .after = istgkfz) %>%
   relocate(istsonstb, .after = istsonst) %>%
-  relocate(istsonst2b, .after = istsonst2)
+  relocate(istsonst2b, .after = istsonst2) %>%
+  relocate(address2, .after = address)
   
 ```
 

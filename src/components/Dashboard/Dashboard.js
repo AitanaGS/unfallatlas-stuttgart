@@ -142,11 +142,13 @@ function Dashboard({ initialData }) {
   const textFontSizeScale = scaleLinear()
     .domain(chartWidthDomain) //based on width
     .range([0.75, 1])
+    // .range([1, 0.75])
     .clamp(true);
 
   const titleFontSizeScale = scaleLinear()
     .domain(chartWidthDomain) //based on width
     .range([0.9, 1.3])
+    // .range([1.3, 0.9])
     .clamp(true);
 
   const svgFontSize = useMemo(() => {
