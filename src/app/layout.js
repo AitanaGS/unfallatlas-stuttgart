@@ -32,7 +32,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     // <SpringConfigContext.Provider value={springConfig}>
-    <html lang="en">
+    <html lang="de">
       {/* <body className={quattrocento.className}>{children}</body> */}
       {/* <meta
         name="viewport"

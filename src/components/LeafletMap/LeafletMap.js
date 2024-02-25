@@ -92,10 +92,15 @@ function LeafletMap({
   const [zoom, setZoom] = useState(11);
   const [center, setCenter] = useState([48.7758, 9.1829]);
   const [mapDescription, setMapDescription] = useState(
-    `Zoomstufe ${zoom}. Zentriert bei Breitengrad ${center[0].toFixed(
+    `Karte zentriert bei Breitengrad ${center[0].toFixed(
       4
-    )} und Längengrad ${center[1].toFixed(4)}.`
+    )} und Längengrad ${center[1].toFixed(4)} mit Zoomstufe ${zoom}.`
   );
+  // const [mapDescription, setMapDescription] = useState(
+  //   `Zoomstufe ${zoom}. Zentriert bei Breitengrad ${center[0].toFixed(
+  //     4
+  //   )} und Längengrad ${center[1].toFixed(4)}.`
+  // );
   // const [currentData, setCurrentData] = useState(
   //   filterData(data, allFilter, filter)
   // );
@@ -252,25 +257,41 @@ function LeafletMap({
     //   }
     // ).addTo(map);
 
+    // function ExampleIcon({ childCount }) {
+    //   return (
+    //     <div
+    //       className="cluster-marker"
+    //       ariaLabel={`Cluster mit ${childCount} Unfällen`}
+    //       tabIndex="0"
+    //       ariaRoleDescription="Cluster von Markierungen"
+    //     >
+    //       {childCount}
+    //     </div>
+    //   );
+    // }
+
     const markerClusterGroup = L.markerClusterGroup({
       spiderfyOnMaxZoom: true,
       removeOutsideVisibleBounds: true, // check accessibility
       chunkedLoading: true, // Enable chunked loading
       // disableClusteringAtZoom: 17, // 17 Disable clustering at higher zoom levels
-      iconCreateFunction: selectHeatmap
-        ? function (cluster) {
-            const childCount = cluster.getChildCount();
-            const className = 'cluster-marker';
-            const html = `<div class="${className}" aria-label="Cluster mit ${childCount} Unfällen" tabindex="0">${childCount}</div>`;
-            return L.divIcon({ html, className });
-          }
-        : // function (cluster) {
-          //   return L.divIcon({
-          //     html: '<b>' + cluster.getChildCount() + '</b>',
-          //     className: 'cluster',
-          //   });
-          // }
-          undefined,
+      // iconCreateFunction: selectHeatmap
+      //   ? function (cluster) {
+      //       const childCount = cluster.getChildCount();
+      //       const className = 'cluster-marker';
+      //       // html = renderToString(
+      //       //   <ExampleIcon childCount={childCount} />
+      //       // );
+      //       const html = `<div className="${className}" ariaLabel="Cluster mit ${childCount} Unfällen" tabIndex="0" ariaRoleDescription="Cluster von Markierungen">${childCount}</div>`;
+      //       return L.divIcon({ html, className });
+      //     }
+      //   : // function (cluster) {
+      //     //   return L.divIcon({
+      //     //     html: '<b>' + cluster.getChildCount() + '</b>',
+      //     //     className: 'cluster',
+      //     //   });
+      //     // }
+      //     undefined,
     });
 
     // Check if necessary: Create a mapping of marker ID to marker instance
@@ -411,9 +432,11 @@ function LeafletMap({
         setCenter(newCenter);
         setZoom(newZoom);
         setMapDescription(
-          `Zoomstufe ${newZoom}. Zentriert bei Breitengrad ${newCenter[0].toFixed(
+          `Karte zentriert bei Breitengrad ${newCenter[0].toFixed(
             4
-          )} und Längengrad ${newCenter[1].toFixed(4)}.`
+          )} und Längengrad ${newCenter[1].toFixed(
+            4
+          )} mit Zoomstufe ${newZoom}.`
         );
       }
     };
@@ -460,9 +483,14 @@ function LeafletMap({
       // setTotalMapData(calculateTotalVisibleData(map, data)); // funktiioniert
 
       setMapDescription(
-        `Zoomstufe ${newZoom}. Zentriert bei Breitengrad ${newCenter[0].toFixed(
+        `Karte zentriert bei Breitengrad ${newCenter[0].toFixed(
           4
-        )} und Längengrad ${newCenter[1].toFixed(4)}.`
+        )} und Längengrad ${newCenter[1].toFixed(
+          4
+        )} mit Zoomstufe ${newZoom}.`
+        // `Zoomstufe ${newZoom}. Zentriert bei Breitengrad ${newCenter[0].toFixed(
+        //   4
+        // )} und Längengrad ${newCenter[1].toFixed(4)}.`
       );
     };
     const debouncedOnZoomEnd = L.Util.throttle(onZoomEnd, 500); // 500
@@ -590,8 +618,10 @@ function LeafletMap({
             id="map"
             // className="leaflet-map"
             ref={mapRef}
-            aria-roledescription="map"
+            // aria-roledescription="map"
+            aria-roledescription="Interaktive Karte"
             aria-label={mapDescription}
+
             // loadingControl={true}
             // style={{
             //   // border: '5px solid rgba(97, 90, 74, 1)',
