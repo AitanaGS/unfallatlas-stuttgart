@@ -19,6 +19,8 @@ function DonutChartArcLabel({
       dominantBaseline="middle"
       // style={{ fontSize: '0.8rem' }}
       fontSize={`${svgFontSize.text}rem`}
+      role="presentation"
+      aria-hidden="true"
     >
       {/* <tspan x={labelPosition.x} dy="0">
         Dämmerung/

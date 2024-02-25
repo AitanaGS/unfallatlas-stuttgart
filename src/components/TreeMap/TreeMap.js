@@ -231,7 +231,22 @@ function TreeMap({
 
   return (
     <>
-      <ChartContainer width={width} height={height}>
+      <ChartContainer
+        width={width}
+        height={height}
+        descId="treeMapDesc"
+      >
+        <desc id="treeMapDesc">
+          Visualisierung der Anteile der beteiligten
+          Verkehrsteilnehmer mithilfe von Rechtecken.
+          {visDataTotal < 1
+            ? 'keine Unfälle / keine Informationen verfügbar'
+            : root
+                .leaves()
+                .map((d) =>
+                  d.value > 0 ? `${d.data.name} ${d.value}` : ''
+                )}
+        </desc>
         <text
           x={margin.left}
           y={4}
@@ -239,6 +254,8 @@ function TreeMap({
           dominantBaseline="hanging"
           className="svg-title"
           fontSize={`${svgFontSize.title}rem`}
+          role="presentation"
+          aria-hidden="true"
         >
           Beteiligte Verkehrsteilnehmer
         </text>
@@ -250,6 +267,8 @@ function TreeMap({
             dominantBaseline="hanging"
             fontSize={`${svgFontSize.text}rem`}
             // className="svg-title"
+            role="presentation"
+            aria-hidden="true"
           >
             keine Unfälle / keine Informationen verfügbar
           </text>

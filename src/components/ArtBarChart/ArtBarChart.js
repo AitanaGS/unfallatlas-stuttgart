@@ -483,7 +483,11 @@ function ArtBarChart({
   // console.log('render');
 
   return (
-    <ChartContainer width={width} height={height}>
+    <ChartContainer
+      width={width}
+      height={height}
+      descId="artBarChartDesc"
+    >
       {/* <ArtBarAxis
         yScale={yScale}
         innerHeight={innerHeight}
@@ -491,6 +495,12 @@ function ArtBarChart({
         kat={kategorienSorted}
         yScaleBandwidth={yScaleBandwidth}
       /> */}
+      <desc id="artBarChartDesc">
+        Horizontales Balkendiagramm zur Art des Unfalls.
+        {artenSorted.map(
+          (art, i) => `${art} ${sortedVariableCount.get(art)}`
+        )}
+      </desc>
       <text
         // x={10}
         x={margin.left}
@@ -499,6 +509,8 @@ function ArtBarChart({
         dominantBaseline="hanging"
         className="svg-title"
         fontSize={`${svgFontSize.title}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
         Art des Unfalls
       </text>
@@ -535,7 +547,8 @@ function ArtBarChart({
                 key={art}
                 xScale={xScale}
                 yScale={yScale}
-                sortedVariableCount={sortedVariableCount}
+                katCount={sortedVariableCount.get(art)}
+                // sortedVariableCount={sortedVariableCount}
                 // visDataTotal={visDataTotal}
                 kat={art}
                 yScaleBandwidth={yScaleBandwidth}

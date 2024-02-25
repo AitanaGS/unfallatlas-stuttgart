@@ -33,6 +33,8 @@ function DonutChart({
   // splitString,
   // responsiveThreshold,
   svgFontSize,
+  descId,
+  description,
   // chartWidthDomain,
   // mobileBreakpoint,
   // smallMobileBreakpoint,
@@ -236,7 +238,13 @@ function DonutChart({
   // const rightLabelTextAnchor = 'start';
 
   return (
-    <ChartContainer width={width} height={height}>
+    <ChartContainer width={width} height={height} descId={descId}>
+      <desc id={descId}>
+        {description}
+        {kategorien.map(
+          (kat, i) => `${kat} ${variableCount.get(kat)}`
+        )}
+      </desc>
       <text
         // x={10}
         x={0}
@@ -245,6 +253,8 @@ function DonutChart({
         dominantBaseline="hanging"
         className="svg-title"
         fontSize={`${svgFontSize.title}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
         {title}
       </text>

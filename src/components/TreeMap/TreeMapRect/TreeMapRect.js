@@ -58,6 +58,8 @@ function TreeMapRect({ d, colorScale, svgFontSize }) {
         textAnchor="start"
         dominantBaseline="hanging"
         fontSize={`${svgFontSize.text}rem`}
+        role="presentation"
+        aria-hidden="true"
         // fill="rgba(32, 35, 56, 1)"
       >
         {d.value > 0 ? d.data.name : ''}
@@ -68,6 +70,8 @@ function TreeMapRect({ d, colorScale, svgFontSize }) {
         textAnchor="start"
         dominantBaseline="hanging"
         fontSize={`${svgFontSize.text}rem`}
+        role="presentation"
+        aria-hidden="true"
         // fill="rgba(32, 35, 56, 1)"
       >
         {d.value > 0 ? numberWithSeparator(d.value) : ''}

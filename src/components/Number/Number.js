@@ -52,8 +52,21 @@ function Number({ number, label, svgFontSize }) {
   // });
   return (
     <NumberWrapper>
-      <p style={{ marginRight: '10px' }}>{label}:</p>
-      <ChartContainer width={width} height={height}>
+      <p
+        style={{ marginRight: '10px' }}
+        role="presentation"
+        aria-hidden="true"
+      >
+        {label}:
+      </p>
+      <ChartContainer
+        width={width}
+        height={height}
+        descId="numberDesc"
+      >
+        <desc id="numberDesc">
+          Anzahl {label} {number}
+        </desc>
         {/* <text x={10} y={10}>
         {number}
       </text> */}

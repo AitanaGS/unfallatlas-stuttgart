@@ -252,10 +252,19 @@ function ColumnChartSmallMultiple({
   return (
     <SvgWrapper chartWidth={chartWidth}>
       <svg
-        viewBox={`0 0 ${chartWidth} ${20}`}
+        viewBox={`0 0 ${chartWidth} ${30}`}
         width={chartWidth}
-        height={40}
+        height={30}
+        role="figure"
+        aria-labelledby="columnChartSmallMultipleDesc"
+        tabIndex={0}
       >
+        <desc id="columnChartSmallMultipleDesc">
+          Mehrere kleine Balkendiagramme zeigen die Anzahl der Unfälle
+          pro Monat für jedes Jahr. Zusätzlich wird in jedem Diagramm
+          die durchschnittliche Anzahl von Unfällen pro Monat für das
+          entsprechende Jahr mit einer Linie dargestellt.
+        </desc>
         <text
           // x={10}
           x={10}
@@ -264,6 +273,8 @@ function ColumnChartSmallMultiple({
           dominantBaseline="hanging"
           className="svg-title"
           fontSize={`${svgFontSize.title}rem`}
+          role="presentation"
+          aria-hidden="true"
         >
           Monat und Jahr
         </text>
@@ -318,8 +329,8 @@ function ColumnChartSmallMultiple({
         // margin={margin}
         margin={`0 0 0 ${10}px`}
       >
-        <p>
-          Die Linie gibt die durchschnittle Anzahl von Unfällen pro
+        <p role="presentation" aria-hidden="true">
+          Die Linie gibt die durchschnittliche Anzahl von Unfällen pro
           Monat im jeweiligen Jahr an.
         </p>
       </Note>

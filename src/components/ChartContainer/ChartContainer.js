@@ -2,7 +2,7 @@
 import React, { forwardRef, memo } from 'react';
 import styled from 'styled-components';
 
-function ChartContainer({ width, height, children }, ref) {
+function ChartContainer({ width, height, descId, children }, ref) {
   // console.log('render');
   return (
     <ChartWrapper ref={ref}>
@@ -11,6 +11,9 @@ function ChartContainer({ width, height, children }, ref) {
         // width={width}
         width="100%"
         height={height}
+        role="figure"
+        aria-labelledby={`${descId}`}
+        tabIndex={0}
         // style={{ border: '1px solid black' }}
       >
         {children}

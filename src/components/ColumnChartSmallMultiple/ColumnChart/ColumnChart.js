@@ -310,7 +310,18 @@ function ColumnChart({
   // console.log('render');
 
   return (
-    <ChartContainer width={width} height={height}>
+    <ChartContainer
+      width={width}
+      height={height}
+      descId="columnChartDesc"
+    >
+      <desc id="columnChartDesc">
+        Balkendiagramm {jahr}. Durchschnittliche Anzahl von Unfällen
+        pro Monat {meanMonthData.toFixed(1)}.
+        {monate.map(
+          (monat, i) => `${monat} ${yearVisData.get(monat)}`
+        )}
+      </desc>
       <text
         x={10}
         y={8}
@@ -319,6 +330,8 @@ function ColumnChart({
         dominantBaseline={'middle'}
         className="svg-title"
         fontSize={`${svgFontSize.title - 0.1}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
         {jahr}
       </text>

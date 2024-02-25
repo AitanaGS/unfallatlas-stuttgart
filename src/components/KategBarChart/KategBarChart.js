@@ -345,7 +345,17 @@ function KategBarChart({
 
   return (
     <>
-      <ChartContainer width={width} height={height}>
+      <ChartContainer
+        width={width}
+        height={height}
+        descId="kategBarChartDesc"
+      >
+        <desc id="kategBarChartDesc">
+          Horizontales Balkendiagramm zum Schweregrad des Unfalls.
+          {kategorienSorted.map(
+            (kat) => `${kat} ${kategCountMap.get(kat)}`
+          )}
+        </desc>
         <text
           // x={10}
           // y={4}
@@ -355,6 +365,8 @@ function KategBarChart({
           dominantBaseline="hanging"
           className="svg-title"
           fontSize={`${svgFontSize.title}rem`}
+          role="presentation"
+          aria-hidden="true"
         >
           Schweregrad des Unfalls
         </text>

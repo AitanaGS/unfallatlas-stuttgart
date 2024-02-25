@@ -53,6 +53,8 @@ function LichtDonutChart({
       chartWidthDomain={chartWidthDomain}
       mobileBreakpoint={mobileBreakpoint}
       // splitString={TRUE}
+      descId="LichtDonutChartDesc"
+      description="Donut-Diagramm zu den Lichtverhältnissen."
     />
   );
 }

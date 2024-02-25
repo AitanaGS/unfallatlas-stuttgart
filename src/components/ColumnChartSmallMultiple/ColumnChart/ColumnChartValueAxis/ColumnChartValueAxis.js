@@ -114,6 +114,8 @@ function ColumnChartValueAxis({
             dominantBaseline="middle"
             // style={{ fontSize: '0.8rem' }}
             fontSize={`${svgFontSize.text}rem`}
+            role="presentation"
+            aria-hidden="true"
           >
             {ticks[i].value < 1 && ticks[i].value > 0
               ? null

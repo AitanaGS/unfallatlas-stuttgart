@@ -25,6 +25,8 @@ function WeekHourAxisX({
           textAnchor="middle"
           dominantBaseline="middle"
           fontSize={`${svgFontSize.text}rem`}
+          role="presentation"
+          aria-hidden="true"
           // style={{ fontSize: '0.8rem' }}
         >
           <tspan>{katLabel[i]}</tspan>

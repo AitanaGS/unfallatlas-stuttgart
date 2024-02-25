@@ -122,6 +122,8 @@ function WeekHourRect({
             : 'rgba(53, 49, 40, 1)'
         }
         fontSize={`${svgFontSize.text}rem`}
+        role="presentation"
+        aria-hidden="true"
         // fill={
         //   (weekHourCount[week]?.[hour] || 0) > extentCounts[1] / 2
         //     ? 'rgba(255, 238, 199, 1)'

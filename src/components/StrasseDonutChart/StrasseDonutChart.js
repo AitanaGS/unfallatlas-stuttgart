@@ -52,6 +52,8 @@ function StrasseDonutChart({
       svgFontSize={svgFontSize}
       chartWidthDomain={chartWidthDomain}
       mobileBreakpoint={mobileBreakpoint}
+      descId="strasseDonutChartDesc"
+      description="Donut-Diagramm zum Straßenzustand."
     />
   );
 }

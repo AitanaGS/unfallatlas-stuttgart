@@ -83,6 +83,8 @@ function KategBarKatAxis({
         // textAnchor="start"
         dominantBaseline="baseline"
         fontSize={`${svgFontSize.text}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
         Unfall mit
       </text>
@@ -96,6 +98,8 @@ function KategBarKatAxis({
           dominantBaseline="middle"
           fontSize={`${svgFontSize.text}rem`}
           // style={{ fontSize: '0.8rem' }}
+          role="presentation"
+          aria-hidden="true"
         >
           {katArray[i].map((label, j) => {
             return katArray[i].length === 1 ? (

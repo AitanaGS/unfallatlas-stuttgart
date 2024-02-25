@@ -330,7 +330,22 @@ function WeekHourHeatmap({
   return (
     // <ChartWrapper ref={ref}>
     // <ChartContainer width={dms.width} height={dms.height} ref={ref}>
-    <ChartContainer width={width} height={height}>
+    <ChartContainer
+      width={width}
+      height={height}
+      descId={'weekHourHeatmapDesc'}
+    >
+      <desc id="weekHourHeatmapDesc">
+        Farbige Wärmetabelle zur Anzahl der Unfälle nach Wochentag und
+        Uhrzeit.
+        {weekSorted.map((day, i) => {
+          return hourSorted.map((hour, i) => {
+            return `${day}, ${hour}: ${weekHourCount
+              .get(day)
+              .get(hour)}`;
+          });
+        })}
+      </desc>
       <text
         // x={10}
         x={0}
@@ -339,6 +354,8 @@ function WeekHourHeatmap({
         dominantBaseline="hanging"
         className="svg-title"
         fontSize={`${svgFontSize.title}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
         Wochentag und Uhrzeit
       </text>

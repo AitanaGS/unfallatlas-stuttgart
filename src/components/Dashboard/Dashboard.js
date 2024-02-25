@@ -1047,7 +1047,7 @@ const inputWrapperVariants = {
   // `,
 };
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.section`
   ${(props) => inputWrapperVariants[props.layout]}
 `;
 /* @media only screen and (min-width: ${(props) =>
@@ -1098,7 +1098,7 @@ const vizWrapperVariants = {
   `,
 };
 
-const VizWrapper = styled.div`
+const VizWrapper = styled.section`
   ${(props) => vizWrapperVariants[props.layout]}
   display: flex;
   flex-direction: column;

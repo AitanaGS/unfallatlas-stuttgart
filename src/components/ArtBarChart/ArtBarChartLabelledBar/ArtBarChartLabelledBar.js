@@ -23,8 +23,9 @@ import { AnimationContext } from '@/context/AnimationContext';
 function ArtBarChartLabelledBar({
   xScale,
   yScale,
-  sortedVariableCount,
+  // sortedVariableCount,
   // visDataTotal,
+  katCount,
   kat,
   yScaleBandwidth,
   svgFontSize,
@@ -85,10 +86,12 @@ function ArtBarChartLabelledBar({
   const spring = useSpring({
     x: xScale(0),
     y: yScale(kat),
-    width: xScale(sortedVariableCount.get(kat) || 0),
+    // width: xScale(sortedVariableCount.get(kat) || 0),
+    width: xScale(katCount || 0),
     // height: yScale.bandwidth(),
     height: yScaleBandwidth,
-    textNumberX: xScale(sortedVariableCount.get(kat) || 0) + 5, // xScale(variableCount.get(kat) || 0) - 2
+    // textNumberX: xScale(sortedVariableCount.get(kat) || 0) + 5, // xScale(variableCount.get(kat) || 0) - 2
+    textNumberX: xScale(katCount || 0) + 5, // xScale(variableCount.get(kat) || 0) - 2
     textNumberY: yScale(kat) + yScaleBandwidth / 2, // yScale(kat) + yScaleBandwidth / 2,
     textLabelX: xScale(0),
     // textLabelY: yScale(kat) - 8,
@@ -127,6 +130,8 @@ function ArtBarChartLabelledBar({
         // textAnchor="start"
         // dominantBaseline="middle"
         fontSize={`${svgFontSize.text}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
         {/* {kat} */}
         {/* {`${Math.round(
@@ -165,8 +170,11 @@ function ArtBarChartLabelledBar({
         dominantBaseline="middle"
         textAnchor="start"
         fontSize={`${svgFontSize.text}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
-        {numberWithSeparator(sortedVariableCount.get(kat) || 0)}
+        {/* {numberWithSeparator(sortedVariableCount.get(kat) || 0)} */}
+        {numberWithSeparator(katCount || 0)}
         {/* {`${Math.round(
             (variableCount.get(kat) / visDataTotal) * 100
           )} %`} */}

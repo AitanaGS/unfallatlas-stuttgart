@@ -122,6 +122,8 @@ function KategBarChartBar({
         textAnchor="start"
         dominantBaseline="middle"
         fontSize={`${svgFontSize.text}rem`}
+        role="presentation"
+        aria-hidden="true"
       >
         {numberWithSeparator(kategCount)}
         {/* {`${Math.round(

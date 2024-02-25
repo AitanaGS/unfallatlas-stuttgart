@@ -30,6 +30,8 @@ function ColumnChartMonthAxis({
             dominantBaseline="middle"
             // style={{ fontSize: '0.8rem' }}
             fontSize={`${svgFontSize.text}rem`}
+            role="presentation"
+            aria-hidden="true"
           >
             {d[0]}
             {/* {/* {i % 6 == 0 ? (

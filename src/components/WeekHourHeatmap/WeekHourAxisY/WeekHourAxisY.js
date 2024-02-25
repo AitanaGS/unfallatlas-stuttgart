@@ -21,6 +21,8 @@ function WeekHourAxisY({
           textAnchor="end"
           dominantBaseline="middle"
           fontSize={`${svgFontSize.text}rem`}
+          role="presentation"
+          aria-hidden="true"
           // style={{ fontSize: '0.8rem' }}
         >
           <tspan>{d}</tspan>
