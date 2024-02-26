@@ -35,7 +35,7 @@ function FilterCheckboxes({
   setAllFilter,
   setFilteringMode,
   chartWidth,
-  feature,
+  description,
 }) {
   // const [allFilter, setAllFilter] = useState(true);
   // const [filter, setFilter] = useState(initialFilter);
@@ -122,7 +122,7 @@ function FilterCheckboxes({
               marginTop: '3px',
             }}
           >
-            {feature}:
+            {description}:
           </legend>
           <Label>
             Alle

@@ -667,7 +667,7 @@ function Dashboard({ initialData }) {
                   setAllFilter={setAllFilter}
                   setFilteringMode={setFilteringMode}
                   chartWidth={chartWidth}
-                  feature="Unfallbeteiligung"
+                  description="Unfallbeteiligung"
                 />
                 <FilterCheckboxes
                   filter={kategFilter}
@@ -676,7 +676,7 @@ function Dashboard({ initialData }) {
                   setAllFilter={setAllKategFilter}
                   setFilteringMode={setKategFilteringMode}
                   chartWidth={chartWidth}
-                  feature="Schweregrad"
+                  description="Schweregrad"
                 />
                 {/* </CheckboxWrapper> */}
 
