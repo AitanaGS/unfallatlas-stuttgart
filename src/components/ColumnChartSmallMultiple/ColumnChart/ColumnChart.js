@@ -318,8 +318,11 @@ function ColumnChart({
       <desc id="columnChartDesc">
         Balkendiagramm {jahr}. Durchschnittliche Anzahl von Unfällen
         pro Monat {meanMonthData.toFixed(1)}.
+        {monate.map((monat, i) =>
+          console.log(jahr, monat, yearVisData.get(monat))
+        )}
         {monate.map(
-          (monat, i) => `${monat} ${yearVisData.get(monat)}`
+          (monat, i) => `${monat}: ${yearVisData.get(monat)}, `
         )}
       </desc>
       <text

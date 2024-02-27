@@ -342,7 +342,7 @@ function WeekHourHeatmap({
           return hourSorted.map((hour, i) => {
             return `${day}, ${hour}: ${weekHourCount
               .get(day)
-              .get(hour)}`;
+              .get(hour)}, `;
           });
         })}
       </desc>

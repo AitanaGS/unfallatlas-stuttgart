@@ -3,7 +3,11 @@ import styled from 'styled-components';
 
 function Note({ svgFontSize, margin, children }) {
   return (
-    <NoteWrapper svgFontSize={svgFontSize} margin={margin}>
+    <NoteWrapper
+      svgFontSize={svgFontSize}
+      margin={margin}
+      tabIndex={0}
+    >
       {children}
     </NoteWrapper>
   );

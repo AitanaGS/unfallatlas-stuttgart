@@ -18,7 +18,7 @@ function Header({ chartWidth, layout, chartWidthDomain }) {
   }, [chartWidthDomain]);
 
   return (
-    <HeaderWrapper colors={COLORS}>
+    <HeaderWrapper colors={COLORS} tabIndex={0}>
       <TitleWrapper
         colors={COLORS}
         chartWidth={chartWidth}

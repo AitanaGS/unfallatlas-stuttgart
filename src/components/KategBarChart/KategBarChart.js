@@ -353,7 +353,7 @@ function KategBarChart({
         <desc id="kategBarChartDesc">
           Horizontales Balkendiagramm zum Schweregrad des Unfalls.
           {kategorienSorted.map(
-            (kat) => `${kat} ${kategCountMap.get(kat)}`
+            (kat) => `${kat} ${kategCountMap.get(kat)}, `
           )}
         </desc>
         <text

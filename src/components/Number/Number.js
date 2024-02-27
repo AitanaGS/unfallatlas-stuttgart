@@ -5,7 +5,7 @@ import { COLORS } from '../../utils/constants';
 import styled from 'styled-components';
 // import { useSpring, animated } from '@react-spring/web';
 
-function Number({ number, label, svgFontSize }) {
+function Number({ number, label, svgFontSize, description }) {
   // console.log(
   //   'number',
   //   number,
@@ -65,7 +65,8 @@ function Number({ number, label, svgFontSize }) {
         descId="numberDesc"
       >
         <desc id="numberDesc">
-          Anzahl {label} {number}
+          {/* Anzahl {label} {number} */}
+          {description}: {numberWithSeparator(number)}
         </desc>
         {/* <text x={10} y={10}>
         {number}

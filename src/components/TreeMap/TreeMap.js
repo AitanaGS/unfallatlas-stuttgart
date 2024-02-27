@@ -244,7 +244,7 @@ function TreeMap({
             : root
                 .leaves()
                 .map((d) =>
-                  d.value > 0 ? `${d.data.name} ${d.value}` : ''
+                  d.value > 0 ? `${d.data.name} ${d.value}, ` : ''
                 )}
         </desc>
         <text

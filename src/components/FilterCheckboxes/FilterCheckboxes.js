@@ -113,6 +113,8 @@ function FilterCheckboxes({
         onSubmit={(event) => {
           event.preventDefault();
         }}
+        tabIndex={0}
+        aria-label={`Checkboxen zum Filtern von ${description}`}
       >
         <Fieldset style={{ border: 'none' }}>
           <legend

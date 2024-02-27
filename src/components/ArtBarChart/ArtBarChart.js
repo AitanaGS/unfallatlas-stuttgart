@@ -498,7 +498,7 @@ function ArtBarChart({
       <desc id="artBarChartDesc">
         Horizontales Balkendiagramm zur Art des Unfalls.
         {artenSorted.map(
-          (art, i) => `${art} ${sortedVariableCount.get(art)}`
+          (art, i) => `${art} ${sortedVariableCount.get(art)}, `
         )}
       </desc>
       <text

@@ -242,7 +242,7 @@ function DonutChart({
       <desc id={descId}>
         {description}
         {kategorien.map(
-          (kat, i) => `${kat} ${variableCount.get(kat)}`
+          (kat, i) => `${kat} ${variableCount.get(kat)}, `
         )}
       </desc>
       <text

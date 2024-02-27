@@ -6,7 +6,7 @@ import { GitHub } from 'react-feather';
 
 function Footer({ chartWidth }) {
   return (
-    <FooterWrapper chartWidth={chartWidth}>
+    <FooterWrapper chartWidth={chartWidth} tabIndex={0}>
       <InfoText chartWidth={chartWidth}>
         <DataInfo>
           <h3>Daten</h3>

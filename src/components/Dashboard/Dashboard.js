@@ -636,7 +636,8 @@ function Dashboard({ initialData }) {
         /> */}
                 <Number
                   number={visDataTotal}
-                  label={'Gesamt'}
+                  label="Gesamt"
+                  description="Gesamt Anzahl von Unfällen"
                   // colorScale={undefined}
                   // max={undefined}
                 />
