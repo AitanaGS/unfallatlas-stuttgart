@@ -279,7 +279,14 @@ function Dashboard({ initialData }) {
     []
   );
 
+  // const initialScrollbarWidth = useScrollbarWidth();
+
+  // const scrollbarWidth =
+  //   initialScrollbarWidth > 0 ? initialScrollbarWidth : 20;
+
   const scrollbarWidth = useScrollbarWidth();
+
+  const scrollbarWidthGap = scrollbarWidth > 15 ? scrollbarWidth : 20;
 
   // here
   useEffect(() => {
@@ -327,11 +334,29 @@ function Dashboard({ initialData }) {
           //     ? min([sizeWidth, mobileBreakpoint])
           //     : sizeWidth / 2;
 
+          // const newChartWidth =
+          //   sizeWidth <= mobileBreakpoint
+          //     ? min([sizeWidth, mobileBreakpoint]) -
+          //       scrollbarWidth * 2
+          //     : sizeWidth / 2 - scrollbarWidth * 2;
+
+          // const newScrollbarWidth =
+          //   scrollbarWidth > 0 ? scrollbarWidth : 20;
+          // const newChartWidth =
+          //   sizeWidth <= mobileBreakpoint
+          //     ? min([sizeWidth, mobileBreakpoint]) -
+          //       newScrollbarWidth * 2
+          //     : sizeWidth / 2 - newScrollbarWidth * 2;
+          // const newChartWidth =
+          //   sizeWidth <= mobileBreakpoint
+          //     ? min([sizeWidth, mobileBreakpoint]) -
+          //       scrollbarWidth * 2
+          //     : sizeWidth / 2 - scrollbarWidth * 2;
           const newChartWidth =
             sizeWidth <= mobileBreakpoint
               ? min([sizeWidth, mobileBreakpoint]) -
-                scrollbarWidth * 2
-              : sizeWidth / 2 - scrollbarWidth * 2;
+                scrollbarWidthGap * 2
+              : sizeWidth / 2 - scrollbarWidthGap * 2;
 
           setChartWidth(newChartWidth);
 
@@ -391,7 +416,8 @@ function Dashboard({ initialData }) {
     textFontSizeScale,
     titleFontSizeScale,
     wrapperRef,
-    scrollbarWidth,
+    // scrollbarWidth,
+    scrollbarWidthGap,
     // loading,
     // spinnerWrapperRef,
   ]);
@@ -722,9 +748,11 @@ function Dashboard({ initialData }) {
                 </CheckboxWrapper> */}
                 <Note
                   svgFontSize={svgFontSize}
-                  margin={`0px 0 -20px ${scrollbarWidth}px`}
+                  // margin={`0px 0 -20px ${scrollbarWidthGap}px`}
+                  margin={`0px 0 -20px ${10}px`}
                 >
                   <p>
+                    {/* {scrollbarWidth} */}
                     Bitte beachte, dass die Verkehrsdichte auf den
                     Straßen variiert und somit auch die
                     Wahrscheinlichkeit für Unfälle unterschiedlich
@@ -752,7 +780,7 @@ function Dashboard({ initialData }) {
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
                   vizWrapperGap={vizWrapperGap}
-                  scrollbarWidth={scrollbarWidth}
+                  scrollbarWidthGap={scrollbarWidthGap}
                 />
                 <KategBarChart
                   // variableCount={kategCount}
@@ -763,7 +791,7 @@ function Dashboard({ initialData }) {
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
                   vizWrapperGap={vizWrapperGap}
-                  scrollbarWidth={scrollbarWidth}
+                  scrollbarWidthGap={scrollbarWidthGap}
                 />
                 <WeekHourHeatmap
                   visData={visData}
@@ -777,9 +805,9 @@ function Dashboard({ initialData }) {
                   visData={visData}
                   chartWidth={chartWidth}
                   svgFontSize={svgFontSize}
-                  vizWrapperGap={vizWrapperGap}
+                  // vizWrapperGap={vizWrapperGap}
                   // chartWidthDomain={chartWidthDomain}
-                  scrollbarWidth={scrollbarWidth}
+                  // scrollbarWidthGap={scrollbarWidthGap}
                 />
                 <LichtDonutChart
                   // variableCount={lichtCount}

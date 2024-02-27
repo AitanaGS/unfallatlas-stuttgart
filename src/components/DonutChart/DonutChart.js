@@ -63,15 +63,29 @@ function DonutChart({
   //   bottom: 10,
   //   left: 50,
   // };
+  // const margin = useMemo(() => {
+  //   return {
+  //     // top: chartWidth > donutChartMobileBreakpoint ? 60 : 100, //100
+  //     // top: chartWidth > donutChartMobileBreakpoint ? 60 : 100, //100
+  //     // top: chartWidth > donutChartMobileBreakpoint ? 50 : 90, // 90 //100
+  //     top: 90, // 90 //100
+  //     right: 50,
+  //     bottom: 5, // 10
+  //     left: 50,
+  //   };
+  // }, []);
+
   const margin = useMemo(() => {
     return {
       // top: chartWidth > donutChartMobileBreakpoint ? 60 : 100, //100
-      top: chartWidth > donutChartMobileBreakpoint ? 60 : 100, //100
+      // top: chartWidth > donutChartMobileBreakpoint ? 60 : 100, //100
+      // top: chartWidth > donutChartMobileBreakpoint ? 50 : 90, // 90 //100
+      top: 90, // 90 //100
       right: 50,
       bottom: 5, // 10
       left: 50,
     };
-  }, [chartWidth, donutChartMobileBreakpoint]);
+  }, []);
 
   const innerWidth = width - margin.left - margin.right;
 
@@ -175,7 +189,11 @@ function DonutChart({
           ? // ? innerWidth / 2 - radius * 2 + margin.left
             innerWidth / 2 + margin.left - radius
           : innerWidth / 2 + margin.right - 10, // -20 10
-      y: chartWidth > donutChartMobileBreakpoint ? 65 : 65,
+      // x: innerWidth / 2 + margin.left - radius,
+
+      // y: chartWidth > donutChartMobileBreakpoint ? 65 : 65,
+      // y: 65,
+      y: 50,
       textAnchor: 'end',
     };
   }, [
@@ -201,8 +219,13 @@ function DonutChart({
         chartWidth > donutChartMobileBreakpoint
           ? // ? innerWidth / 2 + radius * 2 + margin.left
             innerWidth / 2 + margin.left + radius
-          : innerWidth / 2 + margin.right + 10, // + 20  -10
-      y: chartWidth > donutChartMobileBreakpoint ? 65 : 65,
+          : innerWidth / 2 + margin.right + 10,
+      // x: innerWidth / 2 + margin.left + radius,
+
+      // + 20  -10
+      // y: chartWidth > donutChartMobileBreakpoint ? 65 : 65,
+      // y: 65,
+      y: 50,
       textAnchor: 'start',
     };
   }, [

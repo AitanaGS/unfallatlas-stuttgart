@@ -32,7 +32,7 @@ function KategBarChart({
   svgFontSize,
   chartWidthDomain,
   vizWrapperGap,
-  scrollbarWidth,
+  scrollbarWidthGap,
 }) {
   // const [visData, setVisData] = useState(data);
 
@@ -471,11 +471,16 @@ function KategBarChart({
       <Note
         svgFontSize={svgFontSize}
         // margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 10px`}
+        // margin={`${-(
+        //   margin.bottom +
+        //   vizWrapperGap +
+        //   5
+        // )}px 0 0 ${scrollbarWidthGap}px`}
         margin={`${-(
           margin.bottom +
           vizWrapperGap +
           5
-        )}px 0 0 ${scrollbarWidth}px`}
+        )}px 0 0 ${10}px`}
       >
         <p>
           Für die Zurodnung war die jeweils schwerste Unfallfolge

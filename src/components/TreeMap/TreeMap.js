@@ -29,10 +29,10 @@ function TreeMap({
   // fontSizeScale,
   // svgFontSize,
   vizWrapperGap,
-  scrollbarWidth,
+  scrollbarWidthGap,
 }) {
   const width = chartWidth; //|| 300; // 250
-  const height = 255;
+  const height = 260; // 255
   // const margin = {
   //   top: 25, // 20
   //   right: chartWidth > smallMobileBreakpoint ? 40 : 20, //40
@@ -48,7 +48,7 @@ function TreeMap({
 
   const margin = useMemo(() => {
     return {
-      top: 25, // 20
+      top: 28, // 25 // 20
       right: marginRightScale(chartWidth), //40
       bottom: 10,
       left: 0, // 10
@@ -320,9 +320,14 @@ function TreeMap({
       </ChartContainer>
       <Note
         svgFontSize={svgFontSize}
-        margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 ${
-          margin.left + scrollbarWidth
-        }px`}
+        // margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 ${
+        //   margin.left + scrollbarWidthGap
+        // }px`}
+        margin={`${-(
+          margin.bottom +
+          vizWrapperGap +
+          5
+        )}px 0 0 ${10}px`}
         // margin={`${-(margin.bottom + vizWrapperGap + 5)}px 0 0 ${
         //   margin.left
         // }px`}

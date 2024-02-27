@@ -22,8 +22,8 @@ const AnimationProvider = ({ children }) => {
 
   const springConfig = {
     mass: 1,
-    tension: reduceMotion ? 0 : 120,
-    friction: reduceMotion ? 0 : 20,
+    tension: reduceMotion ? 0 : 120, // 160  // 120
+    friction: reduceMotion ? 0 : 20, // 20
   };
 
   return (
