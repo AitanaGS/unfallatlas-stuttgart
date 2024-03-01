@@ -38,8 +38,7 @@ function Header({ chartWidth, layout, chartWidthDomain }) {
           und herein- oder herauszoomen, während sich die
           Datenvisualisierungen automatisch an den ausgewählten
           Bereich anpassen. Zusätzlich hast du die Möglichkeit, nach
-          Unfallschwere und beteiligten Verkehrsteilnehmern zu
-          filtern.
+          Unfallbeteiligung und Schweregrad zu filtern.
         </p>
         {/* <br /> */}
         {/* <p>
