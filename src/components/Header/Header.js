@@ -28,20 +28,49 @@ function Header({ chartWidth, layout, chartWidthDomain }) {
         <h1>Unfallatlas Stuttgart</h1>
       </TitleWrapper>
       <IntroText>
+        {/* <p style={{ marginBottom: '10px' }}> */}
         <p>
+          Der Unfallatlas Stuttgart bietet eine umfassende Darstellung
+          der registrierten Verkehrsunfälle mit verletzten Personen im
+          Stadtgebiet von Stuttgart für den Zeitraum von 2016 bis
+          2022. <br />
+          In der interaktiven Karte kannst du die Ansicht verschieben
+          und herein- oder herauszoomen, während sich die
+          Datenvisualisierungen automatisch an den ausgewählten
+          Bereich anpassen. Zusätzlich hast du die Möglichkeit, nach
+          Unfallschwere und beteiligten Verkehrsteilnehmern zu
+          filtern.
+        </p>
+        {/* <br /> */}
+        {/* <p>
+          Durch die interaktive Karte kannst du die Ansicht
+          verschieben und herein- oder herauszoomen, während sich die
+          Datenvisualisierungen automatisch an den ausgewählten
+          Bereich anpassen. Zusätzlich hast du die Möglichkeit, nach
+          Unfallschwere und beteiligten Verkehrsteilnehmern zu
+          filtern.
+        </p> */}
+        {/* <p>
+          Die Karte mit den Unfällen ist interaktiv; man kann sie
+          bewegen, rein- oder rauszommen. Die Datenvisualisierungen
+          passien sich auch den angezeigten Abschnitt. Es kann zudem
+          nach Schwergrad und beteiligte Verkehrsteilnehmer gefiltert
+          werden.
+        </p> */}
+        {/* <p>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
           diam nonumy eirmod tempor invidunt ut labore et dolore magna
           aliquyam erat, sed diam voluptua. At vero eos et accusam et
           justo duo dolores et ea rebum. Stet clita kasd gubergren, no
           sea takimata sanctus est Lorem ipsum dolor sit amet.{' '}
-        </p>
-        <p>
+        </p> */}
+        {/* <p>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
           diam nonumy eirmod tempor invidunt ut labore et dolore magna
           aliquyam erat, sed diam voluptua. At vero eos et accusam et
           justo duo dolores et ea rebum. Stet clita kasd gubergren, no
           sea takimata sanctus est Lorem ipsum dolor sit amet.
-        </p>
+        </p> */}
       </IntroText>
     </HeaderWrapper>
   );
@@ -59,6 +88,8 @@ const HeaderWrapper = styled.header`
   /* position: relative; */
   /* border: 2px solid blue; */
   width: 100%;
+  /* text-align: left;
+  hyphens: auto; */
   /* h1 {
     /* margin: 30px 0px 20px 0px; */
   /* margin: 30px 0px 20px 0px;
@@ -115,6 +146,9 @@ const TitleWrapper = styled.div`
 `;
 
 const IntroText = styled.div`
+  text-align: left;
+  /* hyphens: auto; */
+  margin-top: 30px;
   /* background-color: rgba(55, 62, 98, 1);
   color: rgba(214, 217, 232, 1);
   padding: 20px;

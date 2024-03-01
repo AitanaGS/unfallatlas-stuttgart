@@ -652,7 +652,8 @@ const MapWrapper = styled.div`
   /* width: 400px; */
   position: relative;
   width: ${(props) => props.chartWidth}px; // 400px
-  margin-top: 25px;
+  /* margin-top: 25px; */
+  margin-top: 10px;
   /* margin-top: 5px; */
   /* margin-bottom: 100px; */
 `;

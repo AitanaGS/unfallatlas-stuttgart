@@ -1137,18 +1137,18 @@ const VizWrapper = styled.section`
 
 // const CheckboxWrapper = styled.div``;
 
-const CheckboxWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 100%; // 500px
-  gap: 5px;
-`;
+// const CheckboxWrapper = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   max-width: 100%; // 500px
+//   gap: 5px;
+// `;
 
-const BarChartWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: ${(props) => props.dashboardWidth}px;
-  /* max-width: 100%; // 500px */
-`;
+// const BarChartWrapper = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   width: ${(props) => props.dashboardWidth}px;
+//   /* max-width: 100%; // 500px */
+// `;
 
 export default Dashboard;
