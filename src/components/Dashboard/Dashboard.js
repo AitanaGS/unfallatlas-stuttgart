@@ -748,11 +748,9 @@ function Dashboard({ initialData }) {
                 </CheckboxWrapper> */}
                 <Note
                   svgFontSize={svgFontSize}
-                  // margin={`0px 0 -20px ${scrollbarWidthGap}px`}
-                  margin={`0px 0 -20px ${10}px`}
+                  margin={`0px 0 -20px 10px`}
                 >
                   <p>
-                    {/* {scrollbarWidth} */}
                     Bitte beachte, dass die Verkehrsdichte auf den
                     Straßen variiert und somit auch die
                     Wahrscheinlichkeit für Unfälle unterschiedlich
@@ -769,18 +767,12 @@ function Dashboard({ initialData }) {
                 /> */}
 
                 <TreeMap
-                  // treeData={treemapDataArray}
                   chartWidth={chartWidth}
                   visDataTotal={visDataTotal}
-                  // chartData={beteiligteData}
                   visData={visData}
-                  smallMobileBreakpoint={smallMobileBreakpoint}
-                  // fontSizeScale={fontSizeScale}
-                  // svgFontSize={svgFontSize}
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
                   vizWrapperGap={vizWrapperGap}
-                  scrollbarWidthGap={scrollbarWidthGap}
                 />
                 <KategBarChart
                   // variableCount={kategCount}
