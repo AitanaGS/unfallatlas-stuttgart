@@ -85,8 +85,8 @@ const CodeInfo = styled.div`
     gap: 10px;
     align-items: center;
     flex-wrap: wrap;
-    /* flex: 1; */
     word-break: break-all;
+    /* flex: 1; */
     /* Prevent the link from overflowing its container */
     /* max-width: 100%; */
   }
