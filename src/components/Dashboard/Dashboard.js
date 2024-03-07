@@ -775,15 +775,12 @@ function Dashboard({ initialData }) {
                   vizWrapperGap={vizWrapperGap}
                 />
                 <KategBarChart
-                  // variableCount={kategCount}
-                  // visDataTotal={visDataTotal}
                   chartWidth={chartWidth}
                   visData={visData}
                   smallMobileBreakpoint={smallMobileBreakpoint}
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
                   vizWrapperGap={vizWrapperGap}
-                  scrollbarWidthGap={scrollbarWidthGap}
                 />
                 <WeekHourHeatmap
                   visData={visData}
