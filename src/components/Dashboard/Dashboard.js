@@ -784,9 +784,7 @@ function Dashboard({ initialData }) {
                 />
                 <WeekHourHeatmap
                   visData={visData}
-                  // weekHourCount={weekHourCount}
                   chartWidth={chartWidth}
-                  // smallMobileBreakpoint={smallMobileBreakpoint}
                   svgFontSize={svgFontSize}
                   chartWidthDomain={chartWidthDomain}
                 />
