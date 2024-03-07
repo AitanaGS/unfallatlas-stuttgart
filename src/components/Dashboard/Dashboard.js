@@ -792,9 +792,6 @@ function Dashboard({ initialData }) {
                   visData={visData}
                   chartWidth={chartWidth}
                   svgFontSize={svgFontSize}
-                  // vizWrapperGap={vizWrapperGap}
-                  // chartWidthDomain={chartWidthDomain}
-                  // scrollbarWidthGap={scrollbarWidthGap}
                 />
                 <LichtDonutChart
                   // variableCount={lichtCount}
