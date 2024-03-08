@@ -794,24 +794,14 @@ function Dashboard({ initialData }) {
                   svgFontSize={svgFontSize}
                 />
                 <LichtDonutChart
-                  // variableCount={lichtCount}
-                  // visDataTotal={visDataTotal}
                   chartWidth={chartWidth}
                   visData={visData}
                   svgFontSize={svgFontSize}
-                  // chartWidthDomain={chartWidthDomain}
-                  // mobileBreakpoint={mobileBreakpoint}
-                  // smallMobileBreakpoint={smallMobileBreakpoint}
                 />
                 <StrasseDonutChart
-                  // variableCount={strasseCount}
-                  // visDataTotal={visDataTotal}
                   chartWidth={chartWidth}
                   visData={visData}
                   svgFontSize={svgFontSize}
-                  // chartWidthDomain={chartWidthDomain}
-                  // mobileBreakpoint={mobileBreakpoint}
-                  // smallMobileBreakpoint={smallMobileBreakpoint}
                 />
 
                 <ArtBarChart
