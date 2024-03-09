@@ -655,11 +655,11 @@ function Dashboard({ initialData }) {
                   layout={layout}
                 />
                 {/* <CheckboxWrapper> */}
-                <LeafletHeatCheckbox
+                {/* <LeafletHeatCheckbox
                   selectHeatmap={selectHeatmap}
                   setSelectHeatmap={setSelectHeatmap}
                   dashboardWidth={dashboardWidth}
-                />
+                /> */}
                 <Number
                   number={visDataTotal}
                   label="Gesamt"
@@ -887,9 +887,9 @@ function Dashboard({ initialData }) {
           timeDateExtent={timeDateExtent}
           timeCountExtent={timeCountExtent}
           timeDataDates={timeDataDates}
-        /> */}
-              {/* <LineChartYear visData={visData} /> */}
-              {/* <LineChartMonth visData={visData} /> */}
+        />
+              <LineChartYear visData={visData} />
+              <LineChartMonth visData={visData} /> */}
             </DashboardWrapper>
             <Footer chartWidth={chartWidth} />
           </>
