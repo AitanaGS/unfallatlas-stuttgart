@@ -664,8 +664,6 @@ function Dashboard({ initialData }) {
                   number={visDataTotal}
                   label="Gesamt"
                   description="Gesamt Anzahl von Unfällen"
-                  // colorScale={undefined}
-                  // max={undefined}
                 />
                 {/* <CheckboxWrapper>
                   <FilterCheckboxes
