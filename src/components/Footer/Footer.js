@@ -1,8 +1,6 @@
-'use client';
-import React, { useEffect, useState, useMemo, useRef } from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../../utils/constants';
+import React from 'react';
 import { GitHub } from 'react-feather';
+import styled from 'styled-components';
 
 function Footer({ chartWidth }) {
   return (
@@ -24,72 +22,68 @@ function Footer({ chartWidth }) {
         <CodeInfo>
           <h3>Code</h3>
           <p style={{ marginTop: '5px' }}>
-            {/* <span 
-        class="githubIconWrapper" 
-        style="
-        --githubColor: {COLORS.primary["600"]};
-        --githubHoverColor: {COLORS.primary["800"]};
-        "> */}
             <a
               href="https://github.com/AitanaGS/unfallatlas-stuttgart"
               target="_blank"
               rel="noreferrer"
             >
-              {/* <GithubIcon size="24"/> */}
               <GitHub size="24" color="rgba(255, 179, 0, 1)" />
-              <span
-              // style={{ flex: 1 }}
-              >
-                github.com/AitanaGS/unfallatlas-stuttgart
-              </span>
+              <span>github.com/AitanaGS/unfallatlas-stuttgart</span>
             </a>
-            {/* </span> */}
           </p>
         </CodeInfo>
+        <NameInfo>
+          <p>
+            <a
+              href="https://www.github.com/AitanaGS"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Aitana Gräbs Santiago
+            </a>{' '}
+            | 2024
+          </p>
+        </NameInfo>
       </InfoText>
     </FooterWrapper>
   );
 }
 
 const FooterWrapper = styled.footer`
-  /* width: ${(props) => props.chartWidth}px; */
   width: 100%;
-  /* margin: 0 auto; */
   margin-top: 40px;
   background-color: rgba(59, 59, 59, 1);
   color: rgba(255, 179, 0, 1);
-  /* padding: 20px; */
   padding-top: 20px;
   padding-bottom: 50px;
-  /* margin-bottom: 50px; */
-  /* border-radius: 10px; */
-`;
 
-const InfoText = styled.div`
-  width: ${(props) => props.chartWidth}px;
-  margin: 0 auto;
-`;
-
-const DataInfo = styled.div`
   a {
     color: rgba(255, 179, 0, 1);
+    cursor: pointer;
   }
 `;
 
+const InfoText = styled.div`
+  width: ${({ chartWidth }) => chartWidth}px;
+  margin: 0 auto;
+`;
+
+const DataInfo = styled.div``;
+
 const CodeInfo = styled.div`
   margin-top: 20px;
-  /* margin-bottom: 50px; */
+
   a {
-    color: rgba(255, 179, 0, 1);
     display: flex;
     gap: 10px;
     align-items: center;
     flex-wrap: wrap;
     word-break: break-all;
-    /* flex: 1; */
-    /* Prevent the link from overflowing its container */
-    /* max-width: 100%; */
   }
+`;
+
+const NameInfo = styled.div`
+  margin-top: 40px;
 `;
 
 export default React.memo(Footer);
