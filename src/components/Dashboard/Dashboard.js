@@ -655,11 +655,11 @@ function Dashboard({ initialData }) {
                   layout={layout}
                 />
                 {/* <CheckboxWrapper> */}
-                {/* <LeafletHeatCheckbox
-          selectHeatmap={selectHeatmap}
-          setSelectHeatmap={setSelectHeatmap}
-          dashboardWidth={dashboardWidth}
-        /> */}
+                <LeafletHeatCheckbox
+                  selectHeatmap={selectHeatmap}
+                  setSelectHeatmap={setSelectHeatmap}
+                  dashboardWidth={dashboardWidth}
+                />
                 <Number
                   number={visDataTotal}
                   label="Gesamt"
