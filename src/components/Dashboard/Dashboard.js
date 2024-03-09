@@ -805,8 +805,6 @@ function Dashboard({ initialData }) {
                 />
 
                 <ArtBarChart
-                  // variableCount={artCount}
-                  // visDataTotal={visDataTotal}
                   chartWidth={chartWidth}
                   visData={visData}
                   svgFontSize={svgFontSize}
