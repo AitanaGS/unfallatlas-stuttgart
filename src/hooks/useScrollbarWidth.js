@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function useScrollbarWidth() {
   const [scrollbarWidth, setScrollbarWidth] = useState(0);

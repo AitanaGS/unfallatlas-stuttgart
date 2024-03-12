@@ -1,11 +1,9 @@
-'use client';
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 // Code by Amelia Wattenberger
 // https://2019.wattenberger.com/blog/react-and-d3
 
-// console.log('resize', ResizeObserver);
 const useChartDimensions = (passedSettings) => {
   const ref = useRef();
 
