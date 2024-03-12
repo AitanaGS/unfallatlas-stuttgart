@@ -20,7 +20,11 @@ const arten = [
 ];
 
 function ArtBarChart({ chartWidth, visData, svgFontSize }) {
-  const variableCount = useFixedRolledUpMap(visData, 'art', arten);
+  const variableCount = useFixedRolledUpMap({
+    data: visData,
+    variable: 'art',
+    kategorien: arten,
+  });
 
   const sortedVariableCount = useMemo(() => {
     const sortedResultMap = new Map(

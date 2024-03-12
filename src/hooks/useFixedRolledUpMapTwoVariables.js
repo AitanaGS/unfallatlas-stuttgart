@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { rollup } from 'd3-array';
 
-function useFixedRolledUpMapTwoVariables(
+function useFixedRolledUpMapTwoVariables({
   data,
   variableOne,
   variableTwo,
   kategorienOne,
-  kategorienTwo
-) {
+  kategorienTwo,
+}) {
   const rolledUpMap = useMemo(() => {
     return rollup(
       data,

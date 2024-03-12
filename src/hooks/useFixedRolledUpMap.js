@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { rollup } from 'd3-array';
 
-function useFixedRolledUpMap(data, variable, kategorien) {
+function useFixedRolledUpMap({ data, variable, kategorien }) {
   const rolledUpMap = useMemo(() => {
     return rollup(
       data,

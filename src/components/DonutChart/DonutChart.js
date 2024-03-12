@@ -37,11 +37,11 @@ function DonutChart({
 
   const innerHeight = height - margin.top - margin.bottom;
 
-  const variableCount = useFixedRolledUpMap(
+  const variableCount = useFixedRolledUpMap({
     data,
     variable,
-    kategorien
-  );
+    kategorien,
+  });
 
   const radius = Math.min(innerWidth, innerHeight) / 2.5;
 

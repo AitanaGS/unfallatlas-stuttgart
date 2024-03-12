@@ -38,13 +38,21 @@ function ColumnChartSmallMultiple({
       ? (chartWidth - widthNudge) / 2
       : chartWidth;
 
-  const dataByYear = useFixedRolledUpMapTwoVariables(
-    visData,
-    'jahr',
-    'monatn',
-    jahre,
-    monate
-  );
+  const dataByYear = useFixedRolledUpMapTwoVariables({
+    data: visData,
+    variableOne: 'jahr',
+    variableTwo: 'monatn',
+    kategorienOne: jahre,
+    kategorienTwo: monate,
+  });
+
+  // useFixedRolledUpMapTwoVariables(
+  //   visData,
+  //   'jahr',
+  //   'monatn',
+  //   jahre,
+  //   monate
+  // );
 
   useEffect(() => {
     const maxValueMap = new Map();

@@ -74,13 +74,13 @@ function WeekHourHeatmap({
       .paddingOuter(0.1);
   }, [innerHeight]);
 
-  const weekHourCount = useFixedRolledUpMapTwoVariables(
-    visData,
-    'wochentag',
-    'zeit',
-    weekSorted,
-    hourSorted
-  );
+  const weekHourCount = useFixedRolledUpMapTwoVariables({
+    data: visData,
+    variableOne: 'wochentag',
+    variableTwo: 'zeit',
+    kategorienOne: weekSorted,
+    kategorienTwo: hourSorted,
+  });
 
   const counts = useMemo(() => {
     const countsArray = Array.from(

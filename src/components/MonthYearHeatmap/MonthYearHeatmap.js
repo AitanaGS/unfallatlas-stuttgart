@@ -39,20 +39,22 @@ function MonthYearHeatmap({ visData }) {
 
   // const hourSorted = ['0-6 Uhr', '6-12 Uhr', '12-18 Uhr', '18-0 Uhr'];
 
-  const monthSorted = [
-    'Januar',
-    'Februar',
-    'März',
-    'April',
-    'Mai',
-    'Juni',
-    'Juli',
-    'August',
-    'September',
-    'Oktober',
-    'November',
-    'Dezember',
-  ];
+  const monthSorted = useMemo(() => {
+    return [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember',
+    ];
+  }, []);
 
   // const uniqueTimes = [
   //   ...new Set(
@@ -60,7 +62,9 @@ function MonthYearHeatmap({ visData }) {
   //   ),
   // ];
 
-  const yearSorted = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
+  const yearSorted = useMemo(() => {
+    return [2016, 2017, 2018, 2019, 2020, 2021, 2022];
+  }, []);
 
   const monthYearCount = useMemo(() => {
     // const uniqueWeekdays = [
@@ -110,7 +114,7 @@ function MonthYearHeatmap({ visData }) {
     });
 
     return nestedObj;
-  }, [visData]);
+  }, [visData, monthSorted, yearSorted]);
 
   const yearScale = scaleBand()
     .domain(yearSorted)

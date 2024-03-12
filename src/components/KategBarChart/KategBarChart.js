@@ -21,11 +21,11 @@ function KategBarChart({
   chartWidthDomain,
   vizWrapperGap,
 }) {
-  const kategCountMap = useFixedRolledUpMap(
-    visData,
-    'kateg2',
-    kategorienSorted
-  );
+  const kategCountMap = useFixedRolledUpMap({
+    data: visData,
+    variable: 'kateg2',
+    kategorien: kategorienSorted,
+  });
 
   const width = chartWidth || 300;
 

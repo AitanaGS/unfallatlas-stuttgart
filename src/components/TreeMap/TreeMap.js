@@ -36,30 +36,35 @@ function TreeMap({
   const innerWidth = width - margin.right - margin.left;
   const innerHeight = height - margin.top - margin.bottom;
 
-  const fussCount = useFixedRolledUpMap(visData, 'istfussb', [
-    true,
-    false,
-  ]);
+  const fussCount = useFixedRolledUpMap({
+    data: visData,
+    variable: 'istfussb',
+    kategorien: [true, false],
+  });
 
-  const radCount = useFixedRolledUpMap(visData, 'istradb', [
-    true,
-    false,
-  ]);
+  const radCount = useFixedRolledUpMap({
+    data: visData,
+    variable: 'istradb',
+    kategorien: [true, false],
+  });
 
-  const pkwCount = useFixedRolledUpMap(visData, 'istpkwb', [
-    true,
-    false,
-  ]);
+  const pkwCount = useFixedRolledUpMap({
+    data: visData,
+    variable: 'istpkwb',
+    kategorien: [true, false],
+  });
 
-  const kradCount = useFixedRolledUpMap(visData, 'istkradb', [
-    true,
-    false,
-  ]);
+  const kradCount = useFixedRolledUpMap({
+    data: visData,
+    variable: 'istkradb',
+    kategorien: [true, false],
+  });
 
-  const sonstCount = useFixedRolledUpMap(visData, 'istsonst2b', [
-    true,
-    false,
-  ]);
+  const sonstCount = useFixedRolledUpMap({
+    data: visData,
+    variable: 'istsonst2b',
+    kategorien: [true, false],
+  });
 
   const numberData = useMemo(() => {
     return new Map([
