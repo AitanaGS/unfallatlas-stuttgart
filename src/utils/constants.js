@@ -17,21 +17,7 @@ export const COLORS = {
     light: 'rgba(235, 124, 0, 1)',
     dark: 'rgba(170, 62, 0, 1)',
   },
-  // orange: {
-  //   light: 'rgba(252, 153, 77, 1)',
-  //   medium: 'rgba(231, 93, 13, 1)',
-  //   dark: 'rgba(142, 45, 4, 1)',
-  // },
   categorical: {
-    gray: 'rgba(187, 187, 187, 1)',
-    yellow: 'rgba(204, 187, 68, 1)',
-    green: 'rgba(34, 136, 51, 1)',
-    pink: 'rgba(238, 102, 119, 1)',
-    blue: 'rgba(68, 119, 170, 1)',
-    purple: 'rgba(170, 51, 119, 1)',
-    cyan: 'rgba(102, 204, 238, 1)',
-  },
-  categorical2: {
     orangeLight: 'rgba(230, 159, 0, 1)',
     orangeDark: 'rgba(213, 94, 0, 1)',
     blueLight: 'rgba(86, 180, 233, 1)',

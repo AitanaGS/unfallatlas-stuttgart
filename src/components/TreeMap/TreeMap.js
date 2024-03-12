@@ -97,11 +97,11 @@ function TreeMap({
 
   const colorScale = useMemo(() => {
     const colorArray = [
-      COLORS.categorical2.yellow,
-      COLORS.categorical2.green,
-      COLORS.categorical2.purple,
-      COLORS.categorical2.orangeDark,
-      COLORS.categorical2.blueLight,
+      COLORS.categorical.yellow,
+      COLORS.categorical.green,
+      COLORS.categorical.purple,
+      COLORS.categorical.orangeDark,
+      COLORS.categorical.blueLight,
     ];
     return scaleOrdinal().domain(namesArray).range(colorArray);
   }, [namesArray]);

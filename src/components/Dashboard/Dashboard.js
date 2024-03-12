@@ -29,7 +29,7 @@ import TreeMap from '../TreeMap';
 import { timeParse } from 'd3-time-format';
 // import LineChartYear from '../LineChartYear';
 // import LineChartMonth from '../LineChartMonth';
-import MonthYearHeatmap from '../MonthYearHeatmap';
+// import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
 import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
