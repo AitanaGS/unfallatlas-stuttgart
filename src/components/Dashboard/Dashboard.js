@@ -589,7 +589,7 @@ function Dashboard({ initialData }) {
   const { reduceMotion } = useContext(AnimationContext);
 
   // console.log('reducemotion', reduceMotion);
-  const vizWrapperGap = 40;
+  const vizWrapperGap = 35; // 40;
 
   return (
     visData && (

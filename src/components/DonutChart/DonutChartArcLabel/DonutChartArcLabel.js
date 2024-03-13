@@ -1,15 +1,14 @@
 import { numberWithSeparator } from '@/utils/calc';
-import { splitStringOnSlash } from '@/utils/strings';
 
 import React from 'react';
 
 function DonutChartArcLabel({
-  label,
   count,
+  labelArray,
+  numberLabelShiftY,
   labelPosition,
   svgFontSize,
 }) {
-  const labelArray = splitStringOnSlash(label);
   return (
     <text
       y={labelPosition.y}
@@ -28,7 +27,14 @@ function DonutChartArcLabel({
           {label}
         </tspan>
       ))}
-      <tspan x={labelPosition.x} dy="1.4em">
+      <tspan
+        x={labelPosition.x}
+        dy={`${
+          labelArray.length === numberLabelShiftY
+            ? 1.4
+            : numberLabelShiftY * 1.4
+        }em`}
+      >
         {numberWithSeparator(count)}
       </tspan>
     </text>

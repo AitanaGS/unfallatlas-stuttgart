@@ -3,8 +3,10 @@ import DonutChartArc from './DonutChartArc';
 import DonutChartArcLabel from './DonutChartArcLabel';
 import useFixedRolledUpMap from '@/hooks/useFixedRolledUpMap';
 import { COLORS } from '@/utils/constants';
+import { splitStringOnSlash } from '@/utils/strings';
 
 import React, { useMemo } from 'react';
+import { max } from 'd3-array';
 import { pie } from 'd3-shape';
 import { scaleOrdinal } from 'd3-scale';
 
@@ -22,16 +24,31 @@ function DonutChart({
 
   const width = chartWidth;
 
-  const height = 250;
+  // numberLabelShiftY (based on label length) is necessary
+  // for calculating height, label position, etc.
+  const labelInfo = useMemo(() => {
+    const labelArrays = kategorien.map((kat) =>
+      splitStringOnSlash(kat)
+    );
+
+    const numberLabelShiftY = max(labelArrays, (arr) => arr.length);
+
+    return {
+      labelArrays,
+      numberLabelShiftY,
+    };
+  }, [kategorien]);
+
+  const height = 230 + labelInfo.numberLabelShiftY * 10;
 
   const margin = useMemo(() => {
     return {
-      top: 90,
+      top: 80 + labelInfo.numberLabelShiftY * 10,
       right: 50,
-      bottom: 5,
+      bottom: 2,
       left: 50,
     };
-  }, []);
+  }, [labelInfo.numberLabelShiftY]);
 
   const innerWidth = width - margin.left - margin.right;
 
@@ -43,7 +60,9 @@ function DonutChart({
     kategorien,
   });
 
-  const radius = Math.min(innerWidth, innerHeight) / 2.5;
+  const radius =
+    Math.min(innerWidth, innerHeight) / 2 -
+    (margin.right - margin.left);
 
   const colorScale = useMemo(() => {
     return scaleOrdinal()
@@ -74,7 +93,7 @@ function DonutChart({
         chartWidth > donutChartMobileBreakpoint
           ? innerWidth / 2 + margin.left - radius
           : innerWidth / 2 + margin.right - 10,
-      y: 50,
+      y: 60 - labelInfo.numberLabelShiftY * 10,
       textAnchor: 'end',
     };
   }, [
@@ -83,6 +102,7 @@ function DonutChart({
     margin,
     radius,
     innerWidth,
+    labelInfo.numberLabelShiftY,
   ]);
 
   const rightLabelPosition = useMemo(() => {
@@ -91,7 +111,7 @@ function DonutChart({
         chartWidth > donutChartMobileBreakpoint
           ? innerWidth / 2 + margin.left + radius
           : innerWidth / 2 + margin.right + 10,
-      y: 50,
+      y: 60 - labelInfo.numberLabelShiftY * 10,
       textAnchor: 'start',
     };
   }, [
@@ -100,6 +120,7 @@ function DonutChart({
     margin,
     radius,
     innerWidth,
+    labelInfo.numberLabelShiftY,
   ]);
 
   const labelPosition = [leftLabelPosition, rightLabelPosition];
@@ -127,7 +148,8 @@ function DonutChart({
       {kategorien.map((kat, i) => (
         <DonutChartArcLabel
           key={kat}
-          label={kat}
+          labelArray={labelInfo.labelArrays[i]}
+          numberLabelShiftY={labelInfo.numberLabelShiftY}
           count={variableCount.get(kat)}
           labelPosition={labelPosition[i]}
           svgFontSize={svgFontSize}
