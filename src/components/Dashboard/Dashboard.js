@@ -31,7 +31,7 @@ import { timeParse } from 'd3-time-format';
 // import LineChartMonth from '../LineChartMonth';
 // import MonthYearHeatmap from '../MonthYearHeatmap';
 import FilterCheckboxes from '../FilterCheckboxes';
-import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
+// import LeafletHeatCheckbox from '../LeafletHeatCheckbox';
 import ArtBarChart from '../ArtBarChart';
 // import KategStackedBarChart from '../KategStackedBarChart';
 // import LichtLollipopChart from '../LichtLollipopChart';
@@ -637,22 +637,14 @@ function Dashboard({ initialData }) {
                 {/* <Map data={data} setVisData={setVisData} /> */}
                 <LeafletMap
                   data={data}
-                  setVisData={setVisData}
-                  setMapData={setMapData}
-                  // filteredData={filteredData}
-                  filteringMode={filteringMode}
-                  // setData={setData}
+                  setTotalMapData={setTotalMapData}
                   filterData={filterData}
                   allFilter={allFilter}
                   filter={filter}
                   filterKategData={filterKategData}
                   allKategFilter={allKategFilter}
                   kategFilter={kategFilter}
-                  selectHeatmap={selectHeatmap}
-                  setTotalMapData={setTotalMapData}
                   chartWidth={chartWidth}
-                  svgFontSize={svgFontSize}
-                  layout={layout}
                 />
                 {/* <CheckboxWrapper> */}
                 {/* <LeafletHeatCheckbox

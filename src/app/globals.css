@@ -166,7 +166,7 @@ svg {
   color: rgba(59, 59, 59, 1);
 }
 
-.cluster-icon {
+/* .cluster-icon {
   background-color: #333;
   height: 2em;
   width: 2em;
@@ -177,7 +177,7 @@ svg {
   border-radius: 50%;
   font-size: 1.2rem;
   box-shadow: 0 0 0px 5px #fff;
-}
+} */
 
 /* .leaflet-map {
   height: 500px;
