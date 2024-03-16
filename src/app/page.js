@@ -106,7 +106,7 @@ export default function Home() {
       {/* <SpringConfigContext.Provider value={springConfig}> */}
       {initialData && (
         <AnimationProvider>
-          <Dashboard initialData={initialData} />
+          <Dashboard data={initialData} />
         </AnimationProvider>
       )}
       {/* </SpringConfigContext.Provider> */}
