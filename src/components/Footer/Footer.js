@@ -83,7 +83,7 @@ const CodeInfo = styled.div`
 `;
 
 const NameInfo = styled.div`
-  margin-top: 40px;
+  margin-top: 60px;
 `;
 
 export default React.memo(Footer);
