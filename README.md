@@ -4,6 +4,8 @@ An interactive data visualization offering insights into registered traffic acci
 
 ## Project Link
 
+[https://aitanags.github.io/unfallatlas-stuttgart/](https://aitanags.github.io/unfallatlas-stuttgart/)
+
 ## Technologies
 
 **Frontend:**
